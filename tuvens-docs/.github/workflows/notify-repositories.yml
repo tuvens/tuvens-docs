@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'integration-guides/**'
-      - 'implementation-guides/**'  
-      - 'shared-protocols/**'
-      - 'integration-examples/**'
-      - 'claude-templates/**'
-      - 'setup.sh'
-      - 'README.md'
-      - 'CONTRIBUTING.md'
+      - 'tuvens-docs/integration-guides/**'
+      - 'tuvens-docs/implementation-guides/**'  
+      - 'tuvens-docs/shared-protocols/**'
+      - 'tuvens-docs/integration-examples/**'
+      - 'tuvens-docs/claude-templates/**'
+      - 'tuvens-docs/setup.sh'
+      - 'tuvens-docs/README.md'
+      - 'tuvens-docs/CONTRIBUTING.md'
 
 jobs:
   analyze-changes:
@@ -50,9 +50,9 @@ jobs:
           fi
           
           # Analyze change types
-          frontend_files="shared-protocols/general-frontend-integration.md|integration-examples/frontend-integration/|claude-templates/"
-          backend_files="implementation-guides/cross-app-authentication/|integration-guides/hi-events/api-requirements.md"
-          integration_files="integration-guides/hi-events/|setup.sh"
+          frontend_files="tuvens-docs/shared-protocols/general-frontend-integration.md|tuvens-docs/integration-examples/frontend-integration/|tuvens-docs/claude-templates/"
+          backend_files="tuvens-docs/implementation-guides/cross-app-authentication/|tuvens-docs/integration-guides/hi-events/api-requirements.md"
+          integration_files="tuvens-docs/integration-guides/hi-events/|tuvens-docs/setup.sh"
           
           echo "frontend-changes=false" >> $GITHUB_OUTPUT
           echo "backend-changes=false" >> $GITHUB_OUTPUT  
