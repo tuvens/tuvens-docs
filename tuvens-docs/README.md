@@ -93,10 +93,39 @@ After copying templates, **you must customize repository references**:
 1. **Update commands.json**: Change the description to reflect your repository name
 2. **Update INTEGRATION_REGISTRY.md**: Mark your repository as "Current Repository" 
 3. **Update command templates**: Replace repository references throughout all .md files
+4. **Create project-instructions.md**: If `docs/.claude/project-instructions.md` doesn't exist, generate it with your project's specific context
 
 ### Find and Replace Needed:
 - `eventdigest-ai` → `your-repo-name`
 - `eventdigest-ai/client` → `your-repo-name`
+
+### Required Project Instructions File
+
+**Important**: The shared templates reference `docs/.claude/project-instructions.md` for project-specific context. If this file doesn't exist in your repository, you should create it with:
+
+- Project overview and purpose
+- Architecture and technology stack details
+- Development workflow and standards
+- Testing requirements and guidelines
+- Deployment information
+- Repository-specific Claude Code instructions
+
+Example structure:
+```markdown
+# [Your Project Name] - Claude Code Instructions
+
+## Project Overview
+[Brief description of your project's purpose and goals]
+
+## Architecture
+[Technology stack, framework choices, key architectural decisions]
+
+## Development Workflow
+[Branch strategy, code review process, testing requirements]
+
+## Claude Code Specific Instructions
+[Any project-specific guidance for Claude Code sessions]
+```
 
 ## Tuvens Ecosystem Repositories
 
