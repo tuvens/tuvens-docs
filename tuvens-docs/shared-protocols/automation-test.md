@@ -18,6 +18,9 @@ The notification system should:
 - ✅ Include commit information and changed files
 - ✅ Create a tracking issue for monitoring
 
+## Test Update
+This update tests the fixed workflow paths (commit 98830ea).
+
 ## Verification Steps
 
 After pushing this change:
