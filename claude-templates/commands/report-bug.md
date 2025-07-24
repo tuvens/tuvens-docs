@@ -11,7 +11,7 @@ Report a bug in another repository that affects the current project's integratio
 ## Process
 
 1. First, identify the target repository from our project registry:
-   - Check `docs/.claude/INTEGRATION_REGISTRY.md` for the complete list of Tuvens ecosystem repositories
+   - Check `docs/.claude/INTEGRATION_REGISTRY.md` for the complete list of ecosystem repositories
    - Ensure the bug is actually in the external repository, not local code
 
 2. Gather bug information:
@@ -28,7 +28,7 @@ gh issue create --repo <OWNER/REPO> --title "[BUG] <Brief Description>" --body "
 [X] Bug Report
 
 ## Requesting Repository
-**Repo:** eventdigest-ai/client
+**Repo:** {CURRENT_REPOSITORY}
 **Branch/Commit:** $(git rev-parse --abbrev-ref HEAD) / $(git rev-parse --short HEAD)
 
 ## Description
@@ -68,7 +68,7 @@ gh issue create --repo <OWNER/REPO> --title "[BUG] <Brief Description>" --body "
 <If you have ideas about the cause or fix>
 
 ---
-*Created by Claude Code session in eventdigest-ai/client*
+*Created by Claude Code session in {CURRENT_REPOSITORY}*
 EOF
 )"
 ```

@@ -1,26 +1,26 @@
-# Tuvens Ecosystem Integration Registry
+# {ECOSYSTEM_NAME} Integration Registry
 
 ## Overview
-This document provides the complete registry of repositories in the Tuvens ecosystem for cross-repository integration and communication.
+This document provides the complete registry of repositories in the {ECOSYSTEM_NAME} for cross-repository integration and communication.
 
 ## Repository Registry
 
 | Project Name | Repository URL | Purpose/Integration | Status |
 |--------------|---------------|-------------------|--------|
-| **Tuvens Client** | https://github.com/tuvens/tuvens-client | Frontend application, user interface | Active |
-| **Tuvens API** | https://github.com/tuvens/tuvens-api | Backend API services, business logic | Active |
-| **Hi.Events** | https://github.com/tuvens/hi.events | Event management platform | Active (Issues disabled) |
-| **Eventdigest.ai** | https://github.com/tuvens/eventdigest-ai | AI-powered event analysis | Current Repository |
+| **{PROJECT_1}** | {PROJECT_1_URL} | {PROJECT_1_PURPOSE} | Active |
+| **{PROJECT_2}** | {PROJECT_2_URL} | {PROJECT_2_PURPOSE} | Active |
+| **{PROJECT_3}** | {PROJECT_3_URL} | {PROJECT_3_PURPOSE} | Active |
+| **{CURRENT_PROJECT}** | {CURRENT_PROJECT_URL} | {CURRENT_PROJECT_PURPOSE} | Current Repository |
 
 ## Integration Status
 
 ### Documentation Organization Model
 Implementation of the Claude Code documentation organization model across repositories:
 
-- ✅ **Eventdigest.ai**: Complete implementation (reference)
-- 🔄 **Tuvens Client**: [Issue #194](https://github.com/tuvens/tuvens-client/issues/194) created
-- 🔄 **Tuvens API**: [Issue #12](https://github.com/tuvens/tuvens-api/issues/12) created  
-- ❌ **Hi.Events**: Issues disabled - manual coordination required
+- ✅ **{REFERENCE_PROJECT}**: Complete implementation (reference)
+- 🔄 **{PROJECT_1}**: Implementation in progress
+- 🔄 **{PROJECT_2}**: Implementation in progress  
+- 🔄 **{PROJECT_3}**: Implementation in progress
 
 ### Cross-Repository Communication
 - **Method**: GitHub Issues with standardized templates
@@ -49,4 +49,4 @@ Implementation of the Claude Code documentation organization model across reposi
 ---
 
 *Last updated: 2025-07-24*
-*Maintained by: Claude Code sessions across Tuvens ecosystem*
+*Maintained by: Claude Code sessions across {ECOSYSTEM_NAME}*

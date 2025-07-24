@@ -29,7 +29,7 @@ gh issue create --repo <OWNER/REPO> --title "[REQUIREMENTS] <Brief Description>"
 [X] Requirements Request
 
 ## Requesting Repository
-**Repo:** eventdigest-ai/client
+**Repo:** {CURRENT_REPOSITORY}
 **Branch/Commit:** $(git rev-parse --abbrev-ref HEAD) / $(git rev-parse --short HEAD)
 
 ## Description
@@ -74,7 +74,7 @@ gh issue create --repo <OWNER/REPO> --title "[REQUIREMENTS] <Brief Description>"
 <Any other relevant information>
 
 ---
-*Created by Claude Code session in eventdigest-ai/client*
+*Created by Claude Code session in {CURRENT_REPOSITORY}*
 EOF
 )"
 ```

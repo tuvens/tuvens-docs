@@ -60,6 +60,6 @@
   "metadata": {
     "version": "1.0.0",
     "created": "2025-07-24",
-    "description": "Claude Code commands for cross-repository communication in the Eventdigest.ai project"
+    "description": "Claude Code commands for cross-repository communication in the {PROJECT_NAME} project"
   }
 }

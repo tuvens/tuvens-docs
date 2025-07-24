@@ -28,7 +28,7 @@ gh issue create --repo <OWNER/REPO> --title "[QUESTION] <Brief Question>" --body
 [X] Question
 
 ## Requesting Repository
-**Repo:** eventdigest-ai/client
+**Repo:** {CURRENT_REPOSITORY}
 **Branch/Commit:** $(git rev-parse --abbrev-ref HEAD) / $(git rev-parse --short HEAD)
 
 ## Question
@@ -65,7 +65,7 @@ gh issue create --repo <OWNER/REPO> --title "[QUESTION] <Brief Question>" --body
 <Any other context that might help answer the question>
 
 ---
-*Created by Claude Code session in eventdigest-ai/client*
+*Created by Claude Code session in {CURRENT_REPOSITORY}*
 EOF
 )"
 ```

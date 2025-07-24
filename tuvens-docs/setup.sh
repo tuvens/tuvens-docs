@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Tuvens Documentation Setup Script
+# Documentation Templates Setup Script
 # This script sets up the Claude Code documentation structure in your repository
 
 set -e
@@ -9,7 +9,7 @@ REPO_NAME=""
 SETUP_TYPE=""
 
 show_help() {
-    echo "Tuvens Documentation Setup Script"
+    echo "Documentation Templates Setup Script"
     echo ""
     echo "Usage: $0 --repo REPO_NAME [--type TYPE]"
     echo ""
@@ -93,11 +93,12 @@ esac
 echo "Customizing templates for $REPO_NAME..."
 
 # Update repository references in all files
-find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/eventdigest-ai/$REPO_NAME/g" {} \;
-find docs/.claude -name "*.json" -type f -exec sed -i.bak "s/eventdigest-ai/$REPO_NAME/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{CURRENT_REPOSITORY}/$REPO_NAME/g" {} \;
+find docs/.claude -name "*.json" -type f -exec sed -i.bak "s/{PROJECT_NAME}/$REPO_NAME/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{ECOSYSTEM_NAME}/Your Ecosystem/g" {} \;
 
-# Update integration registry to mark current repository
-sed -i.bak "s/| \*\*$REPO_NAME\*\*/| \*\*$REPO_NAME\*\*/; s/| Active |/| Current Repository |/" docs/.claude/INTEGRATION_REGISTRY.md
+# Update integration registry placeholders (user should customize these)
+sed -i.bak "s/{CURRENT_PROJECT}/$REPO_NAME/g" docs/.claude/INTEGRATION_REGISTRY.md
 
 # Clean up backup files
 find docs/.claude -name "*.bak" -delete
