@@ -117,6 +117,86 @@ To contribute improvements:
 3. Submit pull request
 4. Once merged, update submodules in other repositories
 
+## Cross-Repository Communication Workflow
+
+### When to Create Cross-Repository Issues
+
+Claude Code should create issues in other repositories when encountering:
+
+1. **Requirements for other systems** - When current work requires changes/features in another repo
+2. **Integration bugs** - When issues are caused by problems in another system
+3. **Questions** - When needing clarification about another system's behavior/API
+4. **Suggestions** - When proposing improvements or optimizations that affect other systems
+5. **Alternative approaches** - When suggesting different architectural solutions
+
+### Quick Commands Available
+
+- `/report-bug` - Report bugs in other repositories
+- `/send-rqts` - Request features or capabilities
+- `/ask-question` - Ask for clarification about implementations
+- `/suggest-improvement` - Propose optimizations
+- `/propose-alternative` - Suggest architectural changes
+- `/resolve-issue` - Properly close GitHub issues
+- `/update-current-state` - Maintain project status documentation
+
+### GitHub CLI Setup Required
+
+Ensure GitHub CLI is installed and authenticated:
+```bash
+# Check if gh is installed and authenticated
+gh auth status
+
+# If not authenticated, run:
+gh auth login
+```
+
+### Issue Creation Process
+
+1. **Determine Target Repository** - Use INTEGRATION_REGISTRY.md to identify the correct repository
+2. **Use Appropriate Command** - Each command provides standardized issue templates
+3. **Track and Follow Up** - Monitor created issues and respond to feedback
+
+### Issue Labels and Organization
+
+Consistent labels used across repositories:
+- `claude-code` - Issues created by Claude Code sessions
+- `integration` - Cross-repository integration issues
+- `blocking` - Issues that block other work
+- `question` - Questions requiring clarification
+- `enhancement` - Suggestions for improvements
+- `bug` - Bug reports from other systems
+
+### User Communication Protocol
+
+Always communicate to the user when:
+1. **Creating cross-repo issues**: "I'm creating an issue in [REPO] because..."
+2. **Waiting for external responses**: "I'm blocked waiting for response from [REPO] on issue [URL]"
+3. **Receiving responses**: "The other Claude Code session responded to our issue: [SUMMARY]"
+4. **Alternative approaches**: "While waiting, I could try [ALTERNATIVE] instead"
+
+## Best Practices
+
+1. **Be specific** - Provide clear, actionable descriptions
+2. **Include context** - Always explain why the issue matters to current work
+3. **Set realistic priorities** - Not everything is blocking
+4. **Follow up** - Check on issues you've created
+5. **Be responsive** - Address issues created by other Claude Code sessions promptly
+6. **Document decisions** - Comment on closed issues with final outcomes
+
+## Troubleshooting
+
+If GitHub CLI commands fail:
+```bash
+# Re-authenticate
+gh auth login
+
+# Check permissions
+gh auth status
+
+# Verify repo access
+gh repo view OWNER/REPO
+```
+
 ## Support
 
 For questions about these templates or Claude Code integration:
