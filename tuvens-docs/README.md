@@ -136,15 +136,93 @@ Example structure:
 | [hi.events](https://github.com/tuvens/hi.events) | Event management platform | Active |
 | [eventdigest-ai](https://github.com/tuvens/eventdigest-ai) | AI-powered event analysis | Active |
 
+## Update Protocols
+
+### 🔄 Getting Latest Templates (For Claude Code Sessions)
+
+**IMPORTANT**: At the start of each Claude Code session, check for template updates:
+
+```bash
+# If using subdirectory integration
+cd docs/tuvens-shared  # or docs/shared-templates
+git pull origin main
+
+# If templates have been updated, re-copy them
+cd ../..
+cp -r docs/tuvens-shared/claude-templates/* docs/.claude/
+# Re-customize placeholders for your repository
+```
+
+### 📢 Update Notifications
+
+When this repository is updated, maintainers will create issues in all consuming repositories with the title:
+**"[UPDATE] New Documentation Templates Available - Please Fetch"**
+
+**When you see this issue:**
+1. Follow the update steps above to fetch latest templates
+2. Comment on the issue: "✅ Updated templates fetched in [repository-name]"
+3. The issue will be closed when all repositories confirm updates
+
+### 🔧 Contributing Template Improvements
+
+**DO NOT** directly edit templates in your local repository. Instead:
+
+1. **Create an issue** in https://github.com/tuvens/tuvens-docs describing the improvement
+2. **Wait for the improvement** to be implemented in the shared repository
+3. **Fetch the updates** using the protocol above
+
+This ensures all repositories benefit from improvements and maintains consistency.
+
 ## Maintenance
 
-This repository is maintained across all Tuvens ecosystem projects. Updates here automatically benefit all repositories using these templates.
+This repository serves as the single source of truth for documentation templates across the ecosystem. Updates here automatically benefit all repositories using these templates.
+
+### For Template Maintainers
 
 To contribute improvements:
-1. Fork this repository
-2. Make improvements to templates
-3. Submit pull request
-4. Once merged, update submodules in other repositories
+1. **Create an issue** describing the needed improvement
+2. **Implement the improvement** in this repository
+3. **🚀 AUTOMATED**: Push to main triggers automatic notification creation in all consuming repositories
+4. **Monitor tracking issue** created automatically in tuvens-docs
+5. **Verify integration** through automated repository verification
+
+**New Automated System**: See `.github/README.md` for details on the automated notification and verification system.
+
+### Update Notification Template
+
+When templates are updated, create issues in consuming repositories:
+
+```markdown
+## 📢 Documentation Template Updates Available
+
+New improvements have been made to the shared documentation templates:
+
+### What's New
+- [List specific improvements/fixes]
+
+### How to Update
+```bash
+# Navigate to your shared templates directory
+cd docs/tuvens-shared  # or docs/shared-templates
+
+# Pull latest changes
+git pull origin main
+
+# Re-copy updated templates (if using copy method)
+cd ../..
+cp -r docs/tuvens-shared/claude-templates/* docs/.claude/
+
+# Verify your repository-specific customizations are preserved
+```
+
+### Please Confirm
+Comment "✅ Updated templates fetched in [repository-name]" when complete.
+
+This issue will be closed when all repositories confirm updates.
+
+---
+*Created by: [maintainer] from tuvens-docs repository*
+```
 
 ## Cross-Repository Communication Workflow
 

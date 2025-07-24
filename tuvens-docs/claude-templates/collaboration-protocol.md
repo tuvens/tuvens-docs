@@ -1,45 +1,132 @@
-# Collaborative Development Protocol
-*Team Collaboration Guide Template*
+# Claude Code Integration & Collaboration Protocols
 
 ## 🎯 Overview
-This document establishes protocols for safe, conflict-free collaborative development using git worktrees, dependency management, and architectural consistency.
 
-## 🌳 Git Worktree Management Protocol
+This document establishes standardized protocols for Claude Code integration across the Tuvens ecosystem, ensuring consistent AI-assisted development practices and optimal collaboration between human developers and Claude.
 
-### Worktree Lifecycle
-```bash
-# 1. Create worktree from latest develop/main
-git worktree add worktrees/feature-name -b feature/type/description develop
+## 🏗️ Claude Code Setup Standards
 
-# 2. Set up dependencies (CRITICAL)
-cd worktrees/feature-name
-# Use your project's dependency installation commands
-# npm ci --frozen-lockfile  # Node.js projects
-# pip install -r requirements.txt  # Python projects
-# bundle install  # Ruby projects
+### Repository Structure for Claude Integration
 
-# 3. Work in isolation
-# ... make changes ...
+Every Tuvens repository must include:
 
-# 4. Pre-merge validation
-# Run your project's validation scripts
-# ./scripts/check-before-merge.sh
-
-# 5. Clean merge
-git checkout develop
-git pull origin develop
-git merge feature/type/description --no-ff
-
-# 6. Cleanup worktree
-git worktree remove worktrees/feature-name
-git branch -d feature/type/description
+```
+repository-name/
+├── CLAUDE.md                           # Primary Claude instructions
+├── docs/
+│   ├── .claude/
+│   │   ├── commands/                   # Custom Claude commands
+│   │   │   ├── commands.json          # Command registry
+│   │   │   ├── ask-question.md        # Question assistance
+│   │   │   ├── commit-helper.md       # Git commit assistance
+│   │   │   ├── frontend-dev.md        # Frontend development
+│   │   │   ├── report-bug.md          # Bug reporting
+│   │   │   ├── resolve-issue.md       # Issue resolution
+│   │   │   ├── suggest-improvement.md # Improvement suggestions
+│   │   │   ├── test-tdd.md           # TDD assistance
+│   │   │   └── update-current-state.md # Status updates
+│   │   ├── INTEGRATION_REGISTRY.md    # Cross-repo integrations
+│   │   ├── project-instructions.md    # Detailed project context
+│   │   ├── task-routing.md            # File discovery routing
+│   │   └── workflow.md                # Development workflows
+│   └── .temp/                         # Temporary documentation
+└── .claudeignore                      # Files to exclude from Claude
 ```
 
-### Worktree Naming Convention
-- `worktrees/feature-{ticket-id}` - Feature development
-- `worktrees/bugfix-{issue-number}` - Bug fixes
-- `worktrees/hotfix-{severity}` - Production hotfixes
-- `worktrees/experiment-{name}` - R&D work
+### CLAUDE.md Template
+
+```markdown
+# Claude Code Instructions for {PROJECT_NAME}
+
+## 🚨 MANDATORY FIRST STEP - READ THIS EVERY SESSION
+
+**ALWAYS load this file at the start of every Claude Code session:**
+
+```
+docs/.claude/project-instructions.md
+```
+
+This file contains:
+- ✅ Complete project context and structure
+- ✅ Safety rules and branch protection guidelines  
+- ✅ Branding guidelines (correct name: "{PROJECT_NAME}")
+- ✅ Task routing for efficient file discovery
+- ✅ TDD workflow requirements (80% coverage)
+- ✅ Quality gates and development standards
+- ✅ Enterprise CI/CD protocols and security requirements
+- ✅ Collaboration tools and worktree management
+
+## 🚨 Critical Workflow Rules
+
+### /resolve-issue Command Protocol
+When using `/resolve-issue`, you MUST:
+1. Resolve all specified issues completely
+2. **ALWAYS close issues with `gh issue close` before completing the task**
+3. Include descriptive comments explaining the resolution
+4. Never leave issues open after resolution
+
+This is MANDATORY - no exceptions!
+
+## 🏗️ CI/CD & Security Protocols
+
+### MANDATORY CI/CD Compliance
+When working on code changes, you MUST:
+1. **Security First**: All code changes trigger security scanning
+2. **Quality Gates**: 80% test coverage REQUIRED
+3. **Branch Protection**: Never commit directly to `main` or `develop`
+4. **Collaboration Validation**: Use validation commands before major changes
+5. **Testing Protocol**: Follow TDD - Write tests first, then implementation
+
+---
+
+**Remember: Load `docs/.claude/project-instructions.md` FIRST in every session!**
+```
+
+### .claudeignore Template
+
+```
+# Claude Code ignore patterns
+
+# Dependencies
+node_modules/
+__pycache__/
+venv/
+env/
+
+# Build outputs
+build/
+dist/
+.next/
+out/
+target/
+
+# Logs and temporary files
+*.log
+.temp/
+tmp/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Environment variables
+.env*
+
+# Large generated files
+*.min.js
+*.min.css
+*.bundle.js
+
+# Test artifacts
+test-results/
+coverage/
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+```
 
 ## 🔒 Dependency Management Protocol
 

@@ -92,13 +92,61 @@ esac
 
 echo "Customizing templates for $REPO_NAME..."
 
-# Update repository references in all files
+# Define ecosystem defaults (users can customize these later)
+ECOSYSTEM_NAME="Tuvens"
+PROJECT_1="tuvens-api"
+PROJECT_2="eventdigest-ai"
+PROJECT_3="hi.events"
+REFERENCE_PROJECT="tuvens-docs"
+
+# Generate placeholder URLs and purposes
+CURRENT_PROJECT_URL="https://github.com/tuvens/$REPO_NAME"
+PROJECT_1_URL="https://github.com/tuvens/tuvens-api"
+PROJECT_2_URL="https://github.com/tuvens/eventdigest-ai"
+CURRENT_PROJECT_PURPOSE="Component of the $ECOSYSTEM_NAME ecosystem"
+PROJECT_1_PURPOSE="Backend API services for the $ECOSYSTEM_NAME platform"
+PROJECT_2_PURPOSE="Event aggregation and curation frontend application"
+PROJECT_3_PURPOSE="Ticketing platform integration"
+
+# Update all repository references in files
+echo "Replacing basic placeholders..."
 find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{CURRENT_REPOSITORY}/$REPO_NAME/g" {} \;
 find docs/.claude -name "*.json" -type f -exec sed -i.bak "s/{PROJECT_NAME}/$REPO_NAME/g" {} \;
-find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{ECOSYSTEM_NAME}/Your Ecosystem/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{CURRENT_PROJECT}/$REPO_NAME/g" {} \;
 
-# Update integration registry placeholders (user should customize these)
-sed -i.bak "s/{CURRENT_PROJECT}/$REPO_NAME/g" docs/.claude/INTEGRATION_REGISTRY.md
+# Update ecosystem and project placeholders
+echo "Replacing ecosystem placeholders..."
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{ECOSYSTEM_NAME}/$ECOSYSTEM_NAME/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{REFERENCE_PROJECT}/$REFERENCE_PROJECT/g" {} \;
+
+# Update project registry placeholders
+echo "Replacing integration registry placeholders..."
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_1}/$PROJECT_1/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_2}/$PROJECT_2/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_3}/$PROJECT_3/g" {} \;
+
+# Update URL placeholders
+echo "Replacing URL placeholders..."
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s|{CURRENT_PROJECT_URL}|$CURRENT_PROJECT_URL|g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s|{PROJECT_1_URL}|$PROJECT_1_URL|g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s|{PROJECT_2_URL}|$PROJECT_2_URL|g" {} \;
+
+# Update purpose placeholders
+echo "Replacing purpose placeholders..."
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{CURRENT_PROJECT_PURPOSE}/$CURRENT_PROJECT_PURPOSE/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_1_PURPOSE}/$PROJECT_1_PURPOSE/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_2_PURPOSE}/$PROJECT_2_PURPOSE/g" {} \;
+find docs/.claude -name "*.md" -type f -exec sed -i.bak "s/{PROJECT_3_PURPOSE}/$PROJECT_3_PURPOSE/g" {} \;
+
+# Verify all placeholders have been replaced
+echo "Verifying placeholder replacement..."
+REMAINING_PLACEHOLDERS=$(find docs/.claude -name "*.md" -o -name "*.json" | xargs grep -l '{[A-Z_]*}' 2>/dev/null || true)
+if [ -n "$REMAINING_PLACEHOLDERS" ]; then
+    echo "⚠️  Warning: Some placeholders may still need manual customization:"
+    find docs/.claude -name "*.md" -o -name "*.json" | xargs grep -n '{[A-Z_]*}' 2>/dev/null || true
+    echo ""
+    echo "   Please review and customize these placeholders manually."
+fi
 
 # Clean up backup files
 find docs/.claude -name "*.bak" -delete
