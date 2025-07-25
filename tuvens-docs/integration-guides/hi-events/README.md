@@ -5,12 +5,17 @@ This directory contains comprehensive documentation for integrating Hi.Events ti
 ## 📚 Documentation Overview
 
 ### Core Integration Guides
-- **[Frontend Integration](./frontend-integration.md)** - Complete frontend implementation guide with React/TypeScript examples
+- **[Architecture](./architecture.md)** - Complete system architecture and component interaction diagrams
+- **[API Reference](./api-reference.md)** - Comprehensive API documentation with request/response formats
+- **[Implementation Status](./implementation-status.md)** - Current status across all repositories and production readiness
+- **[Frontend Integration Spec](./frontend-integration-spec.md)** - Detailed frontend implementation specification with React/TypeScript examples
+- **[Webhook Implementation](./webhook-implementation.md)** - Complete webhook endpoint implementation for Hi.Events status changes
+- **[Backend Testing Guide](./backend-testing-guide.md)** - Comprehensive testing documentation for backend cross-app authentication
 - **[API Requirements](./api-requirements.md)** - Required backend API endpoints and specifications
 - **[Authentication Flow](./authentication-flow.md)** - Cross-app authentication flow documentation with security details
 
 ### Additional Resources
-- **[Widget Integration](./widget-integration.md)** - Hi.Events ticket widget embedding guide
+- **[Frontend Integration](./frontend-integration.md)** - Frontend implementation guide
 - **[Testing Guide](./testing-guide.md)** - Testing procedures for the integration
 - **[Troubleshooting](./troubleshooting.md)** - Common issues and solutions
 
@@ -40,19 +45,22 @@ This directory contains comprehensive documentation for integrating Hi.Events ti
 ## 🚀 Quick Start
 
 ### For Frontend Developers
-1. **Start Here**: [Frontend Integration Guide](./frontend-integration.md)
-2. **Backend Requirements**: [API Requirements](./api-requirements.md)
-3. **Authentication Details**: [Authentication Flow](./authentication-flow.md)
+1. **Start Here**: [Implementation Status](./implementation-status.md) - Check current status
+2. **Architecture Overview**: [Architecture](./architecture.md) - Understand system design
+3. **Frontend Spec**: [Frontend Integration Spec](./frontend-integration-spec.md) - Detailed implementation guide
+4. **API Documentation**: [API Reference](./api-reference.md) - Complete endpoint documentation
 
 ### For Backend Developers
-1. **API Specifications**: [API Requirements](./api-requirements.md)
-2. **Authentication Implementation**: [Authentication Flow](./authentication-flow.md)
-3. **Cross-App Security**: Review security sections in both documents
+1. **Start Here**: [Implementation Status](./implementation-status.md) - Check current status
+2. **Architecture Overview**: [Architecture](./architecture.md) - Understand system design
+3. **API Reference**: [API Reference](./api-reference.md) - Complete endpoint specifications
+4. **Webhook Implementation**: [Webhook Implementation](./webhook-implementation.md) - Webhook details
+5. **Testing Guide**: [Backend Testing Guide](./backend-testing-guide.md) - Testing procedures
 
 ### For Full-Stack Implementation
-1. **Backend**: Implement required API endpoints per [API Requirements](./api-requirements.md)
-2. **Frontend**: Follow [Frontend Integration Guide](./frontend-integration.md)
-3. **Testing**: Use [Testing Guide](./testing-guide.md) to validate implementation
+1. **Backend**: Implement required API endpoints per [API Requirements](./api-requirements.md) and [Webhook Implementation](./webhook-implementation.md)
+2. **Frontend**: Follow [Frontend Integration Spec](./frontend-integration-spec.md) and [Frontend Integration Guide](./frontend-integration.md)
+3. **Testing**: Use [Backend Testing Guide](./backend-testing-guide.md) and [Testing Guide](./testing-guide.md) to validate implementation
 4. **Deployment**: Reference [Troubleshooting](./troubleshooting.md) for common deployment issues
 
 ## 🔧 Implementation Checklist
