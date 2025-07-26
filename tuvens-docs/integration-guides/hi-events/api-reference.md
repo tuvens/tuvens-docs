@@ -98,38 +98,20 @@ curl -X POST https://api.tuvens.com/api/cross-app/validate-session \
 **Response**:
 ```typescript
 interface ValidateSessionResponse {
-    valid: boolean;
-    user_data: {
-        id: number;
-        email: string;
-        name: string;
-        external_id: string;
-    };
-    account_data: {
-        id: number;
-        name: string;
-        slug: string;
-    };
-    expires_at: string;
+    user_id: string;    // User ID converted to string
+    email: string;      // User's email
+    name: string;       // User's display name or email if no display name
+    account_id: number; // The account ID from the session
 }
 ```
 
 **Example Response**:
 ```json
 {
-    "valid": true,
-    "user_data": {
-        "id": 456,
-        "email": "user@example.com",
-        "name": "John Doe",
-        "external_id": "tuvens_456"
-    },
-    "account_data": {
-        "id": 123,
-        "name": "Acme Events",
-        "slug": "acme-events"
-    },
-    "expires_at": "2025-07-25T15:45:00.000Z"
+    "user_id": "456",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "account_id": 123
 }
 ```
 
@@ -169,7 +151,6 @@ interface UserAccountsResponse {
         id: number;
         name: string;
         slug: string;
-        permissions: string[];
     }>;
 }
 ```
@@ -181,8 +162,7 @@ interface UserAccountsResponse {
         {
             "id": 123,
             "name": "Acme Events",
-            "slug": "acme-events",
-            "permissions": ["create_events", "manage_ticketing"]
+            "slug": "acme-events"
         }
     ]
 }
@@ -228,17 +208,13 @@ curl -X POST https://api.tuvens.com/api/cross-app/validate-permission \
 ```typescript
 interface ValidatePermissionResponse {
     has_permission: boolean;
-    user_id: number;
-    account_id: number;
 }
 ```
 
 **Example Response**:
 ```json
 {
-    "has_permission": true,
-    "user_id": 456,
-    "account_id": 123
+    "has_permission": true
 }
 ```
 
