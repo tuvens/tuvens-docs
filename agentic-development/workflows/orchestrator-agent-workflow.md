@@ -37,11 +37,13 @@ This document defines the 6-step workflow process for the Documentation Orchestr
 
 3. **Create Coordination Plan**
    - Document current multi-agent activities
+   - Create GitHub issues for agent tasks with clear deliverables
    - Identify required documentation updates
    - Plan agent handoffs and communication needs
 
 #### Outputs:
 - Updated understanding of system state
+- GitHub issues created for all agent tasks
 - Coordination plan documented in pending-commits/
 - Clear next actions for orchestration work
 

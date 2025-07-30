@@ -3,6 +3,7 @@ VIBE CODER AGENT - WORKFLOW INSTRUCTIONS
 
 Working Directory: /Users/ciarancarroll/code/tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions
 Branch: vibe-coder/feature-agent-workflow-instructions
+GitHub Issue: #28 - Create comprehensive agent workflow instructions
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -19,6 +20,7 @@ Context Loading:
 - Load: /Users/ciarancarroll/code/tuvens/tuvens-docs/agentic-development/agent-system/agent-identities.md
 - Load: /Users/ciarancarroll/code/tuvens/tuvens-docs/agentic-development/workflows/orchestrator-agent-workflow.md
 
+GitHub Issue: #28 - Create comprehensive agent workflow instructions
 Current Task: Create comprehensive agent workflow instructions for all agent types.
 
 Specific Goals:
