@@ -62,12 +62,18 @@ Successfully implemented a complete multi-agent workflow foundation for the Tuve
 
 ## Challenges Encountered and Solutions
 
-### 1. 🔧 Git Repository Initialization
+### 1. 🔧 Missing GitHub Issue Integration
+**Challenge**: Failed to create GitHub issue for Vibe Coder task initially
+**Impact**: Agent prompt lacked proper issue tracking and coordination
+**Solution**: Created GitHub issue #28 and updated all prompts to include issue references
+**Learning**: Always create GitHub issues BEFORE setting up agent tasks
+
+### 2. 🔧 Git Repository Initialization
 **Challenge**: No git repository existed initially
 **Solution**: Had to initialize git, create remote, and establish foundation
 **Learning**: Future sessions should verify git status early
 
-### 2. 🔧 Directory Path Confusion
+### 3. 🔧 Directory Path Confusion
 **Challenge**: Multiple similar paths caused confusion:
 - `/Users/ciarancarroll/Code/Tuvens/tuvens-docs` (actual)
 - `/Code/tuvens/tuvens-docs` (attempted but read-only)
@@ -75,43 +81,43 @@ Successfully implemented a complete multi-agent workflow foundation for the Tuve
 **Solution**: Used full absolute paths consistently
 **Learning**: Always use and document full absolute paths
 
-### 3. 🔧 iTerm2 Window Naming Limitations
+### 4. 🔧 iTerm2 Window Naming Limitations
 **Challenge**: Window names cannot be set via AppleScript (error -10006)
 **Solution**: Used session names instead, which work perfectly
 **Learning**: Session naming is actually better for tab identification
 
-### 4. 🔧 Branch Management for Worktrees
+### 5. 🔧 Branch Management for Worktrees
 **Challenge**: Cannot create worktree for currently checked-out branch
 **Solution**: Switch to different branch before creating worktree
 **Learning**: Document branch switching requirements in workflows
 
-### 5. 🔧 Complex AppleScript Escaping
+### 6. 🔧 Complex AppleScript Escaping
 **Challenge**: Multi-line prompts with quotes caused severe escaping issues
 **Solution**: Created separate prompt files and used `cat` command
 **Learning**: Avoid complex string manipulation in AppleScript
 
-### 6. 🔧 Echo Command Execution
+### 7. 🔧 Echo Command Execution
 **Challenge**: iTerm2 was executing echo commands instead of writing them
 **Impact**: Created garbled, unusable terminal output
 **Solution**: Simplified to file-based prompt display
 **Learning**: Keep iTerm2 automation simple and file-based
 
-### 7. 🔧 Missing Develop Branch
+### 8. 🔧 Missing Develop Branch
 **Challenge**: Branching strategy assumed 'develop' branch existed
 **Solution**: Created and pushed develop branch
 **Learning**: Include branch creation in setup procedures
 
-### 8. 🔧 Unclear Agent Prompts
+### 9. 🔧 Unclear Agent Prompts
 **Challenge**: Initial terminal output didn't provide clear next steps
 **Solution**: Created comprehensive prompt files with full instructions
 **Learning**: Agent windows need complete, copy-paste ready prompts
 
-### 9. 🔧 Directory Organization Discovery
+### 10. 🔧 Directory Organization Discovery
 **Challenge**: Discovered existing claude-templates in multiple locations
 **Solution**: Consolidated all into agentic-development structure
 **Learning**: Always scan for existing related content before organizing
 
-### 10. 🔧 Commit Message Formatting
+### 11. 🔧 Commit Message Formatting
 **Challenge**: Complex heredoc syntax for multi-line commit messages
 **Solution**: Successfully used proper heredoc format
 **Learning**: Document commit message formatting patterns
@@ -127,6 +133,7 @@ Successfully implemented a complete multi-agent workflow foundation for the Tuve
 - iTerm2 integration fully operational
 - Agent context loading automated
 - Clear visual identification system
+- GitHub issue integration for task tracking
 
 ### 🎯 Scalable Organization
 - Worktree structure supports unlimited agents
@@ -144,6 +151,7 @@ Successfully implemented a complete multi-agent workflow foundation for the Tuve
 - Verify git repository status
 - Check for existing directory structures
 - Confirm full absolute paths
+- Create GitHub issues for all agent tasks FIRST
 - Test basic commands early
 
 ### 2. Simplification Strategies
@@ -167,6 +175,7 @@ Successfully implemented a complete multi-agent workflow foundation for the Tuve
 ### 5. Agent Setup Improvements
 - Create prompt template files for each agent
 - Include context loading in every prompt
+- Include GitHub issue references in all prompts
 - Provide clear success criteria
 - Enable progress tracking
 
@@ -189,11 +198,16 @@ The multi-agent workflow foundation is now:
 
 ## Conclusion
 
-Despite multiple technical challenges, we successfully created a robust multi-agent development system. The key to success was iterating on solutions, simplifying complex approaches, and maintaining clear documentation throughout. The system is now ready for production use with the Vibe Coder agent actively working on comprehensive workflow instructions.
+Despite multiple technical challenges (including a critical GitHub integration miss), we successfully created a robust multi-agent development system. The key to success was iterating on solutions, simplifying complex approaches, and maintaining clear documentation throughout. 
 
-Total Implementation Time: ~2 hours
+The most important lesson: **Always create GitHub issues BEFORE setting up agent tasks** - this oversight was caught and fixed by adding issue #28 and updating all workflows.
+
+The system is now ready for production use with the Vibe Coder agent actively working on comprehensive workflow instructions with proper GitHub issue tracking.
+
+Total Implementation Time: ~2.5 hours
 Components Created: 15+ files
-Challenges Resolved: 10
+Challenges Resolved: 11 (including post-implementation fix)
+GitHub Issues Created: 1 (#28)
 Final Status: 🟢 Fully Operational
 
 ## Files Created/Modified
