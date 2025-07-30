@@ -31,9 +31,15 @@ Priority workflows and implementation guides:
 
 ### pending-commits/
 Tracks commit messages and changes ready for git commit:
-- Local changes awaiting commit
+- Local changes awaiting commit (organized by branch)
 - Commit message templates
 - Status tracking for ongoing work
+
+### reports/
+Completed implementation reports and lessons learned:
+- Historical documentation of major implementations
+- Challenge analysis and solutions
+- Knowledge capture for future sessions
 
 ## Getting Started
 

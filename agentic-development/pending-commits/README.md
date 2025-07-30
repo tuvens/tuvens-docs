@@ -27,8 +27,15 @@ Examples:
 
 1. When changes are ready for commit but not yet committed, create a file here
 2. Include the complete commit message and summary of changes
-3. When the commit is made, move or delete the corresponding file
+3. When the commit is made, DELETE the corresponding file (completed work moves to reports/)
 4. Future Claude Code sessions can check this directory to understand pending work
+
+## Important: Lifecycle Management
+
+- **Active work**: Create files here while working
+- **Ready to commit**: Keep files here until committed
+- **After commit**: DELETE files here (don't move to reports/)
+- **Completed implementations**: Create separate reports in ../reports/
 
 ## Status Tracking
 
