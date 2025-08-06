@@ -1,5 +1,7 @@
 # Worktree Organization Strategy
 
+**[CODE] - Loaded by Claude Code to understand worktree patterns**
+
 ## Overview
 
 This document defines the organizational strategy for git worktrees in the Tuvens multi-agent development system, enabling efficient parallel development across multiple agents and repositories.
@@ -10,41 +12,37 @@ This document defines the organizational strategy for git worktrees in the Tuven
 ```
 /Users/ciarancarroll/code/tuvens/
 ├── tuvens-docs/                     # Main repository checkout
+│   ├── vibe-coder/                  # Agent worktrees (docs organization)
+│   │   ├── feature-agent-workflow-instructions/
+│   │   ├── feature-cto-technical-improvements/
+│   │   └── {other-vibe-coder-branches}/
+│   └── integration-specialist/
+│       └── {integration-doc-branches}/
 ├── tuvens-client/                   # Main repository checkout  
+│   ├── frontend-developer/          # Agent worktrees
+│   │   ├── {frontend-feature-branches}/
+│   │   └── {ui-component-branches}/
+│   └── integration-specialist/
+│       └── {frontend-integration-branches}/
 ├── tuvens-api/                      # Main repository checkout
-├── hi.events/                       # Main repository checkout
-└── worktrees/
-    ├── tuvens-docs/
-    │   ├── vibe-coder/
-    │   │   ├── feature-agent-workflow-instructions/
-    │   │   └── {other-vibe-coder-branches}/
-    │   ├── documentation-orchestrator/
-    │   │   ├── {orchestrator-branches}/
-    │   │   └── {coordination-branches}/
-    │   └── integration-specialist/
-    │       └── {integration-doc-branches}/
-    ├── tuvens-client/
-    │   ├── frontend-specialist/
-    │   │   ├── {frontend-feature-branches}/
-    │   │   └── {ui-component-branches}/
-    │   └── integration-specialist/
-    │       └── {frontend-integration-branches}/
-    ├── tuvens-api/
-    │   ├── backend-specialist/
-    │   │   ├── {backend-feature-branches}/
-    │   │   └── {api-endpoint-branches}/
-    │   └── integration-specialist/
-    │       └── {backend-integration-branches}/
-    └── hi.events/
-        └── integration-specialist/
-            └── {external-integration-branches}/
+│   ├── backend-developer/           # Agent worktrees
+│   │   ├── {backend-feature-branches}/
+│   │   └── {api-endpoint-branches}/
+│   └── integration-specialist/
+│       └── {backend-integration-branches}/
+├── tuvens-mobile/                   # Main repository checkout
+│   └── integration-specialist/      # Agent worktrees
+│       └── {mobile-integration-branches}/
+└── hi.events/                       # Main repository checkout
+    └── integration-specialist/      # Agent worktrees
+        └── {external-integration-branches}/
 ```
 
 ## Organizational Principles
 
 ### Agent-Centric Structure
-- **Agent Isolation**: Each agent type gets dedicated directories
-- **Repository Separation**: Agent worktrees organized by target repository
+- **Agent Isolation**: Each agent type gets dedicated directories within their repository
+- **Repository-Local Worktrees**: Agent worktrees live inside each repository following `[repo]/[agent]/[branch]` pattern
 - **Feature Grouping**: Related features grouped under agent directories
 - **Clean Separation**: No cross-contamination between agent workspaces
 
@@ -56,44 +54,35 @@ This document defines the organizational strategy for git worktrees in the Tuven
 
 ## Agent Worktree Patterns
 
-### Documentation Orchestrator
+### Vibe Coder (Documentation Organization & Experimental Agent)
 **Repository:** tuvens-docs
-**Directory:** `/worktrees/tuvens-docs/documentation-orchestrator/`
-
-**Typical Branches:**
-```
-docs-orchestrator/update-agent-identities
-docs-orchestrator/create-workflow-templates
-docs-orchestrator/sync-cross-repo-docs
-```
-
-**Usage Pattern:**
-```bash
-# Create orchestrator worktree
-git worktree add /Users/ciarancarroll/code/tuvens/worktrees/tuvens-docs/documentation-orchestrator/update-agent-identities docs-orchestrator/update-agent-identities
-
-# Work in isolated environment
-cd /Users/ciarancarroll/code/tuvens/worktrees/tuvens-docs/documentation-orchestrator/update-agent-identities
-```
-
-### Vibe Coder (Experimental Agent)
-**Repository:** tuvens-docs
-**Directory:** `/worktrees/tuvens-docs/vibe-coder/`
+**Directory Pattern:** `tuvens-docs/vibe-coder/[branch-name]`
 
 **Typical Branches:**
 ```
 vibe-coder/feature-agent-workflow-instructions
+vibe-coder/feature-cto-technical-improvements
+vibe-coder/update-agent-identities
+vibe-coder/create-workflow-templates
 vibe-coder/experiment-new-patterns
 vibe-coder/test-coordination-protocols
 ```
 
 **Current Implementation:**
-- ✅ `feature-agent-workflow-instructions` - Created and ready for use
-- Directory: `/Users/ciarancarroll/code/tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions/`
+- ✅ `feature-agent-workflow-instructions` - Completed and merged
+- ✅ `feature-cto-technical-improvements` - Completed and merged
+- Directory Pattern: `/Users/ciarancarroll/code/tuvens/tuvens-docs/vibe-coder/[branch-name]/`
 
-### Frontend Specialist
+**Responsibilities:**
+- Documentation organization and structure
+- Agent workflow development
+- System architecture experimentation
+- Technical workflow improvements
+- Creative problem-solving for development challenges
+
+### Frontend Developer
 **Repository:** tuvens-client
-**Directory:** `/worktrees/tuvens-client/frontend-specialist/`
+**Directory Pattern:** `tuvens-client/frontend-developer/[branch-name]`
 
 **Typical Branches:**
 ```
@@ -102,9 +91,9 @@ frontend-dev/create-dashboard-widgets
 frontend-dev/responsive-layout-updates
 ```
 
-### Backend Specialist  
+### Backend Developer  
 **Repository:** tuvens-api
-**Directory:** `/worktrees/tuvens-api/backend-specialist/`
+**Directory Pattern:** `tuvens-api/backend-developer/[branch-name]`
 
 **Typical Branches:**
 ```
@@ -115,16 +104,19 @@ backend-dev/add-user-management-api
 
 ### Integration Specialist
 **Repositories:** All (cross-repository work)
-**Directories:** 
-- `/worktrees/tuvens-docs/integration-specialist/`
-- `/worktrees/tuvens-client/integration-specialist/`  
-- `/worktrees/tuvens-api/integration-specialist/`
+**Directory Patterns:** 
+- `tuvens-docs/integration-specialist/[branch-name]`
+- `tuvens-client/integration-specialist/[branch-name]`
+- `tuvens-api/integration-specialist/[branch-name]`
+- `tuvens-mobile/integration-specialist/[branch-name]`
+- `hi.events/integration-specialist/[branch-name]`
 
 **Typical Branches:**
 ```
 integration-specialist/oauth-flow-implementation
 integration-specialist/hi-events-webhook-setup
 integration-specialist/cross-app-session-sync
+integration-specialist/mobile-api-integration
 ```
 
 ## Worktree Lifecycle Management
@@ -138,12 +130,13 @@ integration-specialist/cross-app-session-sync
 
 2. **Create Agent Worktree**
    ```bash
-   git worktree add /Users/ciarancarroll/code/tuvens/worktrees/{repo}/{agent-type}/{feature-name} {agent-type}/{feature-name}
+   cd /Users/ciarancarroll/code/tuvens/{repo}
+   git worktree add {agent-type}/{feature-name} {agent-type}/{feature-name}
    ```
 
 3. **Set Up Agent Environment**
    ```bash
-   cd /Users/ciarancarroll/code/tuvens/worktrees/{repo}/{agent-type}/{feature-name}
+   cd {agent-type}/{feature-name}
    # Load agent context and begin work
    ```
 
@@ -156,7 +149,7 @@ integration-specialist/cross-app-session-sync
 ### Completion Process
 1. **Final Commit and Push**
    ```bash
-   cd /Users/ciarancarroll/code/tuvens/worktrees/{repo}/{agent-type}/{feature-name}
+   cd /Users/ciarancarroll/code/tuvens/{repo}/{agent-type}/{feature-name}
    git add .
    git commit -m "feat({agent}): complete {feature-name}"
    git push origin {agent-type}/{feature-name}
@@ -169,7 +162,8 @@ integration-specialist/cross-app-session-sync
 
 3. **Clean Up Worktree**
    ```bash
-   git worktree remove /Users/ciarancarroll/code/tuvens/worktrees/{repo}/{agent-type}/{feature-name}
+   cd /Users/ciarancarroll/code/tuvens/{repo}
+   git worktree remove {agent-type}/{feature-name}
    ```
 
 ## Benefits of This Organization
@@ -224,11 +218,19 @@ integration-specialist/cross-app-session-sync
 # List all active worktrees
 git worktree list
 
-# Check worktree directory sizes
-du -sh /Users/ciarancarroll/code/tuvens/worktrees/*
+# Check worktree directory sizes in each repository
+for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
+    echo "=== $repo ==="
+    cd /Users/ciarancarroll/code/tuvens/$repo
+    du -sh */
+    echo ""
+done
 
-# Identify stale worktrees (older than 30 days)
-find /Users/ciarancarroll/code/tuvens/worktrees -type d -mtime +30
+# Identify stale worktrees (older than 30 days) in each repository
+for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
+    echo "=== $repo ==="
+    find /Users/ciarancarroll/code/tuvens/$repo -mindepth 2 -maxdepth 2 -type d -mtime +30
+done
 ```
 
 ### Optimization Strategies

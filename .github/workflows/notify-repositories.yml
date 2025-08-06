@@ -1,0 +1,183 @@
+name: Notify Repositories of Documentation Updates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tuvens-docs/integration-guides/**'
+      - 'tuvens-docs/implementation-guides/**'  
+      - 'tuvens-docs/shared-protocols/**'
+      - 'tuvens-docs/integration-examples/**'
+      - 'tuvens-docs/claude-templates/**'
+      - 'tuvens-docs/setup.sh'
+      - 'tuvens-docs/README.md'
+      - 'tuvens-docs/CONTRIBUTING.md'
+
+jobs:
+  analyze-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ steps.changes.outputs.has-changes }}
+      changed-files: ${{ steps.changes.outputs.changed-files }}
+      commit-message: ${{ steps.changes.outputs.commit-message }}
+      commit-sha: ${{ steps.changes.outputs.commit-sha }}
+      frontend-changes: ${{ steps.changes.outputs.frontend-changes }}
+      backend-changes: ${{ steps.changes.outputs.backend-changes }}
+      integration-changes: ${{ steps.changes.outputs.integration-changes }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Analyze changes
+        id: changes
+        run: |
+          # Get changed files
+          changed_files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          echo "changed-files=$changed_files" >> $GITHUB_OUTPUT
+          
+          # Get commit info
+          commit_message=$(git log -1 --pretty=%s)
+          commit_sha=$(git rev-parse --short HEAD)
+          echo "commit-message=$commit_message" >> $GITHUB_OUTPUT
+          echo "commit-sha=$commit_sha" >> $GITHUB_OUTPUT
+          
+          # Check if we have relevant changes
+          if [ -n "$changed_files" ]; then
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # Analyze change types
+          frontend_files="tuvens-docs/shared-protocols/frontend-integration/|tuvens-docs/integration-examples/frontend-integration/|tuvens-docs/claude-templates/"
+          backend_files="tuvens-docs/implementation-guides/cross-app-authentication/|tuvens-docs/integration-guides/hi-events/api-requirements.md"
+          integration_files="tuvens-docs/integration-guides/hi-events/|tuvens-docs/setup.sh"
+          
+          echo "frontend-changes=false" >> $GITHUB_OUTPUT
+          echo "backend-changes=false" >> $GITHUB_OUTPUT  
+          echo "integration-changes=false" >> $GITHUB_OUTPUT
+          
+          echo "$changed_files" | tr ',' '\n' | while read file; do
+            if echo "$file" | grep -E "$frontend_files" > /dev/null; then
+              echo "frontend-changes=true" >> $GITHUB_OUTPUT
+            fi
+            if echo "$file" | grep -E "$backend_files" > /dev/null; then
+              echo "backend-changes=true" >> $GITHUB_OUTPUT
+            fi
+            if echo "$file" | grep -E "$integration_files" > /dev/null; then
+              echo "integration-changes=true" >> $GITHUB_OUTPUT
+            fi
+          done
+
+  notify-repositories:
+    needs: analyze-changes
+    if: needs.analyze-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: 
+          - { name: "tuvens/eventdigest-ai", type: "frontend" }
+          - { name: "tuvens/tuvens-client", type: "frontend" }
+          - { name: "tuvens/tuvens-api", type: "backend" }
+          - { name: "tuvens/hi.events", type: "integration" }
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate repository-specific notification
+        id: notification
+        run: |
+          repo_name="${{ matrix.repo.name }}"
+          repo_type="${{ matrix.repo.type }}"
+          changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
+          commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
+          commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
+          
+          # Generate issue title
+          title="📢 URGENT: Documentation Updates Available (${commit_sha})"
+          
+          # Read the appropriate template
+          if [ "$repo_type" = "frontend" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/frontend-notification.md"
+          elif [ "$repo_type" = "backend" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/backend-notification.md"
+          else
+            template_file="agentic-development/cross-repo-sync-automation/templates/integration-notification.md"
+          fi
+          
+          # Replace placeholders in template
+          issue_body=$(cat "$template_file")
+          issue_body="${issue_body//\[CHANGED_FILES\]/$changed_files}"
+          issue_body="${issue_body//\[COMMIT_SHA\]/$commit_sha}"
+          issue_body="${issue_body//\[COMMIT_MESSAGE\]/$commit_message}"
+          issue_body="${issue_body//\[REPO_NAME\]/$repo_name}"
+          
+          # Save to file for gh command
+          echo "$issue_body" > notification.md
+          echo "title=$title" >> $GITHUB_OUTPUT
+
+      - name: Create notification issue
+        continue-on-error: true  # Don't fail entire workflow if one repo fails
+        env:
+          GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
+        run: |
+          # Check if similar issue already exists (within last 24 hours)
+          existing_issue=$(gh issue list --repo "${{ matrix.repo.name }}" \
+            --search "📢 URGENT: Documentation Updates Available in:title is:open" \
+            --json number,createdAt --jq '.[0].number // empty')
+          
+          if [ -z "$existing_issue" ]; then
+            echo "Creating new notification issue in ${{ matrix.repo.name }}"
+            if gh issue create \
+              --repo "${{ matrix.repo.name }}" \
+              --title "${{ steps.notification.outputs.title }}" \
+              --body-file notification.md \
+              --label "documentation,urgent,tuvens-docs-update"; then
+              echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
+            else
+              echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
+              echo "This may indicate missing token permissions or repository access"
+              echo "⚠️ Failed to notify ${{ matrix.repo.name }}" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "Recent notification issue already exists (#$existing_issue), skipping"
+          fi
+
+  create-tracking-issue:
+    needs: [analyze-changes, notify-repositories]
+    if: needs.analyze-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create tracking issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
+          commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
+          changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
+          
+          # Create tracking issue in tuvens-docs
+          gh issue create \
+            --title "🔄 Documentation Update Tracking (${commit_sha})" \
+            --body "## Documentation Update Distribution Tracking
+
+**Commit**: ${commit_sha}
+**Message**: ${commit_message}
+**Changed Files**: ${changed_files}
+
+### Repository Notification Status
+- [ ] tuvens/eventdigest-ai - Issue created
+- [ ] tuvens/tuvens-client - Issue created  
+- [ ] tuvens/tuvens-api - Issue created
+- [ ] tuvens/hi.events - Issue created
+
+### Integration Status
+This issue will be updated as repositories confirm integration of the documentation updates.
+
+**Expected Timeline**: All repositories should integrate within 1 week.
+
+---
+*This tracking issue is automatically created when documentation updates are pushed to main.*" \
+            --label "tracking,documentation,automation"

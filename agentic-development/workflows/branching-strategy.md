@@ -1,5 +1,7 @@
 # Multi-Agent Branching Strategy
 
+**[CODE] - Essential git workflow guide for Claude Code agents**
+
 ## Overview
 
 This document defines the branching strategy for the Tuvens multi-agent development system, supporting parallel agent work across multiple repositories with git worktrees and coordinated workflows.

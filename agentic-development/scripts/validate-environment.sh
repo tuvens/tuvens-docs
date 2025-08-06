@@ -17,7 +17,7 @@ echo "   ✓ Git repository detected"
 
 # Path Validation
 echo "✅ Validating paths..."
-EXPECTED_PATH="/Users/ciarancarroll/code/tuvens"
+EXPECTED_PATH="/Users/ciarancarroll/Code/Tuvens"
 if [[ ! "$PWD" == *"$EXPECTED_PATH"* ]]; then
     echo "❌ ERROR: Not in expected path structure"
     echo "   Expected: $EXPECTED_PATH"
@@ -33,9 +33,10 @@ echo "   ✓ Current branch: $CURRENT_BRANCH"
 
 # Worktree Directory
 echo "✅ Checking worktree structure..."
-WORKTREE_BASE="/Users/ciarancarroll/code/tuvens/worktrees"
-if [[ ! -d "$WORKTREE_BASE" ]]; then
-    echo "❌ ERROR: Worktree base directory missing"
+# Following worktree organization strategy: [repo]/[agent]/[branch] pattern
+REPO_BASE="/Users/ciarancarroll/Code/Tuvens"
+if [[ ! -d "$REPO_BASE" ]]; then
+    echo "❌ ERROR: Repository base directory missing"
     exit 1
 fi
 echo "   ✓ Worktree structure exists"

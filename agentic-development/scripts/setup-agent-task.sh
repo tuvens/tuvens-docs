@@ -85,7 +85,8 @@ echo ""
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
 BRANCH_NAME="feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
-WORKTREE_PATH="/Users/ciarancarroll/code/tuvens/worktrees/tuvens-docs/$AGENT_NAME/$BRANCH_NAME"
+# Following worktree organization strategy: [repo]/[agent]/[branch]
+WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/$AGENT_NAME/$BRANCH_NAME"
 
 # Ensure we're not on the target branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -128,8 +129,7 @@ CLAUDE PROMPT:
 I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') agent.
 
 Context Loading:
-- Load: agent-identities.md ($(echo "$AGENT_NAME" | sed 's/-/ /g') section)
-- Load: $(echo "$AGENT_NAME")-spec.md
+- Load: .claude/agents/$(echo "$AGENT_NAME").md
 - Load: Implementation reports and workflow documentation
 
 GitHub Issue: #$GITHUB_ISSUE
