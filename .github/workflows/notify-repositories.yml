@@ -78,10 +78,7 @@ jobs:
     strategy:
       matrix:
         repo: 
-          - { name: "tuvens/eventdigest-ai", type: "frontend" }
-          - { name: "tuvens/tuvens-client", type: "frontend" }
-          - { name: "tuvens/tuvens-api", type: "backend" }
-          - { name: "tuvens/hi.events", type: "integration" }
+          - { name: "tuvens/tuvens-mobile", type: "mobile" }
     steps:
       - uses: actions/checkout@v4
       
@@ -94,27 +91,38 @@ jobs:
           commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
           commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
           
-          # Generate issue title
-          title="📢 URGENT: Documentation Updates Available (${commit_sha})"
+          # Generate simple test issue
+          title="🧪 TEST: Workflow Token Verification (${commit_sha})"
           
-          # Read the appropriate template
-          if [ "$repo_type" = "frontend" ]; then
-            template_file="agentic-development/cross-repo-sync-automation/templates/frontend-notification.md"
-          elif [ "$repo_type" = "backend" ]; then
-            template_file="agentic-development/cross-repo-sync-automation/templates/backend-notification.md"
-          else
-            template_file="agentic-development/cross-repo-sync-automation/templates/integration-notification.md"
-          fi
+          # Create simple test issue body
+          cat > notification.md << 'EOF'
+          ## 🧪 Workflow Test Issue
           
-          # Replace placeholders in template
-          issue_body=$(cat "$template_file")
-          issue_body="${issue_body//\[CHANGED_FILES\]/$changed_files}"
-          issue_body="${issue_body//\[COMMIT_SHA\]/$commit_sha}"
-          issue_body="${issue_body//\[COMMIT_MESSAGE\]/$commit_message}"
-          issue_body="${issue_body//\[REPO_NAME\]/$repo_name}"
+          This is a **test issue** created to verify that the TUVENS_DOCS_TOKEN is working correctly.
           
-          # Save to file for gh command
-          echo "$issue_body" > notification.md
+          ### Test Details
+          - **Repository**: tuvens/tuvens-mobile
+          - **Commit**: COMMIT_SHA_PLACEHOLDER
+          - **Message**: COMMIT_MESSAGE_PLACEHOLDER
+          - **Changed Files**: CHANGED_FILES_PLACEHOLDER
+          
+          ### Status
+          ✅ If you can see this issue, the workflow token is configured correctly!
+          
+          ### Next Steps
+          - This issue can be closed once verified
+          - The workflow will be restored to production templates after testing
+          
+          ---
+          🤖 **Automated test issue from tuvens-docs workflow**
+          EOF
+          
+          # Replace placeholders
+          sed -i.bak "s|COMMIT_SHA_PLACEHOLDER|${commit_sha}|g" notification.md
+          sed -i.bak "s|COMMIT_MESSAGE_PLACEHOLDER|${commit_message}|g" notification.md  
+          sed -i.bak "s|CHANGED_FILES_PLACEHOLDER|${changed_files}|g" notification.md
+          rm notification.md.bak
+          
           echo "title=$title" >> $GITHUB_OUTPUT
 
       - name: Create notification issue
@@ -122,18 +130,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
-          # Check if similar issue already exists (within last 24 hours)
+          # Check if similar test issue already exists
           existing_issue=$(gh issue list --repo "${{ matrix.repo.name }}" \
-            --search "📢 URGENT: Documentation Updates Available in:title is:open" \
+            --search "🧪 TEST: Workflow Token Verification in:title is:open" \
             --json number,createdAt --jq '.[0].number // empty')
           
           if [ -z "$existing_issue" ]; then
-            echo "Creating new notification issue in ${{ matrix.repo.name }}"
+            echo "Creating test issue in ${{ matrix.repo.name }}"
             if gh issue create \
               --repo "${{ matrix.repo.name }}" \
               --title "${{ steps.notification.outputs.title }}" \
               --body-file notification.md \
-              --label "documentation,urgent,tuvens-docs-update"; then
+              --label "test"; then
               echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
             else
               echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
