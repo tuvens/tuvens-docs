@@ -78,7 +78,11 @@ jobs:
     strategy:
       matrix:
         repo: 
-          - { name: "tuvens/tuvens-mobile", type: "mobile" }  # Testing comment system only
+          - { name: "tuvens/eventdigest-ai", type: "frontend" }
+          - { name: "tuvens/tuvens-client", type: "frontend" }  
+          - { name: "tuvens/tuvens-api", type: "backend" }
+          - { name: "tuvens/hi.events", type: "integration" }
+          - { name: "tuvens/tuvens-mobile", type: "mobile" }
     steps:
       - uses: actions/checkout@v4
       
@@ -197,6 +201,7 @@ jobs:
           - [ ] tuvens/tuvens-client - Issue created  
           - [ ] tuvens/tuvens-api - Issue created
           - [ ] tuvens/hi.events - Issue created
+          - [ ] tuvens/tuvens-mobile - Issue created
           
           ### Integration Status
           This issue will be updated as repositories confirm integration of the documentation updates.
