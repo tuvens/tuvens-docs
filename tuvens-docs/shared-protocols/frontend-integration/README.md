@@ -4,7 +4,7 @@
 
 This guide provides comprehensive standards and patterns for frontend integration across the Tuvens ecosystem, ensuring consistency, performance, and maintainability across all frontend applications.
 
-**Updated: August 2025** - Testing comment system on tuvens-mobile only.
+**Updated: August 2025** - Testing full cross-repository notification system.
 
 ## 📚 Documentation Index
 
