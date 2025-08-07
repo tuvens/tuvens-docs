@@ -159,28 +159,34 @@ jobs:
           changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
           
           # Create tracking issue body
-          cat > tracking-issue.md << EOF
-## Documentation Update Distribution Tracking
-
-**Commit**: ${commit_sha}
-**Message**: ${commit_message}
-**Changed Files**: ${changed_files}
-
-### Repository Notification Status
-- [ ] tuvens/eventdigest-ai - Issue created
-- [ ] tuvens/tuvens-client - Issue created  
-- [ ] tuvens/tuvens-api - Issue created
-- [ ] tuvens/hi.events - Issue created
-
-### Integration Status
-This issue will be updated as repositories confirm integration of the documentation updates.
-
-**Expected Timeline**: All repositories should integrate within 1 week.
-
----
-*This tracking issue is automatically created when documentation updates are pushed to main.*
-EOF
-
+          cat > tracking-issue.md << 'TRACKING_EOF'
+          ## Documentation Update Distribution Tracking
+          
+          **Commit**: COMMIT_SHA_PLACEHOLDER
+          **Message**: COMMIT_MESSAGE_PLACEHOLDER
+          **Changed Files**: CHANGED_FILES_PLACEHOLDER
+          
+          ### Repository Notification Status
+          - [ ] tuvens/eventdigest-ai - Issue created
+          - [ ] tuvens/tuvens-client - Issue created  
+          - [ ] tuvens/tuvens-api - Issue created
+          - [ ] tuvens/hi.events - Issue created
+          
+          ### Integration Status
+          This issue will be updated as repositories confirm integration of the documentation updates.
+          
+          **Expected Timeline**: All repositories should integrate within 1 week.
+          
+          ---
+          *This tracking issue is automatically created when documentation updates are pushed to main.*
+          TRACKING_EOF
+          
+          # Replace placeholders with actual values
+          sed -i.bak "s|COMMIT_SHA_PLACEHOLDER|${commit_sha}|g" tracking-issue.md
+          sed -i.bak "s|COMMIT_MESSAGE_PLACEHOLDER|${commit_message}|g" tracking-issue.md
+          sed -i.bak "s|CHANGED_FILES_PLACEHOLDER|${changed_files}|g" tracking-issue.md
+          rm tracking-issue.md.bak
+          
           # Create tracking issue in tuvens-docs
           gh issue create \
             --title "🔄 Documentation Update Tracking (${commit_sha})" \
