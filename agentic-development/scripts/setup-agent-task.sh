@@ -85,13 +85,23 @@ echo ""
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
 BRANCH_NAME="feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
-# Following worktree organization strategy: [repo]/[agent]/[branch]
-WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/$AGENT_NAME/$BRANCH_NAME"
+
+# Determine if we're in tuvens-docs or another repository
+if [[ "$(basename "$(pwd)")" == "tuvens-docs" ]]; then
+    # We're in tuvens-docs - use agent-specific worktree path
+    WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/$AGENT_NAME/$BRANCH_NAME"
+    IS_TUVENS_DOCS=true
+else
+    # We're in another repository - use repository-specific worktree path
+    REPO_NAME="$(basename "$(pwd)")"
+    WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME/$AGENT_NAME/$BRANCH_NAME"
+    IS_TUVENS_DOCS=false
+fi
 
 # Ensure we're not on the target branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$CURRENT_BRANCH" == "$BRANCH_NAME" ]]; then
-    git checkout develop
+    git checkout dev 2>/dev/null || git checkout develop 2>/dev/null || git checkout main
 fi
 
 # Create worktree (remove if exists)
@@ -104,6 +114,40 @@ mkdir -p "$(dirname "$WORKTREE_PATH")"
 git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"
 echo "✅ Created worktree: $WORKTREE_PATH"
 echo "✅ Created branch: $BRANCH_NAME"
+
+# Step 3a: Clone tuvens-docs (if not already in tuvens-docs)
+if [[ "$IS_TUVENS_DOCS" == "false" ]]; then
+    echo ""
+    echo "Step 3a: Setting up tuvens-docs access..."
+    cd "$WORKTREE_PATH"
+    
+    # Clone tuvens-docs for documentation access
+    if [[ ! -d "tuvens-docs" ]]; then
+        echo "   Cloning tuvens-docs for documentation access..."
+        git clone https://github.com/tuvens/tuvens-docs.git tuvens-docs
+        echo "✅ Cloned tuvens-docs to worktree"
+    else
+        echo "   tuvens-docs already exists, updating..."
+        cd tuvens-docs && git pull origin main && cd ..
+        echo "✅ Updated existing tuvens-docs"
+    fi
+    
+    # Step 3b: Copy .env file from dev branch
+    echo "   Copying .env configuration from dev branch..."
+    DEV_WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME"
+    if [[ -f "$DEV_WORKTREE_PATH/.env" ]]; then
+        cp "$DEV_WORKTREE_PATH/.env" "$WORKTREE_PATH/.env"
+        echo "✅ Copied .env file from dev branch"
+    elif [[ -f "$DEV_WORKTREE_PATH/.env.example" ]]; then
+        cp "$DEV_WORKTREE_PATH/.env.example" "$WORKTREE_PATH/.env"
+        echo "✅ Copied .env.example as starting point"
+        echo "   ⚠️  Remember to update .env with actual values"
+    else
+        echo "   ⚠️  No .env file found in dev branch - you may need to create one"
+    fi
+    
+    cd - > /dev/null
+fi
 echo ""
 
 # Step 4: Create prompt file

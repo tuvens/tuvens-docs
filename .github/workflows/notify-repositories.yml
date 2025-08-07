@@ -82,6 +82,7 @@ jobs:
           - { name: "tuvens/tuvens-client", type: "frontend" }
           - { name: "tuvens/tuvens-api", type: "backend" }
           - { name: "tuvens/hi.events", type: "integration" }
+          - { name: "tuvens/tuvens-mobile", type: "mobile" }
     steps:
       - uses: actions/checkout@v4
       
@@ -102,6 +103,8 @@ jobs:
             template_file="agentic-development/cross-repo-sync-automation/templates/frontend-notification.md"
           elif [ "$repo_type" = "backend" ]; then
             template_file="agentic-development/cross-repo-sync-automation/templates/backend-notification.md"
+          elif [ "$repo_type" = "mobile" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/mobile-notification.md"
           else
             template_file="agentic-development/cross-repo-sync-automation/templates/integration-notification.md"
           fi
