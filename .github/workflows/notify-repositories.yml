@@ -140,13 +140,18 @@ jobs:
             echo "💬 Adding comment with new documentation changes..."
             
             # Create update comment with current changes
-            cat > update-comment.md << 'EOF'
+            commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
+            commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
+            changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
+            current_date=$(date -u +"%Y-%m-%d %H:%M UTC")
+            
+            cat > update-comment.md << EOF
 ## 📢 Additional Documentation Changes
             
-**New Update**: ${{ needs.analyze-changes.outputs.commit-sha }}
-**Date**: $(date -u +"%Y-%m-%d %H:%M UTC")
-**Message**: ${{ needs.analyze-changes.outputs.commit-message }}
-**Changed Files**: ${{ needs.analyze-changes.outputs.changed-files }}
+**New Update**: ${commit_sha}
+**Date**: ${current_date}
+**Message**: ${commit_message}
+**Changed Files**: ${changed_files}
 
 ### 🔄 Integration Status
 This issue now tracks **multiple pending documentation updates**. Please integrate all changes listed in this issue and its comments before closing.
