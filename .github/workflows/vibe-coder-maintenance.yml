@@ -81,7 +81,7 @@ jobs:
         - System maintenance burden minimized
         EOF
         )" \
-          --assignee ciarancarroll \
+          --assignee Tuvens \
           --label "vibe-coder,maintenance,automated"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
