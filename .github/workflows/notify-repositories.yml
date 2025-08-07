@@ -139,29 +139,19 @@ jobs:
             echo "📋 Found existing notification issue (#$existing_issue)"
             echo "💬 Adding comment with new documentation changes..."
             
-            # Create update comment with current changes
-            commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
-            commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
-            changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
-            current_date=$(date -u +"%Y-%m-%d %H:%M UTC")
-            
-            cat > update-comment.md << EOF
-## 📢 Additional Documentation Changes
-
-**New Update**: ${commit_sha}
-**Date**: ${current_date}
-**Message**: ${commit_message}
-**Changed Files**: ${changed_files}
-
-### 🔄 Integration Status
-This issue now tracks **multiple pending documentation updates**. Please integrate all changes listed in this issue and its comments before closing.
-
-### 📋 Required Actions
-Review the **original issue description above** and **all comments** for the complete list of documentation changes that need integration.
-
----
-*🤖 Comment automatically added by tuvens-docs notification system*
-EOF
+            # Create simple comment to test functionality first
+            echo "## 📢 Additional Documentation Changes" > update-comment.md
+            echo "" >> update-comment.md
+            echo "**New Update**: ${{ needs.analyze-changes.outputs.commit-sha }}" >> update-comment.md
+            echo "**Date**: $(date -u +"%Y-%m-%d %H:%M UTC")" >> update-comment.md
+            echo "**Message**: ${{ needs.analyze-changes.outputs.commit-message }}" >> update-comment.md
+            echo "**Changed Files**: ${{ needs.analyze-changes.outputs.changed-files }}" >> update-comment.md
+            echo "" >> update-comment.md
+            echo "### 🔄 Integration Status" >> update-comment.md
+            echo "This issue now tracks **multiple pending documentation updates**. Please integrate all changes listed in this issue and its comments before closing." >> update-comment.md
+            echo "" >> update-comment.md
+            echo "---" >> update-comment.md
+            echo "*🤖 Comment automatically added by tuvens-docs notification system*" >> update-comment.md
             
             # Add the comment to existing issue
             if gh issue comment "$existing_issue" --repo "${{ matrix.repo.name }}" --body-file update-comment.md; then
