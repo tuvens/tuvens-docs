@@ -3,7 +3,7 @@ name: Notify Repositories of Documentation Updates
 on:
   workflow_dispatch:  # Allow manual triggering for testing
   push:
-    branches: [main, test]  # Added test branch for testing workflows
+    branches: [main]  # Production workflow triggers only on main branch
     paths:
       - 'tuvens-docs/integration-guides/**'
       - 'tuvens-docs/implementation-guides/**'  
@@ -182,7 +182,7 @@ jobs:
       
       - name: Create tracking issue
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
           commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
           commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
