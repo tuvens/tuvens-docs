@@ -35,5 +35,3 @@ This workflow defines the priority implementation for cross-application authenti
 - See integration guides for specific implementation details
 - Refer to agent-identities.md for responsible agents
 - Check repository-ecosystem.md for affected repositories
-
-> Test commit: 2025-08-07 - Testing notify-repositories workflow

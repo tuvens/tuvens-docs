@@ -4,8 +4,6 @@
 
 This guide provides comprehensive standards and patterns for frontend integration across the Tuvens ecosystem, ensuring consistency, performance, and maintainability across all frontend applications.
 
-> Test commit: 2025-08-07 - Debugging TUVENS_DOCS_TOKEN permissions
-
 ## 📚 Documentation Index
 
 ### Core Standards
