@@ -4,7 +4,7 @@
 
 This guide provides comprehensive standards and patterns for frontend integration across the Tuvens ecosystem, ensuring consistency, performance, and maintainability across all frontend applications.
 
-**Updated: August 2025** - Enhanced cross-repository notification system now active.
+**Updated: August 2025** - Enhanced cross-repository notification system with debug logging active.
 
 ## 📚 Documentation Index
 

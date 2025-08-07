@@ -125,26 +125,36 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
+          echo "🔍 Processing repository: ${{ matrix.repo.name }}"
+          
           # Check if similar issue already exists (within last 24 hours)
+          echo "🔎 Checking for existing notification issues..."
           existing_issue=$(gh issue list --repo "${{ matrix.repo.name }}" \
             --search "📢 URGENT: Documentation Updates Available in:title is:open" \
-            --json number,createdAt --jq '.[0].number // empty')
+            --json number,createdAt --jq '.[0].number // empty' 2>/dev/null || echo "search_failed")
           
-          if [ -z "$existing_issue" ]; then
-            echo "Creating new notification issue in ${{ matrix.repo.name }}"
+          if [ "$existing_issue" = "search_failed" ]; then
+            echo "⚠️ Issue search failed for ${{ matrix.repo.name }} - may indicate access issues"
+          elif [ -z "$existing_issue" ]; then
+            echo "✨ No existing notification issues found"
+            echo "📝 Creating new notification issue in ${{ matrix.repo.name }}"
+            
+            # Try without labels first to avoid label-related failures
             if gh issue create \
               --repo "${{ matrix.repo.name }}" \
               --title "${{ steps.notification.outputs.title }}" \
-              --body-file notification.md \
-              --label "documentation,urgent,tuvens-docs-update"; then
+              --body-file notification.md 2>&1; then
               echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
             else
               echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
-              echo "This may indicate missing token permissions or repository access"
-              echo "⚠️ Failed to notify ${{ matrix.repo.name }}" >> $GITHUB_STEP_SUMMARY
+              echo "Trying to get more error details..."
+              gh issue create \
+                --repo "${{ matrix.repo.name }}" \
+                --title "TEST: Simple issue" \
+                --body "Test issue to check permissions" 2>&1 || echo "Basic issue creation also failed"
             fi
           else
-            echo "Recent notification issue already exists (#$existing_issue), skipping"
+            echo "📋 Recent notification issue already exists (#$existing_issue), skipping"
           fi
 
   create-tracking-issue:
