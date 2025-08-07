@@ -22,7 +22,7 @@ This update may include:
 ```bash
 # Navigate to YOUR repository's tuvens-docs directory
 cd client/tuvens-docs/tuvens-docs
-# OR: cd docs/shared-templates (if using submodule method)
+# OR: cd worktree-path/tuvens-docs (standard method)
 
 # Pull latest changes
 git pull origin main
