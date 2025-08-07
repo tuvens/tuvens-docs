@@ -147,7 +147,7 @@ jobs:
             
             cat > update-comment.md << EOF
 ## 📢 Additional Documentation Changes
-            
+
 **New Update**: ${commit_sha}
 **Date**: ${current_date}
 **Message**: ${commit_message}
