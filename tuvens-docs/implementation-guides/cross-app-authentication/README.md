@@ -5,7 +5,7 @@ This guide provides complete instructions for implementing cross-application aut
 ## 📚 Documentation Structure
 
 1. **[Requirements & Architecture](./01-requirements-architecture.md)** - Business requirements, technical architecture, and system design
-2. **[Database Implementation](./02-database-implementation.md)** - Database schema, table creation, and data model setup
+2. **[Database Implementation](./database-implementation/README.md)** - Database schema, table creation, and data model setup
 3. **[Service Layer Implementation](./03-service-layer.md)** - Core business logic and service implementation
 4. **[Controller Implementation](./04-controller-implementation.md)** - API endpoints and request handling
 5. **[Module & Wiring](./05-module-wiring.md)** - NestJS module setup and dependency injection
@@ -19,7 +19,7 @@ This guide provides complete instructions for implementing cross-application aut
 If you're familiar with the system and just need a checklist:
 
 1. ✅ Review [Requirements & Architecture](./01-requirements-architecture.md)
-2. ✅ Implement [Database Schema](./02-database-implementation.md)
+2. ✅ Implement [Database Schema](./database-implementation/README.md)
 3. ✅ Create [Service Layer](./03-service-layer.md)
 4. ✅ Build [Controller Layer](./04-controller-implementation.md)
 5. ✅ Wire [NestJS Modules](./05-module-wiring.md)

@@ -1,50 +1,77 @@
-# Agentic Development System
+# Tuvens Multi-Agent Development System
 
-## Overview
+## Final Production Structure
 
-The Agentic Development System is Tuvens' multi-agent approach to software development, enabling coordinated development across multiple repositories and services.
+This directory contains only the essential files for the multi-agent system:
 
-## Directory Structure
+### 📁 Core Structure
 
-### agent-system/
-Core documentation for the multi-agent system:
-- Agent identities and roles
-- Context loading procedures
-- Repository ecosystem overview
+```
+agentic-development/
+├── README.md                        # This file
+├── desktop-project-instructions/    # Claude Desktop instructions
+│   ├── README.md                      # Main entry point for Desktop
+│   ├── agents/                      # Agent-specific handoffs
+│   ├── handoff-templates/           # Task-type templates
+│   └── workflows/                   # Multi-agent protocols
+├── workflows/                       # Technical workflows
+│   ├── worktree-organization.md    # [CODE] Worktree patterns
+│   ├── branching-strategy.md       # [CODE] Git workflow guide
+│   ├── agent-terminal-prompts.md   # [CODE] Task-specific prompt templates
+│   └── cross-repository-development/   # [CODE] Repository standards for agents
+│       ├── README.md                # Index of development standards
+│       ├── repository-structure.md  # Repository setup standards
+│       ├── cicd-standards.md        # CI/CD pipeline requirements
+│       └── [6 other micro-docs]     # Focused development guidelines
+├── scripts/                        # System automation
+│   ├── setup-agent-task.sh         # Creates sessions
+│   ├── validate-environment.sh     # Environment checks
+│   └── maintenance-check.sh        # System health validation
+└── cross-repo-sync-automation/     # Repository synchronization
+    ├── README.md                   # Automation documentation
+    └── templates/                  # Notification templates
+```
 
-### integration-guides/
-Detailed guides for integrating with external services:
-- hi-events integration documentation
-- API specifications and requirements
-- Authentication flows and testing guides
+### 🎯 File Purposes
 
-### claude-templates/
-Claude Code command templates and integration protocols:
-- Custom commands for common workflows
-- Integration registry
-- Collaboration protocols
+**For Claude Desktop:**
+- Load `desktop-project-instructions/README.md`
+- References other files based on task needs
 
-### workflows/
-Priority workflows and implementation guides:
-- Authentication priority workflow
-- Cross-repository development patterns
+**For Claude Code:**
+- Loads agent identity from `.claude/agents/[agent].md`
+- Additional context from `workflows/`
 
-### pending-commits/
-Tracks commit messages and changes ready for git commit:
-- Local changes awaiting commit
-- Commit message templates
-- Status tracking for ongoing work
+**System Scripts:**
+- `setup-agent-task.sh` - Creates worktrees, issues, prompts
+- `validate-environment.sh` - Checks prerequisites
 
-## Getting Started
+### 🗂️ Archived Materials
 
-1. Review the agent-system documentation to understand the multi-agent architecture
-2. Load appropriate agent context using the context-loading-guide
-3. Follow workflow documentation for specific tasks
-4. Use claude-templates for standardized operations
+All design documents, analysis, and development artifacts are in `.temp/`:
+- Design documentation
+- System analysis  
+- Development reports
+- Migration guides
+- Old templates
 
-## Key Principles
+### 🚀 Quick Start
 
-- **Consistency**: All agents follow documented protocols
-- **Coordination**: Cross-repository changes are synchronized
-- **Documentation**: All decisions and implementations are documented
-- **Automation**: Repetitive tasks are automated through templates
+1. **Claude Desktop Project**: Use content from `.temp/migration-guides/DESKTOP_PROJECT_UPDATE.md`
+2. **Start Session**: Use `/start-session [agent-name]` command
+3. **Claude Code**: Will load appropriate agent identity automatically
+
+### 🔧 System Maintenance
+
+**This documentation is maintained by the Vibe Coder agent.**
+
+Automated maintenance issues are created via GitHub Actions on every push to `develop`. The Vibe Coder should:
+- Verify structure accuracy in this README
+- Update file counts and descriptions (currently 37 production files) 
+- Check for orphaned or missing references
+- Validate that all load paths work correctly
+- Archive outdated files to `.temp/`
+
+**Maintenance Issues**: Look for GitHub issues titled `[Vibe Coder] System Maintenance Check - [Date]`
+
+This structure maintains only what's needed for production use of the multi-agent system.

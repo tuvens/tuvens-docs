@@ -220,4 +220,4 @@ Security:
 
 ---
 
-**Next**: Continue with [Database Implementation](./02-database-implementation.md) to set up the required database schema.
+**Next**: Continue with [Database Implementation](./database-implementation/README.md) to set up the required database schema.
