@@ -158,10 +158,9 @@ jobs:
           commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
           changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
           
-          # Create tracking issue in tuvens-docs
-          gh issue create \
-            --title "🔄 Documentation Update Tracking (${commit_sha})" \
-            --body "## Documentation Update Distribution Tracking
+          # Create tracking issue body
+          cat > tracking-issue.md << EOF
+## Documentation Update Distribution Tracking
 
 **Commit**: ${commit_sha}
 **Message**: ${commit_message}
@@ -179,5 +178,11 @@ This issue will be updated as repositories confirm integration of the documentat
 **Expected Timeline**: All repositories should integrate within 1 week.
 
 ---
-*This tracking issue is automatically created when documentation updates are pushed to main.*" \
+*This tracking issue is automatically created when documentation updates are pushed to main.*
+EOF
+
+          # Create tracking issue in tuvens-docs
+          gh issue create \
+            --title "🔄 Documentation Update Tracking (${commit_sha})" \
+            --body-file tracking-issue.md \
             --label "tracking,documentation,automation"
