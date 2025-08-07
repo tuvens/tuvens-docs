@@ -120,41 +120,68 @@ jobs:
           echo "$issue_body" > notification.md
           echo "title=$title" >> $GITHUB_OUTPUT
 
-      - name: Create notification issue
+      - name: Create notification issue or update existing
         continue-on-error: true  # Don't fail entire workflow if one repo fails
         env:
           GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
           echo "🔍 Processing repository: ${{ matrix.repo.name }}"
           
-          # Check if similar issue already exists (within last 24 hours)
-          echo "🔎 Checking for existing notification issues..."
+          # Check if any open documentation notification issue exists
+          echo "🔎 Checking for existing documentation notification issues..."
           existing_issue=$(gh issue list --repo "${{ matrix.repo.name }}" \
             --search "📢 URGENT: Documentation Updates Available in:title is:open" \
-            --json number,createdAt --jq '.[0].number // empty' 2>/dev/null || echo "search_failed")
+            --json number --jq '.[0].number // empty' 2>/dev/null || echo "search_failed")
           
           if [ "$existing_issue" = "search_failed" ]; then
             echo "⚠️ Issue search failed for ${{ matrix.repo.name }} - may indicate access issues"
-          elif [ -z "$existing_issue" ]; then
-            echo "✨ No existing notification issues found"
+          elif [ -n "$existing_issue" ]; then
+            echo "📋 Found existing notification issue (#$existing_issue)"
+            echo "💬 Adding comment with new documentation changes..."
+            
+            # Create update comment with current changes
+            cat > update-comment.md << 'EOF'
+## 📢 Additional Documentation Changes
+            
+**New Update**: ${{ needs.analyze-changes.outputs.commit-sha }}
+**Date**: $(date -u +"%Y-%m-%d %H:%M UTC")
+**Message**: ${{ needs.analyze-changes.outputs.commit-message }}
+**Changed Files**: ${{ needs.analyze-changes.outputs.changed-files }}
+
+### 🔄 Integration Status
+This issue now tracks **multiple pending documentation updates**. Please integrate all changes listed in this issue and its comments before closing.
+
+### 📋 Required Actions
+Review the **original issue description above** and **all comments** for the complete list of documentation changes that need integration.
+
+---
+*🤖 Comment automatically added by tuvens-docs notification system*
+EOF
+            
+            # Add the comment to existing issue
+            if gh issue comment "$existing_issue" --repo "${{ matrix.repo.name }}" --body-file update-comment.md; then
+              echo "✅ Successfully added update comment to issue #$existing_issue"
+            else
+              echo "❌ Failed to add comment to issue #$existing_issue"
+              echo "Falling back to creating new issue..."
+              existing_issue=""  # Force new issue creation
+            fi
+          fi
+          
+          # Create new issue if none exists or comment failed
+          if [ -z "$existing_issue" ]; then
+            echo "✨ No existing notification issues found (or comment failed)"
             echo "📝 Creating new notification issue in ${{ matrix.repo.name }}"
             
-            # Try without labels first to avoid label-related failures
             if gh issue create \
               --repo "${{ matrix.repo.name }}" \
               --title "${{ steps.notification.outputs.title }}" \
-              --body-file notification.md 2>&1; then
-              echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
+              --body-file notification.md; then
+              echo "✅ Successfully created new issue in ${{ matrix.repo.name }}"
             else
               echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
-              echo "Trying to get more error details..."
-              gh issue create \
-                --repo "${{ matrix.repo.name }}" \
-                --title "TEST: Simple issue" \
-                --body "Test issue to check permissions" 2>&1 || echo "Basic issue creation also failed"
+              echo "This may indicate missing token permissions or repository access"
             fi
-          else
-            echo "📋 Recent notification issue already exists (#$existing_issue), skipping"
           fi
 
   create-tracking-issue:
