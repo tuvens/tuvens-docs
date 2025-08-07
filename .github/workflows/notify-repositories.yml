@@ -130,26 +130,37 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
-          # Check if similar test issue already exists
-          existing_issue=$(gh issue list --repo "${{ matrix.repo.name }}" \
-            --search "🧪 TEST: Workflow Token Verification in:title is:open" \
-            --json number,createdAt --jq '.[0].number // empty')
+          echo "🔍 Testing TUVENS_DOCS_TOKEN access to ${{ matrix.repo.name }}"
           
-          if [ -z "$existing_issue" ]; then
-            echo "Creating test issue in ${{ matrix.repo.name }}"
-            if gh issue create \
-              --repo "${{ matrix.repo.name }}" \
-              --title "${{ steps.notification.outputs.title }}" \
-              --body-file notification.md \
-              --label "test"; then
-              echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
-            else
-              echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
-              echo "This may indicate missing token permissions or repository access"
-              echo "⚠️ Failed to notify ${{ matrix.repo.name }}" >> $GITHUB_STEP_SUMMARY
-            fi
+          # Test basic repository access
+          echo "Testing repository access..."
+          if gh repo view "${{ matrix.repo.name }}" > /dev/null 2>&1; then
+            echo "✅ Repository access: SUCCESS"
           else
-            echo "Recent notification issue already exists (#$existing_issue), skipping"
+            echo "❌ Repository access: FAILED"
+            exit 1
+          fi
+          
+          # Test issue listing permission
+          echo "Testing issue listing permission..."
+          issue_count=$(gh issue list --repo "${{ matrix.repo.name }}" --limit 1 --json number --jq 'length' 2>/dev/null || echo "error")
+          if [ "$issue_count" != "error" ]; then
+            echo "✅ Issue listing: SUCCESS (found $issue_count issues)"
+          else
+            echo "❌ Issue listing: FAILED"
+          fi
+          
+          # Now try to create the test issue
+          echo "Creating test issue in ${{ matrix.repo.name }}"
+          if gh issue create \
+            --repo "${{ matrix.repo.name }}" \
+            --title "${{ steps.notification.outputs.title }}" \
+            --body-file notification.md; then
+            echo "✅ Successfully created issue in ${{ matrix.repo.name }}"
+          else
+            echo "❌ Failed to create issue in ${{ matrix.repo.name }}"
+            echo "This may indicate missing token permissions or repository access"
+            exit 1
           fi
 
   create-tracking-issue:
