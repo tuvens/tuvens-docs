@@ -78,11 +78,7 @@ jobs:
     strategy:
       matrix:
         repo: 
-          - { name: "tuvens/tuvens-mobile", type: "mobile" }  # Test repository first
-          - { name: "tuvens/eventdigest-ai", type: "frontend" }
-          - { name: "tuvens/tuvens-client", type: "frontend" }
-          - { name: "tuvens/tuvens-api", type: "backend" }
-          - { name: "tuvens/hi.events", type: "integration" }
+          - { name: "tuvens/tuvens-mobile", type: "mobile" }  # Testing comment system only
     steps:
       - uses: actions/checkout@v4
       
@@ -139,19 +135,13 @@ jobs:
             echo "📋 Found existing notification issue (#$existing_issue)"
             echo "💬 Adding comment with new documentation changes..."
             
-            # Create simple comment to test functionality first
-            echo "## 📢 Additional Documentation Changes" > update-comment.md
+            # Create minimal test comment
+            echo "🔄 **Additional Documentation Update**" > update-comment.md
             echo "" >> update-comment.md
-            echo "**New Update**: ${{ needs.analyze-changes.outputs.commit-sha }}" >> update-comment.md
-            echo "**Date**: $(date -u +"%Y-%m-%d %H:%M UTC")" >> update-comment.md
-            echo "**Message**: ${{ needs.analyze-changes.outputs.commit-message }}" >> update-comment.md
-            echo "**Changed Files**: ${{ needs.analyze-changes.outputs.changed-files }}" >> update-comment.md
+            echo "- Commit: ${{ needs.analyze-changes.outputs.commit-sha }}" >> update-comment.md
+            echo "- Files: ${{ needs.analyze-changes.outputs.changed-files }}" >> update-comment.md
             echo "" >> update-comment.md
-            echo "### 🔄 Integration Status" >> update-comment.md
-            echo "This issue now tracks **multiple pending documentation updates**. Please integrate all changes listed in this issue and its comments before closing." >> update-comment.md
-            echo "" >> update-comment.md
-            echo "---" >> update-comment.md
-            echo "*🤖 Comment automatically added by tuvens-docs notification system*" >> update-comment.md
+            echo "This comment verifies the tracking system is working." >> update-comment.md
             
             # Add the comment to existing issue
             if gh issue comment "$existing_issue" --repo "${{ matrix.repo.name }}" --body-file update-comment.md; then
