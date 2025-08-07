@@ -7,7 +7,6 @@
 - **Message**: [COMMIT_MESSAGE]
 - **Changed Files**: [CHANGED_FILES]
 - **Repository**: [REPO_NAME]
-
 ### 🚨 Critical Changes (Review Immediately)
 This update may include:
 - 🔐 Cross-app authentication implementation updates
@@ -15,35 +14,34 @@ This update may include:
 - 🛡️ Security protocol enhancements
 - 🏗️ Database schema changes
 - 📋 Backend integration patterns
-
 ### 📋 REQUIRED ACTIONS
 
-#### Step 1: Update Your Local tuvens-docs
+#### Step 1: Update tuvens-docs Submodule
 ```bash
-# Navigate to YOUR repository's tuvens-docs directory
-cd docs/shared-templates
-# OR: cd path/to/tuvens-docs (if using copy method)
+# From your repository root, update the tuvens-docs submodule
+git submodule update --remote tuvens-docs
 
-# Pull latest changes
-git pull origin main
+# Commit the submodule update
+git add tuvens-docs
+git commit -m "docs: update tuvens-docs submodule to [COMMIT_SHA]"
 
 # Verify you have the latest version
+cd tuvens-docs
 git log --oneline -5
+cd ..
 ```
-
 #### Step 2: Verify New Documentation Access
 ```bash
 # Check that new documentation is available
-ls -la implementation-guides/
-ls -la integration-guides/
-ls -la shared-protocols/
+ls -la tuvens-docs/tuvens-docs/implementation-guides/
+ls -la tuvens-docs/tuvens-docs/integration-guides/
+ls -la tuvens-docs/tuvens-docs/shared-protocols/
 
 # Confirm specific backend files exist
-ls -la implementation-guides/cross-app-authentication/README.md
-ls -la integration-guides/hi-events/api-requirements.md
-ls -la agentic-development/workflows/cross-repository-development.md
+ls -la tuvens-docs/tuvens-docs/implementation-guides/cross-app-authentication/README.md
+ls -la tuvens-docs/tuvens-docs/integration-guides/hi-events/api-requirements.md
+ls -la tuvens-docs/agentic-development/workflows/cross-repository-development/README.md
 ```
-
 #### Step 3: Backend-Specific Actions ⚡
 - [ ] **Review Cross-App Authentication**: Study `implementation-guides/cross-app-authentication/README.md`
 - [ ] **Check API Requirements**: Review `integration-guides/hi-events/api-requirements.md`
@@ -100,7 +98,6 @@ npm run test:api
 # Verify security requirements
 npm run test:security
 ```
-
 ### 🔄 MANDATORY: Confirm Completion
 
 When you've completed all steps, **comment on this issue** with:
@@ -136,20 +133,16 @@ npm audit            # ✅ No high/critical vulnerabilities
 **Security Updates** (if any): [List any security enhancements]
 **Next Steps**: [Any follow-up actions needed]
 ```
-
 ### ⏰ Timeline Requirements
 - **Immediate** (within 4 hours): Pull changes and verify access
-- **Within 24 hours**: Review implementation requirements
-- **Within 48 hours**: Implement missing endpoints (if any)
-- **Within 1 week**: Full integration testing and security compliance
-
+- **Within 24 hours**: Complete compliance verification and review requirements  
+- **Within 48 hours**: Update any non-compliant components or implement missing features
+- **Within 1 week**: Full integration testing and verification complete
 ### 🆘 Need Help?
-- **Implementation Guide**: Follow `implementation-guides/cross-app-authentication/README.md`
+- **Troubleshooting**: Check `tuvens-docs/tuvens-docs/shared-protocols/automated-change-notification.md`
+- **Questions**: Comment on this issue for assistance- **Implementation Guide**: Follow `implementation-guides/cross-app-authentication/README.md`
 - **API Specifications**: Review `integration-guides/hi-events/api-requirements.md`
 - **Development Standards**: Check `agentic-development/workflows/cross-repository-development/README.md`
-- **Troubleshooting**: See `shared-protocols/automated-change-notification.md`
-- **Questions**: Comment on this issue for assistance
-
 ### 🤖 Optional: Enable Automated Verification
 For automatic verification when you comment with completion status, install our workflow:
 ```bash
@@ -160,8 +153,7 @@ curl -o .github/workflows/verify-tuvens-docs.yml \
 git add .github/workflows/verify-tuvens-docs.yml
 git commit -m "Add automated tuvens-docs verification workflow"
 ```
-This workflow will automatically verify your integration and close this issue when you comment with "✅ Backend Updates Integrated Successfully".
-
+This workflow will automatically verify your integration and close this issue when you comment with completion confirmation.
 ### 📈 Quality Standards
 Your backend must maintain:
 - ✅ **Security**: All authentication endpoints properly secured
@@ -178,7 +170,6 @@ Your backend must maintain:
 - [ ] Secure session token generation
 - [ ] Proper CORS configuration
 - [ ] Audit logging for authentication events
-
 ---
 **This issue will remain open until confirmation is received and verification passes**
 

@@ -7,7 +7,6 @@
 - **Message**: [COMMIT_MESSAGE]
 - **Changed Files**: [CHANGED_FILES]
 - **Repository**: [REPO_NAME]
-
 ### 🚨 Critical Changes (Review Immediately)
 This update may include:
 - ✨ New frontend integration patterns and standards
@@ -15,35 +14,34 @@ This update may include:
 - 🔧 Enhanced component architecture standards
 - 📱 Responsive design improvements
 - ♿ Accessibility compliance updates
-
 ### 📋 REQUIRED ACTIONS
 
-#### Step 1: Update Your Local tuvens-docs
+#### Step 1: Update tuvens-docs Submodule
 ```bash
-# Navigate to YOUR repository's tuvens-docs directory
-cd client/tuvens-docs/tuvens-docs
-# OR: cd docs/shared-templates (if using submodule method)
+# From your repository root, update the tuvens-docs submodule
+git submodule update --remote tuvens-docs
 
-# Pull latest changes
-git pull origin main
+# Commit the submodule update
+git add tuvens-docs
+git commit -m "docs: update tuvens-docs submodule to [COMMIT_SHA]"
 
 # Verify you have the latest version
+cd tuvens-docs
 git log --oneline -5
+cd ..
 ```
-
 #### Step 2: Verify New Documentation Access
 ```bash
 # Check that new documentation is available
-ls -la integration-guides/
-ls -la shared-protocols/
-ls -la integration-examples/
+ls -la tuvens-docs/tuvens-docs/integration-guides/
+ls -la tuvens-docs/tuvens-docs/shared-protocols/
+ls -la tuvens-docs/tuvens-docs/integration-examples/
 
 # Confirm specific frontend files exist
-ls -la shared-protocols/frontend-integration/README.md
-ls -la integration-examples/frontend-integration/README.md
-ls -la integration-guides/hi-events/frontend-integration/README.md
+ls -la tuvens-docs/tuvens-docs/shared-protocols/frontend-integration/README.md
+ls -la tuvens-docs/tuvens-docs/integration-examples/frontend-integration/README.md
+ls -la tuvens-docs/tuvens-docs/integration-guides/hi-events/frontend-integration/README.md
 ```
-
 #### Step 3: Frontend-Specific Actions ⚡
 - [ ] **Review Frontend Standards**: Check `shared-protocols/frontend-integration/README.md`
 - [ ] **Check Component Examples**: Review `integration-examples/frontend-integration/README.md`
@@ -78,7 +76,6 @@ npm run test:e2e
 # Verify cross-app authentication works
 # Test widget embedding functionality
 ```
-
 ### 🔄 MANDATORY: Confirm Completion
 
 When you've completed all steps, **comment on this issue** with:
@@ -106,19 +103,15 @@ npm test -- --coverage # ✅ 85% coverage achieved
 **Updated Components** (if any): [List any components updated for compliance]
 **Next Steps**: [Any follow-up actions needed]
 ```
-
 ### ⏰ Timeline Requirements
 - **Immediate** (within 4 hours): Pull changes and verify access
-- **Within 24 hours**: Complete compliance verification
-- **Within 48 hours**: Update any non-compliant components
-- **Within 1 week**: Full integration testing complete
-
+- **Within 24 hours**: Complete compliance verification and review requirements  
+- **Within 48 hours**: Update any non-compliant components or implement missing features
+- **Within 1 week**: Full integration testing and verification complete
 ### 🆘 Need Help?
-- **Troubleshooting**: Check `shared-protocols/automated-change-notification.md`
-- **Frontend Standards**: Review `shared-protocols/frontend-integration/README.md`
+- **Troubleshooting**: Check `tuvens-docs/tuvens-docs/shared-protocols/automated-change-notification.md`
+- **Questions**: Comment on this issue for assistance- **Frontend Standards**: Review `shared-protocols/frontend-integration/README.md`
 - **Design System**: Check `integration-examples/frontend-integration/README.md`
-- **Questions**: Comment on this issue for assistance
-
 ### 🤖 Optional: Enable Automated Verification
 For automatic verification when you comment with completion status, install our workflow:
 ```bash
@@ -129,8 +122,7 @@ curl -o .github/workflows/verify-tuvens-docs.yml \
 git add .github/workflows/verify-tuvens-docs.yml
 git commit -m "Add automated tuvens-docs verification workflow"
 ```
-This workflow will automatically verify your integration and close this issue when you comment with "✅ Frontend Updates Integrated Successfully".
-
+This workflow will automatically verify your integration and close this issue when you comment with completion confirmation.
 ### 📈 Quality Standards
 Your repository must maintain:
 - ✅ **Test Coverage**: ≥80% (required)
@@ -139,7 +131,6 @@ Your repository must maintain:
 - ✅ **Design System**: Tuvens color palette and typography
 - ✅ **Accessibility**: WCAG 2.1 AA compliance
 - ✅ **Performance**: Lighthouse score >90
-
 ---
 **This issue will remain open until confirmation is received and verification passes**
 

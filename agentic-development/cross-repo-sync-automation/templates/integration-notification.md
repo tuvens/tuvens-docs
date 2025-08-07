@@ -7,7 +7,6 @@
 - **Message**: [COMMIT_MESSAGE]
 - **Changed Files**: [CHANGED_FILES]
 - **Repository**: [REPO_NAME]
-
 ### 🚨 Critical Changes (Review Immediately)
 This update may include:
 - 🔗 Updated Hi.Events integration requirements
@@ -15,36 +14,35 @@ This update may include:
 - 📡 New API validation endpoints
 - 🎛️ Widget integration updates
 - 🛡️ Security protocol enhancements
-
 ### 📋 REQUIRED ACTIONS
 
-#### Step 1: Update Your Local tuvens-docs
+#### Step 1: Update tuvens-docs Submodule
 ```bash
-# Navigate to YOUR repository's tuvens-docs directory
-cd docs/shared-templates
-# OR: cd path/to/tuvens-docs (if using copy method)
+# From your repository root, update the tuvens-docs submodule
+git submodule update --remote tuvens-docs
 
-# Pull latest changes
-git pull origin main
+# Commit the submodule update
+git add tuvens-docs
+git commit -m "docs: update tuvens-docs submodule to [COMMIT_SHA]"
 
 # Verify you have the latest version
+cd tuvens-docs
 git log --oneline -5
+cd ..
 ```
-
 #### Step 2: Verify New Documentation Access
 ```bash
 # Check that new documentation is available
-ls -la integration-guides/hi-events/
-ls -la implementation-guides/
-ls -la shared-protocols/
+ls -la tuvens-docs/integration-guides/hi-events/
+ls -la tuvens-docs/implementation-guides/
+ls -la tuvens-docs/shared-protocols/
 
 # Confirm specific integration files exist
-ls -la integration-guides/hi-events/README.md
-ls -la integration-guides/hi-events/authentication-flow.md
-ls -la integration-guides/hi-events/api-requirements.md
-ls -la integration-guides/hi-events/frontend-integration/README.md
+ls -la tuvens-docs/integration-guides/hi-events/README.md
+ls -la tuvens-docs/integration-guides/hi-events/authentication-flow.md
+ls -la tuvens-docs/integration-guides/hi-events/api-requirements.md
+ls -la tuvens-docs/integration-guides/hi-events/frontend-integration/README.md
 ```
-
 #### Step 3: Integration-Specific Actions ⚡
 - [ ] **Review Integration Overview**: Study `integration-guides/hi-events/README.md`
 - [ ] **Understand Authentication Flow**: Review `integration-guides/hi-events/authentication-flow.md`
@@ -108,7 +106,6 @@ npm run test:auth:security
 # Check widget performance
 npm run test:performance:widget
 ```
-
 ### 🔄 MANDATORY: Confirm Completion
 
 When you've completed all steps, **comment on this issue** with:
@@ -147,21 +144,17 @@ npm audit                      # ✅ No high/critical vulnerabilities
 **Event Sync Status**: ✅ Working / ❌ Issues found
 **Next Steps**: [Any follow-up actions needed]
 ```
-
 ### ⏰ Timeline Requirements
 - **Immediate** (within 4 hours): Pull changes and verify access
-- **Within 24 hours**: Review integration requirements and test endpoints
-- **Within 48 hours**: Fix any integration issues discovered
-- **Within 1 week**: Full end-to-end integration testing complete
-
+- **Within 24 hours**: Complete compliance verification and review requirements  
+- **Within 48 hours**: Update any non-compliant components or implement missing features
+- **Within 1 week**: Full integration testing and verification complete
 ### 🆘 Need Help?
-- **Integration Overview**: Start with `integration-guides/hi-events/README.md`
+- **Troubleshooting**: Check `tuvens-docs/tuvens-docs/shared-protocols/automated-change-notification.md`
+- **Questions**: Comment on this issue for assistance- **Integration Overview**: Start with `integration-guides/hi-events/README.md`
 - **Authentication Flow**: Review `integration-guides/hi-events/authentication-flow.md`
 - **API Requirements**: Check `integration-guides/hi-events/api-requirements.md`
 - **Frontend Integration**: See `integration-guides/hi-events/frontend-integration/README.md`
-- **Troubleshooting**: Review `shared-protocols/automated-change-notification.md`
-- **Questions**: Comment on this issue for assistance
-
 ### 🤖 Optional: Enable Automated Verification
 For automatic verification when you comment with completion status, install our workflow:
 ```bash
@@ -172,8 +165,7 @@ curl -o .github/workflows/verify-tuvens-docs.yml \
 git add .github/workflows/verify-tuvens-docs.yml
 git commit -m "Add automated tuvens-docs verification workflow"
 ```
-This workflow will automatically verify your integration and close this issue when you comment with "✅ Integration Updates Integrated Successfully".
-
+This workflow will automatically verify your integration and close this issue when you comment with completion confirmation.
 ### 📈 Quality Standards
 Your integration must maintain:
 - ✅ **Security**: Secure cross-app authentication implementation
@@ -199,7 +191,6 @@ Your integration must maintain:
 - [ ] CORS properly configured for Tuvens domains
 - [ ] Authentication bypass protection in place
 - [ ] Audit logging for all cross-app operations
-
 ---
 **This issue will remain open until confirmation is received and verification passes**
 

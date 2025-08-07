@@ -1,0 +1,2 @@
+- **Frontend Standards**: Review `shared-protocols/frontend-integration/README.md`
+- **Design System**: Check `integration-examples/frontend-integration/README.md`

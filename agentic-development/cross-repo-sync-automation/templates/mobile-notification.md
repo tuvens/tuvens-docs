@@ -7,7 +7,6 @@
 - **Message**: [COMMIT_MESSAGE]
 - **Changed Files**: [CHANGED_FILES]
 - **Repository**: [REPO_NAME]
-
 ### 🚨 Critical Changes (Review Immediately)
 This update may include:
 - 📱 New mobile integration patterns and standards
@@ -16,35 +15,34 @@ This update may include:
 - 🚀 Performance optimization guidelines
 - 📍 Location services and geo-fencing updates
 - 🔐 Cross-app authentication patterns
-
 ### 📋 REQUIRED ACTIONS
 
-#### Step 1: Update Your Local tuvens-docs
+#### Step 1: Update tuvens-docs Submodule
 ```bash
-# Navigate to YOUR repository's tuvens-docs directory
-cd mobile/tuvens-docs/tuvens-docs
-# OR: cd docs/shared-templates (if using submodule method)
+# From your repository root, update the tuvens-docs submodule
+git submodule update --remote tuvens-docs
 
-# Pull latest changes
-git pull origin main
+# Commit the submodule update
+git add tuvens-docs
+git commit -m "docs: update tuvens-docs submodule to [COMMIT_SHA]"
 
 # Verify you have the latest version
+cd tuvens-docs
 git log --oneline -5
+cd ..
 ```
-
 #### Step 2: Verify New Documentation Access
 ```bash
 # Check that new documentation is available
-ls -la integration-guides/
-ls -la shared-protocols/
-ls -la integration-examples/
+ls -la tuvens-docs/integration-guides/
+ls -la tuvens-docs/shared-protocols/
+ls -la tuvens-docs/integration-examples/
 
 # Confirm specific mobile-relevant files exist
-ls -la shared-protocols/frontend-integration/README.md
-ls -la integration-examples/frontend-integration/README.md
-ls -la implementation-guides/cross-app-authentication/README.md
+ls -la tuvens-docs/shared-protocols/frontend-integration/README.md
+ls -la tuvens-docs/integration-examples/frontend-integration/README.md
+ls -la tuvens-docs/implementation-guides/cross-app-authentication/README.md
 ```
-
 #### Step 3: Mobile-Specific Actions ⚡
 - [ ] **Review Mobile Standards**: Check mobile-relevant sections in `shared-protocols/`
 - [ ] **Check Authentication Updates**: Review `implementation-guides/cross-app-authentication/README.md`
@@ -89,7 +87,6 @@ flutter build apk --debug
 # Verify cross-app authentication works
 # Test location-based features
 ```
-
 ### 🔄 MANDATORY: Confirm Completion
 
 When you've completed all steps, **comment on this issue** with:
@@ -118,19 +115,15 @@ npm test -- --coverage # ✅ 75% coverage achieved
 **Platform Testing**: [iOS/Android/Flutter testing results]
 **Next Steps**: [Any follow-up actions needed]
 ```
-
 ### ⏰ Timeline Requirements
 - **Immediate** (within 4 hours): Pull changes and verify access
-- **Within 24 hours**: Complete compliance verification
-- **Within 48 hours**: Update any non-compliant components
-- **Within 1 week**: Full platform testing complete
-
+- **Within 24 hours**: Complete compliance verification and review requirements  
+- **Within 48 hours**: Update any non-compliant components or implement missing features
+- **Within 1 week**: Full integration testing and verification complete
 ### 🆘 Need Help?
-- **Troubleshooting**: Check `shared-protocols/automated-change-notification.md`
-- **Mobile Standards**: Review mobile-relevant sections in `shared-protocols/`
+- **Troubleshooting**: Check `tuvens-docs/tuvens-docs/shared-protocols/automated-change-notification.md`
+- **Questions**: Comment on this issue for assistance- **Mobile Standards**: Review mobile-relevant sections in `shared-protocols/`
 - **Authentication**: Check `implementation-guides/cross-app-authentication/README.md`
-- **Questions**: Comment on this issue for assistance
-
 ### 🤖 Optional: Enable Automated Verification
 For automatic verification when you comment with completion status, install our workflow:
 ```bash
@@ -141,8 +134,7 @@ curl -o .github/workflows/verify-tuvens-docs.yml \
 git add .github/workflows/verify-tuvens-docs.yml
 git commit -m "Add automated tuvens-docs verification workflow"
 ```
-This workflow will automatically verify your integration and close this issue when you comment with "✅ Mobile Updates Integrated Successfully".
-
+This workflow will automatically verify your integration and close this issue when you comment with completion confirmation.
 ### 📈 Quality Standards
 Your mobile repository must maintain:
 - ✅ **Test Coverage**: ≥70% (mobile-adjusted)
@@ -151,8 +143,7 @@ Your mobile repository must maintain:
 - ✅ **Design System**: Tuvens mobile color palette and typography
 - ✅ **Performance**: Smooth 60fps animations
 - ✅ **Platform Compliance**: iOS App Store & Google Play guidelines
-
 ---
 **This issue will remain open until confirmation is received and verification passes**
 
-*🤖 This notification was automatically generated when tuvens-docs was updated. Claude Code will detect this issue and help integrate the changes during mobile development workflows.*
+*🤖 This notification was automatically generated when tuvens-docs was updated. Claude Code will detect this issue and help integrate the changes during normal development workflows.*
