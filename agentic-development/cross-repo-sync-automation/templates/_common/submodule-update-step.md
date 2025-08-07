@@ -1,14 +1,14 @@
-#### Step 1: Update tuvens-docs Submodule
+#### Step 1: Update tuvens-docs Documentation
 ```bash
-# From your repository root, update the tuvens-docs submodule
-git submodule update --remote tuvens-docs
-
-# Commit the submodule update
-git add tuvens-docs
-git commit -m "docs: update tuvens-docs submodule to [COMMIT_SHA]"
-
-# Verify you have the latest version
+# Navigate to your worktree's tuvens-docs directory
 cd tuvens-docs
+
+# Pull latest changes
+git pull origin main
+
+# Verify you have the latest version (should include [COMMIT_SHA])
 git log --oneline -5
+
+# Return to worktree root
 cd ..
 ```
