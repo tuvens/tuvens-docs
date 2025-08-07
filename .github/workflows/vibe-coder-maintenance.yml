@@ -1,8 +1,9 @@
 name: Vibe Coder Maintenance Check
 
 on:
+  workflow_dispatch:  # Allow manual triggering for testing
   push:
-    branches: [ develop ]
+    branches: [ dev ]  # Fixed branch name
     paths: 
       - 'agentic-development/**'
       - '.claude/**'
