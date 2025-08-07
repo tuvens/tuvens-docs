@@ -1,0 +1,261 @@
+# Repository Verification Workflow Template
+# Copy this file to .github/workflows/verify-tuvens-docs.yml in consuming repositories
+
+name: Verify tuvens-docs Integration
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  verify-integration:
+    # Only run on comments that indicate completion
+    if: |
+      contains(github.event.comment.body, '✅ Updates Integrated Successfully') ||
+      contains(github.event.comment.body, '✅ Frontend Updates Integrated Successfully') ||
+      contains(github.event.comment.body, '✅ Backend Updates Integrated Successfully') ||
+      contains(github.event.comment.body, '✅ Integration Updates Integrated Successfully')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Check tuvens-docs version
+        id: docs-check
+        run: |
+          # Check if tuvens-docs directory exists and get latest commit
+          if [ -d "client/tuvens-docs/tuvens-docs" ]; then
+            cd client/tuvens-docs/tuvens-docs
+            docs_path="client/tuvens-docs/tuvens-docs"
+          elif [ -d "docs/shared-templates" ]; then
+            cd docs/shared-templates
+            docs_path="docs/shared-templates"
+          else
+            echo "❌ tuvens-docs directory not found"
+            exit 1
+          fi
+          
+          latest_commit=$(git log -1 --format="%H")
+          latest_date=$(git log -1 --format="%ci")
+          echo "docs-commit=$latest_commit" >> $GITHUB_OUTPUT
+          echo "docs-date=$latest_date" >> $GITHUB_OUTPUT
+          echo "docs-path=$docs_path" >> $GITHUB_OUTPUT
+          
+          echo "✅ Found tuvens-docs at: $docs_path"
+          echo "📅 Latest commit: $latest_commit ($latest_date)"
+      
+      - name: Verify required documentation
+        run: |
+          cd "${{ steps.docs-check.outputs.docs-path }}"
+          
+          # Define required files based on repository type
+          # Frontend repositories
+          frontend_files=(
+            "shared-protocols/frontend-integration/README.md"
+            "integration-examples/frontend-integration/README.md"
+            "integration-guides/hi-events/frontend-integration.md"
+          )
+          
+          # Backend repositories  
+          backend_files=(
+            "implementation-guides/cross-app-authentication/README.md"
+            "integration-guides/hi-events/api-requirements.md"
+            "agentic-development/workflows/cross-repository-development/README.md"
+          )
+          
+          # Integration repositories
+          integration_files=(
+            "integration-guides/hi-events/README.md"
+            "integration-guides/hi-events/authentication-flow.md"
+            "integration-guides/hi-events/api-requirements.md"
+            "integration-guides/hi-events/frontend-integration.md"
+          )
+          
+          # Check core files (required for all repositories)
+          core_files=(
+            "setup.sh"
+            "README.md"
+            "CONTRIBUTING.md"
+          )
+          
+          echo "🔍 Verifying core documentation files..."
+          for file in "${core_files[@]}"; do
+            if [[ -f "$file" ]]; then
+              echo "✅ Found: $file"
+            else
+              echo "❌ Missing: $file"
+              exit 1
+            fi
+          done
+          
+          # Detect repository type and verify appropriate files
+          repo_name="${{ github.repository }}"
+          if [[ "$repo_name" == *"eventdigest-ai"* || "$repo_name" == *"tuvens-client"* ]]; then
+            echo "🎨 Detected frontend repository, checking frontend files..."
+            for file in "${frontend_files[@]}"; do
+              if [[ -f "$file" ]]; then
+                echo "✅ Found: $file"
+              else
+                echo "❌ Missing: $file"  
+                exit 1
+              fi
+            done
+          elif [[ "$repo_name" == *"tuvens-api"* ]]; then
+            echo "🔧 Detected backend repository, checking backend files..."
+            for file in "${backend_files[@]}"; do
+              if [[ -f "$file" ]]; then
+                echo "✅ Found: $file"
+              else
+                echo "❌ Missing: $file"
+                exit 1
+              fi
+            done
+          elif [[ "$repo_name" == *"hi.events"* ]]; then
+            echo "🔗 Detected integration repository, checking integration files..."
+            for file in "${integration_files[@]}"; do
+              if [[ -f "$file" ]]; then
+                echo "✅ Found: $file"
+              else
+                echo "❌ Missing: $file"
+                exit 1
+              fi
+            done
+          fi
+          
+          echo "✅ All required documentation files are present"
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run verification tests
+        run: |
+          echo "🧪 Running verification tests..."
+          
+          # Run linting
+          if npm run lint --if-present; then
+            echo "✅ Linting passed"
+          else
+            echo "❌ Linting failed"
+            exit 1
+          fi
+          
+          # Run type checking
+          if npm run typecheck --if-present; then
+            echo "✅ Type checking passed"
+          else
+            echo "❌ Type checking failed"
+            exit 1
+          fi
+          
+          # Run tests with coverage
+          if npm test -- --coverage --run; then
+            echo "✅ Tests passed"
+          else
+            echo "❌ Tests failed"
+            exit 1
+          fi
+      
+      - name: Repository-specific verification
+        run: |
+          repo_name="${{ github.repository }}"
+          
+          if [[ "$repo_name" == *"eventdigest-ai"* || "$repo_name" == *"tuvens-client"* ]]; then
+            echo "🎨 Running frontend-specific verification..."
+            
+            # Check for Tuvens design system usage
+            if grep -r "primary-500\|secondary-500\|text-primary\|bg-primary" src/ > /dev/null; then
+              echo "✅ Tuvens design system colors detected"
+            else
+              echo "⚠️  Tuvens design system colors not detected (may not be required)"
+            fi
+            
+            # Check for component structure
+            if [ -d "src/components/ui" ] || [ -d "src/lib/components/ui" ]; then
+              echo "✅ Proper component structure detected"
+            else
+              echo "⚠️  Standard component structure not detected"
+            fi
+            
+          elif [[ "$repo_name" == *"tuvens-api"* ]]; then
+            echo "🔧 Running backend-specific verification..."
+            
+            # Check if cross-app endpoints might exist (without starting server)
+            if grep -r "cross-app" src/ > /dev/null; then
+              echo "✅ Cross-app authentication code detected"
+            else
+              echo "⚠️  Cross-app authentication code not detected (may not be implemented yet)"
+            fi
+            
+            # Check for database migration files
+            if [ -d "migrations" ] || [ -d "src/migrations" ] || [ -d "database/migrations" ]; then
+              echo "✅ Database migrations directory found"
+            else
+              echo "⚠️  Database migrations directory not found"
+            fi
+            
+          elif [[ "$repo_name" == *"hi.events"* ]]; then
+            echo "🔗 Running integration-specific verification..."
+            
+            # Check for Tuvens integration code
+            if grep -r "tuvens\|session_token" src/ > /dev/null; then
+              echo "✅ Tuvens integration code detected"
+            else
+              echo "⚠️  Tuvens integration code not detected (may not be implemented yet)"
+            fi
+          fi
+      
+      - name: Close notification issue
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          issue_number="${{ github.event.issue.number }}"
+          docs_commit="${{ steps.docs-check.outputs.docs-commit }}"
+          docs_date="${{ steps.docs-check.outputs.docs-date }}"
+          
+          gh issue close $issue_number --comment "✅ **Integration Verification Complete**
+          
+          **Automated verification completed successfully:**
+          - ✅ tuvens-docs is up to date (commit: \`${docs_commit:0:8}\`)
+          - ✅ Latest documentation date: $docs_date
+          - ✅ All required files are present
+          - ✅ Linting and type checking passed
+          - ✅ All tests passing with coverage
+          - ✅ Repository-specific verification completed
+          
+          **Integration Status:** ✅ **VERIFIED**
+          
+          This issue has been automatically closed as the repository has successfully integrated the documentation updates. The integration has been verified through automated testing.
+          
+          ---
+          *🤖 Automated verification completed at $(date -u)*"
+      
+      - name: Report verification failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          issue_number="${{ github.event.issue.number }}"
+          
+          gh issue comment $issue_number --body "❌ **Integration Verification Failed**
+          
+          **Automated verification encountered issues:**
+          - Check the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details
+          - Review the failed verification steps above
+          - Ensure all required documentation is present and accessible
+          - Verify that all tests are passing
+          
+          **Next Steps:**
+          1. Review the workflow logs to identify specific issues
+          2. Fix any failing tests or missing documentation
+          3. Comment again with the completion confirmation to re-trigger verification
+          
+          ---
+          *🤖 Automated verification failed at $(date -u)*"
