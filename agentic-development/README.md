@@ -4,6 +4,8 @@
 
 This directory contains only the essential files for the multi-agent system:
 
+> Test commit: 2025-08-07 - Testing workflow triggers
+
 ### 📁 Core Structure
 
 ```
