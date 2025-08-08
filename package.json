@@ -1,7 +1,7 @@
 {
-  "name": "tuvens-docs-infrastructure-setup",
+  "name": "tuvens-docs",
   "version": "1.0.0",
-  "description": "Infrastructure setup for Tuvens ecosystem - replicating event-harvester patterns",
+  "description": "Central documentation and coordination system for Tuvens ecosystem - replicating event-harvester patterns",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,9 @@
     "test:workflows": "./scripts/test.sh --workflows",
     "test:integration": "./scripts/test.sh --integration",
     "test:full": "./scripts/test.sh --full",
+    "test:unit": "bash scripts/test.sh unit",
+    "test:system": "bash scripts/test.sh system",
+    "test:verbose": "bash scripts/test.sh --verbose",
     
     "lint": "npm run lint:scripts && npm run lint:workflows",
     "lint:scripts": "shellcheck scripts/*.sh 2>/dev/null || echo 'shellcheck not installed, skipping shell script linting'",
@@ -19,6 +22,7 @@
     "setup": "npm install",
     "setup:hooks": "pip install pre-commit && pre-commit install",
     "setup:env": "./scripts/setup-environment.sh",
+    "validate-hooks": "pre-commit run --all-files",
     
     "validate": "./scripts/branch-check",
     "branch-check": "./scripts/branch-check",
@@ -37,7 +41,8 @@
     "prepare": "npm run setup:hooks"
   },
   "devDependencies": {
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.0",
+    "pre-commit": "^1.2.2"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -55,10 +60,14 @@
     "claude-code",
     "infrastructure",
     "devops",
-    "automation"
+    "automation",
+    "branch-protection",
+    "safety-tools",
+    "multi-agent",
+    "branch-tracking"
   ],
-  "author": "Tuvens DevOps Agent",
-  "license": "UNLICENSED",
+  "author": "Tuvens Development Team",
+  "license": "MIT",
   "config": {
     "test_timeout": 300,
     "coverage_threshold": 75

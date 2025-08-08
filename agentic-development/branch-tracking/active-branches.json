@@ -1,6 +1,7 @@
 {
-  "lastUpdated": "2025-08-08T13:45:47.115Z",
-  "generatedBy": "GitHub Actions",
+<<<<<<< HEAD
+  "lastUpdated": "2025-08-08T18:15:00.000Z",
+  "generatedBy": "Merge Resolution",
   "tuvensStrategy": "feature/* → dev → test → stage → main with change-type prefixes",
   "branches": {
     "tuvens-docs": [
@@ -80,14 +81,44 @@
         "issues": []
       },
       {
+        "name": "vibe-coder/feature/test-branch-protection",
+        "author": "validation-system",
+        "created": "2025-08-08T14:12:19.200Z",
+        "lastActivity": "2025-08-08T14:12:19.201Z",
+        "taskGroup": null,
+        "status": "validated",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/test-branch-protection",
+        "issues": [],
+        "validationStatus": "passed",
+        "prNumber": "123"
+      },
+      {
+        "name": "feature/complete-branch-protection-tasks-1--2",
+        "author": "validation-system",
+        "created": "2025-08-08T15:54:33.090Z",
+        "lastActivity": "2025-08-08T15:57:21.951Z",
+        "taskGroup": null,
+        "status": "validating",
+        "worktree": null,
+        "agent": "pre-merge-check",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/complete-branch-protection-tasks-1--2",
+        "issues": [],
+        "validationStatus": "pre-merge-passed",
+        "prNumber": null
+      },
+      {
         "name": "feature/make-branch-tracking-fully-operational",
         "author": "ciarancarroll",
         "created": "2025-08-08T13:45:47.113Z",
         "lastActivity": "2025-08-08T13:45:47.115Z",
         "taskGroup": null,
-        "status": "active",
+        "status": "merged",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/make-branch-tracking-fully-operational",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/make-branch-tracking-fully-operational",
         "issues": "tuvens-docs#51"

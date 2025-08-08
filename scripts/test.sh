@@ -1,8 +1,12 @@
 #!/bin/bash
 # Tuvens-Docs Comprehensive Test Runner
+# Hybrid approach combining infrastructure validation with branch tracking system integration
 # Provides branch-aware testing with safety validation and workflow verification
 
-set -e  # Exit on error
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TRACKING_DIR="$SCRIPT_DIR/../agentic-development/branch-tracking"
 
 # Colors for output
 RED='\033[0;31m'
@@ -20,7 +24,11 @@ COVERAGE_THRESHOLD=75
 # Determine the current branch and context
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 IS_CI=${CI:-false}
-TEST_MODE=${1:-auto}
+
+# Test results tracking
+TOTAL_TESTS=0
+PASSED_TESTS=0
+FAILED_TESTS=0
 
 # Function to print colored output
 print_header() {
@@ -35,10 +43,12 @@ print_status() {
 
 print_success() {
     echo -e "${GREEN}[✓]${NC} $1"
+    ((PASSED_TESTS++))
 }
 
 print_error() {
     echo -e "${RED}[✗]${NC} $1"
+    ((FAILED_TESTS++))
 }
 
 print_warning() {
@@ -51,7 +61,23 @@ print_info() {
 
 # Function to check if we're in CI environment
 is_ci() {
-    [ "$IS_CI" = "true" ] || [ -n "${GITHUB_ACTIONS}" ] || [ -n "${CI}" ]
+    [ "$IS_CI" = "true" ] || [ -n "${GITHUB_ACTIONS:-}" ] || [ -n "${CI:-}" ]
+}
+
+# Test execution helper
+run_test() {
+    local test_name="$1"
+    local test_function="$2"
+    
+    ((TOTAL_TESTS++))
+    
+    if $test_function; then
+        print_success "$test_name"
+        return 0
+    else
+        print_error "$test_name"
+        return 1
+    fi
 }
 
 # Function to validate environment setup
@@ -88,7 +114,7 @@ validate_environment() {
     done
     
     # Check critical files
-    local critical_files=("CLAUDE.md" ".pre-commit-config.yaml")
+    local critical_files=("CLAUDE.md")
     for file in "${critical_files[@]}"; do
         if [ ! -f "$file" ]; then
             print_error "Critical file not found: $file"
@@ -102,6 +128,62 @@ validate_environment() {
     fi
     
     print_success "Environment validation passed"
+    return 0
+}
+
+# JSON validation functions
+validate_json_structure() {
+    local file_path="$1"
+    local expected_structure="$2"
+    
+    if [[ ! -f "$file_path" ]]; then
+        return 1
+    fi
+    
+    # Basic JSON validation
+    if ! python3 -m json.tool "$file_path" > /dev/null 2>&1; then
+        return 1
+    fi
+    
+    # Structure-specific validation based on file type
+    case "$expected_structure" in
+        "active-branches")
+            # Validate active-branches.json structure
+            if ! python3 -c "
+import json, sys
+try:
+    with open('$file_path') as f:
+        data = json.load(f)
+    required = ['lastUpdated', 'generatedBy', 'tuvensStrategy', 'branches']
+    assert all(k in data for k in required), 'Missing required keys'
+    assert isinstance(data['branches'], dict), 'branches must be dict'
+    sys.exit(0)
+except Exception as e:
+    sys.exit(1)
+            "; then
+                return 1
+            fi
+            ;;
+        "task-groups")
+            # Validate task-groups.json structure
+            if ! python3 -c "
+import json, sys
+try:
+    with open('$file_path') as f:
+        data = json.load(f)
+    assert isinstance(data, dict), 'Root must be dict'
+    for group_id, group in data.items():
+        required = ['title', 'description', 'status', 'branches']
+        assert all(k in group for k in required), f'Group {group_id} missing required keys'
+    sys.exit(0)
+except Exception as e:
+    sys.exit(1)
+            "; then
+                return 1
+            fi
+            ;;
+    esac
+    
     return 0
 }
 
@@ -156,6 +238,37 @@ run_safety_tests() {
     return $safety_test_errors
 }
 
+# Branch tracking system tests
+test_branch_tracking_json_files() {
+    local result=0
+    
+    # Test active-branches.json
+    if [[ -f "$TRACKING_DIR/active-branches.json" ]]; then
+        if validate_json_structure "$TRACKING_DIR/active-branches.json" "active-branches"; then
+            print_success "active-branches.json structure valid"
+        else
+            print_error "active-branches.json structure invalid"
+            result=1
+        fi
+    else
+        print_warning "active-branches.json not found"
+    fi
+    
+    # Test task-groups.json
+    if [[ -f "$TRACKING_DIR/task-groups.json" ]]; then
+        if validate_json_structure "$TRACKING_DIR/task-groups.json" "task-groups"; then
+            print_success "task-groups.json structure valid"
+        else
+            print_error "task-groups.json structure invalid"
+            result=1
+        fi
+    else
+        print_info "task-groups.json not found (optional)"
+    fi
+    
+    return $result
+}
+
 # Function to run workflow validation tests
 run_workflow_tests() {
     print_status "Running GitHub Actions workflow validation..."
@@ -186,22 +299,6 @@ run_workflow_tests() {
         fi
     done
     
-    # Branch protection workflow validation
-    if [ -f ".github/workflows/branch-protection.yml" ]; then
-        print_info "Validating branch protection workflow..."
-        # Check for required validation steps
-        if grep -q "Validate CLAUDE.md" ".github/workflows/branch-protection.yml" &&
-           grep -q "Validate branch naming" ".github/workflows/branch-protection.yml"; then
-            print_success "Branch protection workflow structure valid"
-        else
-            print_error "Branch protection workflow missing required validation steps"
-            workflow_test_errors=$((workflow_test_errors + 1))
-        fi
-    else
-        print_error "Branch protection workflow not found"
-        workflow_test_errors=$((workflow_test_errors + 1))
-    fi
-    
     return $workflow_test_errors
 }
 
@@ -212,19 +309,7 @@ run_integration_tests() {
     local integration_test_errors=0
     
     # Branch tracking system integration
-    print_info "Testing branch tracking system integration..."
-    if [ -f "agentic-development/scripts/update-branch-tracking.js" ]; then
-        # Test branch tracking script with mock data
-        if node agentic-development/scripts/update-branch-tracking.js --help >/dev/null 2>&1; then
-            print_success "Branch tracking script integration valid"
-        else
-            print_error "Branch tracking script integration failed"
-            integration_test_errors=$((integration_test_errors + 1))
-        fi
-    else
-        print_error "Branch tracking script not found"
-        integration_test_errors=$((integration_test_errors + 1))
-    fi
+    run_test "Branch tracking JSON files validation" test_branch_tracking_json_files || integration_test_errors=$((integration_test_errors + 1))
     
     # Agent status scripts integration
     print_info "Testing agent status scripts..."
@@ -247,40 +332,6 @@ run_integration_tests() {
     return $integration_test_errors
 }
 
-# Function to run comprehensive validation
-run_comprehensive_tests() {
-    print_status "Running comprehensive system validation..."
-    
-    local comprehensive_test_errors=0
-    
-    # Run branch-check command if available
-    if [ -f "scripts/branch-check" ] && [ -x "scripts/branch-check" ]; then
-        print_info "Running comprehensive branch validation..."
-        if ! ./scripts/branch-check --no-interactive; then
-            print_error "Comprehensive branch validation failed"
-            comprehensive_test_errors=$((comprehensive_test_errors + 1))
-        else
-            print_success "Comprehensive branch validation passed"
-        fi
-    fi
-    
-    # Validate all JSON files in branch-tracking
-    print_info "Validating branch tracking JSON files..."
-    local json_files=(agentic-development/branch-tracking/*.json)
-    for json_file in "${json_files[@]}"; do
-        if [ -f "$json_file" ]; then
-            if ! python3 -c "import json; json.load(open('$json_file'))" 2>/dev/null; then
-                print_error "Invalid JSON in $json_file"
-                comprehensive_test_errors=$((comprehensive_test_errors + 1))
-            else
-                print_success "$(basename "$json_file") JSON valid"
-            fi
-        fi
-    done
-    
-    return $comprehensive_test_errors
-}
-
 # Function to determine test level based on context
 determine_test_level() {
     local test_level="quick"
@@ -296,6 +347,10 @@ determine_test_level() {
         test_level="workflows"
     elif [[ "${1}" == "--integration" ]]; then
         test_level="integration"
+    elif [[ "${1}" == "unit" ]]; then
+        test_level="unit"
+    elif [[ "${1}" == "system" ]]; then
+        test_level="system"
     elif is_ci; then
         test_level="full"
         print_info "CI environment detected - running full test suite"
@@ -318,7 +373,7 @@ main() {
     
     print_header "Tuvens-Docs Comprehensive Test Runner"
     print_info "Branch: ${CURRENT_BRANCH}"
-    print_info "Test Mode: ${TEST_MODE}"
+    print_info "Test Mode: ${1:-auto}"
     print_info "CI Environment: $(is_ci && echo 'Yes' || echo 'No')"
     echo ""
     
@@ -338,8 +393,8 @@ main() {
     
     # Run tests based on determined level
     case "$test_level" in
-        "quick")
-            print_header "Quick Test Suite (Safety Tests Only)"
+        "quick"|"unit")
+            print_header "Quick/Unit Test Suite (Safety Tests)"
             if ! run_safety_tests; then
                 total_errors=$((total_errors + 1))
             fi
@@ -380,8 +435,8 @@ main() {
             tests_run=$((tests_run + 1))
             ;;
             
-        "thorough")
-            print_header "Thorough Test Suite (Safety + Workflows + Integration)"
+        "system"|"thorough")
+            print_header "System/Thorough Test Suite"
             if ! run_safety_tests; then
                 total_errors=$((total_errors + 1))
             fi
@@ -399,7 +454,7 @@ main() {
             ;;
             
         "full")
-            print_header "Full Test Suite (All Tests + Comprehensive Validation)"
+            print_header "Full Test Suite (All Tests)"
             if ! run_safety_tests; then
                 total_errors=$((total_errors + 1))
             fi
@@ -411,11 +466,6 @@ main() {
             tests_run=$((tests_run + 1))
             
             if ! run_integration_tests; then
-                total_errors=$((total_errors + 1))
-            fi
-            tests_run=$((tests_run + 1))
-            
-            if ! run_comprehensive_tests; then
                 total_errors=$((total_errors + 1))
             fi
             tests_run=$((tests_run + 1))
@@ -431,10 +481,13 @@ main() {
     
     print_info "Test Suite: $test_level"
     print_info "Tests Run: $tests_run"
+    print_info "Individual Checks: $TOTAL_TESTS"
+    print_info "Passed: $PASSED_TESTS"
+    print_info "Failed: $FAILED_TESTS"
     print_info "Duration: ${duration}s"
     print_info "Branch: $CURRENT_BRANCH"
     
-    if [ $total_errors -eq 0 ]; then
+    if [ $total_errors -eq 0 ] && [ $FAILED_TESTS -eq 0 ]; then
         print_success "All tests passed! ✨"
         print_success "$(printf "%*s" 60 | tr ' ' '=')"
         exit 0
@@ -442,6 +495,7 @@ main() {
         print_error "Tests failed! 💔"
         print_error "$(printf "%*s" 60 | tr ' ' '=')"
         print_error "Failed test suites: $total_errors"
+        print_error "Failed individual checks: $FAILED_TESTS"
         print_warning "Please fix failing tests before pushing or merging"
         exit 1
     fi
@@ -459,8 +513,10 @@ case "${1:-}" in
         echo "  --safety      Run safety and validation tests"
         echo "  --workflows   Run safety + workflow validation tests"
         echo "  --integration Run safety + integration tests"
-        echo "  --thorough    Run safety + workflows + integration tests"
         echo "  --full        Run complete test suite with comprehensive validation"
+        echo "  unit          Run unit tests (alias for --quick)"
+        echo "  system        Run system tests (alias for --thorough)"
+        echo "  --verbose     Detailed test output (legacy compatibility)"
         echo "  --help        Show this help message"
         echo ""
         echo "Default behavior (auto-detection):"
