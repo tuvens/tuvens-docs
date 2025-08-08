@@ -43,7 +43,7 @@ ls -la tuvens-docs/.claude/agents/mobile-dev.md
 
 # Confirm mobile-specific files exist
 ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md
-ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/flutter-standards.md
+ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md
 ```
 
 #### Step 3: Mobile-Specific Actions ⚡

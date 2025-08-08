@@ -58,7 +58,7 @@ integration-specialist/oauth-provider-setup
 
 ### Worktree Organization Structure
 ```
-/Code/tuvens/
+/Users/ciarancarroll/Code/Tuvens/
 ├── {repo-name}/                     # Main repository checkouts
 ├── worktrees/
 │   ├── {repo-name}/
@@ -75,22 +75,22 @@ integration-specialist/oauth-provider-setup
 #### For Documentation Work
 ```bash
 # Create docs orchestrator worktree
-git worktree add /Code/tuvens/worktrees/tuvens-docs/docs-orchestrator/feature-name develop
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/docs-orchestrator/feature-name develop
 
 # Create vibe coder worktree  
-git worktree add /Code/tuvens/worktrees/tuvens-docs/vibe-coder/experiment-name develop
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/vibe-coder/experiment-name develop
 ```
 
 #### For Integration Work
 ```bash
 # Create integration specialist worktree (docs)
-git worktree add /Code/tuvens/worktrees/tuvens-docs/integration-specialist/oauth-docs develop
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/integration-specialist/oauth-docs develop
 
 # Create integration specialist worktree (client)
-git worktree add /Code/tuvens/worktrees/tuvens-client/integration-specialist/oauth-ui develop
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-client/integration-specialist/oauth-ui develop
 
 # Create integration specialist worktree (api)
-git worktree add /Code/tuvens/worktrees/tuvens-api/integration-specialist/oauth-endpoints develop
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-api/integration-specialist/oauth-endpoints develop
 ```
 
 ### Agent Worktree Workflow
@@ -105,13 +105,13 @@ git pull origin develop
 git checkout -b {agent-type}/{feature-name}
 
 # Create worktree for the agent
-git worktree add /Code/tuvens/worktrees/{repo}//{agent-type}/{feature-name} {agent-type}/{feature-name}
+git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}//{agent-type}/{feature-name} {agent-type}/{feature-name}
 ```
 
 #### 2. Work in Agent-Specific Directory
 ```bash
 # Navigate to agent worktree
-cd /Code/tuvens/worktrees/{repo}/{agent-type}/{feature-name}
+cd /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
 
 # Start Claude Code session with agent context
 claude
@@ -131,16 +131,28 @@ git push origin {agent-type}/{feature-name}
 gh pr create --base develop --title "feat({agent}): {description}"
 
 # Clean up worktree after merge
-git worktree remove /Code/tuvens/worktrees/{repo}/{agent-type}/{feature-name}
+git worktree remove /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
 ```
 
 ## Merge Strategies
 
+### CRITICAL: Forward-Only Merge Policy (NO EXCEPTIONS)
+**⚠️ STRICT RULE**: Merges flow in ONE DIRECTION ONLY:
+```
+feature/* → dev/develop → test → stage → main
+```
+
+**NEVER** merge backwards (e.g., test → dev, main → stage). This is a STRICT policy with NO exceptions.
+
 ### Feature Branch Integration
 1. **Agent Work**: All agent work happens on feature branches in worktrees
-2. **Review Process**: PRs reviewed by Documentation Orchestrator or senior agent
-3. **Integration**: Merge to `develop` branch for testing
-4. **Release**: Merge `develop` to `main` for production
+2. **Feature to Dev**: ALWAYS create feature branches off dev, merge ONLY to dev
+3. **Review Process**: PRs reviewed before merging to dev
+4. **Forward Promotion**: 
+   - dev → test (for testing)
+   - test → stage (for staging)
+   - stage → main (for production)
+5. **No Backward Merges**: NEVER merge from test back to dev, or main back to stage
 
 ### Cross-Repository Coordination
 1. **Sync Points**: Use pending-commits/ to coordinate timing

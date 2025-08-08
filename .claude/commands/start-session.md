@@ -27,7 +27,7 @@ Based on our conversation, I will:
 1. **Analyze Recent Context**: Review our discussion to understand the specific task
 2. **Identify Task Details**: Determine the task title and description from context
 3. **Create GitHub Issue**: Use the `/create-issue` command if needed
-4. **Setup Worktree**: Create proper worktree following our organization strategy
+4. **Setup Worktree**: Create proper worktree following `agentic-development/workflows/worktree-organization.md`
 5. **Generate Prompt**: Create agent-specific prompt with all context
 6. **Open iTerm2**: Display the prompt in a new terminal window
 

@@ -37,47 +37,27 @@ echo ""
 
 # Step 2: Create GitHub issue
 echo "Step 2: Creating GitHub issue..."
-ISSUE_BODY="## Agent Assignment
-**Agent**: $AGENT_NAME
-**Task**: $TASK_TITLE
 
-## Description
-$TASK_DESCRIPTION
+# Create issue using temporary file to avoid complex variable expansion
+TEMP_BODY_FILE="/tmp/github-issue-body-$$"
+cat > "$TEMP_BODY_FILE" << EOF
+Agent: $AGENT_NAME
+Task: $TASK_TITLE
+Description: $TASK_DESCRIPTION
 
-## Technical Requirements
-- [ ] Load agent context from agent-identities.md
-- [ ] Create worktree for branch isolation
-- [ ] Follow agent-specific workflow pattern
-- [ ] Create comprehensive documentation
-- [ ] Test and validate solutions
+Generated with Claude Code automation
+EOF
 
-## Success Criteria
-- [ ] All deliverables completed
-- [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code review completed
-- [ ] Branch merged to develop
-
-## Agent Workflow
-Follow the standard agent workflow:
-1. Context Assessment and Planning
-2. Agent Coordination Setup  
-3. Multi-Agent Workflow Initiation
-4. Active Coordination and Monitoring
-5. Integration and Quality Assurance
-6. Workflow Completion and Knowledge Capture
-
-🤖 Generated with [Claude Code](https://claude.ai/code) - CTO Agent
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
-
-GITHUB_ISSUE=$(gh issue create \
+# Create GitHub issue
+echo "   Creating issue: $TASK_TITLE"
+ISSUE_URL=$(gh issue create \
     --title "$TASK_TITLE" \
-    --body "$ISSUE_BODY" \
+    --body-file "$TEMP_BODY_FILE" \
     --assignee "@me" \
-    --label "agent-task,$AGENT_NAME" \
-    | grep -o '#[0-9]*' | tr -d '#')
+    --label "agent-task,$AGENT_NAME")
 
+GITHUB_ISSUE=$(echo "$ISSUE_URL" | grep -o '[0-9]\+$')
+rm -f "$TEMP_BODY_FILE"
 echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
 echo ""
@@ -132,18 +112,26 @@ if [[ "$IS_TUVENS_DOCS" == "false" ]]; then
         echo "✅ Updated existing tuvens-docs"
     fi
     
-    # Step 3b: Copy .env file from dev branch
-    echo "   Copying .env configuration from dev branch..."
-    DEV_WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME"
+    # Step 3b: Copy .env file from dev worktree
+    echo "   Copying .env configuration from dev worktree..."
+    DEV_WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME/dev"
     if [[ -f "$DEV_WORKTREE_PATH/.env" ]]; then
         cp "$DEV_WORKTREE_PATH/.env" "$WORKTREE_PATH/.env"
-        echo "✅ Copied .env file from dev branch"
+        echo "✅ Copied .env file from dev worktree"
+        # Copy any additional .env files in subdirectories
+        find "$DEV_WORKTREE_PATH" -name ".env" -not -path "$DEV_WORKTREE_PATH/.env" | while read env_file; do
+            relative_path=${env_file#$DEV_WORKTREE_PATH/}
+            target_dir="$WORKTREE_PATH/$(dirname "$relative_path")"
+            mkdir -p "$target_dir"
+            cp "$env_file" "$target_dir/.env"
+            echo "✅ Copied additional .env from $relative_path"
+        done
     elif [[ -f "$DEV_WORKTREE_PATH/.env.example" ]]; then
         cp "$DEV_WORKTREE_PATH/.env.example" "$WORKTREE_PATH/.env"
         echo "✅ Copied .env.example as starting point"
         echo "   ⚠️  Remember to update .env with actual values"
     else
-        echo "   ⚠️  No .env file found in dev branch - you may need to create one"
+        echo "   ⚠️  No .env file found in dev worktree - you may need to create one at $DEV_WORKTREE_PATH/.env"
     fi
     
     cd - > /dev/null
@@ -201,7 +189,7 @@ tell application \"iTerm\"
         set name to \"$AGENT_NAME Agent\"
         write text \"cd \\\"$WORKTREE_PATH\\\"\"
         write text \"cat \\\"$PROMPT_FILE\\\"\"
-        write text \"# Ready for Claude Code session\"
+        write text \"claude\"
     end tell
 end tell"
     

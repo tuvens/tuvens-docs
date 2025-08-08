@@ -10,7 +10,7 @@ This document defines the organizational strategy for git worktrees in the Tuven
 
 ### Implemented Organization
 ```
-/Users/ciarancarroll/code/tuvens/
+/Users/ciarancarroll/Code/Tuvens/
 ├── tuvens-docs/                     # Main repository checkout
 │   ├── vibe-coder/                  # Agent worktrees (docs organization)
 │   │   ├── feature-agent-workflow-instructions/
@@ -71,7 +71,7 @@ vibe-coder/test-coordination-protocols
 **Current Implementation:**
 - ✅ `feature-agent-workflow-instructions` - Completed and merged
 - ✅ `feature-cto-technical-improvements` - Completed and merged
-- Directory Pattern: `/Users/ciarancarroll/code/tuvens/tuvens-docs/vibe-coder/[branch-name]/`
+- Directory Pattern: `/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/[branch-name]/`
 
 **Responsibilities:**
 - Documentation organization and structure
@@ -130,7 +130,7 @@ integration-specialist/mobile-api-integration
 
 2. **Create Agent Worktree**
    ```bash
-   cd /Users/ciarancarroll/code/tuvens/{repo}
+   cd /Users/ciarancarroll/Code/Tuvens/{repo}
    git worktree add {agent-type}/{feature-name} {agent-type}/{feature-name}
    ```
 
@@ -149,7 +149,7 @@ integration-specialist/mobile-api-integration
 ### Completion Process
 1. **Final Commit and Push**
    ```bash
-   cd /Users/ciarancarroll/code/tuvens/{repo}/{agent-type}/{feature-name}
+   cd /Users/ciarancarroll/Code/Tuvens/{repo}/{agent-type}/{feature-name}
    git add .
    git commit -m "feat({agent}): complete {feature-name}"
    git push origin {agent-type}/{feature-name}
@@ -162,7 +162,7 @@ integration-specialist/mobile-api-integration
 
 3. **Clean Up Worktree**
    ```bash
-   cd /Users/ciarancarroll/code/tuvens/{repo}
+   cd /Users/ciarancarroll/Code/Tuvens/{repo}
    git worktree remove {agent-type}/{feature-name}
    ```
 
@@ -221,7 +221,7 @@ git worktree list
 # Check worktree directory sizes in each repository
 for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
     echo "=== $repo ==="
-    cd /Users/ciarancarroll/code/tuvens/$repo
+    cd /Users/ciarancarroll/Code/Tuvens/$repo
     du -sh */
     echo ""
 done
@@ -229,7 +229,7 @@ done
 # Identify stale worktrees (older than 30 days) in each repository
 for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
     echo "=== $repo ==="
-    find /Users/ciarancarroll/code/tuvens/$repo -mindepth 2 -maxdepth 2 -type d -mtime +30
+    find /Users/ciarancarroll/Code/Tuvens/$repo -mindepth 2 -maxdepth 2 -type d -mtime +30
 done
 ```
 
@@ -239,4 +239,4 @@ done
 - **Workflow**: Continuously improve worktree workflows based on usage
 - **Automation**: Automate routine worktree management tasks
 
-This organization strategy provides a solid foundation for efficient multi-agent development while maintaining clear separation of concerns and enabling effective coordination across the entire Tuvens ecosystem.
+This worktree organization pattern provides a solid foundation for efficient multi-agent development while maintaining clear separation of concerns and enabling effective coordination across the entire Tuvens ecosystem.

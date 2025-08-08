@@ -1,0 +1,29 @@
+═══════════════════════════════════════════════════════════════════════════════
+MOBILE DEV AGENT - READY FOR TASK
+
+GitHub Issue: #22
+Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-mobile/mobile-dev/feature/actually-working-test
+Branch: feature/actually-working-test
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS:
+1. Type: claude
+2. Copy and paste the prompt below
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUDE PROMPT:
+
+I am the mobile dev agent.
+
+Context Loading:
+- Load: .claude/agents/mobile-dev.md
+- Load: Implementation reports and workflow documentation
+
+GitHub Issue: #22
+Task: ACTUALLY WORKING TEST
+
+Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-mobile/mobile-dev/feature/actually-working-test
+Branch: feature/actually-working-test
+
+Start your work by analyzing the task requirements and following the 6-step agent workflow pattern.
+═══════════════════════════════════════════════════════════════════════════════
