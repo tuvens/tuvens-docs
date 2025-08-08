@@ -137,18 +137,39 @@ If a branch becomes corrupted or needs recovery:
 - **Preserve evidence of issues for debugging**
 - **Follow established escalation procedures**
 
+### Safety Tools and Commands
+
+This repository includes safety tools for agents:
+
+#### Pre-commit Hooks
+Static safety validation hooks are available to prevent common violations:
+- **Branch naming validation** - Ensures proper {agent}/{type}/{description} format
+- **Protected branch checks** - Prevents direct commits to main/stage/test
+- **CLAUDE.md validation** - Verifies safety file completeness
+- **Safety rules check** - Scans for secrets and policy violations
+
+Setup: `pip install pre-commit && pre-commit install`
+
+#### Interactive Validation
+- **`./scripts/branch-check`** - Command-line validation of current repository state
+- **Enhanced workflow error messages** - Detailed guidance when validation fails
+- **Branch tracking integration** - Automatic validation status recording
+
 ### Compliance Validation
 
 This CLAUDE.md file works in conjunction with:
-- `.github/workflows/branch-protection.yml` - Automated validation
+- `.github/workflows/branch-protection.yml` - Automated validation with enhanced error messages
+- `.pre-commit-config.yaml` - Local pre-commit safety hooks
+- `scripts/hooks/` - Individual safety validation scripts
+- `scripts/branch-check` - Interactive validation command
 - `agentic-development/branch-tracking/` - Central coordination system
 - Agent-specific configuration files in `.claude/agents/`
 - Cross-repository sync automation templates
 
 **Last Updated**: 2025-08-08  
-**Version**: 1.0  
+**Version**: 1.1 - Enhanced with pre-commit hooks and interactive validation  
 **Maintained By**: Vibe Coder Agent
 
 ---
 
-*This file is automatically validated by branch protection workflows. Any modifications must pass safety checks before being merged.*
+*This file is automatically validated by branch protection workflows and pre-commit hooks. Any modifications must pass safety checks before being merged.*
