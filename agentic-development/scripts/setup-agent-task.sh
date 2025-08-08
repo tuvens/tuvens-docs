@@ -259,16 +259,9 @@ if [ -f "$TRACKING_DIR/task-groups.json" ]; then
         echo "📋 Related task groups found:"
         echo "$RELATED_GROUPS"
         echo ""
-        echo "💡 Recommendation: Consider joining an existing task group for coordination"
-        echo ""
-        read -p "❓ Would you like to join an existing task group? (y/N): " -n 1 -r
-        echo ""
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            echo "🤝 Task group coordination will be set up"
-            TASK_GROUP_ID=$(echo "$RELATED_GROUPS" | head -n1 | cut -d: -f1)
-        else
-            TASK_GROUP_ID=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
-        fi
+        echo "💡 Auto-joining first related task group for coordination"
+        echo "🤝 Task group coordination will be set up"
+        TASK_GROUP_ID=$(echo "$RELATED_GROUPS" | head -n1 | cut -d: -f1)
     else
         echo "   No related task groups found - creating new coordination context"
         TASK_GROUP_ID=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
@@ -436,7 +429,7 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') agent.
+I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') $GITHUB_ISSUE agent.
 
 Context Loading:
 - Load: .claude/agents/$(echo "$AGENT_NAME").md
