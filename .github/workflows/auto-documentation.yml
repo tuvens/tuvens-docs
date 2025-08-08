@@ -1,12 +1,12 @@
-# Auto-Generate Documentation (Based on event-harvester patterns)  
-# Modified for test branch validation - will revert to full branch set after testing
+# Auto-Generate Documentation (Based on event-harvester patterns)
+# Provides Claude agents with current repository context
 
 name: Auto-Generate Documentation
 on:
   push:
-    branches: [test]  # TESTING: Focus on test branch for immediate validation
+    branches: [dev]  # Generate docs on dev branch, flows downstream via merges
   pull_request:
-    branches: [test]
+    branches: [dev]  # Also generate for PRs targeting dev
   workflow_dispatch:
   schedule:
     - cron: '0 2 * * 0'  # Weekly on Sunday at 2 AM UTC
