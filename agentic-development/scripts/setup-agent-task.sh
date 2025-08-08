@@ -335,6 +335,9 @@ fi
 
 cat >> "$PROMPT_FILE" << EOF
 
+🚨 CRITICAL: Read GitHub Issue #$GITHUB_ISSUE for complete task context
+Use: \`gh issue view $GITHUB_ISSUE\` to get the full problem analysis, requirements, and implementation details.
+
 GitHub Issue: #$GITHUB_ISSUE
 Task: $TASK_TITLE
 
@@ -362,8 +365,10 @@ EOF
 fi
 
 cat >> "$PROMPT_FILE" << EOF
+IMPORTANT: Start by reading the GitHub issue (#$GITHUB_ISSUE) with \`gh issue view $GITHUB_ISSUE\` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+
 Start your work by:
-1. Reading the comprehensive GitHub issue #$GITHUB_ISSUE for full context
+1. Running: \`gh issue view $GITHUB_ISSUE\` to read the full GitHub issue
 2. Examining the specified files (if any) to understand current state
 3. Following the 6-step agent workflow pattern
 4. Updating the GitHub issue with your progress and findings
