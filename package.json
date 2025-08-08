@@ -1,0 +1,15 @@
+{
+  "name": "tuvens-multi-agent-system",
+  "version": "1.0.0",
+  "description": "Tuvens multi-agent development system with branch tracking",
+  "scripts": {
+    "test": "bash scripts/test.sh",
+    "test:unit": "bash scripts/test.sh unit",
+    "test:integration": "bash scripts/test.sh integration", 
+    "test:system": "bash scripts/test.sh system",
+    "test:verbose": "bash scripts/test.sh --verbose"
+  },
+  "keywords": ["multi-agent", "development", "branch-tracking", "automation"],
+  "author": "Tuvens Development Team",
+  "license": "MIT"
+}
