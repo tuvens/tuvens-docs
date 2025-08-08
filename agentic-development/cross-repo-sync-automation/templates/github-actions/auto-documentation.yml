@@ -1,12 +1,12 @@
-# Auto-Generate Documentation (Based on event-harvester patterns)
-# This file should be copied to .github/workflows/auto-documentation.yml in each repository
+# Auto-Generate Documentation (Based on event-harvester patterns)  
+# Modified for test branch validation - will revert to full branch set after testing
 
 name: Auto-Generate Documentation
 on:
   push:
-    branches: [dev, test, stage, main]
+    branches: [test]  # TESTING: Focus on test branch for immediate validation
   pull_request:
-    branches: [dev, test, stage, main]
+    branches: [test]
   workflow_dispatch:
   schedule:
     - cron: '0 2 * * 0'  # Weekly on Sunday at 2 AM UTC
