@@ -23,4 +23,4 @@ Thumbs.db
 # Local environment files
 .env
 .env.local
-.env.*.local
+.env.*.locallogs/
