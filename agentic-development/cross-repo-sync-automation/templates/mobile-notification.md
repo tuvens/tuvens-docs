@@ -7,15 +7,13 @@
 - **Message**: [COMMIT_MESSAGE]
 - **Changed Files**: [CHANGED_FILES]
 - **Repository**: [REPO_NAME]
-
 ### 🚨 Critical Changes (Review Immediately)
 This update may include:
-- 📱 New mobile development patterns and standards
-- 🗺️ Updated Mapbox integration guidelines
+- 📱 New mobile integration patterns and standards
 - 🎨 Updated Tuvens design system for mobile
-- 🔧 Enhanced Flutter component architecture
+- 🔧 Enhanced mobile component architecture
 - 🚀 Performance optimization guidelines
-- 📍 Location services and permissions updates
+- 📍 Location services and geo-fencing updates
 - 🔐 Cross-app authentication patterns
 ### 📋 REQUIRED ACTIONS
 
@@ -33,58 +31,61 @@ git log --oneline -5
 # Return to worktree root
 cd ..
 ```
-
 #### Step 2: Verify New Documentation Access
 ```bash
 # Check that new documentation is available
-ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/
-ls -la tuvens-docs/tuvens-docs/integration-guides/mapbox/
-ls -la tuvens-docs/.claude/agents/mobile-dev.md
+ls -la tuvens-docs/integration-guides/
+ls -la tuvens-docs/shared-protocols/
+ls -la tuvens-docs/integration-examples/
 
-# Confirm mobile-specific files exist
-ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md
-ls -la tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md
+# Confirm specific mobile-relevant files exist
+ls -la tuvens-docs/shared-protocols/frontend-integration/README.md
+ls -la tuvens-docs/integration-examples/frontend-integration/README.md
+ls -la tuvens-docs/implementation-guides/cross-app-authentication/README.md
 ```
-
 #### Step 3: Mobile-Specific Actions ⚡
-- [ ] **Review Mobile Standards**: Check `tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md`
-- [ ] **Flutter Architecture**: Review Flutter app structure and patterns
-- [ ] **Mapbox Integration**: Verify map functionality follows guidelines
-- [ ] **Performance Standards**: Ensure 60fps target and efficient memory usage
-- [ ] **Platform Compliance**: Check iOS 13+ and Android API 26+ requirements
-- [ ] **API Integration**: Verify Tuvens API usage follows mobile patterns
+- [ ] **Review Mobile Standards**: Check mobile-relevant sections in `shared-protocols/`
+- [ ] **Check Authentication Updates**: Review `implementation-guides/cross-app-authentication/README.md`
+- [ ] **Verify Design System Compliance**: 
+  - Colors: Tuvens Blue (#5C69E6), Coral (#FF5A6D), Yellow (#FFD669), Navy (#071551)
+  - Typography: System fonts for mobile (SF Pro, Roboto)
+  - Mobile-responsive patterns and touch interfaces
+- [ ] **Update Non-Compliant Components**: Fix any components not following new standards
+- [ ] **Review Location Services**: Check any geo-fencing and location-based feature updates
 
-#### Step 4: Development Environment Verification
+#### Step 4: Compliance Verification
 ```bash
-# Verify Flutter environment
-flutter doctor
+# Run mobile development checks
+npm ci
+npm run lint
+npm run typecheck
+npm test -- --coverage
 
-# Check dependencies
-flutter pub get
+# Verify coverage meets 70% requirement (mobile-adjusted)
+echo "Coverage should be ≥70%"
 
-# Run tests with coverage
-flutter test --coverage
-lcov --summary coverage/lcov.info
+# Check for Tuvens design system usage in mobile
+grep -r "primary\|secondary\|accent" src/styles/ || echo "Design system in use"
 
-# Platform-specific builds
-flutter build ios --debug
-flutter build android --debug
+# Test mobile-specific functionality
+npm run test:ios     # If iOS tests available
+npm run test:android # If Android tests available
 ```
 
-#### Step 5: Mobile Testing Requirements
+#### Step 5: Platform Testing (If Applicable)
 ```bash
-# Unit tests for core logic
-flutter test test/unit/
+# Test React Native functionality (if applicable)
+npx react-native doctor
+npx react-native run-ios --simulator="iPhone 14"
+npx react-native run-android
 
-# Widget tests for UI components
-flutter test test/widget/
+# Test Flutter functionality (if applicable) 
+flutter doctor
+flutter test
+flutter build apk --debug
 
-# Integration tests for user flows
-flutter test integration_test/
-
-# Platform-specific testing
-# iOS: Test on simulator and physical device
-# Android: Test on emulator and physical device
+# Verify cross-app authentication works
+# Test location-based features
 ```
 ### 🔄 MANDATORY: Confirm Completion
 
@@ -97,69 +98,51 @@ When you've completed all steps, **comment on this issue** with:
 **Updated By**: @[your-github-username]
 **Completed Actions**:
 - [x] ✅ Pulled latest tuvens-docs changes (commit: [COMMIT_SHA])
-- [x] ✅ Verified new mobile documentation access
-- [x] ✅ Reviewed mobile development standards
-- [x] ✅ Updated Flutter app following new guidelines
-- [x] ✅ Verified Mapbox integration compliance
-- [x] ✅ Achieved 70%+ test coverage maintained
-- [x] ✅ All platform builds successful
+- [x] ✅ Verified new documentation access
+- [x] ✅ Reviewed mobile standards and patterns
+- [x] ✅ Updated components for design system compliance
+- [x] ✅ Verified 70%+ test coverage maintained
+- [x] ✅ All linting and type checking passed
 
-**Testing Results**:
+**Verification Commands Run**:
 ```bash
-flutter test --coverage     # ✅ 75% coverage achieved
-flutter build ios          # ✅ iOS build successful
-flutter build android      # ✅ Android build successful
-flutter doctor             # ✅ No issues found
+npm run lint         # ✅ Passed
+npm run typecheck    # ✅ Passed  
+npm test -- --coverage # ✅ 75% coverage achieved
 ```
 
-**Performance Verification**:
-- [x] App startup time: < 3 seconds
-- [x] 60fps maintained during scrolling
-- [x] Memory usage optimized
-- [x] Battery usage minimal
-
-**Platform Testing**:
-- [x] iOS 13+ compatibility verified
-- [x] Android API 26+ compatibility verified
-- [x] Mapbox functionality tested on both platforms
-- [x] Location permissions working correctly
-
-**Updated Components** (if any): [List any Flutter widgets or services updated]
-**Performance Improvements** (if any): [List any optimizations made]
-**Next Steps**: [Any follow-up mobile development tasks needed]
+**Updated Components** (if any): [List any components updated for compliance]
+**Platform Testing**: [iOS/Android/Flutter testing results]
+**Next Steps**: [Any follow-up actions needed]
 ```
-
 ### ⏰ Timeline Requirements
 - **Immediate** (within 4 hours): Pull changes and verify access
-- **Within 24 hours**: Complete mobile standards compliance verification
-- **Within 48 hours**: Update any non-compliant Flutter components
-- **Within 1 week**: Full platform testing and performance optimization complete
-
+- **Within 24 hours**: Complete compliance verification and review requirements  
+- **Within 48 hours**: Update any non-compliant components or implement missing features
+- **Within 1 week**: Full integration testing and verification complete
 ### 🆘 Need Help?
-- **Mobile Standards**: Review `tuvens-docs/tuvens-docs/shared-protocols/mobile-development/README.md`
-- **Flutter Patterns**: Check Flutter-specific documentation
-- **Mapbox Integration**: See `tuvens-docs/tuvens-docs/integration-guides/mapbox/README.md`
-- **Agent Context**: Load `tuvens-docs/.claude/agents/mobile-dev.md`
-- **Questions**: Comment on this issue for assistance
-
-### 📈 Mobile Quality Standards
-Your Flutter app must maintain:
-- ✅ **Test Coverage**: ≥70% (mobile-optimized requirement)
-- ✅ **Performance**: 60fps target, <3s startup time
-- ✅ **Platform Support**: iOS 13+, Android API 26+
-- ✅ **Memory Usage**: <100MB typical usage
-- ✅ **Battery Efficiency**: Minimal background activity
-- ✅ **User Experience**: Smooth animations and responsive UI
-
-### 📱 Mobile Development Checklist
-- [ ] Flutter version compatibility verified
-- [ ] Mapbox SDK properly configured
-- [ ] Location permissions implemented correctly
-- [ ] Push notifications working (if applicable)
-- [ ] Offline functionality tested
-- [ ] API integration following mobile patterns
-- [ ] UI responsive across different screen sizes
-- [ ] Accessibility features implemented
+- **Troubleshooting**: Check `tuvens-docs/tuvens-docs/shared-protocols/automated-change-notification.md`
+- **Questions**: Comment on this issue for assistance- **Mobile Standards**: Review mobile-relevant sections in `shared-protocols/`
+- **Authentication**: Check `implementation-guides/cross-app-authentication/README.md`
+### 🤖 Optional: Enable Automated Verification
+For automatic verification when you comment with completion status, install our workflow:
+```bash
+# One-time setup (only if not already installed)
+mkdir -p .github/workflows
+curl -o .github/workflows/verify-tuvens-docs.yml \
+  https://raw.githubusercontent.com/tuvens/tuvens-docs/main/agentic-development/cross-repo-sync-automation/templates/repository-verification-workflow.yml
+git add .github/workflows/verify-tuvens-docs.yml
+git commit -m "Add automated tuvens-docs verification workflow"
+```
+This workflow will automatically verify your integration and close this issue when you comment with completion confirmation.
+### 📈 Quality Standards
+Your mobile repository must maintain:
+- ✅ **Test Coverage**: ≥70% (mobile-adjusted)
+- ✅ **TypeScript**: Strict mode compliance (if applicable)
+- ✅ **Linting**: Zero ESLint/Flutter analyzer errors
+- ✅ **Design System**: Tuvens mobile color palette and typography
+- ✅ **Performance**: Smooth 60fps animations
+- ✅ **Platform Compliance**: iOS App Store & Google Play guidelines
 ---
 **This issue will remain open until confirmation is received and verification passes**
 
