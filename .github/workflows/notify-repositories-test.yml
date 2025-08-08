@@ -25,16 +25,26 @@ jobs:
       frontend-changes: ${{ steps.changes.outputs.frontend-changes }}
       backend-changes: ${{ steps.changes.outputs.backend-changes }}
       integration-changes: ${{ steps.changes.outputs.integration-changes }}
+      mobile-changes: ${{ steps.changes.outputs.mobile-changes }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0  # Get full history for proper multi-commit diff
       
       - name: Analyze changes
         id: changes
         run: |
-          # Get changed files
-          changed_files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          # Get changed files - handle both push events and manual triggers
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            # For push events, use before/after SHAs to get all changes in the push
+            changed_files=$(git diff --name-only ${{ github.event.before }}..${{ github.event.after }} | tr '\n' ',' | sed 's/,$//')
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            # For manual triggers, get changes from last commit
+            changed_files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          else
+            # Fallback for other events
+            changed_files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          fi
           echo "changed-files=$changed_files" >> $GITHUB_OUTPUT
           
           # Get commit info
@@ -50,26 +60,41 @@ jobs:
             echo "has-changes=false" >> $GITHUB_OUTPUT
           fi
           
-          # Analyze change types
+          # Analyze change types for granular notification routing
           frontend_files="tuvens-docs/shared-protocols/frontend-integration/|tuvens-docs/integration-examples/frontend-integration/|tuvens-docs/claude-templates/"
           backend_files="tuvens-docs/implementation-guides/cross-app-authentication/|tuvens-docs/integration-guides/hi-events/api-requirements.md"
           integration_files="tuvens-docs/integration-guides/hi-events/|tuvens-docs/setup.sh"
+          mobile_files="tuvens-docs/shared-protocols/mobile-development/|tuvens-docs/integration-examples/mobile-integration/"
           
-          echo "frontend-changes=false" >> $GITHUB_OUTPUT
-          echo "backend-changes=false" >> $GITHUB_OUTPUT  
-          echo "integration-changes=false" >> $GITHUB_OUTPUT
+          # Initialize change type flags
+          frontend_changes=false
+          backend_changes=false
+          integration_changes=false
+          mobile_changes=false
           
+          # Check each changed file against patterns
           echo "$changed_files" | tr ',' '\n' | while read file; do
-            if echo "$file" | grep -E "$frontend_files" > /dev/null; then
-              echo "frontend-changes=true" >> $GITHUB_OUTPUT
-            fi
-            if echo "$file" | grep -E "$backend_files" > /dev/null; then
-              echo "backend-changes=true" >> $GITHUB_OUTPUT
-            fi
-            if echo "$file" | grep -E "$integration_files" > /dev/null; then
-              echo "integration-changes=true" >> $GITHUB_OUTPUT
+            if [ -n "$file" ]; then
+              if echo "$file" | grep -E "$frontend_files" > /dev/null; then
+                frontend_changes=true
+              fi
+              if echo "$file" | grep -E "$backend_files" > /dev/null; then
+                backend_changes=true
+              fi
+              if echo "$file" | grep -E "$integration_files" > /dev/null; then
+                integration_changes=true
+              fi
+              if echo "$file" | grep -E "$mobile_files" > /dev/null; then
+                mobile_changes=true
+              fi
             fi
           done
+          
+          # Output change type flags
+          echo "frontend-changes=$frontend_changes" >> $GITHUB_OUTPUT
+          echo "backend-changes=$backend_changes" >> $GITHUB_OUTPUT  
+          echo "integration-changes=$integration_changes" >> $GITHUB_OUTPUT
+          echo "mobile-changes=$mobile_changes" >> $GITHUB_OUTPUT
 
   notify-repositories:
     needs: analyze-changes
@@ -86,7 +111,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Check if repository should be notified
+        id: should_notify
+        run: |
+          repo_type="${{ matrix.repo.type }}"
+          frontend_changes="${{ needs.analyze-changes.outputs.frontend-changes }}"
+          backend_changes="${{ needs.analyze-changes.outputs.backend-changes }}"
+          integration_changes="${{ needs.analyze-changes.outputs.integration-changes }}"
+          mobile_changes="${{ needs.analyze-changes.outputs.mobile-changes }}"
+          
+          should_notify=false
+          
+          # Check if this repository type has relevant changes
+          if [[ "$repo_type" == "frontend" && "$frontend_changes" == "true" ]]; then
+            should_notify=true
+          elif [[ "$repo_type" == "backend" && "$backend_changes" == "true" ]]; then
+            should_notify=true
+          elif [[ "$repo_type" == "integration" && "$integration_changes" == "true" ]]; then
+            should_notify=true
+          elif [[ "$repo_type" == "mobile" && "$mobile_changes" == "true" ]]; then
+            should_notify=true
+          fi
+          
+          echo "should_notify=$should_notify" >> $GITHUB_OUTPUT
+          echo "Repository ${{ matrix.repo.name }} ($repo_type): should_notify=$should_notify"
+      
       - name: Generate repository-specific notification
+        if: steps.should_notify.outputs.should_notify == 'true'
         id: notification
         run: |
           repo_name="${{ matrix.repo.name }}"
@@ -121,26 +172,25 @@ jobs:
           echo "title=$title" >> $GITHUB_OUTPUT
 
       - name: Create test notification issue
+        if: steps.should_notify.outputs.should_notify == 'true'
         continue-on-error: true  # Don't fail entire workflow if one repo fails
         env:
           GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
         run: |
           echo "🧪 TESTING: Processing repository: ${{ matrix.repo.name }}"
           
-          # For testing, only create issues in tuvens-docs (not external repos)
-          if [[ "${{ matrix.repo.name }}" == "tuvens/tuvens-docs" ]]; then
-            echo "📝 Creating TEST notification issue in tuvens-docs"
-            
-            if gh issue create \
-              --repo "tuvens/tuvens-docs" \
-              --title "${{ steps.notification.outputs.title }}" \
-              --body-file notification.md \
-              --label "test,automation"; then
-              echo "✅ Successfully created TEST issue in tuvens-docs"
-            else
-              echo "❌ Failed to create TEST issue in tuvens-docs"
-            fi
+          # For testing, create test issues in tuvens-docs for each matrix repository
+          # This allows us to test the notification system without spamming external repos
+          echo "📝 Creating TEST notification issue in tuvens-docs for ${{ matrix.repo.name }}"
+          
+          if gh issue create \
+            --repo "tuvens/tuvens-docs" \
+            --title "TEST: ${{ steps.notification.outputs.title }} [${{ matrix.repo.name }}]" \
+            --body-file notification.md \
+            --label "test,automation,documentation-update"; then
+            echo "✅ Successfully created TEST issue in tuvens-docs for ${{ matrix.repo.name }}"
           else
-            echo "🚫 TESTING: Skipping external repository ${{ matrix.repo.name }}"
-            echo "   (Would create notification issue in production)"
+            echo "❌ Failed to create TEST issue in tuvens-docs for ${{ matrix.repo.name }}"
           fi
+          
+          echo "ℹ️  In production, this would create issue in ${{ matrix.repo.name }}"
