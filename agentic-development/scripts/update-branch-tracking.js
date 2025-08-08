@@ -210,6 +210,61 @@ function handleLocalUpdate(payload) {
     }
 }
 
+function handleValidation(payload) {
+    console.log(`🛡️ Handling branch validation: ${payload.repository}/${payload.branch}`);
+    
+    const activeBranches = loadJSON(ACTIVE_BRANCHES_FILE);
+    
+    // Ensure repository exists in active branches
+    if (!activeBranches.branches) {
+        activeBranches.branches = {};
+    }
+    if (!activeBranches.branches[payload.repository]) {
+        activeBranches.branches[payload.repository] = [];
+    }
+    
+    // Find existing branch or create new entry
+    let branch = activeBranches.branches[payload.repository].find(b => b.name === payload.branch);
+    
+    if (!branch) {
+        // Create new branch entry for validation tracking
+        branch = {
+            name: payload.branch,
+            author: 'validation-system',
+            created: new Date().toISOString(),
+            lastActivity: new Date().toISOString(),
+            taskGroup: null,
+            status: 'validating',
+            worktree: null,
+            agent: payload.agent,
+            relatedBranches: [],
+            githubUrl: `https://github.com/tuvens/${payload.repository}/tree/${payload.branch}`,
+            issues: []
+        };
+        activeBranches.branches[payload.repository].push(branch);
+    }
+    
+    // Update validation information
+    branch.lastActivity = new Date().toISOString();
+    branch.validationStatus = payload['validation-status'] || 'pending';
+    branch.prNumber = payload['pr-number'] || null;
+    
+    if (payload['validation-status'] === 'passed') {
+        branch.status = 'validated';
+        console.log(`✅ Branch ${payload.branch} passed validation`);
+    } else if (payload['validation-status'] === 'failed') {
+        branch.status = 'validation-failed';
+        console.log(`❌ Branch ${payload.branch} failed validation`);
+    }
+    
+    // Update timestamps
+    activeBranches.lastUpdated = new Date().toISOString();
+    activeBranches.generatedBy = 'Branch Protection Workflow';
+    
+    // Save updates
+    saveJSON(ACTIVE_BRANCHES_FILE, activeBranches);
+}
+
 // Main execution
 function main() {
     const args = process.argv.slice(2);
@@ -264,6 +319,9 @@ function main() {
         case 'local-update':
             handleLocalUpdate(payload);
             break;
+        case 'validate':
+            handleValidation(payload);
+            break;
         default:
             console.error(`Unknown event type: ${eventType}`);
             process.exit(1);
@@ -281,5 +339,6 @@ module.exports = {
     handleBranchCreated,
     handleBranchMerged,
     handleBranchDeleted,
-    handleLocalUpdate
+    handleLocalUpdate,
+    handleValidation
 };
