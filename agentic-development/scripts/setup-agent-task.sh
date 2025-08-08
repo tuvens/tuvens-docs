@@ -6,27 +6,80 @@ set -euo pipefail
 
 # Usage function
 usage() {
-    echo "Usage: $0 <agent_name> <task_title> <task_description>"
+    echo "Usage: $0 <agent_name> <task_title> <task_description> [context_file] [--files=file1,file2] [--success-criteria='criteria']"
     echo ""
-    echo "Example:"
-    echo "  $0 vibe-coder 'API Documentation' 'Create comprehensive API docs'"
+    echo "Examples:"
+    echo "  Basic usage:"
+    echo "    $0 vibe-coder 'API Documentation' 'Create comprehensive API docs'"
+    echo ""
+    echo "  With context file:"
+    echo "    $0 vibe-coder 'Fix Docs' 'Update branching docs' /tmp/task-context.md"
+    echo ""
+    echo "  With file references:"
+    echo "    $0 vibe-coder 'Fix Issue' 'Description' --files='file1.md,file2.md'"
+    echo ""
+    echo "  Full enhanced usage:"
+    echo "    $0 vibe-coder 'Complex Task' 'Description' /tmp/context.md --files='a.md,b.md' --success-criteria='All tests pass'"
     echo ""
     exit 1
 }
 
-# Check arguments
-if [[ $# -ne 3 ]]; then
+# Initialize variables
+AGENT_NAME=""
+TASK_TITLE=""
+TASK_DESCRIPTION=""
+CONTEXT_FILE=""
+FILES_TO_EXAMINE=""
+SUCCESS_CRITERIA=""
+
+# Check minimum arguments first
+if [[ $# -lt 3 ]]; then
     usage
 fi
 
+# Parse required arguments
 AGENT_NAME="$1"
-TASK_TITLE="$2"
+TASK_TITLE="$2" 
 TASK_DESCRIPTION="$3"
+
+# Parse optional arguments
+shift 3
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --files=*)
+            FILES_TO_EXAMINE="${1#*=}"
+            shift
+            ;;
+        --success-criteria=*)
+            SUCCESS_CRITERIA="${1#*=}"
+            shift
+            ;;
+        --help|-h)
+            usage
+            ;;
+        -*)
+            echo "Unknown option: $1"
+            usage
+            ;;
+        *)
+            # Assume it's a context file if it exists
+            if [[ -f "$1" ]]; then
+                CONTEXT_FILE="$1"
+            else
+                echo "Warning: Context file '$1' not found, ignoring"
+            fi
+            shift
+            ;;
+    esac
+done
 
 echo "🚀 Setting up agent task: $AGENT_NAME"
 echo "========================================"
 echo "Task: $TASK_TITLE"
 echo "Description: $TASK_DESCRIPTION"
+[[ -n "$CONTEXT_FILE" ]] && echo "Context File: $CONTEXT_FILE"
+[[ -n "$FILES_TO_EXAMINE" ]] && echo "Files to Examine: $FILES_TO_EXAMINE"
+[[ -n "$SUCCESS_CRITERIA" ]] && echo "Success Criteria: $SUCCESS_CRITERIA"
 echo ""
 
 # Step 1: Environment validation
@@ -38,14 +91,105 @@ echo ""
 # Step 2: Create GitHub issue
 echo "Step 2: Creating GitHub issue..."
 
-# Create issue using temporary file to avoid complex variable expansion
-TEMP_BODY_FILE="/tmp/github-issue-body-$$"
-cat > "$TEMP_BODY_FILE" << EOF
-Agent: $AGENT_NAME
-Task: $TASK_TITLE
-Description: $TASK_DESCRIPTION
+# Function to validate and format file references
+validate_files() {
+    local files_input="$1"
+    local validated_files=""
+    local invalid_files=""
+    
+    if [[ -n "$files_input" ]]; then
+        IFS=',' read -ra file_array <<< "$files_input"
+        for file in "${file_array[@]}"; do
+            file=$(echo "$file" | xargs) # trim whitespace
+            if [[ -f "$file" ]]; then
+                validated_files="${validated_files}- \`$file\`\n"
+            else
+                invalid_files="${invalid_files}- \`$file\` (NOT FOUND)\n"
+            fi
+        done
+    fi
+    
+    echo -e "$validated_files"
+    if [[ -n "$invalid_files" ]]; then
+        echo "⚠️  Warning: Some files not found:"
+        echo -e "$invalid_files"
+    fi
+}
 
-Generated with Claude Code automation
+# Create enhanced issue body using temporary file
+TEMP_BODY_FILE="/tmp/github-issue-body-$$"
+
+# Load context from file if provided
+CONTEXT_CONTENT=""
+if [[ -n "$CONTEXT_FILE" && -f "$CONTEXT_FILE" ]]; then
+    echo "📄 Loading context from: $CONTEXT_FILE"
+    CONTEXT_CONTENT=$(cat "$CONTEXT_FILE")
+fi
+
+# Validate files if provided
+VALIDATED_FILES=""
+if [[ -n "$FILES_TO_EXAMINE" ]]; then
+    echo "📁 Validating file references..."
+    VALIDATED_FILES=$(validate_files "$FILES_TO_EXAMINE")
+fi
+
+# Create structured issue body
+cat > "$TEMP_BODY_FILE" << EOF
+# $TASK_TITLE
+
+**Agent**: $AGENT_NAME  
+**Generated**: $(date '+%Y-%m-%d %H:%M:%S')
+
+## Task Description
+$TASK_DESCRIPTION
+
+EOF
+
+# Add context section if context file provided
+if [[ -n "$CONTEXT_CONTENT" ]]; then
+    cat >> "$TEMP_BODY_FILE" << EOF
+## Context Analysis
+$CONTEXT_CONTENT
+
+EOF
+fi
+
+# Add files section if files provided
+if [[ -n "$VALIDATED_FILES" ]]; then
+    cat >> "$TEMP_BODY_FILE" << EOF
+## Files to Examine
+$VALIDATED_FILES
+
+EOF
+fi
+
+# Add success criteria if provided
+if [[ -n "$SUCCESS_CRITERIA" ]]; then
+    cat >> "$TEMP_BODY_FILE" << EOF
+## Success Criteria
+$SUCCESS_CRITERIA
+
+EOF
+fi
+
+# Add standard sections for comprehensive context
+cat >> "$TEMP_BODY_FILE" << EOF
+## Implementation Notes
+- Review the task requirements carefully
+- Follow the 6-step agent workflow pattern
+- Update this issue with progress and findings
+- Reference specific files and line numbers in comments
+
+## Validation Checklist
+- [ ] Task requirements understood
+- [ ] Relevant files identified and examined
+- [ ] Solution implemented according to requirements
+- [ ] Testing completed (if applicable)
+- [ ] Documentation updated (if applicable)
+- [ ] Issue updated with final results
+
+---
+*Generated with Claude Code automation*
 EOF
 
 # Create GitHub issue
@@ -138,17 +282,34 @@ if [[ "$IS_TUVENS_DOCS" == "false" ]]; then
 fi
 echo ""
 
-# Step 4: Create prompt file
-echo "Step 4: Creating agent prompt..."
+# Step 4: Create enhanced agent prompt
+echo "Step 4: Creating enhanced agent prompt..."
 PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
 
 cat > "$PROMPT_FILE" << EOF
 ═══════════════════════════════════════════════════════════════════════════════
-$(echo "$AGENT_NAME" | tr '[:lower:]' '[:upper:]' | tr '-' ' ') AGENT - READY FOR TASK
+$(echo "$AGENT_NAME" | tr '[:lower:]' '[:upper:]' | tr '-' ' ') AGENT - ENHANCED TASK CONTEXT
 
 GitHub Issue: #$GITHUB_ISSUE
 Worktree: $WORKTREE_PATH
 Branch: $BRANCH_NAME
+EOF
+
+# Add context file reference if provided
+if [[ -n "$CONTEXT_FILE" ]]; then
+    cat >> "$PROMPT_FILE" << EOF
+Context File: $CONTEXT_FILE
+EOF
+fi
+
+# Add file references if provided
+if [[ -n "$FILES_TO_EXAMINE" ]]; then
+    cat >> "$PROMPT_FILE" << EOF
+Files to Examine: $FILES_TO_EXAMINE
+EOF
+fi
+
+cat >> "$PROMPT_FILE" << EOF
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -163,6 +324,16 @@ I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') agent.
 Context Loading:
 - Load: .claude/agents/$(echo "$AGENT_NAME").md
 - Load: Implementation reports and workflow documentation
+EOF
+
+# Add context file loading if provided
+if [[ -n "$CONTEXT_FILE" ]]; then
+    cat >> "$PROMPT_FILE" << EOF
+- Load: Context from $CONTEXT_FILE
+EOF
+fi
+
+cat >> "$PROMPT_FILE" << EOF
 
 GitHub Issue: #$GITHUB_ISSUE
 Task: $TASK_TITLE
@@ -170,7 +341,33 @@ Task: $TASK_TITLE
 Working Directory: $WORKTREE_PATH
 Branch: $BRANCH_NAME
 
-Start your work by analyzing the task requirements and following the 6-step agent workflow pattern.
+EOF
+
+# Add files to examine if provided
+if [[ -n "$FILES_TO_EXAMINE" ]]; then
+    cat >> "$PROMPT_FILE" << EOF
+Priority Files to Examine:
+$(echo "$FILES_TO_EXAMINE" | tr ',' '\n' | sed 's/^/- /')
+
+EOF
+fi
+
+# Add success criteria if provided
+if [[ -n "$SUCCESS_CRITERIA" ]]; then
+    cat >> "$PROMPT_FILE" << EOF
+Success Criteria:
+$SUCCESS_CRITERIA
+
+EOF
+fi
+
+cat >> "$PROMPT_FILE" << EOF
+Start your work by:
+1. Reading the comprehensive GitHub issue #$GITHUB_ISSUE for full context
+2. Examining the specified files (if any) to understand current state
+3. Following the 6-step agent workflow pattern
+4. Updating the GitHub issue with your progress and findings
+
 ═══════════════════════════════════════════════════════════════════════════════
 EOF
 
