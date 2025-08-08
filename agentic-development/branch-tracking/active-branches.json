@@ -1,0 +1,22 @@
+{
+  "lastUpdated": "2025-01-15T10:00:00Z",
+  "generatedBy": "Central Branch Tracking System",
+  "tuvensStrategy": "feature/* → dev → test → stage → main with change-type prefixes",
+  "branches": {
+    "tuvens-docs": [
+      {
+        "name": "feature/implement-enhanced-agent-session-context-loading",
+        "author": "ciarancarroll",
+        "created": "2025-01-15T10:00:00Z",
+        "lastActivity": "2025-01-15T10:00:00Z",
+        "taskGroup": "agent-session-enhancement",
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/implement-enhanced-agent-session-context-loading",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/implement-enhanced-agent-session-context-loading",
+        "issues": ["tuvens-docs#47"]
+      }
+    ]
+  }
+}
