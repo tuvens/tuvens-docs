@@ -1,0 +1,146 @@
+name: Notify Repositories of Documentation Updates (TEST)
+
+on:
+  workflow_dispatch:  # Allow manual triggering for testing
+  push:
+    branches: [test]  # TESTING: Modified to trigger on test branch
+    paths:
+      - 'tuvens-docs/integration-guides/**'
+      - 'tuvens-docs/implementation-guides/**'  
+      - 'tuvens-docs/shared-protocols/**'
+      - 'tuvens-docs/integration-examples/**'
+      - 'tuvens-docs/claude-templates/**'
+      - 'tuvens-docs/setup.sh'
+      - 'tuvens-docs/README.md'
+      - 'tuvens-docs/CONTRIBUTING.md'
+
+jobs:
+  analyze-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ steps.changes.outputs.has-changes }}
+      changed-files: ${{ steps.changes.outputs.changed-files }}
+      commit-message: ${{ steps.changes.outputs.commit-message }}
+      commit-sha: ${{ steps.changes.outputs.commit-sha }}
+      frontend-changes: ${{ steps.changes.outputs.frontend-changes }}
+      backend-changes: ${{ steps.changes.outputs.backend-changes }}
+      integration-changes: ${{ steps.changes.outputs.integration-changes }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Analyze changes
+        id: changes
+        run: |
+          # Get changed files
+          changed_files=$(git diff --name-only HEAD~1 HEAD | tr '\n' ',' | sed 's/,$//')
+          echo "changed-files=$changed_files" >> $GITHUB_OUTPUT
+          
+          # Get commit info
+          commit_message=$(git log -1 --pretty=%s)
+          commit_sha=$(git rev-parse --short HEAD)
+          echo "commit-message=$commit_message" >> $GITHUB_OUTPUT
+          echo "commit-sha=$commit_sha" >> $GITHUB_OUTPUT
+          
+          # Check if we have relevant changes
+          if [ -n "$changed_files" ]; then
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          fi
+          
+          # Analyze change types
+          frontend_files="tuvens-docs/shared-protocols/frontend-integration/|tuvens-docs/integration-examples/frontend-integration/|tuvens-docs/claude-templates/"
+          backend_files="tuvens-docs/implementation-guides/cross-app-authentication/|tuvens-docs/integration-guides/hi-events/api-requirements.md"
+          integration_files="tuvens-docs/integration-guides/hi-events/|tuvens-docs/setup.sh"
+          
+          echo "frontend-changes=false" >> $GITHUB_OUTPUT
+          echo "backend-changes=false" >> $GITHUB_OUTPUT  
+          echo "integration-changes=false" >> $GITHUB_OUTPUT
+          
+          echo "$changed_files" | tr ',' '\n' | while read file; do
+            if echo "$file" | grep -E "$frontend_files" > /dev/null; then
+              echo "frontend-changes=true" >> $GITHUB_OUTPUT
+            fi
+            if echo "$file" | grep -E "$backend_files" > /dev/null; then
+              echo "backend-changes=true" >> $GITHUB_OUTPUT
+            fi
+            if echo "$file" | grep -E "$integration_files" > /dev/null; then
+              echo "integration-changes=true" >> $GITHUB_OUTPUT
+            fi
+          done
+
+  notify-repositories:
+    needs: analyze-changes
+    if: needs.analyze-changes.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: 
+          - { name: "tuvens/eventdigest-ai", type: "frontend" }
+          - { name: "tuvens/tuvens-client", type: "frontend" }  
+          - { name: "tuvens/tuvens-api", type: "backend" }
+          - { name: "tuvens/hi.events", type: "integration" }
+          - { name: "tuvens/tuvens-mobile", type: "mobile" }
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate repository-specific notification
+        id: notification
+        run: |
+          repo_name="${{ matrix.repo.name }}"
+          repo_type="${{ matrix.repo.type }}"
+          changed_files="${{ needs.analyze-changes.outputs.changed-files }}"
+          commit_message="${{ needs.analyze-changes.outputs.commit-message }}"
+          commit_sha="${{ needs.analyze-changes.outputs.commit-sha }}"
+          
+          # Generate issue title
+          title="📢 TEST: Documentation Updates Available (${commit_sha})"
+          
+          # Read the appropriate template
+          if [ "$repo_type" = "frontend" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/frontend-notification.md"
+          elif [ "$repo_type" = "backend" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/backend-notification.md"
+          elif [ "$repo_type" = "mobile" ]; then
+            template_file="agentic-development/cross-repo-sync-automation/templates/mobile-notification.md"
+          else
+            template_file="agentic-development/cross-repo-sync-automation/templates/integration-notification.md"
+          fi
+          
+          # Replace placeholders in template
+          issue_body=$(cat "$template_file")
+          issue_body="${issue_body//\[CHANGED_FILES\]/$changed_files}"
+          issue_body="${issue_body//\[COMMIT_SHA\]/$commit_sha}"
+          issue_body="${issue_body//\[COMMIT_MESSAGE\]/$commit_message}"
+          issue_body="${issue_body//\[REPO_NAME\]/$repo_name}"
+          
+          # Save to file for gh command
+          echo "$issue_body" > notification.md
+          echo "title=$title" >> $GITHUB_OUTPUT
+
+      - name: Create test notification issue
+        continue-on-error: true  # Don't fail entire workflow if one repo fails
+        env:
+          GH_TOKEN: ${{ secrets.TUVENS_DOCS_TOKEN }}
+        run: |
+          echo "🧪 TESTING: Processing repository: ${{ matrix.repo.name }}"
+          
+          # For testing, only create issues in tuvens-docs (not external repos)
+          if [[ "${{ matrix.repo.name }}" == "tuvens/tuvens-docs" ]]; then
+            echo "📝 Creating TEST notification issue in tuvens-docs"
+            
+            if gh issue create \
+              --repo "tuvens/tuvens-docs" \
+              --title "${{ steps.notification.outputs.title }}" \
+              --body-file notification.md \
+              --label "test,automation"; then
+              echo "✅ Successfully created TEST issue in tuvens-docs"
+            else
+              echo "❌ Failed to create TEST issue in tuvens-docs"
+            fi
+          else
+            echo "🚫 TESTING: Skipping external repository ${{ matrix.repo.name }}"
+            echo "   (Would create notification issue in production)"
+          fi
