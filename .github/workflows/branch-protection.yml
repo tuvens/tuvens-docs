@@ -30,6 +30,19 @@ jobs:
           
           if [ ! -f "CLAUDE.md" ]; then
             echo "❌ CLAUDE.md file not found"
+            echo ""
+            echo "🛡️  The CLAUDE.md file is required for repository safety."
+            echo ""
+            echo "This file should contain agent guidelines and safety rules including:"
+            echo "  • Critical Claude Code Safety Rules"
+            echo "  • Mandatory Branch Naming Conventions"
+            echo "  • Pull Request Target Branch Rules"
+            echo "  • Emergency Branch Recovery Procedures"
+            echo "  • Testing Protocol Requirements"
+            echo ""
+            echo "📖 To create CLAUDE.md, see existing examples in other repositories"
+            echo "   or refer to the branch protection documentation."
+            echo ""
             echo "valid=false" >> $GITHUB_OUTPUT
             echo "error=CLAUDE.md file is required for repository safety" >> $GITHUB_OUTPUT
             exit 1
@@ -53,8 +66,22 @@ jobs:
           done
           
           if [ ${#missing_sections[@]} -gt 0 ]; then
-            echo "❌ CLAUDE.md is missing required sections:"
-            printf '%s\n' "${missing_sections[@]}"
+            echo "❌ CLAUDE.md is missing required safety sections:"
+            echo ""
+            for missing in "${missing_sections[@]}"; do
+              echo "  • $missing"
+            done
+            echo ""
+            echo "🛡️  These sections are critical for agent safety and coordination."
+            echo ""
+            echo "✅ To fix this:"
+            echo "  1. Add the missing sections to your CLAUDE.md file"
+            echo "  2. Include comprehensive safety rules for each section"
+            echo "  3. Ensure agent-specific guidelines are documented"
+            echo "  4. Test your changes with the branch-check command"
+            echo ""
+            echo "📖 See existing CLAUDE.md files for section examples and format"
+            echo ""
             echo "valid=false" >> $GITHUB_OUTPUT
             echo "error=CLAUDE.md missing required safety sections" >> $GITHUB_OUTPUT
             exit 1
@@ -63,6 +90,18 @@ jobs:
           # Validate 5-branch strategy documentation
           if ! grep -q "main ← stage ← test ← dev ← feature" CLAUDE.md; then
             echo "❌ CLAUDE.md missing 5-branch strategy documentation"
+            echo ""
+            echo "🛡️  CLAUDE.md must document the 5-branch strategy:"
+            echo "   main ← stage ← test ← dev ← feature/*"
+            echo ""
+            echo "✅ To fix this:"
+            echo "  1. Add a section documenting the branch flow"
+            echo "  2. Specify target branches for different change types"
+            echo "  3. Include examples of proper branch targeting"
+            echo ""
+            echo "Example documentation:"
+            echo '  **MUST follow the 5-branch strategy: main ← stage ← test ← dev ← feature/***'
+            echo ""
             echo "valid=false" >> $GITHUB_OUTPUT
             echo "error=CLAUDE.md must document the 5-branch strategy" >> $GITHUB_OUTPUT
             exit 1
@@ -90,10 +129,37 @@ jobs:
             echo "✅ Branch naming validation passed: $branch_name"
             echo "valid=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ Branch name does not follow required pattern: {agent-name}/{task-type}/{descriptive-name}"
-            echo "Branch: $branch_name"
-            echo "Valid agents: vibe-coder, docs-orchestrator, devops, laravel-dev, react-dev, node-dev, svelte-dev"
-            echo "Valid types: feature, bugfix, docs, workflow, hotfix, refactor"
+            echo "❌ Branch name does not follow required pattern"
+            echo ""
+            echo "Current branch: $branch_name"
+            echo ""
+            echo "Required format: {agent-name}/{task-type}/{descriptive-name}"
+            echo ""
+            echo "✅ Valid agents:"
+            echo "  • vibe-coder      - System building and experimentation"
+            echo "  • docs-orchestrator - Documentation coordination"  
+            echo "  • devops          - Infrastructure and workflows"
+            echo "  • laravel-dev     - Laravel/PHP development"
+            echo "  • react-dev       - React frontend development"
+            echo "  • node-dev        - Node.js development"
+            echo "  • svelte-dev      - Svelte frontend development"
+            echo ""
+            echo "✅ Valid task types:"
+            echo "  • feature    - New functionality"
+            echo "  • bugfix     - Bug fixes"
+            echo "  • docs       - Documentation updates"
+            echo "  • workflow   - Process/workflow changes"
+            echo "  • hotfix     - Emergency fixes (targets 'stage')"
+            echo "  • refactor   - Code refactoring"
+            echo ""
+            echo "✅ Examples of correct branch names:"
+            echo "  • vibe-coder/feature/enhance-safety-system"
+            echo "  • docs-orchestrator/docs/api-reference-update"
+            echo "  • devops/workflow/branch-protection-setup"
+            echo ""
+            echo "🔧 To fix your branch name:"
+            echo "  git branch -m $branch_name {agent}/{type}/{description}"
+            echo ""
             echo "valid=false" >> $GITHUB_OUTPUT
             echo "error=Branch name must follow pattern: {agent-name}/{task-type}/{descriptive-name}" >> $GITHUB_OUTPUT
             exit 1
@@ -113,20 +179,61 @@ jobs:
           case "$source_branch" in
             */hotfix/*)
               if [ "$target_branch" != "stage" ]; then
-                echo "❌ Hotfix branches must target 'stage' branch, not '$target_branch'"
+                echo "❌ Hotfix branch targeting wrong branch"
+                echo ""
+                echo "Source: $source_branch → Target: $target_branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Hotfix branches MUST target 'stage' branch only"
+                echo ""
+                echo "✅ To fix this pull request:"
+                echo "  1. Close this PR"
+                echo "  2. Create new PR targeting 'stage' branch"
+                echo "  3. Or change target branch to 'stage' if possible"
+                echo ""
+                echo "📖 See: CLAUDE.md > Pull Request Target Branch Rules"
                 exit 1
               fi
               ;;
             */feature/*|*/bugfix/*|*/docs/*|*/workflow/*|*/refactor/*)
               if [ "$target_branch" != "dev" ]; then
-                echo "❌ Feature/bugfix/docs/workflow/refactor branches must target 'dev' branch, not '$target_branch'"
+                echo "❌ Branch targeting wrong destination"
+                echo ""
+                echo "Source: $source_branch → Target: $target_branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Feature/bugfix/docs/workflow/refactor branches MUST target 'dev' branch"
+                echo ""
+                echo "✅ Correct workflow:"
+                echo "  1. feature/* → dev (for review and testing)"
+                echo "  2. dev → test (for integration testing)"
+                echo "  3. test → stage (for staging validation)"
+                echo "  4. stage → main (for production deployment)"
+                echo ""
+                echo "✅ To fix this pull request:"
+                echo "  1. Change target branch to 'dev'"
+                echo "  2. Or close and create new PR targeting 'dev'"
+                echo ""
+                echo "📖 See: CLAUDE.md > Pull Request Target Branch Rules"
                 exit 1
               fi
               ;;
             *)
               echo "⚠️ Unknown branch type, validating against general rules"
+              echo ""
+              echo "Source: $source_branch → Target: $target_branch"
+              echo ""
               if [[ "$target_branch" == "main" || "$target_branch" == "stage" ]]; then
-                echo "❌ Direct targeting of '$target_branch' is not allowed from feature branches"
+                echo "❌ Direct targeting of protected branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Direct targeting of '$target_branch' is not allowed from feature branches"
+                echo ""
+                echo "✅ Allowed targets:"
+                echo "  • feature/* → dev"
+                echo "  • hotfix/* → stage"
+                echo ""
+                echo "📖 See: CLAUDE.md > 5-Branch Strategy"
                 exit 1
               fi
               ;;
