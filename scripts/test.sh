@@ -121,7 +121,8 @@ run_safety_tests() {
             print_success "CLAUDE.md validation passed"
         fi
     else
-        print_warning "CLAUDE.md validation script not found"
+        print_error "CLAUDE.md validation script not found"
+        safety_test_errors=$((safety_test_errors + 1))
     fi
     
     # Branch naming validation
@@ -134,7 +135,8 @@ run_safety_tests() {
             print_success "Branch naming validation passed"
         fi
     else
-        print_warning "Branch naming validation script not found"
+        print_error "Branch naming validation script not found"
+        safety_test_errors=$((safety_test_errors + 1))
     fi
     
     # Safety rules check
@@ -147,7 +149,8 @@ run_safety_tests() {
             print_success "Safety rules check passed"
         fi
     else
-        print_warning "Safety rules check script not found"
+        print_error "Safety rules check script not found"
+        safety_test_errors=$((safety_test_errors + 1))
     fi
     
     return $safety_test_errors
@@ -282,22 +285,17 @@ run_comprehensive_tests() {
 determine_test_level() {
     local test_level="quick"
     
-    # Check command line arguments first
+    # Check command line arguments first  
     if [[ "${1}" == "--full" ]]; then
         test_level="full"
-        print_info "Full test suite requested"
     elif [[ "${1}" == "--quick" ]]; then
         test_level="quick"
-        print_info "Quick test suite requested"
     elif [[ "${1}" == "--safety" ]]; then
         test_level="safety"
-        print_info "Safety-focused testing requested"
     elif [[ "${1}" == "--workflows" ]]; then
         test_level="workflows"
-        print_info "Workflow-focused testing requested"
     elif [[ "${1}" == "--integration" ]]; then
         test_level="integration"
-        print_info "Integration testing requested"
     elif is_ci; then
         test_level="full"
         print_info "CI environment detected - running full test suite"
