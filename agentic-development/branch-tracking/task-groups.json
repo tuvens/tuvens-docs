@@ -9,7 +9,7 @@
       "tuvens-docs": "feature/branch-protection-prerequisites"
     },
     "agents": {
-      "vibe-coder": "Documentation fixes, tracking system implementation, cleanup automation"
+      "vibe-coder": "Fix agent documentation and implement tracking system"
     },
     "dependencies": [],
     "issues": [
@@ -18,6 +18,29 @@
     "documentation": [
       "agentic-development/workflows/branching-strategy.md",
       "agentic-development/workflows/central-branch-tracking.md"
+    ]
+  },
+  "agent-session-enhancement": {
+    "title": "Agent Session Context Enhancement",
+    "description": "Implement enhanced context loading for agent sessions to ensure GitHub issues are read for complete context",
+    "coordinator": "ciarancarroll",
+    "created": "2025-01-15T10:00:00Z",
+    "status": "in-progress",
+    "branches": {
+      "tuvens-docs": "feature/implement-enhanced-agent-session-context-loading"
+    },
+    "agents": {
+      "vibe-coder": "Implement enhanced prompt template and validate across agent types"
+    },
+    "dependencies": [
+      "Enhanced context template must be tested and validated before rollout"
+    ],
+    "issues": [
+      "tuvens-docs#47",
+      "tuvens-docs#43"
+    ],
+    "documentation": [
+      "/tmp/issue-47-context.md"
     ]
   }
 }

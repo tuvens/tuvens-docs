@@ -1,0 +1,32 @@
+═══════════════════════════════════════════════════════════════════════════════
+VIBE CODER AGENT - READY FOR TASK
+
+GitHub Issue: #47
+Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/implement-enhanced-agent-session-context-loading
+Branch: feature/implement-enhanced-agent-session-context-loading
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS:
+1. Type: claude
+2. Copy and paste the prompt below
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUDE PROMPT:
+
+I am the vibe coder agent.
+
+Context Loading:
+- Load: .claude/agents/vibe-coder.md
+- Load: Implementation reports and workflow documentation
+
+🚨 CRITICAL: Read GitHub Issue #47 for complete task context
+Use: `gh issue view 47` to get the full problem analysis, requirements, and implementation details.
+
+GitHub Issue: #47
+Task: Implement Enhanced Agent Session Context Loading
+
+Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/implement-enhanced-agent-session-context-loading
+Branch: feature/implement-enhanced-agent-session-context-loading
+
+IMPORTANT: Start by reading the GitHub issue (#47) with `gh issue view 47` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+═══════════════════════════════════════════════════════════════════════════════

@@ -164,13 +164,16 @@ Context Loading:
 - Load: .claude/agents/$(echo "$AGENT_NAME").md
 - Load: Implementation reports and workflow documentation
 
+🚨 CRITICAL: Read GitHub Issue #$GITHUB_ISSUE for complete task context
+Use: \`gh issue view $GITHUB_ISSUE\` to get the full problem analysis, requirements, and implementation details.
+
 GitHub Issue: #$GITHUB_ISSUE
 Task: $TASK_TITLE
 
 Working Directory: $WORKTREE_PATH
 Branch: $BRANCH_NAME
 
-Start your work by analyzing the task requirements and following the 6-step agent workflow pattern.
+IMPORTANT: Start by reading the GitHub issue (#$GITHUB_ISSUE) with \`gh issue view $GITHUB_ISSUE\` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
 ═══════════════════════════════════════════════════════════════════════════════
 EOF
 
