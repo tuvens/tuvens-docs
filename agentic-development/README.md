@@ -53,7 +53,9 @@ agentic-development/
 - **Branch Tracking**: Context from `branch-tracking/` for coordination
 
 **System Scripts:**
-- `setup-agent-task.sh` - Creates worktrees, issues, prompts + updates branch tracking
+- `setup-agent-task.sh` - Creates worktrees, issues, prompts + updates branch tracking + **Enhanced Onboarding**
+- `agent-status.sh` - **NEW: Quick agent workload analysis and task recommendations**
+- `system-status.sh` - **NEW: System-wide overview of all agent activity**
 - `cleanup-merged-branches.sh` - Removes merged branches and worktrees automatically  
 - `update-branch-tracking.js` - Updates central tracking from GitHub Actions
 - `validate-environment.sh` - Checks prerequisites
@@ -69,8 +71,32 @@ agentic-development/
 **Key Usage Scenarios:**
 1. **Agent Coordination**: Check `active-branches.json` before starting to avoid duplicating work
 2. **Cross-Repo Features**: Use `task-groups.json` to coordinate work across tuvens-client, tuvens-api, hi.events
-3. **Maintenance**: Run `cleanup-merged-branches.sh` to clean up obsolete worktrees
-4. **Task Handoffs**: See related branches when taking over work from another agent
+3. **Workload Management**: Use `agent-status.sh [agent-name]` for quick workload analysis  
+4. **System Overview**: Use `system-status.sh` for full system activity dashboard
+5. **Enhanced Onboarding**: `/start-session` now includes task recommendations and coordination prompts
+6. **Maintenance**: Run `cleanup-merged-branches.sh` to clean up obsolete worktrees
+7. **Task Handoffs**: See related branches when taking over work from another agent
+
+### 🚀 Enhanced Agent Onboarding Features
+
+**Smart Task Recommendations**: The `/start-session` command now provides:
+- **Activity Overview**: Current repository and system-wide branch activity
+- **Task Group Discovery**: Automatic detection of related work for coordination
+- **Workload Analysis**: Agent-specific recommendations based on current branches  
+- **Interactive Coordination**: Prompts to join existing task groups or create new ones
+- **Cross-Repository Awareness**: Shows related work in other repositories
+
+**Quick Status Commands**:
+```bash
+# Check specific agent workload and get recommendations
+bash agentic-development/scripts/agent-status.sh vibe-coder
+
+# Get system-wide overview of all agent activity  
+bash agentic-development/scripts/system-status.sh
+
+# Check agent status in specific repository
+bash agentic-development/scripts/agent-status.sh svelte-dev tuvens-client
+```
 
 ### 🗂️ Archived Materials
 
