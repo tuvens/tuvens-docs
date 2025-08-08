@@ -1,15 +1,34 @@
 {
-  "name": "tuvens-multi-agent-system",
+  "name": "tuvens-docs",
   "version": "1.0.0",
-  "description": "Tuvens multi-agent development system with branch tracking",
+  "description": "Central documentation and coordination system for the Tuvens ecosystem with branch tracking",
   "scripts": {
+    "pre-merge": "./scripts/check-before-merge.sh",
+    "branch-check": "./scripts/branch-check",
+    "validate-hooks": "pre-commit run --all-files",
+    "setup-hooks": "pre-commit install",
     "test": "bash scripts/test.sh",
     "test:unit": "bash scripts/test.sh unit",
     "test:integration": "bash scripts/test.sh integration", 
     "test:system": "bash scripts/test.sh system",
     "test:verbose": "bash scripts/test.sh --verbose"
   },
-  "keywords": ["multi-agent", "development", "branch-tracking", "automation"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuvens/tuvens-docs.git"
+  },
+  "keywords": [
+    "documentation",
+    "agentic-development",
+    "branch-protection",
+    "safety-tools",
+    "multi-agent",
+    "branch-tracking",
+    "automation"
+  ],
   "author": "Tuvens Development Team",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
+  }
 }

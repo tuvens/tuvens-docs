@@ -302,6 +302,22 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Run pre-merge safety integration
+        run: |
+          echo "🛡️ Running comprehensive pre-merge safety checks..."
+          
+          # Make scripts executable
+          chmod +x scripts/check-before-merge.sh scripts/branch-check
+          
+          # Run pre-merge safety validation
+          if npm run pre-merge; then
+            echo "✅ Pre-merge safety validation passed"
+          else
+            echo "❌ Pre-merge safety validation failed"
+            echo "This indicates critical safety issues that must be resolved"
+            exit 1
+          fi
+
       - name: Update branch tracking for validated branch
         run: |
           echo "🔄 Updating branch tracking system..."
@@ -313,12 +329,8 @@ jobs:
           # Check if update script exists
           if [ -f "agentic-development/scripts/update-branch-tracking.js" ]; then
             node agentic-development/scripts/update-branch-tracking.js \
-              --action=validate \
-              --repository="tuvens-docs" \
-              --branch="$branch_name" \
-              --agent="$agent_name" \
-              --pr-number="${{ github.event.number }}" \
-              --validation-status="passed"
+              --event-type=validate \
+              --payload="{\"repository\":\"tuvens-docs\",\"branch\":\"$branch_name\",\"agent\":\"$agent_name\",\"pr-number\":\"${{ github.event.number }}\",\"validation-status\":\"passed\"}"
           else
             echo "⚠️ Branch tracking script not found, skipping update"
           fi
