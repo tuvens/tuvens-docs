@@ -142,66 +142,147 @@ done
 
 ## /start-session Implementation
 
-### Core Functionality
+### Enhanced Core Functionality (Updated)
+
+The `/start-session` command now supports enhanced context generation through `setup-agent-task.sh`:
+
 ```bash
 #!/bin/bash
-# /start-session [agent-name]
+# /start-session [agent-name] [task-title] [task-description] [options...]
 
-# 1. Determine current repository
-CURRENT_DIR=$(pwd)
-CURRENT_REPO=$(basename $CURRENT_DIR)
+# Enhanced usage patterns:
+# Basic: /start-session svelte-dev "Fix UI Bug" "Button not responsive"
+# With context: /start-session svelte-dev "Complex Task" "Description" /tmp/context.md
+# With files: /start-session svelte-dev "Fix Files" "Update components" --files="comp1.svelte,comp2.svelte"
+# Full enhanced: /start-session svelte-dev "Task" "Desc" context.md --files="a.md,b.md" --success-criteria="All tests pass"
 
-# 2. Load repository awareness
-if [ -f ~/.tuvens/config.json ]; then
-  TUVENS_ROOT=$(jq -r '.root' ~/.tuvens/config.json)
-else
-  TUVENS_ROOT=${TUVENS_ROOT:-"$HOME/Code/Tuvens"}
-fi
-
-# 3. Validate agent for repository
-VALID_AGENTS=$(jq -r ".repositories[\"$CURRENT_REPO\"].agents[]?" ~/.tuvens/config.json)
-if ! echo "$VALID_AGENTS" | grep -q "$1"; then
-  echo "Warning: $1 may not be the right agent for $CURRENT_REPO"
-fi
-
-# 4. Create GitHub issue
-ISSUE_URL=$(create_github_issue "$CURRENT_REPO" "$1" "Task from Claude Desktop")
-
-# 5. Determine branch name
-BRANCH_NAME="$1/$(generate_branch_name_from_context)"
-
-# 6. Create worktree
-WORKTREE_PATH="$CURRENT_DIR/worktrees/$BRANCH_NAME"
-git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"
-
-# 7. Setup context file
-cat > "$WORKTREE_PATH/.claude-context.md" << EOF
-Current Repository: $CURRENT_REPO
-Agent: $1
-Branch: $BRANCH_NAME
-Issue: $ISSUE_URL
-Tuvens Root: $TUVENS_ROOT
-
-Available Repositories:
-$(ls -1 $TUVENS_ROOT | grep -E 'tuvens-|events|digest')
-
-Load Context:
-- Load: tuvens-docs/.claude/agents/$1.md
-- Load: tuvens-docs/agentic-development/workflows/worktree-organization.md
-EOF
-
-# 8. Open terminal with context
-open_iterm_with_prompt "$WORKTREE_PATH" "$1" "$BRANCH_NAME"
+# Implementation calls enhanced setup-agent-task.sh:
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"$SCRIPT_DIR/../scripts/setup-agent-task.sh" "$@"
 ```
 
-### Context Preservation
+### Enhanced Features Added
 
-The script creates a `.claude-context.md` file in each worktree that includes:
-- Current repository and branch
-- Agent assignment
-- Path to other repositories
-- GitHub issue reference
-- Standard context loading instructions
+#### 1. Context File Support
+```bash
+# Create detailed context file
+cat > /tmp/task-context.md << EOF
+## Problem Analysis
+[Detailed analysis with specific examples]
+
+## Current State Analysis  
+[What was discovered about current state]
+
+## Specific Files to Examine
+[Exact file paths and what to look for]
+
+## Success Criteria
+[Measurable outcomes and validation]
+EOF
+
+# Use context in session creation
+/start-session vibe-coder "Complex Task" "Description" /tmp/task-context.md
+```
+
+#### 2. File Reference Validation
+```bash
+# Specify files to examine with validation
+/start-session svelte-dev "Fix Components" "Update broken components" \
+  --files="src/components/Button.svelte,src/components/Modal.svelte"
+
+# Script validates file existence and warns about missing files
+# GitHub issue includes validated file references
+```
+
+#### 3. Success Criteria Definition
+```bash
+# Define measurable outcomes
+/start-session node-dev "API Enhancement" "Add new endpoints" \
+  --success-criteria="All tests pass, API documentation updated, endpoints return correct status codes"
+```
+
+#### 4. Structured GitHub Issue Templates
+Generated issues now include comprehensive sections:
+
+```markdown
+# [Task Title]
+
+**Agent**: [agent-name]  
+**Generated**: [timestamp]
+
+## Task Description
+[Detailed task description]
+
+## Context Analysis
+[Content from context file if provided]
+
+## Files to Examine
+- `validated/file/path1.js`
+- `validated/file/path2.js`
+
+## Success Criteria
+[Specific measurable outcomes]
+
+## Implementation Notes
+- Review the task requirements carefully
+- Follow the 6-step agent workflow pattern
+- Update this issue with progress and findings
+- Reference specific files and line numbers in comments
+
+## Validation Checklist
+- [ ] Task requirements understood
+- [ ] Relevant files identified and examined
+- [ ] Solution implemented according to requirements
+- [ ] Testing completed (if applicable)
+- [ ] Documentation updated (if applicable)
+- [ ] Issue updated with final results
+```
+
+### Enhanced Context Preservation
+
+The enhanced script now creates comprehensive context through:
+
+#### Enhanced Agent Prompt Generation
+```bash
+# Generated prompt now includes:
+CLAUDE PROMPT:
+
+I am the [Agent Name] agent.
+
+Context Loading:
+- Load: .claude/agents/[agent-name].md
+- Load: Implementation reports and workflow documentation
+- Load: Context from [context-file] (if provided)
+
+GitHub Issue: #[issue-number]
+Task: [task-title]
+
+Working Directory: [worktree-path]
+Branch: [branch-name]
+
+Priority Files to Examine: (if provided)
+- file1.ext
+- file2.ext
+
+Success Criteria: (if provided)
+[detailed success criteria]
+
+Start your work by:
+1. Reading the comprehensive GitHub issue #[issue] for full context
+2. Examining the specified files (if any) to understand current state
+3. Following the 6-step agent workflow pattern
+4. Updating the GitHub issue with your progress and findings
+```
+
+#### Backward Compatibility Maintained
+All existing usage patterns continue to work:
+```bash
+# Simple usage still works
+/start-session vibe-coder "Simple Task" "Basic description"
+
+# Creates GitHub issue with standard template sections
+# No breaking changes to existing workflows
+```
 
 ## Usage Examples
 

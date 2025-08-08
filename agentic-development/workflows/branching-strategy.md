@@ -18,18 +18,24 @@ This document defines the branching strategy for the Tuvens multi-agent developm
 Format: `{agent-type}/{feature-description}`
 
 **Agent Types:**
-- `docs-orchestrator` - Documentation Orchestrator agent
-- `integration-specialist` - Integration Specialist agent
-- `backend-dev` - Backend Developer agent
-- `frontend-dev` - Frontend Developer agent
+- `codehooks-dev` - Codehooks Development agent
+- `devops` - DevOps and Infrastructure agent
+- `laravel-dev` - Laravel/PHP Development agent
+- `mobile-dev` - Mobile Development agent
+- `node-dev` - Node.js/Backend Development agent
+- `react-dev` - React Development agent
+- `svelte-dev` - Svelte Development agent
 - `vibe-coder` - Experimental Vibe Coder agent
 
 #### Examples
 ```
-docs-orchestrator/update-agent-identities
-integration-specialist/implement-oauth-flow
-backend-dev/add-session-middleware
-frontend-dev/create-auth-components
+node-dev/add-session-middleware
+react-dev/create-auth-components
+svelte-dev/update-user-interface
+mobile-dev/implement-mobile-auth
+devops/setup-deployment-pipeline
+laravel-dev/create-api-endpoints
+codehooks-dev/add-webhook-handlers
 vibe-coder/test-workflow-patterns
 ```
 
@@ -38,20 +44,20 @@ For work spanning multiple repositories, use consistent naming:
 
 **tuvens-docs:**
 ```
-integration-specialist/cross-app-auth-docs
-docs-orchestrator/sync-api-documentation
+vibe-coder/cross-app-auth-docs
+devops/sync-api-documentation
 ```
 
 **tuvens-client:**
 ```
-frontend-dev/cross-app-auth-ui
-integration-specialist/oauth-callback-handlers
+svelte-dev/cross-app-auth-ui
+react-dev/oauth-callback-handlers
 ```
 
 **tuvens-api:**
 ```
-backend-dev/cross-app-auth-endpoints
-integration-specialist/oauth-provider-setup
+node-dev/cross-app-auth-endpoints
+codehooks-dev/oauth-provider-setup
 ```
 
 ## Git Worktree Workflow
@@ -74,23 +80,28 @@ integration-specialist/oauth-provider-setup
 
 #### For Documentation Work
 ```bash
-# Create docs orchestrator worktree
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/docs-orchestrator/feature-name develop
-
 # Create vibe coder worktree  
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/vibe-coder/experiment-name develop
+cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+git worktree add vibe-coder/experiment-name -b vibe-coder/experiment-name
+
+# Create devops worktree for infrastructure docs
+cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+git worktree add devops/infra-docs -b devops/infra-docs
 ```
 
-#### For Integration Work
+#### For Cross-Repository Development
 ```bash
-# Create integration specialist worktree (docs)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/integration-specialist/oauth-docs develop
+# Create node-dev worktree (docs)
+cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+git worktree add node-dev/api-docs -b node-dev/api-docs
 
-# Create integration specialist worktree (client)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-client/integration-specialist/oauth-ui develop
+# Create svelte-dev worktree (client)
+cd /Users/ciarancarroll/Code/Tuvens/tuvens-client
+git worktree add svelte-dev/oauth-ui -b svelte-dev/oauth-ui
 
-# Create integration specialist worktree (api)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-api/integration-specialist/oauth-endpoints develop
+# Create node-dev worktree (api)
+cd /Users/ciarancarroll/Code/Tuvens/tuvens-api
+git worktree add node-dev/oauth-endpoints -b node-dev/oauth-endpoints
 ```
 
 ### Agent Worktree Workflow
@@ -105,13 +116,13 @@ git pull origin develop
 git checkout -b {agent-type}/{feature-name}
 
 # Create worktree for the agent
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}//{agent-type}/{feature-name} {agent-type}/{feature-name}
+git worktree add {agent-type}/{feature-name} {agent-type}/{feature-name}
 ```
 
 #### 2. Work in Agent-Specific Directory
 ```bash
 # Navigate to agent worktree
-cd /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
+cd {agent-type}/{feature-name}
 
 # Start Claude Code session with agent context
 claude
@@ -131,7 +142,7 @@ git push origin {agent-type}/{feature-name}
 gh pr create --base develop --title "feat({agent}): {description}"
 
 # Clean up worktree after merge
-git worktree remove /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
+git worktree remove {agent-type}/{feature-name}
 ```
 
 ## Merge Strategies
@@ -166,17 +177,17 @@ feature/* → dev/develop → test → stage → main
 1. **Prevention**: Use pending-commits/ to communicate changes early
 2. **Detection**: Regular `git fetch` in worktrees to stay updated
 3. **Resolution**: Agent responsible for feature resolves conflicts
-4. **Escalation**: Documentation Orchestrator mediates complex conflicts
+4. **Escalation**: vibe-coder or lead developer mediates complex conflicts
 
 ### Cross-Agent Conflicts
 1. **Document Conflict**: Create entry in pending-commits/ describing the conflict
 2. **Agent Discussion**: Use workflow files for async discussion
-3. **Resolution Decision**: Documentation Orchestrator or senior agent decides
+3. **Resolution Decision**: vibe-coder or senior agent decides
 4. **Implementation**: Affected agents implement the resolution
 
 ### Workflow Conflicts
 1. **Priority Assignment**: Use workflow priority levels (high/medium/low)
-2. **Resource Conflicts**: Documentation Orchestrator assigns agent priorities  
+2. **Resource Conflicts**: vibe-coder assigns agent priorities  
 3. **Timeline Conflicts**: Adjust workflow phases to accommodate dependencies
 4. **Scope Conflicts**: Break down features to reduce overlap
 
