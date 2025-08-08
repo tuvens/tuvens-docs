@@ -12,7 +12,7 @@ jobs:
       - name: Update tracking on merge
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
           repository: ${{ github.repository }}
           event-type: branch-merged
           client-payload: |
