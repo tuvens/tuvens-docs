@@ -1,0 +1,30 @@
+name: Branch Lifecycle - Created
+on:
+  create:
+
+jobs:
+  notify-tuvens-docs:
+    if: ${{ github.ref_type == 'branch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch info
+        id: branch_info
+        run: |
+          echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          echo "repo=${GITHUB_REPOSITORY#*/}" >> $GITHUB_OUTPUT
+          echo "author=${GITHUB_ACTOR}" >> $GITHUB_OUTPUT
+
+      - name: Update central tracking
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: branch-created
+          client-payload: |
+            {
+              "repository": "${{ steps.branch_info.outputs.repo }}",
+              "branch": "${{ steps.branch_info.outputs.branch }}",
+              "author": "${{ steps.branch_info.outputs.author }}",
+              "created": "${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}",
+              "githubUrl": "${{ github.event.repository.html_url }}/tree/${{ steps.branch_info.outputs.branch }}"
+            }

@@ -26,7 +26,17 @@ Repositories affected:
 - [ ] hi.events
 ```
 
-### 2. Agent Assignment
+### 2. Branch Tracking Check
+Before assigning agents, check for existing work:
+```bash
+# Check active branches for related work
+cat agentic-development/branch-tracking/active-branches.json | jq '.branches'
+
+# Look for related task groups
+cat agentic-development/branch-tracking/task-groups.json | jq 'keys'
+```
+
+### 3. Agent Assignment
 Determine primary agent based on core work:
 - Frontend-heavy → `svelte-dev` or `react-dev`
 - Backend-heavy → `node-dev` or `laravel-dev`
@@ -53,6 +63,12 @@ GitHub Issue: #[number]
 Feature: [name]
 Repository: [primary-repo]
 
+## Branch Tracking Context
+Check active branches and task groups:
+- Read: agentic-development/branch-tracking/active-branches.json
+- Read: agentic-development/branch-tracking/task-groups.json
+- Look for task group: [feature-name-task-group]
+
 ## Implementation Plan
 1. [First major step]
 2. [Second major step]
@@ -68,12 +84,17 @@ Repository: [primary-repo]
 - [Path 2]: [what to do]
 - [Path 3]: [what to do]
 
+## Related Work Coordination
+- Related branches in other repos: [list from task group]
+- Dependencies: [from task group dependencies]
+- Communication channel: [GitHub issue comments]
+
 ## Testing Strategy
 - [ ] Unit tests for [components]
 - [ ] Integration tests for [workflows]
 - [ ] Manual testing of [user flows]
 
-Begin by creating the worktree and reviewing the existing code structure.
+Begin by checking the branch tracking context, then create the worktree and review existing code structure.
 ```
 
 ## Multi-Agent Features
@@ -95,9 +116,38 @@ For features spanning multiple services:
 ```markdown
 Parent Issue: #[number]
 
+## Task Group Setup
+Create task group in: agentic-development/branch-tracking/task-groups.json
+```json
+{
+  "[feature-name-task-group]": {
+    "title": "[Feature Name] Implementation",
+    "description": "[Feature description]",
+    "coordinator": "[your-username]",
+    "created": "[current-date]",
+    "status": "in-progress",
+    "branches": {
+      "tuvens-api": "feature/[feature-name]-api",
+      "tuvens-client": "feature/[feature-name]-ui",
+      "tuvens-docs": "docs/[feature-name]"
+    },
+    "agents": {
+      "node-dev": "API endpoints and business logic",
+      "svelte-dev": "UI components and integration", 
+      "vibe-coder": "Documentation and coordination"
+    },
+    "dependencies": [
+      "API branch must be merged before UI integration",
+      "Documentation after implementation complete"
+    ],
+    "issues": ["#[api-issue]", "#[ui-issue]", "#[docs-issue]"]
+  }
+}
+```
+
 Sub-tasks:
 - API Implementation: #[number] (node-dev)
-- UI Implementation: #[number] (svelte-dev)
+- UI Implementation: #[number] (svelte-dev)  
 - Documentation: #[number] (vibe-coder)
 
 Dependencies:
@@ -124,6 +174,12 @@ Dependencies:
 - [ ] User guide updated
 - [ ] Technical notes added
 - [ ] Examples provided
+
+### Branch Tracking & Cleanup
+- [ ] Task group status updated to "completed"
+- [ ] All related branches merged and tracked in merge-log.json
+- [ ] Worktrees cleaned up via cleanup-merged-branches.sh
+- [ ] active-branches.json reflects completion status
 
 ## Example: User Dashboard Feature
 

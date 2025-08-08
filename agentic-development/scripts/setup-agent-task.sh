@@ -222,6 +222,116 @@ else
     IS_TUVENS_DOCS=false
 fi
 
+# Step 3a: Update branch tracking (local)
+echo ""
+echo "Step 3a: Updating branch tracking..."
+CURRENT_REPO=$(basename "$(pwd)")
+
+# Step 3a1: Enhanced Agent Onboarding - Task Recommendations
+TRACKING_DIR="$SCRIPT_DIR/../branch-tracking"
+echo "🚀 Enhanced Agent Onboarding"
+echo "============================"
+
+# Show current repository activity
+if [ -f "$TRACKING_DIR/active-branches.json" ]; then
+    CURRENT_BRANCHES=$(jq -r --arg repo "$CURRENT_REPO" '.branches[$repo]? // [] | length' "$TRACKING_DIR/active-branches.json" 2>/dev/null || echo "0")
+    TOTAL_BRANCHES=$(jq -r '[.branches[] | length] | add' "$TRACKING_DIR/active-branches.json" 2>/dev/null || echo "0")
+    
+    echo "📊 Current Activity:"
+    echo "   - Active branches in $CURRENT_REPO: $CURRENT_BRANCHES"
+    echo "   - Total active branches across all repos: $TOTAL_BRANCHES"
+    echo ""
+fi
+
+# Check for related task groups and show recommendations
+if [ -f "$TRACKING_DIR/task-groups.json" ]; then
+    echo "🔍 Checking for task coordination opportunities..."
+    
+    # Look for existing task groups that might be related
+    RELATED_GROUPS=$(jq -r --arg title "$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]')" '
+        to_entries[] | 
+        select(.value.title | ascii_downcase | contains($title) or ($title | contains(. | ascii_downcase))) |
+        "\(.key): \(.value.title) (Status: \(.value.status))"
+    ' "$TRACKING_DIR/task-groups.json" 2>/dev/null)
+    
+    if [ -n "$RELATED_GROUPS" ]; then
+        echo ""
+        echo "📋 Related task groups found:"
+        echo "$RELATED_GROUPS"
+        echo ""
+        echo "💡 Auto-joining first related task group for coordination"
+        echo "🤝 Task group coordination will be set up"
+        TASK_GROUP_ID=$(echo "$RELATED_GROUPS" | head -n1 | cut -d: -f1)
+    else
+        echo "   No related task groups found - creating new coordination context"
+        TASK_GROUP_ID=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
+    fi
+    echo ""
+else
+    TASK_GROUP_ID=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
+fi
+
+# Show agent-specific recommendations based on current branches
+if [ -f "$TRACKING_DIR/active-branches.json" ]; then
+    echo "🎯 Agent-specific recommendations for $AGENT_NAME:"
+    
+    AGENT_BRANCHES=$(jq -r --arg agent "$AGENT_NAME" --arg repo "$CURRENT_REPO" '
+        .branches[$repo]? // [] | 
+        map(select(.agent == $agent)) | 
+        length
+    ' "$TRACKING_DIR/active-branches.json" 2>/dev/null || echo "0")
+    
+    if [ "$AGENT_BRANCHES" -gt 0 ]; then
+        echo "   ⚠️  You already have $AGENT_BRANCHES active branch(es) in $CURRENT_REPO"
+        echo "   💡 Consider completing existing work before starting new tasks"
+        echo ""
+        
+        # Show current agent branches
+        CURRENT_WORK=$(jq -r --arg agent "$AGENT_NAME" --arg repo "$CURRENT_REPO" '
+            .branches[$repo]? // [] | 
+            map(select(.agent == $agent)) |
+            .[] | "   - \(.name) (created: \(.created[0:10]))"
+        ' "$TRACKING_DIR/active-branches.json" 2>/dev/null)
+        
+        if [ -n "$CURRENT_WORK" ]; then
+            echo "   Current $AGENT_NAME branches in $CURRENT_REPO:"
+            echo "$CURRENT_WORK"
+            echo ""
+        fi
+    else
+        echo "   ✅ No active branches for $AGENT_NAME in $CURRENT_REPO - good to start"
+        echo ""
+    fi
+    
+    # Show cross-repository coordination opportunities
+    CROSS_REPO_WORK=$(jq -r --arg agent "$AGENT_NAME" '
+        [.branches[] | .[] | select(.agent == $agent)] | length
+    ' "$TRACKING_DIR/active-branches.json" 2>/dev/null || echo "0")
+    
+    if [ "$CROSS_REPO_WORK" -gt 0 ] && [ "$CROSS_REPO_WORK" != "$AGENT_BRANCHES" ]; then
+        echo "   🔗 You have work in other repositories that might benefit from coordination"
+        echo ""
+    fi
+fi
+
+echo "✅ Agent onboarding analysis complete"
+echo ""
+
+# Update local branch tracking
+if [ -f "$SCRIPT_DIR/update-branch-tracking.js" ]; then
+    echo "📊 Updating central branch tracking locally..."
+    node "$SCRIPT_DIR/update-branch-tracking.js" \
+        --action="create" \
+        --repository="$CURRENT_REPO" \
+        --branch="$BRANCH_NAME" \
+        --author="$(git config user.name || echo 'local-user')" \
+        --worktree="$WORKTREE_PATH" \
+        --agent="$AGENT_NAME" \
+        --task-group="$TASK_GROUP_ID" \
+        --issues="$CURRENT_REPO#$GITHUB_ISSUE"
+    echo "✅ Updated local branch tracking"
+fi
+
 # Ensure we're not on the target branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$CURRENT_BRANCH" == "$BRANCH_NAME" ]]; then
@@ -319,7 +429,7 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') agent.
+I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') $GITHUB_ISSUE agent.
 
 Context Loading:
 - Load: .claude/agents/$(echo "$AGENT_NAME").md

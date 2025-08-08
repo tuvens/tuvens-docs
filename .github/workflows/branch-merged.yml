@@ -1,0 +1,26 @@
+name: Branch Lifecycle - Merged
+on:
+  pull_request:
+    types: [closed]
+    branches: [dev, test, stage, main, develop]
+
+jobs:
+  notify-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update tracking on merge
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: branch-merged
+          client-payload: |
+            {
+              "repository": "${{ github.repository.name }}",
+              "branch": "${{ github.event.pull_request.head.ref }}",
+              "targetBranch": "${{ github.event.pull_request.base.ref }}",
+              "mergedBy": "${{ github.event.pull_request.merged_by.login }}",
+              "mergedAt": "${{ github.event.pull_request.merged_at }}",
+              "pullRequestUrl": "${{ github.event.pull_request.html_url }}"
+            }

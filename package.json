@@ -1,12 +1,17 @@
 {
   "name": "tuvens-docs",
   "version": "1.0.0",
-  "description": "Central documentation and coordination system for the Tuvens ecosystem",
+  "description": "Central documentation and coordination system for the Tuvens ecosystem with branch tracking",
   "scripts": {
     "pre-merge": "./scripts/check-before-merge.sh",
     "branch-check": "./scripts/branch-check",
     "validate-hooks": "pre-commit run --all-files",
-    "setup-hooks": "pre-commit install"
+    "setup-hooks": "pre-commit install",
+    "test": "bash scripts/test.sh",
+    "test:unit": "bash scripts/test.sh unit",
+    "test:integration": "bash scripts/test.sh integration", 
+    "test:system": "bash scripts/test.sh system",
+    "test:verbose": "bash scripts/test.sh --verbose"
   },
   "repository": {
     "type": "git",
@@ -16,7 +21,10 @@
     "documentation",
     "agentic-development",
     "branch-protection",
-    "safety-tools"
+    "safety-tools",
+    "multi-agent",
+    "branch-tracking",
+    "automation"
   ],
   "author": "Tuvens Development Team",
   "license": "MIT",
