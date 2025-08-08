@@ -385,7 +385,7 @@ main() {
     
     # Determine test level
     local test_level
-    test_level=$(determine_test_level "$1")
+    test_level=$(determine_test_level "${1:-}")
     
     # Track test results
     local total_errors=0
