@@ -222,6 +222,33 @@ else
     IS_TUVENS_DOCS=false
 fi
 
+# Step 3a: Update branch tracking (local)
+echo ""
+echo "Step 3a: Updating branch tracking..."
+CURRENT_REPO=$(basename "$(pwd)")
+
+# Check for related task groups
+TRACKING_DIR="$SCRIPT_DIR/../branch-tracking"
+if [ -f "$TRACKING_DIR/task-groups.json" ]; then
+    echo "🔍 Checking for related task groups..."
+    TASK_GROUP_ID=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
+fi
+
+# Update local branch tracking
+if [ -f "$SCRIPT_DIR/update-branch-tracking.js" ]; then
+    echo "📊 Updating central branch tracking locally..."
+    node "$SCRIPT_DIR/update-branch-tracking.js" \
+        --action="create" \
+        --repository="$CURRENT_REPO" \
+        --branch="$BRANCH_NAME" \
+        --author="$(git config user.name || echo 'local-user')" \
+        --worktree="$WORKTREE_PATH" \
+        --agent="$AGENT_NAME" \
+        --task-group="$TASK_GROUP_ID" \
+        --issues="$CURRENT_REPO#$GITHUB_ISSUE"
+    echo "✅ Updated local branch tracking"
+fi
+
 # Ensure we're not on the target branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$CURRENT_BRANCH" == "$BRANCH_NAME" ]]; then
