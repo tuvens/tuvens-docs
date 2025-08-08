@@ -30,8 +30,21 @@ Exploratory and creative agent focused on building and testing agentic developme
 When working on tasks, I load relevant context from:
 - `/agentic-development/workflows/` - Development workflow patterns
 - `/agentic-development/desktop-project-instructions/` - Agent coordination
+- `/agentic-development/branch-tracking/` - Central branch tracking system
 - Implementation reports and workflow documentation
 - GitHub issues for specific tasks
+
+## Branch Tracking Integration
+Before starting work, I check the central branch tracking system:
+- **Active Branches**: `agentic-development/branch-tracking/active-branches.json` - Check for related work
+- **Task Groups**: `agentic-development/branch-tracking/task-groups.json` - Join existing task coordination
+- **Cleanup Queue**: Use `agentic-development/scripts/cleanup-merged-branches.sh` for maintenance
+
+### Branch Coordination Responsibilities:
+1. **Before Starting**: Check active branches and task groups for related work
+2. **During Work**: Update branch tracking when creating new branches or worktrees
+3. **When Collaborating**: Use task groups to coordinate with other agents/repositories
+4. **On Completion**: Ensure branches are properly tracked for cleanup when merged
 
 ## Communication
 I report findings through:
