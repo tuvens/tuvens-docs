@@ -1,0 +1,74 @@
+{
+  "lastUpdated": "2025-08-08T12:00:00Z",
+  "generatedBy": "Manual audit and cleanup",
+  "tuvensStrategy": "develop->staging->main with change-type prefixes",
+  "branches": {
+    "tuvens-docs": [
+      {
+        "name": "feature/branch-protection-prerequisites",
+        "author": "ciarancarroll",
+        "created": "2025-08-08T10:00:00Z",
+        "lastActivity": "2025-08-08T12:00:00Z",
+        "taskGroup": "branch-protection-prerequisites",
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/vibe-coder/feature/branch-protection-prerequisites",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/branch-protection-prerequisites",
+        "issues": ["tuvens-docs#42"]
+      },
+      {
+        "name": "docs/branch-protection-implementation",
+        "author": "ciarancarroll",
+        "created": "2025-08-08T10:00:00Z",
+        "lastActivity": "2025-08-08T10:00:00Z",
+        "taskGroup": "branch-protection-implementation",
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/docs-orchestrator/docs-branch-protection-implementation",
+        "agent": "docs-orchestrator",
+        "relatedBranches": ["feature/branch-protection-prerequisites"],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/docs/branch-protection-implementation",
+        "issues": []
+      },
+      {
+        "name": "feature/fix-start-session-context-generation",
+        "author": "ciarancarroll",
+        "created": "2025-08-07T10:00:00Z",
+        "lastActivity": "2025-08-08T10:00:00Z",
+        "taskGroup": "start-session-improvements",
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/vibe-coder/feature/fix-start-session-context-generation",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-start-session-context-generation",
+        "issues": []
+      },
+      {
+        "name": "vibe-coder/feature-agent-workflow-instructions",
+        "author": "ciarancarroll",
+        "created": "2025-08-06T10:00:00Z",
+        "lastActivity": "2025-08-08T10:00:00Z",
+        "taskGroup": "agent-workflow-improvements",
+        "status": "active",
+        "worktree": "~/code/tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature-agent-workflow-instructions",
+        "issues": []
+      },
+      {
+        "name": "feature/cto-technical-workflow-improvements",
+        "author": "ciarancarroll",
+        "created": "2025-08-05T10:00:00Z",
+        "lastActivity": "2025-08-08T10:00:00Z",
+        "taskGroup": "cto-technical-improvements",
+        "status": "active",
+        "worktree": "~/code/tuvens/worktrees/tuvens-docs/vibe-coder/feature-cto-technical-improvements",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/cto-technical-workflow-improvements",
+        "issues": []
+      }
+    ]
+  }
+}

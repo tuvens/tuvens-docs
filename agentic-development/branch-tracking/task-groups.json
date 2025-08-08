@@ -1,0 +1,23 @@
+{
+  "branch-protection-prerequisites": {
+    "title": "Branch Protection Prerequisites Implementation",
+    "description": "Fix agent documentation inconsistencies and implement central branch tracking system",
+    "coordinator": "ciarancarroll",
+    "created": "2025-08-08T10:00:00Z",
+    "status": "in-progress",
+    "branches": {
+      "tuvens-docs": "feature/branch-protection-prerequisites"
+    },
+    "agents": {
+      "vibe-coder": "Documentation fixes, tracking system implementation, cleanup automation"
+    },
+    "dependencies": [],
+    "issues": [
+      "tuvens-docs#42"
+    ],
+    "documentation": [
+      "agentic-development/workflows/branching-strategy.md",
+      "agentic-development/workflows/central-branch-tracking.md"
+    ]
+  }
+}

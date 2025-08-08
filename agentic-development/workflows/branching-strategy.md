@@ -18,19 +18,22 @@ This document defines the branching strategy for the Tuvens multi-agent developm
 Format: `{agent-type}/{feature-description}`
 
 **Agent Types:**
-- `docs-orchestrator` - Documentation Orchestrator agent
-- `integration-specialist` - Integration Specialist agent
-- `backend-dev` - Backend Developer agent
-- `frontend-dev` - Frontend Developer agent
-- `vibe-coder` - Experimental Vibe Coder agent
+- `vibe-coder` - Experimental agent for creative system building
+- `devops` - DevOps and infrastructure specialist
+- `mobile-dev` - Mobile development specialist
+- `node-dev` - Node.js backend development
+- `react-dev` - React frontend development
+- `svelte-dev` - Svelte frontend development
+- `laravel-dev` - Laravel backend development
+- `codehooks-dev` - Codehooks serverless development
 
 #### Examples
 ```
-docs-orchestrator/update-agent-identities
-integration-specialist/implement-oauth-flow
-backend-dev/add-session-middleware
-frontend-dev/create-auth-components
-vibe-coder/test-workflow-patterns
+vibe-coder/update-agent-identities
+devops/implement-oauth-flow
+node-dev/add-session-middleware
+react-dev/create-auth-components
+mobile-dev/test-workflow-patterns
 ```
 
 ### Cross-Repository Coordination Branches
@@ -38,20 +41,20 @@ For work spanning multiple repositories, use consistent naming:
 
 **tuvens-docs:**
 ```
-integration-specialist/cross-app-auth-docs
-docs-orchestrator/sync-api-documentation
+vibe-coder/cross-app-auth-docs
+vibe-coder/sync-api-documentation
 ```
 
 **tuvens-client:**
 ```
-frontend-dev/cross-app-auth-ui
-integration-specialist/oauth-callback-handlers
+react-dev/cross-app-auth-ui
+devops/oauth-callback-handlers
 ```
 
 **tuvens-api:**
 ```
-backend-dev/cross-app-auth-endpoints
-integration-specialist/oauth-provider-setup
+node-dev/cross-app-auth-endpoints
+devops/oauth-provider-setup
 ```
 
 ## Git Worktree Workflow
@@ -74,23 +77,20 @@ integration-specialist/oauth-provider-setup
 
 #### For Documentation Work
 ```bash
-# Create docs orchestrator worktree
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/docs-orchestrator/feature-name develop
-
-# Create vibe coder worktree  
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/vibe-coder/experiment-name develop
+# Create vibe coder worktree
+git worktree add /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature-name develop
 ```
 
-#### For Integration Work
+#### For Development Work
 ```bash
-# Create integration specialist worktree (docs)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-docs/integration-specialist/oauth-docs develop
+# Create node-dev worktree (api)
+git worktree add /Users/ciarancarroll/Code/Tuvens/tuvens-api/node-dev/oauth-endpoints develop
 
-# Create integration specialist worktree (client)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-client/integration-specialist/oauth-ui develop
+# Create react-dev worktree (client)
+git worktree add /Users/ciarancarroll/Code/Tuvens/tuvens-client/react-dev/oauth-ui develop
 
-# Create integration specialist worktree (api)
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/tuvens-api/integration-specialist/oauth-endpoints develop
+# Create devops worktree (infrastructure)
+git worktree add /Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/oauth-config develop
 ```
 
 ### Agent Worktree Workflow
@@ -105,13 +105,13 @@ git pull origin develop
 git checkout -b {agent-type}/{feature-name}
 
 # Create worktree for the agent
-git worktree add /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}//{agent-type}/{feature-name} {agent-type}/{feature-name}
+git worktree add /Users/ciarancarroll/Code/Tuvens/{repo}/{agent-type}/{feature-name} {agent-type}/{feature-name}
 ```
 
 #### 2. Work in Agent-Specific Directory
 ```bash
 # Navigate to agent worktree
-cd /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
+cd /Users/ciarancarroll/Code/Tuvens/{repo}/{agent-type}/{feature-name}
 
 # Start Claude Code session with agent context
 claude
@@ -131,7 +131,7 @@ git push origin {agent-type}/{feature-name}
 gh pr create --base develop --title "feat({agent}): {description}"
 
 # Clean up worktree after merge
-git worktree remove /Users/ciarancarroll/Code/Tuvens/[repo]/[agent]/{repo}/{agent-type}/{feature-name}
+git worktree remove /Users/ciarancarroll/Code/Tuvens/{repo}/{agent-type}/{feature-name}
 ```
 
 ## Merge Strategies
