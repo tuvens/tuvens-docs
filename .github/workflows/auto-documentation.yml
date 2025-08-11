@@ -209,6 +209,7 @@ jobs:
 
       # Check for changes and commit
       - name: Check for changes and commit
+        if: github.event_name == 'push'
         run: |
           git add docs/auto-generated/
           if git diff --staged --quiet; then
@@ -224,6 +225,18 @@ jobs:
             "
             git push
             echo "✅ Documentation updated and pushed"
+          fi
+      
+      # For PRs, just display what would be committed
+      - name: Display changes for PR
+        if: github.event_name == 'pull_request'
+        run: |
+          git add docs/auto-generated/
+          if git diff --staged --quiet; then
+            echo "No documentation changes would be generated"
+          else
+            echo "📝 Documentation would be updated upon merge:"
+            git diff --staged --name-only
           fi
 
       # Upload documentation artifacts

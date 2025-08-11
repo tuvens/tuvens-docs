@@ -76,8 +76,14 @@ jobs:
       - name: 🔨 Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y shellcheck yamllint
-          pip install pre-commit
+          sudo apt-get install -y shellcheck
+          # Install specific version of yamllint via pip for consistency
+          pip install yamllint==1.32.0 pre-commit
+          # Show versions for debugging
+          echo "📋 Tool versions:"
+          yamllint --version || echo "yamllint not found"
+          python3 --version
+          pip show PyYAML | grep Version || echo "PyYAML not found"
           
       - name: 🛡️ Setup Pre-commit Hooks
         run: |

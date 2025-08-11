@@ -283,6 +283,11 @@ run_workflow_tests() {
             if command -v yamllint >/dev/null 2>&1; then
                 if ! yamllint "$workflow" >/dev/null 2>&1; then
                     print_error "YAML syntax error in $workflow"
+                    # Show actual error for debugging in CI
+                    if [[ "${CI:-false}" == "true" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+                        echo "Debug: yamllint error output:"
+                        yamllint "$workflow" 2>&1 | head -10 || true
+                    fi
                     workflow_test_errors=$((workflow_test_errors + 1))
                 else
                     print_success "$(basename "$workflow") syntax valid"
@@ -291,6 +296,11 @@ run_workflow_tests() {
                 # Basic YAML validation using Python if yamllint not available
                 if ! python3 -c "import yaml; yaml.safe_load(open('$workflow'))" 2>/dev/null; then
                     print_error "YAML syntax error in $workflow"
+                    # Show actual error for debugging in CI
+                    if [[ "${CI:-false}" == "true" ]] || [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+                        echo "Debug: Python YAML validation error:"
+                        python3 -c "import yaml; yaml.safe_load(open('$workflow'))" 2>&1 | head -10 || true
+                    fi
                     workflow_test_errors=$((workflow_test_errors + 1))
                 else
                     print_success "$(basename "$workflow") syntax valid"
