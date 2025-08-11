@@ -8,8 +8,15 @@ set -e
 # Get current branch name
 BRANCH_NAME=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
 
-# Skip check for HEAD (detached state)
+# Skip check for HEAD (detached state) and protected branches
 if [ "$BRANCH_NAME" = "HEAD" ]; then
+    exit 0
+fi
+
+# Skip check for protected branches (they don't follow agent naming)
+PROTECTED_BRANCHES="main|stage|test|dev"
+if [[ "$BRANCH_NAME" =~ ^($PROTECTED_BRANCHES)$ ]]; then
+    echo "✅ Branch naming validation skipped for protected branch: $BRANCH_NAME"
     exit 0
 fi
 
