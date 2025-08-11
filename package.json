@@ -14,35 +14,33 @@
     "test:unit": "bash scripts/test.sh unit",
     "test:system": "bash scripts/test.sh system",
     "test:verbose": "bash scripts/test.sh --verbose",
-    
     "lint": "npm run lint:scripts && npm run lint:workflows",
     "lint:scripts": "shellcheck scripts/*.sh 2>/dev/null || echo 'shellcheck not installed, skipping shell script linting'",
     "lint:workflows": "yamllint .github/workflows/*.yml 2>/dev/null || echo 'yamllint not installed, skipping workflow linting'",
-    
     "setup": "npm install",
     "setup:hooks": "pip install pre-commit && pre-commit install",
     "setup:env": "./scripts/setup-environment.sh",
     "validate-hooks": "pre-commit run --all-files",
-    
     "validate": "./scripts/branch-check",
     "branch-check": "./scripts/branch-check",
     "agent-status": "./agentic-development/scripts/agent-status.sh",
     "system-status": "./agentic-development/scripts/system-status.sh",
-    
     "pre-merge": "./scripts/check-before-merge.sh",
     "check-before-merge": "./scripts/check-before-merge.sh",
-    
     "generate-docs": "node scripts/generate-doc-tree.js",
     "generate-doc-tree": "node scripts/generate-doc-tree.js",
-    
     "dev": "npm run setup && npm run validate",
     "start": "npm run setup:env && npm run dev",
     "ci": "npm run setup && npm run test:full && npm run lint",
     "prepare": "npm run setup:hooks"
   },
   "devDependencies": {
-    "prettier": "^3.1.0",
-    "pre-commit": "^1.2.2"
+    "cross-spawn": "^7.0.6",
+    "pre-commit": "^1.0.10",
+    "prettier": "^3.1.0"
+  },
+  "overrides": {
+    "cross-spawn": "^7.0.6"
   },
   "engines": {
     "node": ">=18.0.0",
