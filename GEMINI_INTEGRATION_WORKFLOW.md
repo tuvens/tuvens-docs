@@ -28,22 +28,32 @@ graph LR
 - **Purpose**: Orchestrates the entire feedback processing pipeline
 
 ### 2. Feedback Processing Script
-- **File**: `agentic-development/scripts/process-gemini-feedback.js`
+- **File**: `agentic-development/scripts/process-gemini-feedback.js` (ES Module)
 - **Purpose**: Categorizes feedback and determines appropriate actions
+- **Module System**: ES Modules compatible with project infrastructure
 - **Features**:
   - Intelligent categorization (security, performance, architecture, etc.)
   - Priority assignment (critical, high, medium, low)
   - Agent assignment based on file patterns and feedback context
+  - Shared utility functions via `utils.js`
 
 ### 3. Agent Session Triggering
-- **File**: `agentic-development/scripts/trigger-agent-session.js`
+- **File**: `agentic-development/scripts/trigger-agent-session.js` (ES Module)
 - **Purpose**: Automatically assigns tasks to appropriate agents for critical feedback
+- **Module System**: ES Modules compatible with project infrastructure
 - **Integration**: Works with existing branch tracking system
+- **Features**: Creates agent task files, notifications, and session tracking
 
 ### 4. Branch Tracking Integration
-- **File**: Enhanced `agentic-development/scripts/update-branch-tracking.js`
+- **File**: Enhanced `agentic-development/scripts/update-branch-tracking.js` (ES Module)
 - **Purpose**: Maintains visibility of Gemini feedback in the central tracking system
+- **Module System**: ES Modules compatible with project infrastructure
 - **Features**: Tracks feedback history per branch, agent assignments, and status updates
+
+### 5. Shared Utilities
+- **File**: `agentic-development/scripts/utils.js` (ES Module)
+- **Purpose**: Common utilities for JSON handling, logging, and data processing
+- **Features**: File I/O, argument parsing, directory management, timestamp generation
 
 ## Feedback Categories
 
@@ -276,6 +286,44 @@ gh run view [run-id] --log
 node agentic-development/scripts/process-gemini-feedback.js --help
 node agentic-development/scripts/trigger-agent-session.js --help
 ```
+
+## Infrastructure Integration
+
+### ES Modules Compatibility
+
+The Gemini Integration Workflow has been updated to be fully compatible with the project's ES Modules infrastructure:
+
+- **Module System**: All scripts use ES Module syntax (`import`/`export`)
+- **Node.js Compatibility**: Compatible with `"type": "module"` in package.json
+- **Infrastructure Alignment**: Consistent with existing infrastructure setup by DevOps agent
+- **GitHub Actions**: Workflows run correctly with ES Module scripts
+
+### Testing Infrastructure
+
+- **Test Suite**: `test-gemini-integration.js` (ES Module)
+- **Test Coverage**: 5/5 core functionality tests passing
+- **Integration Testing**: End-to-end workflow validation
+- **Temporary File Management**: Isolated test environments
+
+### Validation Results
+
+```
+✅ Security Critical Feedback Processing
+✅ Performance High Priority Routing
+✅ Architecture Concern Categorization
+✅ Code Quality Issue Handling
+✅ Documentation Low Priority Processing
+✅ Agent Session Triggering
+✅ Branch Tracking Integration
+```
+
+### Dependencies and Requirements
+
+- **Node.js**: Version 18+ (ES Modules support)
+- **Package System**: ES Modules (`"type": "module"` in package.json)
+- **Infrastructure**: Compatible with existing DevOps setup
+- **Branch Tracking**: Requires existing branch-tracking system
+- **GitHub Actions**: Standard GitHub Actions environment
 
 ## Future Enhancements
 

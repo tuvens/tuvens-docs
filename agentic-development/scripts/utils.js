@@ -4,9 +4,14 @@
  * Provides common functions for JSON file handling, logging, and data processing.
  */
 
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+// ES modules don't have __dirname, so we need to create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Load JSON file with error handling and logging
@@ -131,7 +136,7 @@ function logMessage(message, level = 'INFO', logFile = null) {
     }
 }
 
-module.exports = {
+export {
     loadJSON,
     saveJSON,
     generateUniqueId,
