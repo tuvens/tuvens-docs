@@ -294,6 +294,9 @@ npx tsc --noEmit
 if [[ $(git remote get-url origin) == *"tuvens-api"* ]]; then
     Load: tuvens-docs/implementation-guides/cross-app-authentication/README.md
 fi
+
+# Load workflow infrastructure guide for understanding automated coordination
+Load: agentic-development/workflows/README.md
 ```
 
 ### Essential Patterns

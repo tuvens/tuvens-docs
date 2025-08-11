@@ -28,8 +28,9 @@ Exploratory and creative agent focused on building and testing agentic developme
 
 ## Context Loading
 When working on tasks, I load relevant context from:
+- `/agentic-development/workflows/README.md` - **GitHub Actions workflow infrastructure guide**
 - `/agentic-development/workflows/` - Development workflow patterns
-- `/agentic-development/desktop-project-instructions/` - Agent coordination
+- `/agentic-development/desktop-project-instructions/` - Agent coordination  
 - `/agentic-development/branch-tracking/` - Central branch tracking system
 - Implementation reports and workflow documentation
 - GitHub issues for specific tasks

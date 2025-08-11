@@ -210,6 +210,9 @@ npm run analyze-bundle
 if [[ $(git remote get-url origin) == *"hi.events"* ]]; then
     Load: tuvens-docs/hi-events-integration/frontend-integration/README.md
 fi
+
+# Load workflow infrastructure guide for understanding automated coordination
+Load: agentic-development/workflows/README.md
 ```
 
 ### Essential Hooks Pattern
