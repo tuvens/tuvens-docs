@@ -15,11 +15,14 @@ This guide provides agents with essential information about the GitHub Actions w
 | `branch-deleted.yml` | Handles branch deletion notifications | 🗑️ Cleans up agent tracking and task records |
 | `branch-protection.yml` | Enforces safety rules and naming conventions | 🛡️ Validates agent work against safety standards |
 | `notify-repositories.yml` | Cross-repository change notifications | 📡 Coordinates multi-repo agent tasks |
+| `notify-repositories-test.yml` | Test version of cross-repository notifications | 🧪 Tests multi-repo coordination |
+| `infrastructure-validation.yml` | Validates system infrastructure health | 🔍 Monitors infrastructure reliability |
+| `auto-documentation.yml` | Generates context documentation automatically | 📚 Creates agent session context |
 | `vibe-coder-maintenance.yml` | Automated maintenance and health checks | 🔧 Maintains agent coordination infrastructure |
 
 ## The 5-Category Workflow System
 
-### 1. Multi-Agent Coordination & Tracking System (5 workflows)
+### 1. Multi-Agent Coordination & Tracking System (6 workflows)
 **Workflows**: `branch-tracking.yml`, `central-tracking-handler.yml`, `branch-created.yml`, `branch-deleted.yml`, `branch-merged.yml`, `gemini-code-review-integration.yml`
 
 **Purpose**:
