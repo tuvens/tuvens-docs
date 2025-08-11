@@ -273,6 +273,9 @@ case $REPO in
     Load: tuvens-docs/repositories/eventsdigest-ai.md
     ;;
 esac
+
+# Load workflow infrastructure guide for understanding automated coordination
+Load: agentic-development/workflows/README.md
 ```
 
 ### Essential Patterns
