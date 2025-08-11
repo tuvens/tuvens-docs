@@ -9,6 +9,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execSync } = require('child_process');
 
 // Test data for different scenarios
@@ -82,9 +83,24 @@ const TEST_SCENARIOS = {
 
 class GeminiIntegrationTester {
   constructor() {
+    // Use temporary directories for testing to avoid modifying actual tracking files
+    this.tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gemini-test-'));
     this.scriptsDir = path.join(__dirname, 'agentic-development', 'scripts');
-    this.trackingDir = path.join(__dirname, 'agentic-development', 'branch-tracking');
+    this.trackingDir = path.join(this.tempDir, 'branch-tracking');
     this.testResults = [];
+    
+    // Create temporary tracking directory
+    fs.mkdirSync(this.trackingDir, { recursive: true });
+  }
+
+  cleanup() {
+    // Clean up temporary directory after tests
+    try {
+      fs.rmSync(this.tempDir, { recursive: true, force: true });
+      this.log('🧹 Cleaned up temporary test files');
+    } catch (error) {
+      this.log(`Warning: Failed to cleanup temp directory: ${error.message}`, 'WARN');
+    }
   }
 
   log(message, level = 'INFO') {
@@ -107,9 +123,9 @@ class GeminiIntegrationTester {
       
       this.log(`Processing payload: ${payloadJson.substring(0, 100)}...`);
       
-      // Run the processing script
+      // Run the processing script with temporary tracking directory
       const result = execSync(
-        `node "${processScript}" --payload='${payloadJson}'`,
+        `TRACKING_DIR="${this.trackingDir}" node "${processScript}" --payload='${payloadJson}'`,
         { encoding: 'utf8', cwd: __dirname }
       );
       
@@ -254,6 +270,7 @@ class GeminiIntegrationTester {
 
   async runAllTests() {
     this.log('🚀 Starting Gemini Integration Workflow Tests');
+    this.log(`Using temporary directory: ${this.tempDir}`);
     this.ensureDirectoriesExist();
     
     // Run categorization and prioritization tests
@@ -273,6 +290,7 @@ class GeminiIntegrationTester {
     await this.testBranchTracking(TEST_SCENARIOS.security_critical);
     
     this.printSummary();
+    this.cleanup();
   }
 
   printSummary() {

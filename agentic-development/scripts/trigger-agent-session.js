@@ -10,9 +10,19 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { 
+    loadJSON, 
+    saveJSON, 
+    generateUniqueId, 
+    getCurrentTimestamp,
+    parseArguments,
+    validateRequiredArguments,
+    getTrackingDirectory,
+    ensureDirectoryExists 
+} = require('./utils');
 
-// Configuration
-const TRACKING_DIR = path.join(__dirname, '..', 'branch-tracking');
+// Configuration - allow override for testing
+const TRACKING_DIR = process.env.TRACKING_DIR || getTrackingDirectory();
 const AGENT_SESSIONS_LOG = path.join(TRACKING_DIR, 'agent-sessions.json');
 const ACTIVE_BRANCHES_FILE = path.join(TRACKING_DIR, 'active-branches.json');
 
@@ -48,25 +58,7 @@ const AGENT_CONFIG = {
   }
 };
 
-// Utility functions
-function loadJSON(filePath) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (error) {
-    console.error(`Error loading ${filePath}:`, error.message);
-    return {};
-  }
-}
-
-function saveJSON(filePath, data) {
-  try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    console.log(`✅ Updated: ${path.basename(filePath)}`);
-  } catch (error) {
-    console.error(`Error saving ${filePath}:`, error.message);
-  }
-}
-
+// Utility functions moved to utils.js
 function generateSessionId() {
   return `gemini-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
@@ -77,7 +69,7 @@ function generateSessionId() {
 function createSessionContext(options) {
   const context = {
     session_id: generateSessionId(),
-    created_at: new Date().toISOString(),
+    created_at: getCurrentTimestamp(),
     
     // Source information
     repository: options.repository,
@@ -132,8 +124,8 @@ function updateBranchTracking(sessionContext) {
     branch = {
       name: sessionContext.branch,
       author: 'gemini-integration',
-      created: new Date().toISOString(),
-      lastActivity: new Date().toISOString(),
+      created: getCurrentTimestamp(),
+      lastActivity: getCurrentTimestamp(),
       taskGroup: null,
       status: 'agent-assigned',
       worktree: null,
@@ -146,7 +138,7 @@ function updateBranchTracking(sessionContext) {
   }
   
   // Update branch with session information
-  branch.lastActivity = new Date().toISOString();
+  branch.lastActivity = getCurrentTimestamp();
   branch.agent = sessionContext.assigned_agent;
   branch.status = 'agent-session-active';
   branch.gemini_feedback = {
@@ -161,7 +153,7 @@ function updateBranchTracking(sessionContext) {
   }
   
   // Update metadata
-  activeBranches.lastUpdated = new Date().toISOString();
+  activeBranches.lastUpdated = getCurrentTimestamp();
   activeBranches.generatedBy = 'Gemini Integration - Agent Session Trigger';
   
   saveJSON(ACTIVE_BRANCHES_FILE, activeBranches);
@@ -196,7 +188,7 @@ function logAgentSession(sessionContext) {
   }
   
   // Update metadata
-  sessionsLog.last_updated = new Date().toISOString();
+  sessionsLog.last_updated = getCurrentTimestamp();
   sessionsLog.total_sessions = (sessionsLog.total_sessions || 0) + 1;
   
   saveJSON(AGENT_SESSIONS_LOG, sessionsLog);
@@ -273,9 +265,7 @@ function createAgentTaskFile(sessionContext) {
   
   try {
     // Ensure agent directory exists
-    if (!fs.existsSync(agentDir)) {
-      fs.mkdirSync(agentDir, { recursive: true });
-    }
+    ensureDirectoryExists(agentDir);
     
     const instructions = generateAgentInstructions(sessionContext);
     fs.writeFileSync(taskFile, instructions);
@@ -311,21 +301,15 @@ function main() {
     process.exit(1);
   }
   
-  // Parse arguments
-  const options = {};
-  args.forEach(arg => {
-    const [key, value] = arg.split('=');
-    const cleanKey = key.replace('--', '');
-    options[cleanKey] = value;
-  });
+  // Parse arguments using shared utility
+  const options = parseArguments(args);
   
-  // Validate required arguments
-  const required = ['repository', 'branch', 'agent', 'feedback-id', 'priority'];
-  for (const field of required) {
-    if (!options[field]) {
-      console.error(`Missing required argument: --${field}`);
-      process.exit(1);
-    }
+  // Validate required arguments using shared utility
+  try {
+    validateRequiredArguments(options, ['repository', 'branch', 'agent', 'feedback-id', 'priority']);
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
   }
   
   try {

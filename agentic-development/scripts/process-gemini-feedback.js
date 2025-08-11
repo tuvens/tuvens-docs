@@ -9,10 +9,18 @@
 
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
+const { 
+    loadJSON, 
+    saveJSON, 
+    generateUniqueId, 
+    getCurrentTimestamp,
+    parseArguments,
+    validateRequiredArguments,
+    getTrackingDirectory 
+} = require('./utils');
 
-// Configuration
-const TRACKING_DIR = path.join(__dirname, '..', 'branch-tracking');
+// Configuration - allow override for testing
+const TRACKING_DIR = process.env.TRACKING_DIR || getTrackingDirectory();
 const GEMINI_FEEDBACK_LOG = path.join(TRACKING_DIR, 'gemini-feedback.json');
 
 /**
@@ -119,26 +127,7 @@ const AGENT_ASSIGNMENT_RULES = {
   }
 };
 
-// Utility functions
-function loadJSON(filePath) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch (error) {
-    return {};
-  }
-}
-
-function saveJSON(filePath, data) {
-  try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-  } catch (error) {
-    console.error(`Error saving ${filePath}:`, error.message);
-  }
-}
-
-function generateFeedbackId() {
-  return crypto.randomBytes(8).toString('hex');
-}
+// Use shared utilities - utility functions moved to utils.js
 
 /**
  * Categorize feedback based on content analysis
@@ -248,8 +237,8 @@ function processGeminiFeedback(rawPayload) {
   const feedback = typeof rawPayload === 'string' ? JSON.parse(rawPayload) : rawPayload;
   
   // Generate unique ID
-  const feedbackId = generateFeedbackId();
-  const timestamp = new Date().toISOString();
+  const feedbackId = generateUniqueId();
+  const timestamp = getCurrentTimestamp();
   
   // Extract and normalize feedback data
   const processedFeedback = {
@@ -324,7 +313,7 @@ function logFeedback(processedFeedback, actions) {
     feedbackLog.feedback_history = feedbackLog.feedback_history.slice(0, 100);
   }
   
-  feedbackLog.last_updated = new Date().toISOString();
+  feedbackLog.last_updated = getCurrentTimestamp();
   feedbackLog.total_processed = (feedbackLog.total_processed || 0) + 1;
   
   saveJSON(GEMINI_FEEDBACK_LOG, feedbackLog);
@@ -341,16 +330,13 @@ function main() {
     process.exit(1);
   }
   
-  // Parse arguments
-  const options = {};
-  args.forEach(arg => {
-    const [key, value] = arg.split('=');
-    const cleanKey = key.replace('--', '');
-    options[cleanKey] = value;
-  });
+  // Parse arguments using shared utility
+  const options = parseArguments(args);
   
-  if (!options.payload) {
-    console.error('Missing required --payload argument');
+  try {
+    validateRequiredArguments(options, ['payload']);
+  } catch (error) {
+    console.error(error.message);
     process.exit(1);
   }
   

@@ -120,7 +120,7 @@ curl -X POST \
   -d '{
     "event_type": "gemini-code-review",
     "client_payload": {
-      "repository": "tuvens/repository-name",
+      "repository": "tuvens/tuvens-docs",
       "branch": "feature/branch-name",
       "pull_request": 123,
       "commit_sha": "abc123def456",
