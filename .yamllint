@@ -1,0 +1,27 @@
+# yamllint configuration for GitHub Actions workflows
+# Relaxed rules to focus on functional validation over style
+
+extends: relaxed
+
+rules:
+  # Keep important structural rules
+  document-start: disable
+  truthy: disable
+  
+  # Relax formatting rules that don't affect functionality
+  line-length:
+    max: 120  # More reasonable limit for GitHub Actions
+  trailing-spaces: disable
+  new-line-at-end-of-file: disable
+  
+  # Keep bracket consistency but be more lenient
+  brackets:
+    max-spaces-inside: 1
+    min-spaces-inside: 0
+    max-spaces-inside-empty: 0
+  
+  # Allow reasonable indentation variance
+  indentation:
+    spaces: consistent
+    indent-sequences: consistent
+    check-multi-line-strings: false
