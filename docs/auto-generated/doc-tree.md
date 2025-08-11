@@ -6,9 +6,9 @@
 ## Documentation Structure
 
 ### /docs Directory Structure
-- [`docs/auto-generated/current-state.md`](./docs/auto-generated/current-state.md) (Modified: 2025-08-11, 31 lines, 874 bytes)
+- [`docs/auto-generated/current-state.md`](./docs/auto-generated/current-state.md) (Modified: 2025-08-11, 31 lines, 860 bytes)
 - [`docs/auto-generated/doc-tree.md`](./docs/auto-generated/doc-tree.md) (Modified: 2025-08-11, 9 lines, 309 bytes)
-- [`docs/auto-generated/recent-commits.md`](./docs/auto-generated/recent-commits.md) (Modified: 2025-08-11, 227 lines, 5796 bytes)
+- [`docs/auto-generated/recent-commits.md`](./docs/auto-generated/recent-commits.md) (Modified: 2025-08-11, 212 lines, 5553 bytes)
 
 ### Root Level Documentation
 - [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-08, 174 lines)
@@ -24,4 +24,4 @@
 
 ## Documentation Statistics
 - **Total documentation files**: 159
-- **Total lines**: 20219
+- **Total lines**: 20204
