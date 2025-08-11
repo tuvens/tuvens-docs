@@ -4,12 +4,19 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 28832b87eed04705163f815d7707d683cfcb09e7
-- **Commit Message**: Merge pull request #79 from tuvens/devops/bugfix/fix-gemini-yaml-syntax
+- **Commit SHA**: 0aebf9aca6e215499d5d9004aef43889226cc395
+- **Commit Message**: fix: skip branch naming validation for protected branches
 
-🐛 Fix critical YAML syntax error blocking all CI/CD workflows
+- Protected branches (main, stage, test, dev) don't follow agent naming conventions
+- Branch naming validation now skips protected branches instead of failing
+- Resolves CI failures when workflows run on dev branch
+- Maintains naming validation for agent feature branches
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-11T20:44:06+01:00
+- **Timestamp**: 2025-08-11T20:48:06+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

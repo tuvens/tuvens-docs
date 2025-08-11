@@ -10,21 +10,36 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `28832b87eed04705163f815d7707d683cfcb09e7`
-- **Commit Message**: "Merge pull request #79 from tuvens/devops/bugfix/fix-gemini-yaml-syntax
+- **Latest Commit**: `0aebf9aca6e215499d5d9004aef43889226cc395`
+- **Commit Message**: "fix: skip branch naming validation for protected branches
 
-🐛 Fix critical YAML syntax error blocking all CI/CD workflows"
+- Protected branches (main, stage, test, dev) don't follow agent naming conventions
+- Branch naming validation now skips protected branches instead of failing
+- Resolves CI failures when workflows run on dev branch
+- Maintains naming validation for agent feature branches
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-11T20:44:06+01:00
+- **Timestamp**: 2025-08-11T20:48:06+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 0aebf9a` - fix: skip branch naming validation for protected branches
+- **Date**: 2025-08-11 20:48
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* e34aa12` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-11 19:44
+- **Author**: GitHub Actions
+
 #### `*   28832b8` - Merge pull request #79 from tuvens/devops/bugfix/fix-gemini-yaml-syntax
 - **Date**: 2025-08-11 20:44
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -182,26 +197,17 @@
 - **Author**: 2025-08-08 21:45
 - **Refs**: fix: resolve merge conflicts with dev branch
 
-#### `` - 
-- **Date**:  
-- **Author**:    
-
-#### `` -  9142819
-- **Date**:  * 
-- **Author**:  
-- **Refs**: 2025-08-08 21:35|tuvens|fix: address critical Gemini code review issues|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `fix`: 10 commits
-- `docs`: 7 commits
+- `docs`: 8 commits
 - `feat`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `docs/auto-generated/recent-commits.md`: 7 changes
-- `docs/auto-generated/doc-tree.md`: 7 changes
-- `docs/auto-generated/current-state.md`: 7 changes
+- `docs/auto-generated/recent-commits.md`: 8 changes
+- `docs/auto-generated/doc-tree.md`: 8 changes
+- `docs/auto-generated/current-state.md`: 8 changes
 - `scripts/test.sh`: 3 changes
 - `package-lock.json`: 3 changes
 - `.github/workflows/infrastructure-validation.yml`: 3 changes
