@@ -265,6 +265,85 @@ function handleValidation(payload) {
     saveJSON(ACTIVE_BRANCHES_FILE, activeBranches);
 }
 
+function handleGeminiFeedback(payload) {
+    console.log(`🤖 Handling Gemini feedback: ${payload.repository}/${payload.branch}`);
+    
+    const activeBranches = loadJSON(ACTIVE_BRANCHES_FILE);
+    
+    // Ensure repository exists in active branches
+    if (!activeBranches.branches) {
+        activeBranches.branches = {};
+    }
+    if (!activeBranches.branches[payload.repository]) {
+        activeBranches.branches[payload.repository] = [];
+    }
+    
+    // Find existing branch or create new entry
+    let branch = activeBranches.branches[payload.repository].find(b => b.name === payload.branch);
+    
+    if (!branch) {
+        // Create new branch entry for Gemini feedback tracking
+        branch = {
+            name: payload.branch,
+            author: 'gemini-integration',
+            created: new Date().toISOString(),
+            lastActivity: new Date().toISOString(),
+            taskGroup: null,
+            status: 'gemini-feedback-received',
+            worktree: null,
+            agent: payload.agent,
+            relatedBranches: [],
+            githubUrl: `https://github.com/tuvens/${payload.repository}/tree/${payload.branch}`,
+            issues: []
+        };
+        activeBranches.branches[payload.repository].push(branch);
+    }
+    
+    // Update branch with Gemini feedback information
+    branch.lastActivity = new Date().toISOString();
+    branch.agent = payload.agent;
+    
+    // Initialize gemini feedback tracking if not exists
+    if (!branch.gemini_feedback_history) {
+        branch.gemini_feedback_history = [];
+    }
+    
+    // Add new feedback to history
+    const feedbackEntry = {
+        feedback_id: payload.feedback_id,
+        category: payload.category,
+        priority: payload.priority,
+        received_at: new Date().toISOString(),
+        agent_assigned: payload.agent
+    };
+    
+    branch.gemini_feedback_history.unshift(feedbackEntry);
+    
+    // Keep only last 10 feedback entries per branch
+    if (branch.gemini_feedback_history.length > 10) {
+        branch.gemini_feedback_history = branch.gemini_feedback_history.slice(0, 10);
+    }
+    
+    // Update status based on priority
+    if (payload.priority === 'critical') {
+        branch.status = 'gemini-critical-feedback';
+        console.log(`🚨 Critical Gemini feedback received for ${payload.branch}`);
+    } else if (payload.priority === 'high') {
+        branch.status = 'gemini-high-priority-feedback';
+        console.log(`⚠️ High priority Gemini feedback received for ${payload.branch}`);
+    } else {
+        branch.status = 'gemini-feedback-received';
+        console.log(`📝 Gemini feedback received for ${payload.branch}`);
+    }
+    
+    // Update timestamps
+    activeBranches.lastUpdated = new Date().toISOString();
+    activeBranches.generatedBy = 'Gemini Integration Workflow';
+    
+    // Save updates
+    saveJSON(ACTIVE_BRANCHES_FILE, activeBranches);
+}
+
 // Main execution
 function main() {
     const args = process.argv.slice(2);
@@ -322,6 +401,9 @@ function main() {
         case 'validate':
             handleValidation(payload);
             break;
+        case 'gemini-feedback':
+            handleGeminiFeedback(payload);
+            break;
         default:
             console.error(`Unknown event type: ${eventType}`);
             process.exit(1);
@@ -340,5 +422,6 @@ module.exports = {
     handleBranchMerged,
     handleBranchDeleted,
     handleLocalUpdate,
-    handleValidation
+    handleValidation,
+    handleGeminiFeedback
 };

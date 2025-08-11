@@ -15,6 +15,7 @@ agentic-development/
 │   ├── handoff-templates/           # Task-type templates
 │   └── workflows/                   # Multi-agent protocols
 ├── workflows/                       # Technical workflows
+│   ├── README.md                    # **NEW: GitHub Actions workflow infrastructure guide**
 │   ├── worktree-organization.md    # [CODE] Worktree patterns
 │   ├── branching-strategy.md       # [CODE] Git workflow guide
 │   ├── agent-terminal-prompts.md   # [CODE] Task-specific prompt templates
