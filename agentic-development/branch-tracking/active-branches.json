@@ -1,8 +1,51 @@
 {
-  "lastUpdated": "2025-08-08T21:30:00.000Z",
-  "generatedBy": "GitHub Actions",
-  "tuvensStrategy": "feature/* → dev → test → stage → main with change-type prefixes",
   "branches": {
-    "tuvens-docs": []
-  }
+    "test-repo": [
+      {
+        "name": "feature/test",
+        "author": "gemini-integration",
+        "created": "2025-08-11T20:06:08.926Z",
+        "lastActivity": "2025-08-11T20:06:08.926Z",
+        "taskGroup": null,
+        "status": "agent-session-active",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/test-repo/tree/feature/test",
+        "issues": [
+          "tuvens/test-repo#123"
+        ],
+        "gemini_feedback": {
+          "feedback_id": "a5797ff1bf41e52f",
+          "priority": "critical",
+          "session_id": "gemini-1754942768925-w2d16vv7p",
+          "triggered_at": "2025-08-11T20:06:08.925Z"
+        }
+      },
+      {
+        "name": "feature/security-fix",
+        "author": "gemini-integration",
+        "created": "2025-08-11T20:06:08.983Z",
+        "lastActivity": "2025-08-11T20:06:08.984Z",
+        "taskGroup": null,
+        "status": "gemini-critical-feedback",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/test-repo/tree/feature/security-fix",
+        "issues": [],
+        "gemini_feedback_history": [
+          {
+            "feedback_id": "test-feedback-123",
+            "category": "security-vulnerability",
+            "priority": "critical",
+            "received_at": "2025-08-11T20:06:08.984Z",
+            "agent_assigned": "vibe-coder"
+          }
+        ]
+      }
+    ]
+  },
+  "lastUpdated": "2025-08-11T20:06:08.984Z",
+  "generatedBy": "Gemini Integration Workflow"
 }

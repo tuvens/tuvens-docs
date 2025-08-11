@@ -7,10 +7,15 @@
  * including categorization, prioritization, and agent assignment.
  */
 
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+// ES modules don't have __dirname, so we need to create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Test data for different scenarios
 const TEST_SCENARIOS = {
@@ -321,8 +326,8 @@ class GeminiIntegrationTester {
   }
 }
 
-// Run tests if script is called directly
-if (require.main === module) {
+// Run tests if script is called directly (ES modules equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
   const tester = new GeminiIntegrationTester();
   tester.runAllTests().catch(error => {
     console.error('Test execution failed:', error);
@@ -330,4 +335,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = GeminiIntegrationTester;
+export default GeminiIntegrationTester;

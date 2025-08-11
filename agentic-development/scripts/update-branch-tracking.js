@@ -7,8 +7,13 @@
  * and local branch operations.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// ES modules don't have __dirname, so we need to create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const TRACKING_DIR = path.join(__dirname, '..', 'branch-tracking');
@@ -412,12 +417,12 @@ function main() {
     console.log('✅ Branch tracking update complete');
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (ES modules equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
     main();
 }
 
-module.exports = {
+export {
     handleBranchCreated,
     handleBranchMerged,
     handleBranchDeleted,

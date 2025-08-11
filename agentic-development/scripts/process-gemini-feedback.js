@@ -7,9 +7,10 @@
  * GitHub issue creation and agent session triggering.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { 
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { 
     loadJSON, 
     saveJSON, 
     generateUniqueId, 
@@ -17,7 +18,11 @@ const {
     parseArguments,
     validateRequiredArguments,
     getTrackingDirectory 
-} = require('./utils');
+} from './utils.js';
+
+// ES modules don't have __dirname, so we need to create it
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration - allow override for testing
 const TRACKING_DIR = process.env.TRACKING_DIR || getTrackingDirectory();
@@ -385,12 +390,12 @@ function main() {
   }
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (ES modules equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
 
-module.exports = {
+export {
   processGeminiFeedback,
   categorizeFeedback,
   determinePriority,
