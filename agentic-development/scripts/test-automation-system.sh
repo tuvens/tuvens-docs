@@ -30,7 +30,7 @@ done
 echo
 echo "📚 Test 2: Doc Tree Generator (auto-documentation workflow)"
 echo "  Checking workflow presence..."
-if [ -f "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/.github/workflows/auto-documentation.yml" ]; then
+if [ -f "$(git rev-parse --show-toplevel)/.github/workflows/auto-documentation.yml" ]; then
     echo "  ✅ auto-documentation.yml deployed to root workflows"
 else
     echo "  ❌ auto-documentation.yml missing from root workflows"
@@ -41,7 +41,7 @@ fi
 echo
 echo "📊 Test 3: Status Reporting (central-tracking-handler)"
 echo "  Checking central tracking handler..."
-if [ -f "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/.github/workflows/central-tracking-handler.yml" ]; then
+if [ -f "$(git rev-parse --show-toplevel)/.github/workflows/central-tracking-handler.yml" ]; then
     echo "  ✅ central-tracking-handler.yml deployed"
 else
     echo "  ❌ central-tracking-handler.yml missing"
@@ -52,7 +52,7 @@ fi
 echo
 echo "🔔 Test 4: Repository Notification Pipeline"
 echo "  Checking notify-repositories workflow..."
-if [ -f "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/.github/workflows/notify-repositories.yml" ]; then
+if [ -f "$(git rev-parse --show-toplevel)/.github/workflows/notify-repositories.yml" ]; then
     echo "  ✅ notify-repositories.yml exists"
 else
     echo "  ❌ notify-repositories.yml missing"
@@ -76,7 +76,7 @@ done
 # Test 6: Workflow Configuration Validation
 echo
 echo "⚙️  Test 6: Workflow Configuration Validation"
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.github/workflows
+cd "$(git rev-parse --show-toplevel)/.github/workflows"
 
 # Check auto-documentation workflow
 if grep -q "docs/auto-generated" auto-documentation.yml; then
@@ -101,13 +101,14 @@ echo "🔗 Test 7: End-to-End Integration Test"
 echo "  Simulating documentation change workflow..."
 
 # Simulate creating auto-generated documentation
-mkdir -p /Users/ciarancarroll/Code/Tuvens/tuvens-docs/docs/auto-generated
-echo "# Test Documentation" > /Users/ciarancarroll/Code/Tuvens/tuvens-docs/docs/auto-generated/test-doc.md
-echo "Generated: $(date)" >> /Users/ciarancarroll/Code/Tuvens/tuvens-docs/docs/auto-generated/test-doc.md
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+mkdir -p "$REPO_ROOT/docs/auto-generated"
+echo "# Test Documentation" > "$REPO_ROOT/docs/auto-generated/test-doc.md"
+echo "Generated: $(date)" >> "$REPO_ROOT/docs/auto-generated/test-doc.md"
 
-if [ -f "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/docs/auto-generated/test-doc.md" ]; then
+if [ -f "$REPO_ROOT/docs/auto-generated/test-doc.md" ]; then
     echo "  ✅ Doc generation simulation successful"
-    rm -f /Users/ciarancarroll/Code/Tuvens/tuvens-docs/docs/auto-generated/test-doc.md
+    rm -f "$REPO_ROOT/docs/auto-generated/test-doc.md"
 else
     echo "  ❌ Doc generation simulation failed"
     exit 1
