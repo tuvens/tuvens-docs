@@ -1,9 +1,9 @@
 ═══════════════════════════════════════════════════════════════════════════════
 VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
-GitHub Issue: #92
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/critical-directory-structure-cleanup
-Branch: feature/critical-directory-structure-cleanup
+GitHub Issue: {{ISSUE_NUMBER}}
+Worktree: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -13,28 +13,28 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the vibe coder 92 agent.
+I am the {{AGENT_NAME}} agent.
 
 Context Loading:
 - Load: .claude/agents/vibe-coder.md
 - Load: Implementation reports and workflow documentation
 
-🚨 CRITICAL: Read GitHub Issue #92 for complete task context
-Use: `gh issue view 92` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issue {{ISSUE_NUMBER}} for complete task context
+Use: `gh issue view {{ISSUE_NUMBER}}` to get the full problem analysis, requirements, and implementation details.
 
-GitHub Issue: #92
-Task: Critical Directory Structure Cleanup
+GitHub Issue: {{ISSUE_NUMBER}}
+Task: {{TASK_TITLE}}
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/critical-directory-structure-cleanup
-Branch: feature/critical-directory-structure-cleanup
+Working Directory: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 
 Success Criteria:
 Clean directory structure with worktrees isolated and documentation properly organized
 
-IMPORTANT: Start by reading the GitHub issue (#92) with `gh issue view 92` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+IMPORTANT: Start by reading the GitHub issue ({{ISSUE_NUMBER}}) with `gh issue view {{ISSUE_NUMBER}}` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
 
 Start your work by:
-1. Running: `gh issue view 92` to read the full GitHub issue
+1. Running: `gh issue view {{ISSUE_NUMBER}}` to read the full GitHub issue
 2. Examining the specified files (if any) to understand current state
 3. Following the 6-step agent workflow pattern
 4. Updating the GitHub issue with your progress and findings

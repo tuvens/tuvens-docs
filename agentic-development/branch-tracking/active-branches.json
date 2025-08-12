@@ -66,7 +66,7 @@
         "lastActivity": "2025-08-12T13:48:27.920Z",
         "taskGroup": null,
         "status": "active",
-        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/critical-directory-structure-cleanup",
+        "worktree": "worktrees/vibe-coder/feature/critical-directory-structure-cleanup",
         "agent": "feature",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/critical-directory-structure-cleanup",

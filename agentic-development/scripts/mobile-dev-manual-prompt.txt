@@ -1,35 +1,35 @@
 ═══════════════════════════════════════════════════════════════════════════════
 MOBILE DEV AGENT - MANUAL SESSION SETUP
 
-GitHub Issues: #37, #38, #39 (plus created issue #88)
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/mobile-dev/resolve-issues-37-39
-Branch: mobile-dev/resolve-issues-37-39
+GitHub Issues: {{ISSUE_NUMBERS}}
+Worktree: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
 1. Open iTerm2 manually
-2. cd "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/mobile-dev/resolve-issues-37-39"
+2. cd "{{WORKTREE_PATH}}"
 3. Type: claude
 4. Copy and paste the prompt below
 
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the Mobile Dev agent working on GitHub issues #37, #38, and #39.
+I am the Mobile Dev agent working on GitHub issues {{ISSUE_NUMBERS}}.
 
 Context Loading:
 - Load: .claude/agents/mobile-dev.md (if exists)
 - Load: Implementation reports and workflow documentation
 
-🚨 CRITICAL: Read GitHub Issues #37, #38, #39 and #88 for complete task context
-Use: `gh issue view 37`, `gh issue view 38`, `gh issue view 39`, `gh issue view 88` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issues {{ISSUE_NUMBERS}} for complete task context
+Use: {{GITHUB_COMMANDS}} to get the full problem analysis, requirements, and implementation details.
 
-Task: Resolve GitHub issues #37-39 - Mobile workflow testing and validation
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/mobile-dev/resolve-issues-37-39
-Branch: mobile-dev/resolve-issues-37-39
+Task: {{TASK_TITLE}}
+Working Directory: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 
 Start your work by:
-1. Running: `gh issue view 37`, `gh issue view 38`, `gh issue view 39`, `gh issue view 88` to read all related issues
+1. Running: {{GITHUB_COMMANDS}} to read all related issues
 2. Complete end-to-end validation of mobile development environment
 3. Test automation script fixes
 4. Document findings and improvements needed for mobile workflows

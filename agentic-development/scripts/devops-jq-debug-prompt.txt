@@ -1,9 +1,9 @@
 ═══════════════════════════════════════════════════════════════════════════════
 DEVOPS AGENT - DEBUG JQ HANGING ISSUE
 
-GitHub Issue: #90
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/devops/debug-jq-hanging
-Branch: devops/debug-jq-hanging
+GitHub Issue: {{ISSUE_NUMBER}}
+Worktree: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -13,18 +13,18 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the DevOps agent working on GitHub issue #90.
+I am the {{AGENT_NAME}} agent working on GitHub issue {{ISSUE_NUMBER}}.
 
 Context Loading:
 - Load: .claude/agents/devops.md
 - Load: Implementation reports and workflow documentation
 
-🚨 CRITICAL: Read GitHub Issue #90 for complete task context
-Use: `gh issue view 90` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issue {{ISSUE_NUMBER}} for complete task context
+Use: `gh issue view {{ISSUE_NUMBER}}` to get the full problem analysis, requirements, and implementation details.
 
-Task: Debug JQ Command Hanging Issue
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/devops/debug-jq-hanging
-Branch: devops/debug-jq-hanging
+Task: {{TASK_TITLE}}
+Working Directory: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
 
 Problem: The jq command on lines 251-255 in setup-agent-task.sh that searches for related task groups is hanging, likely due to complex regex matching on the task-groups.json file. This affects all /start-session automation.
 
@@ -33,12 +33,12 @@ Priority Files to Examine:
 - agentic-development/branch-tracking/task-groups.json
 
 Start your work by:
-1. Running: `gh issue view 90` to read the full GitHub issue
+1. Running: `gh issue view {{ISSUE_NUMBER}}` to read the full GitHub issue
 2. Examine the problematic jq command in setup-agent-task.sh
 3. Test the jq command in isolation to identify the hanging issue
 4. Fix the regex matching or simplify the logic
 5. Test the complete automation flow to ensure it works
-6. Update GitHub issue #90 with findings and solution
+6. Update GitHub issue {{ISSUE_NUMBER}} with findings and solution
 
 Success Criteria: JQ command fixed and setup-agent-task.sh completes successfully without hanging
 

@@ -64,7 +64,7 @@ codehooks-dev/oauth-provider-setup
 
 ### Worktree Organization Structure
 ```
-/Users/ciarancarroll/Code/Tuvens/
+~/Code/Tuvens/
 ├── {repo-name}/                     # Main repository checkouts
 ├── worktrees/
 │   ├── {repo-name}/
@@ -81,26 +81,26 @@ codehooks-dev/oauth-provider-setup
 #### For Documentation Work
 ```bash
 # Create vibe coder worktree  
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+cd ~/Code/Tuvens/tuvens-docs
 git worktree add vibe-coder/experiment-name -b vibe-coder/experiment-name
 
 # Create devops worktree for infrastructure docs
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+cd ~/Code/Tuvens/tuvens-docs
 git worktree add devops/infra-docs -b devops/infra-docs
 ```
 
 #### For Cross-Repository Development
 ```bash
 # Create node-dev worktree (docs)
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+cd ~/Code/Tuvens/tuvens-docs
 git worktree add node-dev/api-docs -b node-dev/api-docs
 
 # Create svelte-dev worktree (client)
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-client
+cd ~/Code/Tuvens/tuvens-client
 git worktree add svelte-dev/oauth-ui -b svelte-dev/oauth-ui
 
 # Create node-dev worktree (api)
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-api
+cd ~/Code/Tuvens/tuvens-api
 git worktree add node-dev/oauth-endpoints -b node-dev/oauth-endpoints
 ```
 

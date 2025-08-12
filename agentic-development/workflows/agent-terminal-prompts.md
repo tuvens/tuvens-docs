@@ -14,8 +14,8 @@ This document provides copy-paste ready prompts for each agent type when startin
 I am the Vibe Coder - experimental agent for creative system building.
 
 Context Loading:
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.claude/agents/vibe-coder.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md
+- Load: ~/Code/Tuvens/tuvens-docs/.claude/agents/vibe-coder.md
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md
 
 Current Task: Create comprehensive agent workflow instructions for all agent types.
 
@@ -32,7 +32,7 @@ Specific Goals:
 
 4. Update pending-commits with progress and findings.
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions
+Working Directory: ~/Code/Tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions
 Branch: vibe-coder/feature-agent-workflow-instructions
 
 Start by loading the context files above and then begin creating the workflow instructions.
@@ -46,9 +46,9 @@ Start by loading the context files above and then begin creating the workflow in
 I am the Frontend Developer for the Tuvens user interface.
 
 Context Loading:
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.claude/agents/react-dev.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/authentication-flow.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/workflows/branching-strategy.md
+- Load: ~/Code/Tuvens/tuvens-docs/.claude/agents/react-dev.md
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/authentication-flow.md
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/workflows/branching-strategy.md
 
 Current Task: Analyze and implement authentication UI components.
 
@@ -61,7 +61,7 @@ Specific Goals:
    - Authentication state indicators
 4. Document findings in pending-commits/
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/worktrees/tuvens-client/frontend-specialist/feature-authentication-ui
+Working Directory: ~/Code/Tuvens/worktrees/tuvens-client/frontend-specialist/feature-authentication-ui
 Branch: frontend-dev/feature-authentication-ui
 
 Start by analyzing the current authentication UI components.
@@ -75,9 +75,9 @@ Start by analyzing the current authentication UI components.
 I am the Backend Developer for the Tuvens core application.
 
 Context Loading:
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.claude/agents/node-dev.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/api-requirements.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/tuvens-docs/authentication-priority.md
+- Load: ~/Code/Tuvens/tuvens-docs/.claude/agents/node-dev.md
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/api-requirements.md
+- Load: ~/Code/Tuvens/tuvens-docs/tuvens-docs/authentication-priority.md
 
 Current Task: Review and implement OAuth2 authentication API endpoints.
 
@@ -91,7 +91,7 @@ Specific Goals:
 4. Ensure secure token handling and storage
 5. Document API contracts for Frontend Developer
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/worktrees/tuvens-api/backend-specialist/feature-oauth-endpoints
+Working Directory: ~/Code/Tuvens/worktrees/tuvens-api/backend-specialist/feature-oauth-endpoints
 Branch: backend-dev/feature-oauth-endpoints
 
 Start by reviewing the current authentication implementation.
@@ -105,9 +105,9 @@ Start by reviewing the current authentication implementation.
 I am the Integration Specialist for Tuvens external service integrations.
 
 Context Loading:
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.claude/agents/laravel-dev.md
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/ (all files)
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/tuvens-docs/authentication-priority.md
+- Load: ~/Code/Tuvens/tuvens-docs/.claude/agents/laravel-dev.md
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/integration-guides/hi-events/ (all files)
+- Load: ~/Code/Tuvens/tuvens-docs/tuvens-docs/authentication-priority.md
 
 Current Task: Implement cross-application authentication between Tuvens and hi.events.
 
@@ -132,7 +132,7 @@ Start by reviewing the hi.events authentication documentation.
 I am the Documentation Orchestrator for Tuvens multi-agent development.
 
 Context Loading:
-- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/ (complete directory)
+- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/ (complete directory)
 - Load: all pending-commits/ to understand current agent activities
 - Load: active workflows from workflows/ directory
 
@@ -145,7 +145,7 @@ Specific Goals:
 4. Facilitate agent handoffs as needed
 5. Capture and document new patterns and learnings
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+Working Directory: ~/Code/Tuvens/tuvens-docs
 Branch: main or develop (depending on task)
 
 Start by assessing the current state of all agent activities.
@@ -162,7 +162,7 @@ osascript -e 'tell application "iTerm2"
     create window with default profile
     tell current session of current window
         set name to "🎨 Vibe Coder - feature-agent-workflow"
-        write text "cd /Users/ciarancarroll/Code/Tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions"
+        write text "cd ~/Code/Tuvens/worktrees/tuvens-docs/vibe-coder/feature-agent-workflow-instructions"
         write text "clear"
         write text "echo \"======================================\""
         write text "echo \"VIBE CODER AGENT - WORKFLOW INSTRUCTIONS\""
@@ -176,9 +176,9 @@ osascript -e 'tell application "iTerm2"
         write text "I am the Vibe Coder - experimental agent for creative system building."
         write text ""
         write text "Context Loading:"
-        write text "- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/.claude/agents/vibe-coder.md"
-        write text "- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md"
-        write text "- Load: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md"
+        write text "- Load: ~/Code/Tuvens/tuvens-docs/.claude/agents/vibe-coder.md"
+        write text "- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md"
+        write text "- Load: ~/Code/Tuvens/tuvens-docs/agentic-development/workflows/worktree-organization.md"
         write text ""
         write text "Current Task: Create comprehensive agent workflow instructions for all agent types."
         write text ""
