@@ -31,5 +31,8 @@ logs/
 # Agent worktrees (isolated development environments)
 worktrees/
 
+# Sub-session workspaces (temporary agent work environments)
+sub-sessions/
+
 # Node.js dependencies
 node_modules/
