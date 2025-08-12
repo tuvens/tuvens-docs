@@ -242,3 +242,6 @@ echo "  • pre-commit install    - Install pre-commit hooks"
 echo "  • pre-commit run --all  - Test all hooks"
 echo ""
 echo "📖 Documentation: CLAUDE.md, .pre-commit-config.yaml"
+
+# Ensure script exits with success code when checks pass
+exit 0
