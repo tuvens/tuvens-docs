@@ -3,7 +3,7 @@
 # Branch Check Command
 # Simple validation tool for current repository state
 
-set -e
+# Note: Removed 'set -e' so script completes all checks even if individual commands fail
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
