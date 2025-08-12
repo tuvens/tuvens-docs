@@ -55,7 +55,8 @@ if GITHUB_HEAD_REF="$GITHUB_HEAD_REF" GITHUB_BASE_REF="$GITHUB_BASE_REF" ./scrip
     VALIDATION_RESULTS+=("branch-protection:passed")
 else
     echo -e "${RED}❌ Branch protection validation failed${NC}"
-    echo -e "${YELLOW}Run: ./scripts/branch-check${NC} for details"
+    echo -e "${YELLOW}Branch-check output:${NC}"
+    cat /tmp/branch-check-output || echo "No output captured"
     CRITICAL_ISSUES+=("Branch protection validation failed")
     VALIDATION_RESULTS+=("branch-protection:failed")
 fi
