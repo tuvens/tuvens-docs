@@ -10,8 +10,8 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `7f2294b1d05d6588b6def65a6a431f551298d183`
-- **Commit Message**: "docs: enhance workflow infrastructure accessibility and cleanup (#87)
+- **Latest Commit**: `1bcda777c05905bd909b37cd8fbff7fc919fd911`
+- **Commit Message**: "fix: resolve jq command hanging in setup-agent-task.sh (#95)
 
 * fix: add missing tuvensStrategy field to active-branches.json
 
@@ -65,20 +65,43 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 
+* fix: resolve jq command hanging in setup-agent-task.sh
+
+- Simplified complex bi-directional regex matching that caused hanging
+- Changed from: select(.value.title | ascii_downcase | contains($title) or ($title | contains(. | ascii_downcase)))
+- Changed to: select(.value.title | ascii_downcase | contains($title))
+- Improves performance from hanging to <0.01s execution
+- Preserves task coordination functionality
+- Fixes /start-session automation
+
+Fixes #90
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
 ---------
 
 Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-12T14:47:06+01:00
+- **Timestamp**: 2025-08-12T15:44:32+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 1bcda77` - fix: resolve jq command hanging in setup-agent-task.sh (#95)
+- **Date**: 2025-08-12 15:44
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* a5309ba` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-12 13:48
+- **Author**: GitHub Actions
+
 #### `* 7f2294b` - docs: enhance workflow infrastructure accessibility and cleanup (#87)
 - **Date**: 2025-08-12 14:47
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 7fb99dd` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-11 22:32
@@ -192,20 +215,6 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**:  
 - **Author**:  2f074f5
 - **Refs**: tuvens|Merge pull request #74 from tuvens/devops/hotfix/fix-critical-workflow-failures|
-
-#### `` - 
-- **Date**: | 
-- **Author**:  
-
-#### `` - 2025-08-11 15:53
-- **Date**:  * 
-- **Author**:  0df995d
-- **Refs**: tuvens|fix: resolve critical GitHub Actions workflow failures|
-
-#### `* ` - 2025-08-11 14:28
-- **Date**:  
-- **Author**:  ae38ad3
-- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
 
 ## Branch Analysis
 

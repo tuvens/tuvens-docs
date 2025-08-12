@@ -4,8 +4,8 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 7f2294b1d05d6588b6def65a6a431f551298d183
-- **Commit Message**: docs: enhance workflow infrastructure accessibility and cleanup (#87)
+- **Commit SHA**: 1bcda777c05905bd909b37cd8fbff7fc919fd911
+- **Commit Message**: fix: resolve jq command hanging in setup-agent-task.sh (#95)
 
 * fix: add missing tuvensStrategy field to active-branches.json
 
@@ -59,11 +59,26 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 
+* fix: resolve jq command hanging in setup-agent-task.sh
+
+- Simplified complex bi-directional regex matching that caused hanging
+- Changed from: select(.value.title | ascii_downcase | contains($title) or ($title | contains(. | ascii_downcase)))
+- Changed to: select(.value.title | ascii_downcase | contains($title))
+- Improves performance from hanging to <0.01s execution
+- Preserves task coordination functionality
+- Fixes /start-session automation
+
+Fixes #90
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
 ---------
 
 Co-authored-by: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-12T14:47:06+01:00
+- **Timestamp**: 2025-08-12T15:44:32+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
