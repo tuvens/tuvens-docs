@@ -303,11 +303,18 @@ jobs:
           node-version: '20'
 
       - name: Run pre-merge safety integration
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           echo "🛡️ Running comprehensive pre-merge safety checks..."
           
           # Make scripts executable
           chmod +x scripts/check-before-merge.sh scripts/branch-check
+          
+          # Debug environment variables
+          echo "Branch info: HEAD_REF=$GITHUB_HEAD_REF, BASE_REF=$GITHUB_BASE_REF, REF_NAME=$GITHUB_REF_NAME"
           
           # Run pre-merge safety validation
           if npm run pre-merge; then
