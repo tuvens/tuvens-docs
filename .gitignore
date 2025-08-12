@@ -27,3 +27,6 @@ Thumbs.db
 
 # Log files and directories
 logs/
+
+# Agent worktrees (isolated development environments)
+worktrees/

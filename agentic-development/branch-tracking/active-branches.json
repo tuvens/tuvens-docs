@@ -44,9 +44,37 @@
           }
         ]
       }
+    ],
+    "tuvens-docs": [
+      {
+        "name": "test-branch",
+        "author": "test",
+        "created": "2025-08-12T13:22:03.743Z",
+        "lastActivity": "2025-08-12T13:22:03.745Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/tmp/test",
+        "agent": "unknown",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/test-branch",
+        "issues": "test"
+      },
+      {
+        "name": "feature/critical-directory-structure-cleanup",
+        "author": "tuvens",
+        "created": "2025-08-12T13:48:27.919Z",
+        "lastActivity": "2025-08-12T13:48:27.920Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/critical-directory-structure-cleanup",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/critical-directory-structure-cleanup",
+        "issues": "tuvens-docs#92"
+      }
     ]
   },
-  "lastUpdated": "2025-08-11T20:06:08.984Z",
-  "generatedBy": "Gemini Integration Workflow",
+  "lastUpdated": "2025-08-12T13:48:27.920Z",
+  "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
