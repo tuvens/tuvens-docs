@@ -23,20 +23,8 @@ ACTIVE_BRANCHES_FILE="$BRANCH_TRACKING_DIR/active-branches.json"
 MERGE_LOG_FILE="$BRANCH_TRACKING_DIR/merge-log.json"
 
 # Get current branch and target
-# In GitHub Actions, use environment variables for proper branch detection
-if [ -n "$GITHUB_HEAD_REF" ]; then
-    # Pull request event in GitHub Actions
-    CURRENT_BRANCH="$GITHUB_HEAD_REF"
-    TARGET_BRANCH="${GITHUB_BASE_REF:-dev}"
-elif [ -n "$GITHUB_REF_NAME" ]; then
-    # Push event in GitHub Actions
-    CURRENT_BRANCH="$GITHUB_REF_NAME"
-    TARGET_BRANCH="${1:-dev}"
-else
-    # Local environment
-    CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
-    TARGET_BRANCH="${1:-dev}"
-fi
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+TARGET_BRANCH="${1:-dev}"  # Default to dev if no target specified
 
 echo -e "${BLUE}Current branch:${NC} $CURRENT_BRANCH"
 echo -e "${BLUE}Target branch:${NC} $TARGET_BRANCH"
@@ -58,8 +46,6 @@ if ./scripts/branch-check > /tmp/branch-check-output 2>&1; then
 else
     echo -e "${RED}❌ Branch protection validation failed${NC}"
     echo -e "${YELLOW}Run: ./scripts/branch-check${NC} for details"
-    echo -e "${YELLOW}Error output:${NC}"
-    cat /tmp/branch-check-output
     CRITICAL_ISSUES+=("Branch protection validation failed")
     VALIDATION_RESULTS+=("branch-protection:failed")
 fi

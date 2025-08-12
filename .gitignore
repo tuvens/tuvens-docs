@@ -30,4 +30,3 @@ logs/
 
 # Agent worktrees (isolated development environments)
 worktrees/
-node_modules/

@@ -11,27 +11,9 @@ VIOLATIONS=()
 # Check for potential secrets in staged files
 STAGED_FILES=$(git diff --cached --name-only)
 if [ -n "$STAGED_FILES" ]; then
-    # Look for secret patterns but exclude GitHub Actions references and safety hook scripts
     if echo "$STAGED_FILES" | xargs grep -l -i -E "(password|secret|token|key|api_key)" 2>/dev/null; then
         SECRET_FILES=$(echo "$STAGED_FILES" | xargs grep -l -i -E "(password|secret|token|key|api_key)" 2>/dev/null)
-        
-        # Filter out false positives (GitHub Actions secret references and safety hook scripts)
-        REAL_SECRET_FILES=""
-        for file in $SECRET_FILES; do
-            # Check if the file contains legitimate GitHub Actions patterns or is a safety hook script
-            if grep -q '\${{ *secrets\.' "$file" 2>/dev/null || \
-               grep -q '\${{ *github\.' "$file" 2>/dev/null || \
-               [[ "$file" == *"safety-rules"* ]] || \
-               [[ "$file" == *"hooks/"* ]]; then
-                continue  # Skip files with GitHub Actions secret references or safety hook scripts
-            else
-                REAL_SECRET_FILES="$REAL_SECRET_FILES $file"
-            fi
-        done
-        
-        if [ -n "$REAL_SECRET_FILES" ]; then
-            VIOLATIONS+=("Potential secrets detected in: $REAL_SECRET_FILES")
-        fi
+        VIOLATIONS+=("Potential secrets detected in: $SECRET_FILES")
     fi
 fi
 
