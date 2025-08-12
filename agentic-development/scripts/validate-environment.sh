@@ -17,10 +17,10 @@ echo "   ✓ Git repository detected"
 
 # Path Validation
 echo "✅ Validating paths..."
-EXPECTED_PATH="/Users/ciarancarroll/Code/Tuvens"
-if [[ ! "$PWD" == *"$EXPECTED_PATH"* ]]; then
-    echo "❌ ERROR: Not in expected path structure"
-    echo "   Expected: $EXPECTED_PATH"
+# Check if we're in a Tuvens project structure by looking for agentic-development directory
+if [[ ! -d "agentic-development" && ! -d "../agentic-development" && ! -d "../../agentic-development" ]]; then
+    echo "❌ ERROR: Not in expected Tuvens project structure"
+    echo "   Expected: Directory containing or ancestor of 'agentic-development'"
     echo "   Current:  $PWD"
     exit 1
 fi
@@ -33,13 +33,13 @@ echo "   ✓ Current branch: $CURRENT_BRANCH"
 
 # Worktree Directory
 echo "✅ Checking worktree structure..."
-# Following worktree organization strategy: [repo]/[agent]/[branch] pattern
-REPO_BASE="/Users/ciarancarroll/Code/Tuvens"
-if [[ ! -d "$REPO_BASE" ]]; then
-    echo "❌ ERROR: Repository base directory missing"
+# Following worktree organization strategy: [repo]/worktrees/[agent]/[branch] pattern
+REPO_ROOT=$(git rev-parse --show-toplevel)
+if [[ ! -d "$REPO_ROOT" ]]; then
+    echo "❌ ERROR: Repository root directory not accessible"
     exit 1
 fi
-echo "   ✓ Worktree structure exists"
+echo "   ✓ Repository structure exists at: $REPO_ROOT"
 
 # GitHub CLI
 echo "✅ Checking GitHub CLI..."

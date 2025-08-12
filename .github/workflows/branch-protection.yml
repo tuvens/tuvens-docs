@@ -295,7 +295,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -303,8 +303,12 @@ jobs:
           node-version: '20'
 
       - name: Run pre-merge safety integration
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: |
           echo "🛡️ Running comprehensive pre-merge safety checks..."
+          echo "Branch context: $GITHUB_HEAD_REF → $GITHUB_BASE_REF"
           
           # Make scripts executable
           chmod +x scripts/check-before-merge.sh scripts/branch-check
