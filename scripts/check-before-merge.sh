@@ -23,8 +23,18 @@ ACTIVE_BRANCHES_FILE="$BRANCH_TRACKING_DIR/active-branches.json"
 MERGE_LOG_FILE="$BRANCH_TRACKING_DIR/merge-log.json"
 
 # Get current branch and target
-CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
-TARGET_BRANCH="${1:-dev}"  # Default to dev if no target specified
+# Use GitHub Actions environment variables if available, otherwise fallback to git
+if [ -n "$GITHUB_HEAD_REF" ]; then
+    CURRENT_BRANCH="$GITHUB_HEAD_REF"
+else
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+fi
+
+if [ -n "$GITHUB_BASE_REF" ]; then
+    TARGET_BRANCH="$GITHUB_BASE_REF"
+else
+    TARGET_BRANCH="${1:-dev}"  # Default to dev if no target specified
+fi
 
 echo -e "${BLUE}Current branch:${NC} $CURRENT_BRANCH"
 echo -e "${BLUE}Target branch:${NC} $TARGET_BRANCH"

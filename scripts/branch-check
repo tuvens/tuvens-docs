@@ -16,7 +16,12 @@ echo "=========================="
 echo ""
 
 # Get current branch
-CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+# Use GitHub Actions environment variables if available, otherwise fallback to git
+if [ -n "$GITHUB_HEAD_REF" ]; then
+    CURRENT_BRANCH="$GITHUB_HEAD_REF"
+else
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+fi
 echo -e "${BLUE}Current branch:${NC} $CURRENT_BRANCH"
 echo ""
 
