@@ -10,14 +10,21 @@ This document defines the organizational strategy for git worktrees in the Tuven
 
 ### Implemented Organization
 ```
-/Users/ciarancarroll/Code/Tuvens/
+~/Code/Tuvens/
 ├── tuvens-docs/                     # Main repository checkout
-│   ├── vibe-coder/                  # Agent worktrees (docs organization)
-│   │   ├── feature-agent-workflow-instructions/
-│   │   ├── feature-cto-technical-improvements/
-│   │   └── {other-vibe-coder-branches}/
-│   └── integration-specialist/
-│       └── {integration-doc-branches}/
+│   ├── worktrees/                   # Isolated agent worktrees directory
+│   │   ├── vibe-coder/              # Agent worktrees (docs organization)
+│   │   │   ├── feature/
+│   │   │   │   ├── feature-agent-workflow-instructions/
+│   │   │   │   ├── feature-cto-technical-improvements/
+│   │   │   │   └── {other-vibe-coder-feature-branches}/
+│   │   │   └── {other-branch-types}/
+│   │   ├── devops/                  # DevOps agent worktrees
+│   │   │   └── {devops-branches}/
+│   │   ├── mobile-dev/              # Mobile development worktrees
+│   │   │   └── {mobile-branches}/
+│   │   └── integration-specialist/
+│   │       └── {integration-doc-branches}/
 ├── tuvens-client/                   # Main repository checkout  
 │   ├── frontend-developer/          # Agent worktrees
 │   │   ├── {frontend-feature-branches}/
@@ -56,7 +63,7 @@ This document defines the organizational strategy for git worktrees in the Tuven
 
 ### Vibe Coder (Documentation Organization & Experimental Agent)
 **Repository:** tuvens-docs
-**Directory Pattern:** `tuvens-docs/vibe-coder/[branch-name]`
+**Directory Pattern:** `tuvens-docs/worktrees/vibe-coder/[branch-name]`
 
 **Typical Branches:**
 ```
@@ -71,7 +78,7 @@ vibe-coder/test-coordination-protocols
 **Current Implementation:**
 - ✅ `feature-agent-workflow-instructions` - Completed and merged
 - ✅ `feature-cto-technical-improvements` - Completed and merged
-- Directory Pattern: `/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/[branch-name]/`
+- Directory Pattern: `~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/[branch-name]/`
 
 **Responsibilities:**
 - Documentation organization and structure
@@ -130,13 +137,13 @@ integration-specialist/mobile-api-integration
 
 2. **Create Agent Worktree**
    ```bash
-   cd /Users/ciarancarroll/Code/Tuvens/{repo}
-   git worktree add {agent-type}/{feature-name} {agent-type}/{feature-name}
+   cd ~/Code/Tuvens/{repo}
+   git worktree add worktrees/{agent-type}/{feature-name} {agent-type}/{feature-name}
    ```
 
 3. **Set Up Agent Environment**
    ```bash
-   cd {agent-type}/{feature-name}
+   cd worktrees/{agent-type}/{feature-name}
    # Load agent context and begin work
    ```
 
@@ -149,7 +156,7 @@ integration-specialist/mobile-api-integration
 ### Completion Process
 1. **Final Commit and Push**
    ```bash
-   cd /Users/ciarancarroll/Code/Tuvens/{repo}/{agent-type}/{feature-name}
+   cd ~/Code/Tuvens/{repo}/worktrees/{agent-type}/{feature-name}
    git add .
    git commit -m "feat({agent}): complete {feature-name}"
    git push origin {agent-type}/{feature-name}
@@ -162,8 +169,8 @@ integration-specialist/mobile-api-integration
 
 3. **Clean Up Worktree**
    ```bash
-   cd /Users/ciarancarroll/Code/Tuvens/{repo}
-   git worktree remove {agent-type}/{feature-name}
+   cd ~/Code/Tuvens/{repo}
+   git worktree remove worktrees/{agent-type}/{feature-name}
    ```
 
 ## Benefits of This Organization
@@ -221,7 +228,7 @@ git worktree list
 # Check worktree directory sizes in each repository
 for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
     echo "=== $repo ==="
-    cd /Users/ciarancarroll/Code/Tuvens/$repo
+    cd ~/Code/Tuvens/$repo
     du -sh */
     echo ""
 done
@@ -229,7 +236,7 @@ done
 # Identify stale worktrees (older than 30 days) in each repository
 for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile hi.events; do
     echo "=== $repo ==="
-    find /Users/ciarancarroll/Code/Tuvens/$repo -mindepth 2 -maxdepth 2 -type d -mtime +30
+    find ~/Code/Tuvens/$repo -mindepth 2 -maxdepth 2 -type d -mtime +30
 done
 ```
 

@@ -3,7 +3,7 @@
 # Branch Check Command
 # Simple validation tool for current repository state
 
-set -e
+# Note: Removed 'set -e' so script completes all checks even if individual commands fail
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -16,7 +16,12 @@ echo "=========================="
 echo ""
 
 # Get current branch
-CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+# Use GitHub Actions environment variables if available, otherwise fallback to git
+if [ -n "$GITHUB_HEAD_REF" ]; then
+    CURRENT_BRANCH="$GITHUB_HEAD_REF"
+else
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+fi
 echo -e "${BLUE}Current branch:${NC} $CURRENT_BRANCH"
 echo ""
 
@@ -237,3 +242,6 @@ echo "  • pre-commit install    - Install pre-commit hooks"
 echo "  • pre-commit run --all  - Test all hooks"
 echo ""
 echo "📖 Documentation: CLAUDE.md, .pre-commit-config.yaml"
+
+# Ensure script exits with success code when checks pass
+exit 0

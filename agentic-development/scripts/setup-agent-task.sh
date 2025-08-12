@@ -211,14 +211,17 @@ echo "Step 3: Setting up worktree..."
 BRANCH_NAME="feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
 
 # Determine if we're in tuvens-docs or another repository
-if [[ "$(basename "$(pwd)")" == "tuvens-docs" ]]; then
-    # We're in tuvens-docs - use agent-specific worktree path
-    WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/$AGENT_NAME/$BRANCH_NAME"
+REPO_ROOT=$(git rev-parse --show-toplevel)
+REPO_NAME=$(basename "$REPO_ROOT")
+
+if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
+    # We're in tuvens-docs - use new worktrees structure
+    WORKTREE_PATH="$REPO_ROOT/worktrees/$AGENT_NAME/$BRANCH_NAME"
     IS_TUVENS_DOCS=true
 else
     # We're in another repository - use repository-specific worktree path
-    REPO_NAME="$(basename "$(pwd)")"
-    WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME/$AGENT_NAME/$BRANCH_NAME"
+    PARENT_DIR=$(dirname "$REPO_ROOT")
+    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$AGENT_NAME/$BRANCH_NAME"
     IS_TUVENS_DOCS=false
 fi
 
@@ -368,7 +371,12 @@ if [[ "$IS_TUVENS_DOCS" == "false" ]]; then
     
     # Step 3b: Copy .env file from dev worktree
     echo "   Copying .env configuration from dev worktree..."
-    DEV_WORKTREE_PATH="/Users/ciarancarroll/Code/Tuvens/$REPO_NAME/dev"
+    if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
+        DEV_WORKTREE_PATH="$REPO_ROOT/worktrees/dev"
+    else
+        PARENT_DIR=$(dirname "$REPO_ROOT")
+        DEV_WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/dev"
+    fi
     if [[ -f "$DEV_WORKTREE_PATH/.env" ]]; then
         cp "$DEV_WORKTREE_PATH/.env" "$WORKTREE_PATH/.env"
         echo "✅ Copied .env file from dev worktree"
