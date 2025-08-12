@@ -80,12 +80,12 @@
         "taskGroup": null,
         "status": "validating",
         "worktree": null,
-        "agent": "pre-merge-check",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/refactor/critical-directory-structure-cleanup",
-        "issues": [],
+        "issues": ["tuvens-docs#92"],
         "validationStatus": "pre-merge-passed",
-        "prNumber": null
+        "prNumber": 97
       }
     ]
   },

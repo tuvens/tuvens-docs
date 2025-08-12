@@ -30,3 +30,6 @@ logs/
 
 # Agent worktrees (isolated development environments)
 worktrees/
+
+# Node.js dependencies
+node_modules/
