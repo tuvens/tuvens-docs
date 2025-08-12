@@ -247,10 +247,10 @@ fi
 if [ -f "$TRACKING_DIR/task-groups.json" ]; then
     echo "🔍 Checking for task coordination opportunities..."
     
-    # Look for existing task groups that might be related
+    # Look for existing task groups that might be related using simple keyword matching
     RELATED_GROUPS=$(jq -r --arg title "$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]')" '
         to_entries[] | 
-        select(.value.title | ascii_downcase | contains($title) or ($title | contains(. | ascii_downcase))) |
+        select(.value.title | ascii_downcase | contains($title)) |
         "\(.key): \(.value.title) (Status: \(.value.status))"
     ' "$TRACKING_DIR/task-groups.json" 2>/dev/null)
     
