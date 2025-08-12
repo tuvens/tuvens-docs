@@ -76,20 +76,22 @@
         "name": "vibe-coder/refactor/critical-directory-structure-cleanup",
         "author": "validation-system",
         "created": "2025-08-12T14:56:48.707Z",
-        "lastActivity": "2025-08-12T14:56:48.708Z",
+        "lastActivity": "2025-08-12T15:31:55.504Z",
         "taskGroup": null,
         "status": "validated",
         "worktree": null,
         "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/refactor/critical-directory-structure-cleanup",
-        "issues": ["tuvens-docs#92"],
+        "issues": [
+          "tuvens-docs#92"
+        ],
         "validationStatus": "pre-merge-passed",
-        "prNumber": 97
+        "prNumber": null
       }
     ]
   },
-  "lastUpdated": "2025-08-12T14:56:48.708Z",
+  "lastUpdated": "2025-08-12T15:31:55.505Z",
   "generatedBy": "Branch Protection Workflow",
   "tuvensStrategy": "5-branch-flow"
 }
