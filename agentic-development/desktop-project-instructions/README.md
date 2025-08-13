@@ -223,6 +223,7 @@ Load: tuvens-docs/tuvens-docs/implementation-guides/cross-app-authentication/REA
 For deployment and infrastructure:
 ```markdown
 Load: .claude/agents/devops.md
+Load: agentic-development/workflows/README.md
 Load: tuvens-docs/tuvens-docs/repositories/[target-repo].md
 Load: agentic-development/workflows/cross-repository-development/README.md
 ```

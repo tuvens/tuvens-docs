@@ -60,6 +60,36 @@
         "issues": "tuvens-docs#99"
       },
       {
+        "name": "feature/critical-directory-structure-cleanup",
+        "author": "tuvens",
+        "created": "2025-08-12T13:48:27.919Z",
+        "lastActivity": "2025-08-12T13:48:27.920Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/critical-directory-structure-cleanup",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/critical-directory-structure-cleanup",
+        "issues": "tuvens-docs#92"
+      },
+      {
+        "name": "vibe-coder/refactor/critical-directory-structure-cleanup",
+        "author": "validation-system",
+        "created": "2025-08-12T14:56:48.707Z",
+        "lastActivity": "2025-08-12T15:56:05.869Z",
+        "taskGroup": null,
+        "status": "validated",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/refactor/critical-directory-structure-cleanup",
+        "issues": [
+          "tuvens-docs#92"
+        ],
+        "validationStatus": "pre-merge-passed",
+        "prNumber": null
+      },
+      {
         "name": "feature/directory-structure-analysis-and-reference-mapping",
         "author": "tuvens",
         "created": "2025-08-13T09:34:17.813Z",

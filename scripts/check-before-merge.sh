@@ -23,8 +23,18 @@ ACTIVE_BRANCHES_FILE="$BRANCH_TRACKING_DIR/active-branches.json"
 MERGE_LOG_FILE="$BRANCH_TRACKING_DIR/merge-log.json"
 
 # Get current branch and target
-CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
-TARGET_BRANCH="${1:-dev}"  # Default to dev if no target specified
+# Use GitHub Actions environment variables if available, otherwise fallback to git
+if [ -n "$GITHUB_HEAD_REF" ]; then
+    CURRENT_BRANCH="$GITHUB_HEAD_REF"
+else
+    CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+fi
+
+if [ -n "$GITHUB_BASE_REF" ]; then
+    TARGET_BRANCH="$GITHUB_BASE_REF"
+else
+    TARGET_BRANCH="${1:-dev}"  # Default to dev if no target specified
+fi
 
 echo -e "${BLUE}Current branch:${NC} $CURRENT_BRANCH"
 echo -e "${BLUE}Target branch:${NC} $TARGET_BRANCH"
@@ -39,13 +49,14 @@ CRITICAL_ISSUES=()
 echo "1️⃣ Branch Protection Validation"
 echo "--------------------------------"
 
-# Run our existing branch-check tool
-if ./scripts/branch-check > /tmp/branch-check-output 2>&1; then
+# Run our existing branch-check tool with environment variables
+if GITHUB_HEAD_REF="$GITHUB_HEAD_REF" GITHUB_BASE_REF="$GITHUB_BASE_REF" ./scripts/branch-check > /tmp/branch-check-output 2>&1; then
     echo -e "${GREEN}✅ Branch protection checks passed${NC}"
     VALIDATION_RESULTS+=("branch-protection:passed")
 else
     echo -e "${RED}❌ Branch protection validation failed${NC}"
-    echo -e "${YELLOW}Run: ./scripts/branch-check${NC} for details"
+    echo -e "${YELLOW}Branch-check output:${NC}"
+    cat /tmp/branch-check-output || echo "No output captured"
     CRITICAL_ISSUES+=("Branch protection validation failed")
     VALIDATION_RESULTS+=("branch-protection:failed")
 fi

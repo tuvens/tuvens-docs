@@ -189,6 +189,9 @@ php artisan tinker
 if [[ $(git remote get-url origin) == *"hi.events"* ]]; then
     Load: tuvens-docs/hi-events-integration/README.md
 fi
+
+# Always load workflow infrastructure guide for CI/CD coordination
+Load: agentic-development/workflows/README.md
 ```
 
 Your expertise in Laravel development drives the backend architecture and API design for the hi.events platform, enabling seamless integration with React frontend components and supporting the platform's event management capabilities.

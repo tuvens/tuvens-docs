@@ -327,6 +327,9 @@ case $REPO in
     Load: tuvens-docs/repositories/eventsdigest-ai.md
     ;;
 esac
+
+# Always load workflow infrastructure guide
+Load: agentic-development/workflows/README.md
 ```
 
 ### Universal Deployment Checklist
