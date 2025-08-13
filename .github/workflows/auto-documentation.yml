@@ -186,7 +186,7 @@ jobs:
           fi
           
           # Root level documentation
-          echo "" >> agentic-development/agentic-development/docs/auto-generated/doc-tree.md
+          echo "" >> agentic-development/docs/auto-generated/doc-tree.md
           echo "### Root Level Documentation" >> agentic-development/docs/auto-generated/doc-tree.md
           for file in *.md; do
             if [ -f "$file" ] && [ "$file" != "*.md" ]; then
@@ -197,7 +197,7 @@ jobs:
           done
           
           # Summary statistics
-          echo "" >> agentic-development/agentic-development/docs/auto-generated/doc-tree.md
+          echo "" >> agentic-development/docs/auto-generated/doc-tree.md
           echo "## Documentation Statistics" >> agentic-development/docs/auto-generated/doc-tree.md
           total_docs=$(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" | wc -l)
           echo "- **Total documentation files**: $total_docs" >> agentic-development/docs/auto-generated/doc-tree.md
