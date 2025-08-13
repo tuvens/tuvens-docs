@@ -1,9 +1,9 @@
 ═══════════════════════════════════════════════════════════════════════════════
-VIBE CODER AGENT - READY FOR TASK
+VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
-GitHub Issue: #99
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/sub-session-system-implementation
-Branch: feature/sub-session-system-implementation
+GitHub Issue: #104
+Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates
+Branch: feature/phase-2b---coordinate-reference-updates
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -13,26 +13,27 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the vibe coder agent.
+I am the vibe coder 104 agent.
 
 Context Loading:
 - Load: .claude/agents/vibe-coder.md
 - Load: Implementation reports and workflow documentation
 
-🚨 CRITICAL: Read GitHub Issue #99 for complete task context
-Use: `gh issue view 99` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issue #104 for complete task context
+Use: `gh issue view 104` to get the full problem analysis, requirements, and implementation details.
 
-GitHub Issue: #99
-Task: Sub-Session System Implementation
+GitHub Issue: #104
+Task: Phase 2B - Coordinate Reference Updates
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/sub-session-system-implementation
-Branch: feature/sub-session-system-implementation
+Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates
+Branch: feature/phase-2b---coordinate-reference-updates
 
-IMPORTANT: Start by reading the GitHub issue (#99) with `gh issue view 99` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+IMPORTANT: Start by reading the GitHub issue (#104) with `gh issue view 104` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
 
 Start your work by:
-1. Running: `gh issue view 99` to read the full GitHub issue
+1. Running: `gh issue view 104` to read the full GitHub issue
 2. Examining the specified files (if any) to understand current state
 3. Following the 6-step agent workflow pattern
 4. Updating the GitHub issue with your progress and findings
+
 ═══════════════════════════════════════════════════════════════════════════════
