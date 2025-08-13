@@ -21,9 +21,9 @@ Successfully completed the documentation automation system for event-harvester r
 **File**: `.github/workflows/auto-documentation.yml`
 
 **Features Implemented**:
-- **Recent Commits Documentation**: Generates `docs/auto-generated/recent-commits.md` with last 25 commits and file changes
-- **Current State Documentation**: Creates `docs/auto-generated/current-state.md` with repository status and environment info
-- **Documentation Tree**: Builds `docs/auto-generated/doc-tree.md` with complete documentation structure
+- **Recent Commits Documentation**: Generates `agentic-development/docs/auto-generated/recent-commits.md` with last 25 commits and file changes
+- **Current State Documentation**: Creates `agentic-development/docs/auto-generated/current-state.md` with repository status and environment info
+- **Documentation Tree**: Builds `agentic-development/docs/auto-generated/doc-tree.md` with complete documentation structure
 - **Automated Commit**: Commits generated documentation with skip-ci flag
 - **Artifact Upload**: Uploads docs as GitHub artifacts for 30-day retention
 
@@ -139,7 +139,7 @@ templates/
 ```
 Push to tuvens-docs/main 
 → auto-documentation.yml triggers
-→ Generates docs/auto-generated/* files
+→ Generates agentic-development/docs/auto-generated/* files
 → Commits documentation updates
 → notify-repositories.yml triggers 
 → Creates/updates issues in consuming repositories
