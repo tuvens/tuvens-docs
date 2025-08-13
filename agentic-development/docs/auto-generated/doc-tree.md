@@ -39,15 +39,15 @@
 - [`tuvens-docs/hi-events-integration/troubleshooting.md`](./tuvens-docs/hi-events-integration/troubleshooting.md) (Modified: 2025-08-07, 374 lines, 9596 bytes)
 - [`tuvens-docs/hi-events-integration/webhook-implementation.md`](./tuvens-docs/hi-events-integration/webhook-implementation.md) (Modified: 2025-08-07, 190 lines, 5772 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/01-requirements-architecture.md`](./tuvens-docs/implementation-guides/cross-app-authentication/01-requirements-architecture.md) (Modified: 2025-08-07, 222 lines, 10122 bytes)
-- [`tuvens-docs/implementation-guides/cross-app-authentication/README.md`](./tuvens-docs/implementation-guides/cross-app-authentication/README.md) (Modified: 2025-08-07, 103 lines, 4529 bytes)
+- [`tuvens-docs/implementation-guides/cross-app-authentication/README.md`](./tuvens-docs/implementation-guides/cross-app-authentication/README.md) (Modified: 2025-08-13, 112 lines, 4886 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/README.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/README.md) (Modified: 2025-08-07, 65 lines, 2710 bytes)
-- [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/backup-recovery.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/backup-recovery.md) (Modified: 2025-08-07, 30 lines, 898 bytes)
+- [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/backup-recovery.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/backup-recovery.md) (Modified: 2025-08-13, 30 lines, 874 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-maintenance.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-maintenance.md) (Modified: 2025-08-07, 55 lines, 1476 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-schema.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-schema.md) (Modified: 2025-08-07, 61 lines, 2382 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-seeding.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-seeding.md) (Modified: 2025-08-07, 47 lines, 1510 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/entity-definition.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/entity-definition.md) (Modified: 2025-08-07, 81 lines, 2208 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md) (Modified: 2025-08-07, 137 lines, 4450 bytes)
-- [`tuvens-docs/integration-examples/frontend-integration/README.md`](./tuvens-docs/integration-examples/frontend-integration/README.md) (Modified: 2025-08-07, 470 lines, 11992 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/README.md`](./tuvens-docs/integration-examples/frontend-integration/README.md) (Modified: 2025-08-13, 437 lines, 10717 bytes)
 - [`tuvens-docs/integration-examples/frontend-integration/svelte-examples.md`](./tuvens-docs/integration-examples/frontend-integration/svelte-examples.md) (Modified: 2025-08-07, 830 lines, 22041 bytes)
 - [`tuvens-docs/repositories/eventsdigest-ai.md`](./tuvens-docs/repositories/eventsdigest-ai.md) (Modified: 2025-08-07, 24 lines, 823 bytes)
 - [`tuvens-docs/repositories/hi-events.md`](./tuvens-docs/repositories/hi-events.md) (Modified: 2025-08-07, 24 lines, 761 bytes)
@@ -67,13 +67,13 @@
 - [`tuvens-docs/shared-protocols/frontend-integration/performance-optimization.md`](./tuvens-docs/shared-protocols/frontend-integration/performance-optimization.md) (Modified: 2025-08-07, 118 lines, 2497 bytes)
 - [`tuvens-docs/shared-protocols/frontend-integration/security-best-practices.md`](./tuvens-docs/shared-protocols/frontend-integration/security-best-practices.md) (Modified: 2025-08-07, 106 lines, 2950 bytes)
 - [`tuvens-docs/shared-protocols/frontend-integration/testing-standards.md`](./tuvens-docs/shared-protocols/frontend-integration/testing-standards.md) (Modified: 2025-08-07, 160 lines, 4791 bytes)
-- [`tuvens-docs/shared-protocols/mobile-development/README.md`](./tuvens-docs/shared-protocols/mobile-development/README.md) (Modified: 2025-08-07, 270 lines, 8433 bytes)
+- [`tuvens-docs/shared-protocols/mobile-development/README.md`](./tuvens-docs/shared-protocols/mobile-development/README.md) (Modified: 2025-08-13, 270 lines, 8426 bytes)
 
 ### Root Level Documentation
 - [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-08, 174 lines)
-- [`IMPLEMENTATION_REPORT_SUB_SESSION_SYSTEM.md`](./IMPLEMENTATION_REPORT_SUB_SESSION_SYSTEM.md) (Modified: 2025-08-12, 226 lines)
+- [`DOCUMENTATION-REFERENCE-AUDIT-REPORT.md`](./DOCUMENTATION-REFERENCE-AUDIT-REPORT.md) (Modified: 2025-08-13, 170 lines)
 - [`README.md`](./README.md) (Modified: 2025-08-07, 113 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 173
-- **Total lines**: 22870
+- **Total documentation files**: 174
+- **Total lines**: 23021
