@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: branch-naming-check
         name: Branch Naming Convention Check
-        entry: ./scripts/hooks/check-branch-naming.sh
+        entry: ./agentic-development/scripts/hooks/check-branch-naming.sh
         language: script
         stages: [pre-push]
         pass_filenames: false
@@ -11,7 +11,7 @@ repos:
 
       - id: protected-branch-check
         name: Protected Branch Check
-        entry: ./scripts/hooks/check-protected-branches.sh
+        entry: ./agentic-development/scripts/hooks/check-protected-branches.sh
         language: script
         stages: [pre-push]
         pass_filenames: false
@@ -19,14 +19,14 @@ repos:
 
       - id: claude-md-validation
         name: CLAUDE.md Validation
-        entry: ./scripts/hooks/validate-claude-md.sh
+        entry: ./agentic-development/scripts/hooks/validate-claude-md.sh
         language: script
         files: '^CLAUDE\.md$'
         stages: [pre-commit]
 
       - id: safety-rules-check
         name: Safety Rules Check
-        entry: ./scripts/hooks/check-safety-rules.sh
+        entry: ./agentic-development/scripts/hooks/check-safety-rules.sh
         language: script
         stages: [pre-commit]
         pass_filenames: true

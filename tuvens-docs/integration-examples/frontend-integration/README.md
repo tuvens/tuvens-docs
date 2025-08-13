@@ -2,27 +2,21 @@
 
 This directory contains practical examples and code samples for integrating various Tuvens frontend applications and components.
 
-## 📚 Example Categories
+## 📚 Available Examples
 
-### Authentication Integration
-- **[Cross-App Authentication](./cross-app-authentication/)** - Complete authentication flow examples
-- **[JWT Integration](./jwt-integration/)** - JWT token handling and validation
-- **[Session Management](./session-management/)** - Session token lifecycle management
+### Framework-Specific Examples
+- **[Svelte Integration Examples](./svelte-examples.md)** - Complete Svelte integration patterns and code samples
 
-### Component Integration
-- **[Shared Components](./shared-components/)** - Reusable UI component examples
-- **[Widget Embedding](./widget-embedding/)** - Third-party widget integration patterns
-- **[Form Integration](./form-integration/)** - Cross-app form submission examples
-
-### API Integration
-- **[REST API Examples](./rest-api/)** - API consumption patterns and examples
-- **[GraphQL Integration](./graphql/)** - GraphQL client integration examples
-- **[WebSocket Integration](./websocket/)** - Real-time communication examples
-
-### Deployment Integration
-- **[Build Integration](./build-integration/)** - Cross-repository build processes
-- **[Testing Integration](./testing-integration/)** - Cross-app testing strategies
-- **[Monitoring Integration](./monitoring/)** - Analytics and error tracking examples
+### 🚧 Coming Soon
+The following integration examples are planned for future releases:
+- Cross-App Authentication patterns
+- JWT Integration examples  
+- Session Management samples
+- Shared Components library
+- Widget Embedding patterns
+- API Integration examples (REST, GraphQL, WebSocket)
+- Build and Deployment integration guides
+- Testing and Monitoring patterns
 
 ## 🎯 Quick Start Examples
 
@@ -128,42 +122,15 @@ REACT_APP_ANALYTICS_ID=your-analytics-id
 }
 ```
 
-## 📁 Directory Structure
+## 📁 Current Structure
 
 ```
 integration-examples/frontend-integration/
-├── README.md
-├── cross-app-authentication/
-│   ├── basic-flow/
-│   ├── with-permissions/
-│   ├── error-handling/
-│   └── testing/
-├── shared-components/
-│   ├── component-library/
-│   ├── theming/
-│   ├── customization/
-│   └── performance/
-├── widget-embedding/
-│   ├── hi-events-widget/
-│   ├── analytics-widget/
-│   ├── payment-widget/
-│   └── responsive-design/
-├── rest-api/
-│   ├── authentication/
-│   ├── crud-operations/
-│   ├── error-handling/
-│   └── caching/
-├── build-integration/
-│   ├── webpack-config/
-│   ├── deployment/
-│   ├── optimization/
-│   └── testing/
-└── testing-integration/
-    ├── unit-tests/
-    ├── integration-tests/
-    ├── e2e-tests/
-    └── mocking/
+├── README.md              - This comprehensive integration guide
+└── svelte-examples.md     - Detailed Svelte-specific examples
 ```
+
+_Additional example directories and files will be added as integration patterns are developed._
 
 ## 🎨 Design System Integration
 

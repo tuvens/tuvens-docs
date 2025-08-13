@@ -28,4 +28,4 @@ CREATE TABLE cross_app_sessions_2025_02 PARTITION OF cross_app_sessions
 
 ---
 
-**Next**: Continue with [Service Layer Implementation](./03-service-layer.md) to implement the business logic for session management.
+**Next**: Return to [Cross-App Authentication Guide](../README.md) for implementation details and next steps.
