@@ -5,7 +5,7 @@ on:
     branches: [ dev, test, stage, main ]
     paths:
       - 'package.json'
-      - 'scripts/**'
+      - 'agentic-development/scripts/**'
       - '.github/workflows/**'
       - '.pre-commit-config.yaml'
       - 'agentic-development/**'
@@ -13,7 +13,7 @@ on:
     branches: [ dev, test, stage, main ]
     paths:
       - 'package.json'
-      - 'scripts/**'
+      - 'agentic-development/scripts/**'
       - '.github/workflows/**'
       - '.pre-commit-config.yaml'
       - 'agentic-development/**'
@@ -99,7 +99,7 @@ jobs:
           echo "🔍 Validating project structure..."
           
           # Check required directories
-          required_dirs=("agentic-development" "scripts" "scripts/hooks")
+          required_dirs=("agentic-development" "agentic-development/scripts" "agentic-development/scripts/hooks")
           for dir in "${required_dirs[@]}"; do
             if [ ! -d "$dir" ]; then
               echo "❌ Required directory missing: $dir"
@@ -136,14 +136,14 @@ jobs:
           
           echo "🧪 Running $test_level tests..."
           
-          if [ -f scripts/test.sh ]; then
-            ./scripts/test.sh --$test_level
+          if [ -f agentic-development/scripts/test.sh ]; then
+            ./agentic-development/scripts/test.sh --$test_level
           else
             echo "⚠️ Test script not found, running basic validation..."
             
             # Run basic validation
-            if [ -f scripts/branch-check ]; then
-              ./scripts/branch-check --no-interactive || true
+            if [ -f agentic-development/scripts/branch-check ]; then
+              ./agentic-development/scripts/branch-check --no-interactive || true
             fi
             
             # Validate JSON files
@@ -171,9 +171,9 @@ jobs:
       - name: 📄 Generate Documentation Tree
         if: matrix.test-type == 'integration'
         run: |
-          if [ -f scripts/generate-doc-tree.js ]; then
+          if [ -f agentic-development/scripts/generate-doc-tree.js ]; then
             echo "📄 Generating documentation tree..."
-            node scripts/generate-doc-tree.js
+            node agentic-development/scripts/generate-doc-tree.js
             
             # Check if doc tree was generated
             if [ -f agentic-development/docs/auto-generated/doc-tree.md ]; then
@@ -269,15 +269,15 @@ jobs:
           
       - name: 🧪 Run Full Infrastructure Test Suite
         run: |
-          if [ -f scripts/test.sh ]; then
+          if [ -f agentic-development/scripts/test.sh ]; then
             echo "🧪 Running comprehensive test suite..."
-            ./scripts/test.sh --full
+            ./agentic-development/scripts/test.sh --full
           else
             echo "⚠️ Full test suite not available, running basic checks..."
             
             # Run available validation scripts
-            if [ -f scripts/branch-check ]; then
-              ./scripts/branch-check --no-interactive
+            if [ -f agentic-development/scripts/branch-check ]; then
+              ./agentic-development/scripts/branch-check --no-interactive
             fi
           fi
           

@@ -263,7 +263,7 @@ test/
 
 - [Flutter Documentation](https://flutter.dev/docs)
 - [Mapbox Flutter Plugin](https://docs.mapbox.com/flutter/maps/)
-- [Tuvens API Documentation](../../../integration-guides/tuvens-api/)
+- [Tuvens API Documentation](../../repositories/tuvens-api.md)
 - [Tuvens Design System](../frontend-integration/design-system-integration.md)
 
 ---
