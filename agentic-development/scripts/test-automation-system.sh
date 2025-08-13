@@ -79,8 +79,8 @@ echo "⚙️  Test 6: Workflow Configuration Validation"
 cd "$(git rev-parse --show-toplevel)/.github/workflows"
 
 # Check auto-documentation workflow
-if grep -q "docs/auto-generated" auto-documentation.yml; then
-    echo "  ✅ auto-documentation creates docs/auto-generated files"
+if grep -q "agentic-development/docs/auto-generated" auto-documentation.yml; then
+    echo "  ✅ auto-documentation creates agentic-development/docs/auto-generated files"
 else
     echo "  ❌ auto-documentation workflow misconfigured"
     exit 1
@@ -102,13 +102,13 @@ echo "  Simulating documentation change workflow..."
 
 # Simulate creating auto-generated documentation
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-mkdir -p "$REPO_ROOT/docs/auto-generated"
-echo "# Test Documentation" > "$REPO_ROOT/docs/auto-generated/test-doc.md"
-echo "Generated: $(date)" >> "$REPO_ROOT/docs/auto-generated/test-doc.md"
+mkdir -p "$REPO_ROOT/agentic-development/docs/auto-generated"
+echo "# Test Documentation" > "$REPO_ROOT/agentic-development/docs/auto-generated/test-doc.md"
+echo "Generated: $(date)" >> "$REPO_ROOT/agentic-development/docs/auto-generated/test-doc.md"
 
-if [ -f "$REPO_ROOT/docs/auto-generated/test-doc.md" ]; then
+if [ -f "$REPO_ROOT/agentic-development/docs/auto-generated/test-doc.md" ]; then
     echo "  ✅ Doc generation simulation successful"
-    rm -f "$REPO_ROOT/docs/auto-generated/test-doc.md"
+    rm -f "$REPO_ROOT/agentic-development/docs/auto-generated/test-doc.md"
 else
     echo "  ❌ Doc generation simulation failed"
     exit 1
