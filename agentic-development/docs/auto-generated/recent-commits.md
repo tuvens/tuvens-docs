@@ -10,21 +10,35 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `04ce2c88a24730ab25e645a0f1728995c0d97331`
-- **Commit Message**: "Merge pull request #116 from tuvens/feature/fix-audit-report-file-placement
+- **Latest Commit**: `5c72ee4b39b7e15992987881ccd093f8b8228745`
+- **Commit Message**: "docs: add idea pipeline workflow from mobile to Claude Code
 
-Fix audit report file placement"
+- Enables seamless idea capture from Claude mobile app
+- Structured pipeline: Mobile → Desktop (GitHub MCP) → Claude Code
+- Standardized templates for each stage
+- Clear agent assignment guidelines
+- Maintains full traceability from idea to implementation
+
+Exception: Added to root for easy access to workflow documentation"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-13T20:22:18+01:00
+- **Timestamp**: 2025-08-13T20:42:58+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 5c72ee4` - docs: add idea pipeline workflow from mobile to Claude Code
+- **Date**: 2025-08-13 20:42
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 977fedb` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-13 19:22
+- **Author**: GitHub Actions
+
 #### `*   04ce2c8` - Merge pull request #116 from tuvens/feature/fix-audit-report-file-placement
 - **Date**: 2025-08-13 20:22
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -196,34 +210,23 @@ Fix audit report file placement"
 - **Date**: /
 - **Author**:  
 
-#### `* ` - 2025-08-12 17:27
-- **Date**:  
-- **Author**:  41ccd8b
-- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
-
-#### `* ` - 2025-08-12 18:26
-- **Date**:  
-- **Author**:  2f7a582
-- **Refs**: tuvens|refactor: reorganize directory structure and clean up documentation (#97)|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 8 commits
+- `docs`: 9 commits
 - `fix`: 5 commits
 - `feat`: 5 commits
 - `resolve`: 1 commits
-- `refactor`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `docs/auto-generated/doc-tree.md`: 5 changes
-- `docs/auto-generated/recent-commits.md`: 4 changes
-- `docs/auto-generated/current-state.md`: 4 changes
-- `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 3 changes
-- `agentic-development/docs/auto-generated/recent-commits.md`: 3 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 3 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 3 changes
-- `.gitignore`: 3 changes
+- `docs/auto-generated/doc-tree.md`: 4 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 4 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 4 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 4 changes
+- `docs/auto-generated/recent-commits.md`: 3 changes
+- `docs/auto-generated/current-state.md`: 3 changes
+- `agentic-development/branch-tracking/active-branches.json`: 3 changes
 - `vibe-coder/feature/phase-2b---coordinate-reference-updates`: 2 changes
+- `vibe-coder/feature/directory-structure-analysis-and-reference-mapping`: 2 changes
+- `tuvens-docs/shared-protocols/mobile-development/README.md`: 2 changes
 
