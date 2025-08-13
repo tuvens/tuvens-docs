@@ -47,17 +47,17 @@
     ],
     "tuvens-docs": [
       {
-        "name": "test-branch",
-        "author": "test",
-        "created": "2025-08-12T13:22:03.743Z",
-        "lastActivity": "2025-08-12T13:22:03.745Z",
+        "name": "feature/sub-session-system-implementation",
+        "author": "tuvens",
+        "created": "2025-08-12T18:21:20.102Z",
+        "lastActivity": "2025-08-12T18:21:20.103Z",
         "taskGroup": null,
         "status": "active",
-        "worktree": "/tmp/test",
-        "agent": "unknown",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/sub-session-system-implementation",
+        "agent": "vibe-coder",
         "relatedBranches": [],
-        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/test-branch",
-        "issues": "test"
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/sub-session-system-implementation",
+        "issues": "tuvens-docs#99"
       },
       {
         "name": "feature/critical-directory-structure-cleanup",
@@ -88,10 +88,62 @@
         ],
         "validationStatus": "pre-merge-passed",
         "prNumber": null
+      },
+      {
+        "name": "feature/directory-structure-analysis-and-reference-mapping",
+        "author": "tuvens",
+        "created": "2025-08-13T09:34:17.813Z",
+        "lastActivity": "2025-08-13T09:34:17.816Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/directory-structure-analysis-and-reference-mapping",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/directory-structure-analysis-and-reference-mapping",
+        "issues": "tuvens-docs#102"
+      },
+      {
+        "name": "feature/phase-2a---create-new-directory-structure",
+        "author": "tuvens",
+        "created": "2025-08-13T10:05:30.655Z",
+        "lastActivity": "2025-08-13T10:05:30.656Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/feature/phase-2a---create-new-directory-structure",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2a---create-new-directory-structure",
+        "issues": "tuvens-docs#103"
+      },
+      {
+        "name": "feature/phase-2b---coordinate-reference-updates",
+        "author": "tuvens",
+        "created": "2025-08-13T10:26:56.171Z",
+        "lastActivity": "2025-08-13T10:26:56.175Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2b---coordinate-reference-updates",
+        "issues": "tuvens-docs#104"
+      },
+      {
+        "name": "feature/phase-2c---execute-file-moves",
+        "author": "tuvens",
+        "created": "2025-08-13T12:54:13.968Z",
+        "lastActivity": "2025-08-13T12:54:13.971Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/feature/phase-2c---execute-file-moves",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2c---execute-file-moves",
+        "issues": "tuvens-docs#105"
       }
     ]
   },
-  "lastUpdated": "2025-08-12T17:50:54.421Z",
-  "generatedBy": "Sub-Session Integration",
+  "lastUpdated": "2025-08-13T12:54:13.971Z",
+  "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }

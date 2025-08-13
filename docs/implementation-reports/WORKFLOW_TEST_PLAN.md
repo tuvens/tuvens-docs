@@ -68,9 +68,9 @@ gh workflow run auto-documentation.yml --repo tuvens/tuvens-docs
 3. [ ] Verify no step failures or errors
 
 **Expected Outputs**:
-- [ ] `docs/auto-generated/recent-commits.md` created
-- [ ] `docs/auto-generated/current-state.md` created
-- [ ] `docs/auto-generated/doc-tree.md` created
+- [ ] `agentic-development/docs/auto-generated/recent-commits.md` created
+- [ ] `agentic-development/docs/auto-generated/current-state.md` created
+- [ ] `agentic-development/docs/auto-generated/doc-tree.md` created
 - [ ] Files committed with appropriate commit message
 - [ ] Workflow artifacts uploaded successfully
 
@@ -97,13 +97,13 @@ git push origin dev
 **Validation Commands**:
 ```bash
 # Check recent-commits.md content
-curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/docs/auto-generated/recent-commits.md | head -20
+curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/agentic-development/docs/auto-generated/recent-commits.md | head -20
 
 # Check current-state.md content  
-curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/docs/auto-generated/current-state.md | head -20
+curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/agentic-development/docs/auto-generated/current-state.md | head -20
 
 # Check doc-tree.md content
-curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/docs/auto-generated/doc-tree.md | head -20
+curl -s https://raw.githubusercontent.com/tuvens/tuvens-docs/dev/agentic-development/docs/auto-generated/doc-tree.md | head -20
 ```
 
 **Expected Results**:

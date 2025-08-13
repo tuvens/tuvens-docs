@@ -33,12 +33,12 @@ jobs:
           sleep $DELAY
 
       - name: Create auto-generated directory
-        run: mkdir -p docs/auto-generated
+        run: mkdir -p agentic-development/docs/auto-generated
 
       # Generate Recent Commits Documentation
       - name: Generate Recent Commits Documentation  
         run: |
-          cat > docs/auto-generated/recent-commits.md << 'EOF'
+          cat > agentic-development/docs/auto-generated/recent-commits.md << 'EOF'
           # Recent Commits & Development Context
           **Generated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")  
           **Repository**: ${{ github.repository }}
@@ -61,52 +61,52 @@ jobs:
           EOF
           
           # Generate detailed commit history with file changes
-          echo "### Detailed Commit History" >> docs/auto-generated/recent-commits.md
-          echo "" >> docs/auto-generated/recent-commits.md
+          echo "### Detailed Commit History" >> agentic-development/docs/auto-generated/recent-commits.md
+          echo "" >> agentic-development/docs/auto-generated/recent-commits.md
           
           git log --oneline --decorate --graph -25 --pretty=format:"%h|%ad|%an|%s|%D" --date=format:"%Y-%m-%d %H:%M" | while IFS='|' read hash date author message refs; do
-            echo "#### \`$hash\` - $message" >> docs/auto-generated/recent-commits.md
-            echo "- **Date**: $date" >> docs/auto-generated/recent-commits.md
-            echo "- **Author**: $author" >> docs/auto-generated/recent-commits.md
+            echo "#### \`$hash\` - $message" >> agentic-development/docs/auto-generated/recent-commits.md
+            echo "- **Date**: $date" >> agentic-development/docs/auto-generated/recent-commits.md
+            echo "- **Author**: $author" >> agentic-development/docs/auto-generated/recent-commits.md
             if [ -n "$refs" ]; then
-              echo "- **Refs**: $refs" >> docs/auto-generated/recent-commits.md
+              echo "- **Refs**: $refs" >> agentic-development/docs/auto-generated/recent-commits.md
             fi
             
             # Get files changed in this commit
             files_changed=$(git show --name-only --pretty=format: "$hash" 2>/dev/null | grep -v '^$' | head -10)
             if [ -n "$files_changed" ]; then
-              echo "- **Files Changed**:" >> docs/auto-generated/recent-commits.md
+              echo "- **Files Changed**:" >> agentic-development/docs/auto-generated/recent-commits.md
               echo "$files_changed" | while read file; do
                 if [ -n "$file" ]; then
-                  echo "  - \`$file\`" >> docs/auto-generated/recent-commits.md
+                  echo "  - \`$file\`" >> agentic-development/docs/auto-generated/recent-commits.md
                 fi
               done
             fi
-            echo "" >> docs/auto-generated/recent-commits.md
+            echo "" >> agentic-development/docs/auto-generated/recent-commits.md
           done
           
           # Add branch analysis
-          echo "## Branch Analysis" >> docs/auto-generated/recent-commits.md
-          echo "" >> docs/auto-generated/recent-commits.md
+          echo "## Branch Analysis" >> agentic-development/docs/auto-generated/recent-commits.md
+          echo "" >> agentic-development/docs/auto-generated/recent-commits.md
           
-          echo "### Commit Types (Last 25 commits)" >> docs/auto-generated/recent-commits.md
+          echo "### Commit Types (Last 25 commits)" >> agentic-development/docs/auto-generated/recent-commits.md
           git log --oneline -25 --pretty=format:"%s" | grep -oE '^[a-z]+(\([^)]+\))?' | sort | uniq -c | sort -nr | head -10 | while read count type; do
-            echo "- \`$type\`: $count commits" >> docs/auto-generated/recent-commits.md
+            echo "- \`$type\`: $count commits" >> agentic-development/docs/auto-generated/recent-commits.md
           done
-          echo "" >> docs/auto-generated/recent-commits.md
+          echo "" >> agentic-development/docs/auto-generated/recent-commits.md
           
-          echo "### Most Active Files (Last 25 commits)" >> docs/auto-generated/recent-commits.md
+          echo "### Most Active Files (Last 25 commits)" >> agentic-development/docs/auto-generated/recent-commits.md
           git log --name-only --pretty=format: -25 | grep -v '^$' | sort | uniq -c | sort -nr | head -10 | while read count file; do
             if [ -n "$file" ]; then
-              echo "- \`$file\`: $count changes" >> docs/auto-generated/recent-commits.md
+              echo "- \`$file\`: $count changes" >> agentic-development/docs/auto-generated/recent-commits.md
             fi
           done
-          echo "" >> docs/auto-generated/recent-commits.md
+          echo "" >> agentic-development/docs/auto-generated/recent-commits.md
 
       # Generate Current State Documentation
       - name: Generate Current State Documentation
         run: |
-          cat > docs/auto-generated/current-state.md << 'EOF'
+          cat > agentic-development/docs/auto-generated/current-state.md << 'EOF'
           # Current System State
           **Generated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
           **Repository**: ${{ github.repository }}
@@ -128,41 +128,41 @@ jobs:
           EOF
           
           # Add basic repository information
-          echo "- **Repository**: ${{ github.repository }}" >> docs/auto-generated/current-state.md
-          echo "- **Default Branch**: ${{ github.event.repository.default_branch || 'main' }}" >> docs/auto-generated/current-state.md
-          echo "- **Language**: ${{ github.event.repository.language || 'N/A' }}" >> docs/auto-generated/current-state.md
+          echo "- **Repository**: ${{ github.repository }}" >> agentic-development/docs/auto-generated/current-state.md
+          echo "- **Default Branch**: ${{ github.event.repository.default_branch || 'main' }}" >> agentic-development/docs/auto-generated/current-state.md
+          echo "- **Language**: ${{ github.event.repository.language || 'N/A' }}" >> agentic-development/docs/auto-generated/current-state.md
           
           # Check for key files
-          echo "" >> docs/auto-generated/current-state.md
-          echo "## Key Files Present" >> docs/auto-generated/current-state.md
+          echo "" >> agentic-development/docs/auto-generated/current-state.md
+          echo "## Key Files Present" >> agentic-development/docs/auto-generated/current-state.md
           for file in package.json composer.json Cargo.toml requirements.txt pom.xml build.gradle; do
             if [ -f "$file" ]; then
-              echo "- ✅ \`$file\`" >> docs/auto-generated/current-state.md
+              echo "- ✅ \`$file\`" >> agentic-development/docs/auto-generated/current-state.md
             fi
           done
           
           # Check for documentation
-          echo "" >> docs/auto-generated/current-state.md
-          echo "## Documentation Status" >> docs/auto-generated/current-state.md
+          echo "" >> agentic-development/docs/auto-generated/current-state.md
+          echo "## Documentation Status" >> agentic-development/docs/auto-generated/current-state.md
           doc_count=$(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" | wc -l)
-          echo "- **Markdown files**: $doc_count" >> docs/auto-generated/current-state.md
+          echo "- **Markdown files**: $doc_count" >> agentic-development/docs/auto-generated/current-state.md
           
           if [ -f "README.md" ]; then
-            echo "- ✅ README.md present" >> docs/auto-generated/current-state.md
+            echo "- ✅ README.md present" >> agentic-development/docs/auto-generated/current-state.md
           else
-            echo "- ❌ README.md missing" >> docs/auto-generated/current-state.md
+            echo "- ❌ README.md missing" >> agentic-development/docs/auto-generated/current-state.md
           fi
           
-          if [ -d "docs/" ]; then
-            echo "- ✅ docs/ directory present" >> docs/auto-generated/current-state.md
+          if [ -d "tuvens-docs/" ]; then
+            echo "- ✅ tuvens-docs/ directory present" >> agentic-development/docs/auto-generated/current-state.md
           else
-            echo "- ❌ docs/ directory missing" >> docs/auto-generated/current-state.md
+            echo "- ❌ tuvens-docs/ directory missing" >> agentic-development/docs/auto-generated/current-state.md
           fi
 
       # Generate Documentation Tree
       - name: Generate Documentation Tree
         run: |
-          cat > docs/auto-generated/doc-tree.md << 'EOF'
+          cat > agentic-development/docs/auto-generated/doc-tree.md << 'EOF'
           # Documentation Tree
           **Generated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
           **Repository**: ${{ github.repository }}
@@ -172,46 +172,46 @@ jobs:
           EOF
           
           # Function to add file info with git history
-          if [ -d "docs/" ]; then
-            echo "" >> docs/auto-generated/doc-tree.md
-            echo "### /docs Directory Structure" >> docs/auto-generated/doc-tree.md
-            find docs/ -name "*.md" -type f | sort | while read -r file; do
+          if [ -d "tuvens-docs/" ]; then
+            echo "" >> agentic-development/docs/auto-generated/doc-tree.md
+            echo "### /tuvens-docs Directory Structure" >> agentic-development/docs/auto-generated/doc-tree.md
+            find tuvens-docs/ -name "*.md" -type f | sort | while read -r file; do
               if [ -f "$file" ]; then
                 modified=$(git log -1 --format="%ad" --date=format:"%Y-%m-%d" -- "$file" 2>/dev/null || echo "Unknown")
                 size=$(wc -c < "$file" 2>/dev/null | awk '{print $1}')
                 lines=$(wc -l < "$file" 2>/dev/null | awk '{print $1}')
-                echo "- [\`$file\`](./$file) (Modified: $modified, $lines lines, $size bytes)" >> docs/auto-generated/doc-tree.md
+                echo "- [\`$file\`](./$file) (Modified: $modified, $lines lines, $size bytes)" >> agentic-development/docs/auto-generated/doc-tree.md
               fi
             done
           fi
           
           # Root level documentation
-          echo "" >> docs/auto-generated/doc-tree.md
-          echo "### Root Level Documentation" >> docs/auto-generated/doc-tree.md
+          echo "" >> agentic-development/docs/auto-generated/doc-tree.md
+          echo "### Root Level Documentation" >> agentic-development/docs/auto-generated/doc-tree.md
           for file in *.md; do
             if [ -f "$file" ] && [ "$file" != "*.md" ]; then
               modified=$(git log -1 --format="%ad" --date=format:"%Y-%m-%d" -- "$file" 2>/dev/null || echo "Unknown")
               lines=$(wc -l < "$file" 2>/dev/null | awk '{print $1}')
-              echo "- [\`$file\`](./$file) (Modified: $modified, $lines lines)" >> docs/auto-generated/doc-tree.md
+              echo "- [\`$file\`](./$file) (Modified: $modified, $lines lines)" >> agentic-development/docs/auto-generated/doc-tree.md
             fi
           done
           
           # Summary statistics
-          echo "" >> docs/auto-generated/doc-tree.md
-          echo "## Documentation Statistics" >> docs/auto-generated/doc-tree.md
+          echo "" >> agentic-development/docs/auto-generated/doc-tree.md
+          echo "## Documentation Statistics" >> agentic-development/docs/auto-generated/doc-tree.md
           total_docs=$(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" | wc -l)
-          echo "- **Total documentation files**: $total_docs" >> docs/auto-generated/doc-tree.md
+          echo "- **Total documentation files**: $total_docs" >> agentic-development/docs/auto-generated/doc-tree.md
           
           if [ $total_docs -gt 0 ]; then
             total_lines=$(find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" -exec wc -l {} + | tail -1 | awk '{print $1}' || echo "0")
-            echo "- **Total lines**: $total_lines" >> docs/auto-generated/doc-tree.md
+            echo "- **Total lines**: $total_lines" >> agentic-development/docs/auto-generated/doc-tree.md
           fi
 
       # Check for changes and commit
       - name: Check for changes and commit
         if: github.event_name == 'push'
         run: |
-          git add docs/auto-generated/
+          git add agentic-development/docs/auto-generated/
           if git diff --staged --quiet; then
             echo "No documentation changes to commit"
           else
@@ -231,7 +231,7 @@ jobs:
       - name: Display changes for PR
         if: github.event_name == 'pull_request'
         run: |
-          git add docs/auto-generated/
+          git add agentic-development/docs/auto-generated/
           if git diff --staged --quiet; then
             echo "No documentation changes would be generated"
           else
@@ -244,7 +244,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: auto-generated-docs-${{ github.sha }}
-          path: docs/auto-generated/
+          path: agentic-development/docs/auto-generated/
           retention-days: 30
 
       # Create summary for PR or push
@@ -253,9 +253,9 @@ jobs:
           echo "## 📚 Documentation Auto-Generated" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
-          echo "- \`docs/auto-generated/recent-commits.md\` - Last 25 commits with context" >> $GITHUB_STEP_SUMMARY
-          echo "- \`docs/auto-generated/current-state.md\` - System status and repository info" >> $GITHUB_STEP_SUMMARY  
-          echo "- \`docs/auto-generated/doc-tree.md\` - Documentation structure overview" >> $GITHUB_STEP_SUMMARY
+          echo "- \`agentic-development/docs/auto-generated/recent-commits.md\` - Last 25 commits with context" >> $GITHUB_STEP_SUMMARY
+          echo "- \`agentic-development/docs/auto-generated/current-state.md\` - System status and repository info" >> $GITHUB_STEP_SUMMARY  
+          echo "- \`agentic-development/docs/auto-generated/doc-tree.md\` - Documentation structure overview" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Purpose" >> $GITHUB_STEP_SUMMARY
           echo "These files provide Claude AI agents with context about:" >> $GITHUB_STEP_SUMMARY

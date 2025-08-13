@@ -153,7 +153,7 @@ const backendUrl = (() => {
 Every repository maintains these auto-generated files:
 
 ```
-docs/auto-generated/
+agentic-development/docs/auto-generated/
 ├── recent-commits.md      # Last 25 commits with context
 ├── current-state.md       # System status and deployment info
 ├── api-endpoints.md       # Available API endpoints
@@ -305,7 +305,7 @@ Worktrees are automatically queued for cleanup when branches are merged:
 - [ ] **Branch Protection Rules**: Configure main, stage, test, dev protection
 - [ ] **GitHub Actions**: Deploy all 4 required workflow templates  
 - [ ] **Environment Variables**: Set up dev/test/stage/production environment configs
-- [ ] **Documentation Structure**: Create docs/auto-generated/ directory
+- [ ] **Documentation Structure**: Create agentic-development/docs/auto-generated/ directory
 - [ ] **Config Files**: Set up environment-specific configuration files
 - [ ] **Central Tracking**: Enable webhook events to tuvens-docs
 - [ ] **TUVENS_DOCS_TOKEN**: Configure secret for central tracking webhooks

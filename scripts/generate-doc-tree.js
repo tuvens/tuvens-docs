@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 // Configuration
 const CONFIG = {
-    outputFile: 'agentic-development/auto-generated/doc-tree.md',
+    outputFile: 'agentic-development/docs/auto-generated/doc-tree.md',
     excludeDirs: [
         'node_modules',
         '.git',

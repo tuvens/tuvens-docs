@@ -176,10 +176,10 @@ jobs:
             node scripts/generate-doc-tree.js
             
             # Check if doc tree was generated
-            if [ -f agentic-development/auto-generated/doc-tree.md ]; then
+            if [ -f agentic-development/docs/auto-generated/doc-tree.md ]; then
               echo "✅ Documentation tree generated successfully"
               echo "📊 Stats:"
-              head -20 agentic-development/auto-generated/doc-tree.md | grep -E "(Directories|Files|Total Size)"
+              head -20 agentic-development/docs/auto-generated/doc-tree.md | grep -E "(Directories|Files|Total Size)"
             else
               echo "❌ Documentation tree generation failed"
               exit 1
