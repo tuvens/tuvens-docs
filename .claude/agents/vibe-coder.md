@@ -159,16 +159,16 @@ echo "✅ Safe to proceed on branch: $BRANCH"
 When multiple agents work in parallel:
 
 ```bash
-# File Reservation System
-echo "📋 ACTIVE FILE RESERVATIONS" > /tmp/active_reservations.txt
-echo "Agent: [agent-name] | Files: [file-list] | Until: [time]" >> /tmp/active_reservations.txt
+# File Reservation System (Fixed: Use persistent storage and append mode)
+echo "📋 ACTIVE FILE RESERVATIONS" >> ${TRACKING_DIR}/active_file_reservations.txt
+echo "Agent: [agent-name] | Files: [file-list] | Until: [time]" >> ${TRACKING_DIR}/active_file_reservations.txt
 
-# Conflict Detection
+# Conflict Detection (Fixed: Use safe grep with -F flag)
 check_file_conflicts() {
     local NEW_FILES="$1"
     local AGENT="$2"
     
-    if grep -q "$NEW_FILES" /tmp/active_reservations.txt; then
+    if grep -Fq "$NEW_FILES" ${TRACKING_DIR}/active_file_reservations.txt; then
         echo "❌ FILE CONFLICT: $NEW_FILES already claimed"
         echo "🛑 Requesting Vibe Coder arbitration"
         return 1
@@ -384,10 +384,10 @@ Always load these contexts when starting:
 
 ### Integration Points
 - **GitHub Issues**: Task assignment and tracking via comment threads
-- **Branch Tracking**: Central coordination state
+- **Branch Tracking**: Central coordination state (uses persistent storage in `${TRACKING_DIR}`)
 - **Workflow Automation**: CI/CD integration
 - **Agent Sessions**: Direct coordination capability
-- **File Reservations**: Conflict prevention system
+- **File Reservations**: Conflict prevention system (persistent across reboots)
 
 ## Communication Protocols
 
