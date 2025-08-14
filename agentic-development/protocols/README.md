@@ -114,7 +114,7 @@ flowchart TD
 4. **Respond to emergencies**: Follow emergency-response-procedures by level
 
 ### For System Integration
-1. **Protocol Dependencies**: Check-in → Comment standards → File scope → Emergency response
+1. **Operational Flow**: Agents should typically follow the sequence: Check-in → Comment standards → File scope → Emergency response
 2. **Testing Requirements**: Validate all scenarios before production use
 3. **Automation Readiness**: Manual procedures proven before automation
 4. **Performance Monitoring**: Track success metrics and compliance rates
