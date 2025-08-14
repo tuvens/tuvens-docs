@@ -142,13 +142,13 @@ echo "🔍 VIBE CODER INDEPENDENT VALIDATION"
 echo "Agent: $AGENT_NAME | Repo: $REPOSITORY | Branch: $BRANCH_NAME"
 
 # Switch to agent's work location and run tests
-cd "$HOME/Code/Tuvens/$REPOSITORY"
+cd "${TUVENS_ROOT:-$HOME/Code/Tuvens}/$REPOSITORY"
 if [[ -d "worktrees/$BRANCH_NAME" ]]; then
     cd "worktrees/$BRANCH_NAME"
 fi
 
 # Independent testing (MANDATORY)
-npm test || echo "❌ Tests failed - rejecting submission"
+npm test || { echo "❌ Tests failed - rejecting submission"; exit 1; }
 git log --oneline -5 || echo "📋 Commit history review"
 
 echo "✅ VALIDATION COMPLETE"
