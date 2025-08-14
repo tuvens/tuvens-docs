@@ -72,8 +72,9 @@
 ### Root Level Documentation
 - [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-08, 174 lines)
 - [`IDEA-PIPELINE-WORKFLOW.md`](./IDEA-PIPELINE-WORKFLOW.md) (Modified: 2025-08-13, 198 lines)
+- [`ORCHESTRATOR-VALIDATION.md`](./ORCHESTRATOR-VALIDATION.md) (Modified: 2025-08-14, 204 lines)
 - [`README.md`](./README.md) (Modified: 2025-08-07, 113 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 187
-- **Total lines**: 26955
+- **Total documentation files**: 189
+- **Total lines**: 27960
