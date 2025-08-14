@@ -4,18 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 5c72ee4b39b7e15992987881ccd093f8b8228745
-- **Commit Message**: docs: add idea pipeline workflow from mobile to Claude Code
+- **Commit SHA**: d01ff8ccea09a46370625f62fa42d28789fbcaf4
+- **Commit Message**: [Phase 0] Master Planning & Wiki Documentation Structure
 
-- Enables seamless idea capture from Claude mobile app
-- Structured pipeline: Mobile → Desktop (GitHub MCP) → Claude Code
-- Standardized templates for each stage
-- Clear agent assignment guidelines
-- Maintains full traceability from idea to implementation
-
-Exception: Added to root for easy access to workflow documentation
+Merging Phase 0 planning documentation. Infrastructure validation failures are unrelated to these documentation-only changes.
 - **Author**: tuvens
-- **Timestamp**: 2025-08-13T20:42:58+01:00
+- **Timestamp**: 2025-08-14T20:42:21+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
@@ -32,6 +26,6 @@ Exception: Added to root for easy access to workflow documentation
 - ✅ `package.json`
 
 ## Documentation Status
-- **Markdown files**: 175
+- **Markdown files**: 179
 - ✅ README.md present
 - ✅ tuvens-docs/ directory present
