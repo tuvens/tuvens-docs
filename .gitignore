@@ -34,5 +34,8 @@ worktrees/
 # Sub-session workspaces (temporary agent work environments)
 sub-sessions/
 
+# Wiki repository (nested git repo for wiki content)
+agentic-development/wiki/
+
 # Node.js dependencies
 node_modules/
