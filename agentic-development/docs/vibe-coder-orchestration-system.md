@@ -190,29 +190,29 @@ echo "✅ Safe to proceed on branch: $BRANCH"
 
 ```bash
 # System initialization
-./vibe-coder-orchestration.sh init
+./agentic-development/scripts/vibe-coder-orchestration.sh init
 
 # Agent validation
-./vibe-coder-orchestration.sh validate-identity <agent> <repo> <branch> <path>
+./agentic-development/scripts/vibe-coder-orchestration.sh validate-identity <agent> <repo> <branch> <path>
 
 # File management
-./vibe-coder-orchestration.sh check-conflicts <agent> <repo> <file1> [file2...]
-./vibe-coder-orchestration.sh reserve-files <agent> <repo> <hours> <file1> [file2...]
-./vibe-coder-orchestration.sh release-files <agent> <repo>
+./agentic-development/scripts/vibe-coder-orchestration.sh check-conflicts <agent> <repo> <file1> [file2...]
+./agentic-development/scripts/vibe-coder-orchestration.sh reserve-files <agent> <repo> <hours> <file1> [file2...]
+./agentic-development/scripts/vibe-coder-orchestration.sh release-files <agent> <repo>
 
 # Session management
-./vibe-coder-orchestration.sh start-session <agent> <repo> <branch> <task>
-./vibe-coder-orchestration.sh end-session <agent> <repo>
+./agentic-development/scripts/vibe-coder-orchestration.sh start-session <agent> <repo> <branch> <task>
+./agentic-development/scripts/vibe-coder-orchestration.sh end-session <agent> <repo>
 
 # Work validation
-./vibe-coder-orchestration.sh validate-work <agent> <repo> <branch> [issue#]
+./agentic-development/scripts/vibe-coder-orchestration.sh validate-work <agent> <repo> <branch> [issue#]
 
 # Monitoring
-./vibe-coder-orchestration.sh dashboard
-./vibe-coder-orchestration.sh cleanup
+./agentic-development/scripts/vibe-coder-orchestration.sh dashboard
+./agentic-development/scripts/vibe-coder-orchestration.sh cleanup
 
 # Help
-./vibe-coder-orchestration.sh help
+./agentic-development/scripts/vibe-coder-orchestration.sh help
 ```
 
 ## Emergency Protocols
@@ -273,6 +273,25 @@ Cross-repository work coordination:
 - File reservations work across repositories
 - Session tracking spans multiple codebases
 - Consistent protocols regardless of repository
+
+## Technical Details
+
+### State Persistence
+The system now uses persistent storage instead of temporary files:
+- **File Reservations**: `${TRACKING_DIR}/active_file_reservations.txt`
+- **Agent Sessions**: `${TRACKING_DIR}/active_agent_sessions.txt`
+- **State survives system reboots** and maintains coordination across sessions
+
+### Cross-Platform Compatibility
+The orchestration script supports both macOS/BSD and Linux/GNU environments:
+- **Date Operations**: Automatic detection and adaptation of date commands
+- **Sed Operations**: Compatible with both BSD and GNU sed variants
+- **File Operations**: Uses safe, portable patterns for grep and file manipulation
+
+### Security Improvements
+- **Safe Pattern Matching**: Uses `grep -F` for exact string matching
+- **Argument Validation**: Proper parsing and validation of command arguments
+- **File Safety**: Prevents regex injection and ensures exact file matching
 
 ---
 
