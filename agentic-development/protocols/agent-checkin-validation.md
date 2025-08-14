@@ -28,8 +28,9 @@ Before ANY agent begins work, they MUST complete this identity declaration:
 **BRANCH SAFETY CHECK**:
 ```bash
 BRANCH=$(git branch --show-current)
-if [[ "$BRANCH" == "dev" ]] || [[ "$BRANCH" == "main" ]]; then
+if [[ "$BRANCH" == "dev" ]] || [[ "$BRANCH" == "main" ]] || [[ "$BRANCH" == "stage" ]] || [[ "$BRANCH" == "test" ]]; then
     echo "❌ CRITICAL ERROR: Cannot work on protected branch: $BRANCH"
+    echo "SOLUTION: Create feature branch: git checkout -b {agent}/{type}/{description}"
     exit 1
 fi
 echo "✅ Safe to proceed on branch: $BRANCH"

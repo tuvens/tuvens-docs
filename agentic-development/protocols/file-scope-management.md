@@ -47,7 +47,7 @@ All agents must declare their file scope during check-in using this format:
 
 #### 3. File Type Patterns
 ```markdown
-**File Scope**: Working on files: **/*.md in docs/ directory
+**File Scope**: Working on files: docs/**/*.md
 ```
 
 #### 4. Combined Scope
@@ -127,7 +127,19 @@ def detect_conflicts(new_scope, active_sessions):
         if direct_conflicts:
             conflicts.append(DirectConflict(session, direct_conflicts))
         
-        # Directory overlap conflicts
+        # File vs pattern conflicts (new files against existing patterns)
+        for new_file in new_scope.files:
+            for existing_pattern in session.patterns:
+                if file_matches_pattern(new_file, existing_pattern):
+                    conflicts.append(FilePatternConflict(session, new_file, existing_pattern))
+        
+        # Pattern vs file conflicts (new patterns against existing files)
+        for new_pattern in new_scope.patterns:
+            for existing_file in session.files:
+                if file_matches_pattern(existing_file, new_pattern):
+                    conflicts.append(PatternFileConflict(session, new_pattern, existing_file))
+        
+        # Directory overlap conflicts (pattern vs pattern)
         for new_pattern in new_scope.patterns:
             for existing_pattern in session.patterns:
                 if patterns_overlap(new_pattern, existing_pattern):

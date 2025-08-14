@@ -298,7 +298,7 @@ The Emergency Response Procedures Protocol establishes a comprehensive crisis ma
 
 **Crisis Level**: 4 - Emergency
 **Detected**: [timestamp]
-**Alert ID**: EMG-2025-0814-004
+**Alert ID**: L4-2025-0814-004
 
 ### IMMEDIATE ACTIONS - ALL AGENTS
 1. **STOP ALL WORK**: Cease all activities immediately
