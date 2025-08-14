@@ -4,12 +4,23 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 9366319ce7a4dee9321166913dee28c0bb883d60
-- **Commit Message**: Merge pull request #124 from tuvens/feature/fix-infrastructure-validation-workflow-scripts-path
+- **Commit SHA**: fd8dbe7246db200c6fbf050a093cbc1e045e4de3
+- **Commit Message**: fix: update infrastructure validation script paths after directory reorganization (#127)
 
-Fix infrastructure validation workflow scripts path
+- Fix line 108: Update required_dirs to include agentic-development/scripts
+- Fix lines 198-227: Update hook script paths to agentic-development/scripts/hooks/
+- Fix line 335: Update branch-check path to agentic-development/scripts/branch-check
+
+Resolves #125
+
+All infrastructure validation components now work correctly and can find
+their required scripts at the proper paths after the directory reorganization.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-14T21:27:29+01:00
+- **Timestamp**: 2025-08-14T22:18:16+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

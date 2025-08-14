@@ -10,21 +10,40 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `9366319ce7a4dee9321166913dee28c0bb883d60`
-- **Commit Message**: "Merge pull request #124 from tuvens/feature/fix-infrastructure-validation-workflow-scripts-path
+- **Latest Commit**: `fd8dbe7246db200c6fbf050a093cbc1e045e4de3`
+- **Commit Message**: "fix: update infrastructure validation script paths after directory reorganization (#127)
 
-Fix infrastructure validation workflow scripts path"
+- Fix line 108: Update required_dirs to include agentic-development/scripts
+- Fix lines 198-227: Update hook script paths to agentic-development/scripts/hooks/
+- Fix line 335: Update branch-check path to agentic-development/scripts/branch-check
+
+Resolves #125
+
+All infrastructure validation components now work correctly and can find
+their required scripts at the proper paths after the directory reorganization.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-14T21:27:29+01:00
+- **Timestamp**: 2025-08-14T22:18:16+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* fd8dbe7` - fix: update infrastructure validation script paths after directory reorganization (#127)
+- **Date**: 2025-08-14 22:18
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 8bf52d0` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-14 20:28
+- **Author**: GitHub Actions
+
 #### `*   9366319` - Merge pull request #124 from tuvens/feature/fix-infrastructure-validation-workflow-scripts-path
 - **Date**: 2025-08-14 21:27
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -195,37 +214,23 @@ Fix infrastructure validation workflow scripts path"
 - **Author**: 2025-08-12 21:42
 - **Refs**: Merge pull request #101 from tuvens/feature/sub-session-system-implementation
 
-#### `` - 
-- **Date**:    
-- **Author**: 
-
-#### `` - 2025-08-12 21:07
-- **Date**:  * 
-- **Author**:  0c8e60f
-- **Refs**: tuvens|feat: add sub-session file access control system|
-
-#### `` - 2025-08-12 19:16
-- **Date**:  * 
-- **Author**:    d04bcb6
-- **Refs**: tuvens|feat: resolve conflicts from directory structure updates (approved by orchestrator)|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 7 commits
-- `fix`: 4 commits
+- `fix`: 5 commits
 - `feat`: 4 commits
 - `resolve`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 6 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 6 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 6 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 7 changes
 - `vibe-coder/feature/phase-2b---coordinate-reference-updates`: 2 changes
 - `vibe-coder/feature/directory-structure-analysis-and-reference-mapping`: 2 changes
 - `tuvens-docs/shared-protocols/mobile-development/README.md`: 2 changes
 - `tuvens-docs/integration-examples/frontend-integration/README.md`: 2 changes
 - `tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/backup-recovery.md`: 2 changes
 - `tuvens-docs/implementation-guides/cross-app-authentication/README.md`: 2 changes
-- `docs/auto-generated/doc-tree.md`: 2 changes
+- `devops/feature/phase-2c---execute-file-moves`: 2 changes
 
