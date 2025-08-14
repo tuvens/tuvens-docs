@@ -7,8 +7,9 @@ set -euo pipefail
 # Configuration
 TUVENS_ROOT="${HOME}/Code/Tuvens"
 TRACKING_DIR="${TUVENS_ROOT}/tuvens-docs/agentic-development/branch-tracking"
-RESERVATIONS_FILE="/tmp/active_file_reservations.txt"
-SESSION_LOG="/tmp/active_agent_sessions.txt"
+# Fixed: Use persistent storage instead of /tmp
+RESERVATIONS_FILE="${TRACKING_DIR}/active_file_reservations.txt"
+SESSION_LOG="${TRACKING_DIR}/active_agent_sessions.txt"
 
 # Colors for output
 RED='\033[0;31m'
@@ -40,9 +41,41 @@ log() {
     esac
 }
 
+# Cross-platform date function
+add_hours_to_date() {
+    local hours="$1"
+    
+    # Check if we're on macOS (BSD) or Linux (GNU)
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS/BSD date
+        date -v "+${hours}H" '+%Y-%m-%d %H:%M:%S'
+    else
+        # GNU date
+        date -d "+${hours} hours" '+%Y-%m-%d %H:%M:%S'
+    fi
+}
+
+# Cross-platform sed function
+sed_inplace() {
+    local pattern="$1"
+    local file="$2"
+    
+    # Check if we're on macOS (BSD) or Linux (GNU)
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS/BSD sed requires backup extension
+        sed -i '' "$pattern" "$file"
+    else
+        # GNU sed
+        sed -i "$pattern" "$file"
+    fi
+}
+
 # Initialize tracking files
 initialize_tracking() {
     log "INFO" "Initializing Vibe Coder tracking systems"
+    
+    # Ensure tracking directory exists
+    mkdir -p "$TRACKING_DIR"
     
     # Create reservations file if it doesn't exist
     if [[ ! -f "$RESERVATIONS_FILE" ]]; then
@@ -116,9 +149,9 @@ check_file_conflicts() {
     log "INFO" "Checking file conflicts for agent: $agent_name"
     
     for file in "${files[@]}"; do
-        # Check if file is already reserved
-        if grep -q "$repository|.*$file" "$RESERVATIONS_FILE" 2>/dev/null; then
-            local conflicting_agent=$(grep "$repository|.*$file" "$RESERVATIONS_FILE" | head -1 | cut -d'|' -f1)
+        # Fixed: Use exact field matching with grep -F to avoid regex issues
+        if grep -Fq "|$repository|$file|" "$RESERVATIONS_FILE" 2>/dev/null; then
+            local conflicting_agent=$(grep -F "|$repository|$file|" "$RESERVATIONS_FILE" | head -1 | cut -d'|' -f1)
             if [[ "$conflicting_agent" != "$agent_name" ]]; then
                 log "ERROR" "File conflict detected: $file already reserved by $conflicting_agent"
                 echo "🚨 FILE CONFLICT: $file"
@@ -143,8 +176,8 @@ reserve_files() {
     
     log "INFO" "Reserving files for agent: $agent_name"
     
-    # Calculate reservation end time
-    local reservation_end=$(date -d "+${duration_hours} hours" '+%Y-%m-%d %H:%M:%S')
+    # Calculate reservation end time using cross-platform function
+    local reservation_end=$(add_hours_to_date "$duration_hours")
     
     # Add reservations
     for file in "${files[@]}"; do
@@ -202,9 +235,9 @@ end_agent_session() {
     
     log "INFO" "Ending agent session: $agent_name on $repository"
     
-    # Update session status
+    # Update session status using cross-platform sed
     if [[ -f "$SESSION_LOG" ]]; then
-        sed -i "s/^$agent_name|$repository|.*|ACTIVE$/$agent_name|$repository|.*|COMPLETED|$(date '+%Y-%m-%d %H:%M:%S')/g" "$SESSION_LOG"
+        sed_inplace "s/^$agent_name|$repository|.*|ACTIVE$/$agent_name|$repository|.*|COMPLETED|$(date '+%Y-%m-%d %H:%M:%S')/g" "$SESSION_LOG"
     fi
     
     # Release file reservations
@@ -400,20 +433,27 @@ main() {
             validate_agent_identity "$2" "$3" "$4" "$5"
             ;;
         "check-conflicts")
-            if [[ $# -lt 3 ]]; then
+            # Fixed: Correct argument parsing
+            if [[ $# -lt 4 ]]; then
                 echo "Usage: $0 check-conflicts <agent> <repository> <file1> [file2] [...]"
                 exit 1
             fi
-            shift 2
-            check_file_conflicts "$2" "$3" "${@:3}"
+            local agent_name="$2"
+            local repository="$3"
+            shift 3
+            check_file_conflicts "$agent_name" "$repository" "$@"
             ;;
         "reserve-files")
-            if [[ $# -lt 4 ]]; then
+            # Fixed: Correct argument parsing
+            if [[ $# -lt 5 ]]; then
                 echo "Usage: $0 reserve-files <agent> <repository> <duration_hours> <file1> [file2] [...]"
                 exit 1
             fi
-            shift 3
-            reserve_files "$2" "$3" "$4" "${@:4}"
+            local agent_name="$2"
+            local repository="$3"
+            local duration_hours="$4"
+            shift 4
+            reserve_files "$agent_name" "$repository" "$duration_hours" "$@"
             ;;
         "release-files")
             if [[ $# -lt 3 ]]; then
