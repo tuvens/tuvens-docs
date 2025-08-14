@@ -13,15 +13,15 @@
 
 ### 📋 Master Planning
 - **[Master Plan](vibe-coder-orchestration-master-plan.md)** - Complete vision and phase breakdown
-- **[Coordination Hub](coordination/)** - Claude Code handoff and coordination protocols
+- **[Coordination Hub](coordination/claude-code-handoff-instructions.md)** - Claude Code handoff and coordination protocols
 
 ### 📊 Phase Reports
 - **[Phase 1 Analysis](phase-reports/phase-1-completion-analysis.md)** - Comprehensive completion assessment
-- **[Phase Reports Directory](phase-reports/)** - Implementation tracking for all phases
+- **[Phase Reports](phase-reports/phase-1-completion-analysis.md)** - Implementation tracking for all phases
 
 ### 🤝 Coordination
 - **[Claude Code Handoff](coordination/claude-code-handoff-instructions.md)** - Complete implementation guidance
-- **[PR #118 Coordination](coordination/)** - Progress tracking and communication
+- **[PR #118 Coordination](coordination/claude-code-handoff-instructions.md)** - Progress tracking and communication
 
 ## Phase Implementation Overview
 
