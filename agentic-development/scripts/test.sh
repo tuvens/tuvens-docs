@@ -105,7 +105,7 @@ validate_environment() {
     fi
     
     # Check required directories
-    local required_dirs=("agentic-development" ".github/workflows" "scripts")
+    local required_dirs=("agentic-development" ".github/workflows" "agentic-development/scripts")
     for dir in "${required_dirs[@]}"; do
         if [ ! -d "$dir" ]; then
             print_error "Required directory not found: $dir"
@@ -195,8 +195,8 @@ run_safety_tests() {
     
     # CLAUDE.md validation
     print_info "Validating CLAUDE.md safety infrastructure..."
-    if [ -f "scripts/hooks/validate-claude-md.sh" ]; then
-        if ! ./scripts/hooks/validate-claude-md.sh; then
+    if [ -f "agentic-development/scripts/hooks/validate-claude-md.sh" ]; then
+        if ! ./agentic-development/scripts/hooks/validate-claude-md.sh; then
             print_error "CLAUDE.md validation failed"
             safety_test_errors=$((safety_test_errors + 1))
         else
@@ -209,8 +209,8 @@ run_safety_tests() {
     
     # Branch naming validation
     print_info "Validating branch naming compliance..."
-    if [ -f "scripts/hooks/check-branch-naming.sh" ]; then
-        if ! ./scripts/hooks/check-branch-naming.sh; then
+    if [ -f "agentic-development/scripts/hooks/check-branch-naming.sh" ]; then
+        if ! ./agentic-development/scripts/hooks/check-branch-naming.sh; then
             print_error "Branch naming validation failed"
             safety_test_errors=$((safety_test_errors + 1))
         else
@@ -223,8 +223,8 @@ run_safety_tests() {
     
     # Safety rules check
     print_info "Running safety rules check..."
-    if [ -f "scripts/hooks/check-safety-rules.sh" ]; then
-        if ! ./scripts/hooks/check-safety-rules.sh; then
+    if [ -f "agentic-development/scripts/hooks/check-safety-rules.sh" ]; then
+        if ! ./agentic-development/scripts/hooks/check-safety-rules.sh; then
             print_error "Safety rules check failed"
             safety_test_errors=$((safety_test_errors + 1))
         else
@@ -332,7 +332,7 @@ run_integration_tests() {
     
     # Interactive validation integration
     print_info "Testing interactive validation tools..."
-    if [ -f "scripts/branch-check" ] && [ -x "scripts/branch-check" ]; then
+    if [ -f "agentic-development/scripts/branch-check" ] && [ -x "agentic-development/scripts/branch-check" ]; then
         print_success "Interactive validation tools available"
     else
         print_error "Interactive validation tools not found or not executable"
