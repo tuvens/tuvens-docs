@@ -9,19 +9,28 @@ This document provides Claude Desktop agents with complete instructions for crea
 ## When to Create Wiki Content
 
 ### ✅ Appropriate Wiki Content
-- **System Architecture**: Design patterns, technical specifications, and system overviews
-- **Agent Documentation**: Role definitions, capabilities, and interaction protocols
-- **Development Workflows**: Branching strategies, coordination patterns, and best practices
-- **User Guides**: Getting started documentation, tutorials, and how-to guides
-- **Reference Documentation**: API references, configuration guides, and technical specifications
-- **Protocol Standards**: Safety rules, quality standards, and compliance procedures
+- **User Guides**: Getting started documentation, tutorials, how-to guides for human users
+- **Draft Ideas**: Brainstorming, preliminary concepts, and evolving documentation (core wiki function)
+- **Architecture Documentation**: High-level system design and WHY decisions were made  
+- **Protocol Documentation**: Deep protocol philosophy and design rationale (not daily procedures)
+- **Historical Archives**: Implementation logs when no longer actively needed by agents
 
 ### ❌ Not Appropriate for Wiki
+- **Agent Operational Documentation**: Daily workflows, procedures agents need constant access to
+- **Implementation Steps**: HOW-to procedures for agent operations (belongs in agentic-development)
 - **Temporary Work Notes**: Implementation-specific notes and debugging information
 - **PR-Specific Content**: Pull request descriptions and code review comments
 - **Private Information**: Sensitive configuration, credentials, or internal-only content
-- **Draft Ideas**: Incomplete thoughts or preliminary concepts
-- **Implementation Logs**: Detailed implementation tracking and progress reports
+
+### 🎯 **WHY vs HOW Distinction**
+**Key Principle**: Wiki content explains design rationale and deep understanding, while agentic-development contains operational procedures.
+
+- **Wiki (WHY)**: Why was this architecture chosen? What was the reasoning behind this protocol design?
+- **Agentic-Dev (HOW)**: How do I implement this? What are the step-by-step procedures?
+
+**Example**: 
+- Wiki: "Multi-agent coordination architecture: rationale and design principles"
+- Agentic-dev: "Agent coordination protocols: implementation procedures"
 
 ## Phase 1: Content Creation Workflow
 
@@ -54,11 +63,11 @@ Place content in the appropriate staging category:
 
 ```
 agentic-development/wiki/staging/
-├── architecture/     # System design and technical architecture
-├── agents/          # Agent roles, capabilities, and protocols  
-├── workflows/       # Development processes and coordination
-├── protocols/       # Standards, safety rules, and compliance
-└── guides/          # User documentation and tutorials
+├── guides/          # User documentation and tutorials
+├── drafts/          # Ideas that evolve into permanent docs
+├── archives/        # Historical implementation logs
+├── architecture/    # High-level system design (WHY decisions)
+└── protocols/       # Deep protocol documentation (rare reference)
 ```
 
 **File Naming Convention:**
@@ -141,7 +150,7 @@ When creating content on mobile Claude app:
 #### Mobile Content Markers
 ```markdown
 <!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
-<!-- WIKI_CATEGORY: [architecture/agents/workflows/protocols/guides] -->
+<!-- WIKI_CATEGORY: [guides/drafts/archives/architecture/protocols] -->
 <!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
 
 # [Content Title]
@@ -178,7 +187,7 @@ gh pr create --title "Wiki Content: [Descriptive Title]" \
 Add comprehensive [topic] documentation to wiki staging.
 
 ## Content Overview
-- **Category**: [architecture/agents/workflows/protocols/guides]
+- **Category**: [guides/drafts/archives/architecture/protocols]
 - **Target Audience**: [developers/agents/users]
 - **Scope**: [brief description]
 

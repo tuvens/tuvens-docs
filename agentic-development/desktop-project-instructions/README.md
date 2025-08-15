@@ -131,7 +131,7 @@ git checkout -b [agent-name]/wiki/[descriptive-name]
 
 # Create content in staging directory
 # Structure: agentic-development/wiki/staging/[category]/[content-name].md
-# Categories: architecture, agents, workflows, protocols, guides
+# Categories: guides, drafts, archives, architecture, protocols
 ```
 
 #### Phase 2: Pull Request with wiki-ready Label
@@ -153,35 +153,35 @@ The vibe coder agent automatically:
 
 ### Content Categories
 
-#### 🏗️ Architecture (`staging/architecture/`)
-- System design and technical architecture
-- Multi-agent coordination patterns
-- Repository organization strategies
-- Cross-repository integration patterns
-
-#### 🤖 Agents (`staging/agents/`)
-- Individual agent roles and capabilities
-- Agent interaction protocols and standards
-- Development workflow patterns
-- Handoff and coordination procedures
-
-#### 🔄 Workflows (`staging/workflows/`)
-- Branching strategies and conventions
-- Quality assurance and testing protocols
-- Cross-repository development patterns
-- Mobile and desktop development integration
-
-#### 📋 Protocols (`staging/protocols/`)
-- Safety rules and compliance validation
-- Branch protection and security protocols
-- Documentation standards and templates
-- Issue management and coordination standards
-
 #### 📖 Guides (`staging/guides/`)
 - Getting started for new developers
-- Agent-specific usage instructions
-- Mobile artifact handling procedures
+- User documentation and tutorials
+- How-to guides for human users
 - Troubleshooting and error recovery guides
+
+#### 💡 Drafts (`staging/drafts/`)
+- Brainstorming and preliminary concepts
+- Ideas that evolve into permanent documentation
+- Initial concept formulation
+- Collaborative development content
+
+#### 📚 Archives (`staging/archives/`)
+- Historical implementation logs
+- Project evolution records
+- Completed project documentation
+- Content no longer actively needed by agents
+
+#### 🏗️ Architecture (`staging/architecture/`)
+- High-level system design (WHY decisions were made)
+- Architectural decision rationale
+- System design philosophy
+- Cross-repository integration reasoning
+
+#### 📋 Protocols (`staging/protocols/`)
+- Deep protocol philosophy and design rationale
+- Protocol decision reasoning (not daily procedures)
+- Standards background and justification
+- Compliance philosophy and principles
 
 ### Mobile Artifact Support
 

@@ -20,11 +20,11 @@ agentic-development/wiki/
 ├── claude-desktop-project-instructions.md # Concise Claude Desktop reference
 └── staging/              # Temporary directory for wiki-ready content
     ├── README.md         # Staging area documentation
-    ├── architecture/     # System architecture and design docs
-    ├── agents/          # Agent-specific documentation
-    ├── workflows/       # Development and coordination workflows
-    ├── protocols/       # Standards and protocols
-    └── guides/          # User guides and tutorials
+    ├── guides/          # User documentation and tutorials
+    ├── drafts/          # Ideas that evolve into permanent docs
+    ├── archives/        # Historical implementation logs
+    ├── architecture/    # High-level system design (WHY decisions)
+    └── protocols/       # Deep protocol documentation (rare reference)
 ```
 
 ### 🌐 GitHub Wiki Organization
@@ -68,17 +68,22 @@ agentic-development/wiki/
 ## Content Categories
 
 ### 📋 Permanent GitHub Wiki Content
-- **Architecture Documentation**: System design and technical specifications
-- **Agent Protocols**: Standardized interaction patterns and responsibilities  
-- **Development Workflows**: Cross-repository coordination and branching strategies
-- **User Guides**: Getting started documentation and tutorials
-- **API References**: Technical documentation for integrations
+- **User Guides**: Getting started documentation, tutorials, and how-to guides
+- **Draft Ideas**: Brainstorming, preliminary concepts, and evolving documentation
+- **Architecture Documentation**: High-level system design and WHY decisions were made
+- **Protocol Documentation**: Deep protocol philosophy and design rationale
+- **Historical Archives**: Implementation logs and project evolution records
 
 ### 🔄 Staged Content (Temporary)
-- **Draft Documentation**: Content being prepared for wiki publication
-- **Work-in-Progress**: Articles and guides under development
-- **Mobile Artifacts**: Content created on mobile devices pending processing
-- **Review Queue**: Content awaiting quality review before wiki sync
+- **guides/**: User-facing documentation and tutorials
+- **drafts/**: Ideas that evolve into permanent documentation
+- **archives/**: Historical implementation logs (when no longer actively needed)
+- **architecture/**: System design philosophy and decision rationale
+- **protocols/**: Deep protocol understanding and design principles
+
+### 🎯 **WHY vs HOW Distinction**
+- **Wiki Content (WHY)**: Design rationale, architectural decisions, deep understanding
+- **Agentic-Development (HOW)**: Operational procedures, implementation steps, daily workflows
 
 ### 🏠 Local Repository Files (Minimal)
 - **index.md**: This navigation and organization file
