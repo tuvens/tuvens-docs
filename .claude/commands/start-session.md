@@ -1,7 +1,7 @@
 ---
 allowed-tools: Bash, Write, Read, LS, Grep, Task
 description: Create fully automated Claude Code session using setup-agent-task.sh
-argument-hint: [agent-name] [task-title] [task-description] [options...]
+argument-hint: [agent-name] [optional-task-hint]
 ---
 
 # Start New Claude Code Session
@@ -48,8 +48,16 @@ The script supports multiple usage patterns:
 ./agentic-development/scripts/setup-agent-task.sh <agent> "<task-title>" "<description>" context.md --files="a.md,b.md" --success-criteria="All tests pass"
 ```
 
-## Execution
+## Context Analysis and Execution
 
-I'll analyze the conversation context to determine task details and execute the setup-agent-task.sh script with appropriate parameters.
+Based on the provided arguments (`$ARGUMENTS`) and our conversation context, I will:
 
-!`./agentic-development/scripts/setup-agent-task.sh $ARGUMENTS`
+1. **Parse Arguments**: Extract the agent name and any task hints
+2. **Analyze Context**: Review our recent discussion to understand the specific task
+3. **Generate Task Details**: Create appropriate task title and description
+4. **Execute Setup**: Call the setup-agent-task.sh script with context-derived parameters
+
+The setup script will be called with the format:
+```bash
+./agentic-development/scripts/setup-agent-task.sh [agent] "[context-derived-title]" "[context-derived-description]"
+```
