@@ -11,11 +11,11 @@ This directory provides organized staging for content that will be synchronized 
 ```
 staging/
 ├── README.md              # This file - staging area documentation
-├── architecture/          # System design and technical architecture
-├── agents/                # Agent roles, capabilities, and protocols
-├── workflows/             # Development processes and coordination
-├── protocols/             # Standards, safety rules, and compliance
-└── guides/                # User documentation and tutorials
+├── guides/                # User documentation and tutorials
+├── drafts/                # Ideas that evolve into permanent docs
+├── archives/              # Historical implementation logs
+├── architecture/          # High-level system design (WHY decisions)
+└── protocols/             # Deep protocol documentation (rare reference)
 ```
 
 ## Usage Instructions
@@ -35,30 +35,30 @@ staging/
 
 ## Content Categories
 
+### 📖 Guides
+**Purpose**: User documentation and tutorials  
+**Examples**: Getting started guides, how-to tutorials, troubleshooting guides  
+**Target Audience**: Human users, new developers, end users  
+
+### 💡 Drafts  
+**Purpose**: Ideas that evolve into permanent documentation (core wiki function)  
+**Examples**: Brainstorming sessions, preliminary concepts, collaborative development ideas  
+**Target Audience**: Development team, stakeholders, collaborators  
+
+### 📚 Archives
+**Purpose**: Historical implementation logs and completed project records  
+**Examples**: Implementation logs no longer actively needed, project evolution documentation  
+**Target Audience**: Future reference, historical context, project archaeology  
+
 ### 🏗️ Architecture
-**Purpose**: System design and technical specifications  
-**Examples**: Multi-agent coordination patterns, repository organization, integration strategies  
-**Target Audience**: Developers, system architects, technical leads  
-
-### 🤖 Agents  
-**Purpose**: Agent documentation and interaction protocols  
-**Examples**: Role definitions, capabilities, handoff procedures  
-**Target Audience**: Agent developers, coordination specialists  
-
-### 🔄 Workflows
-**Purpose**: Development processes and coordination patterns  
-**Examples**: Branching strategies, quality assurance, cross-repo development  
-**Target Audience**: All developers, project managers  
+**Purpose**: High-level system design and WHY decisions were made  
+**Examples**: Architectural decision rationale, system design philosophy, integration reasoning  
+**Target Audience**: System architects, senior developers (deep understanding needs)  
 
 ### 📋 Protocols
-**Purpose**: Standards, rules, and compliance procedures  
-**Examples**: Safety rules, branch protection, documentation standards  
-**Target Audience**: All team members, compliance officers  
-
-### 📖 Guides
-**Purpose**: User documentation and instructional content  
-**Examples**: Getting started guides, tutorials, troubleshooting  
-**Target Audience**: New developers, end users  
+**Purpose**: Deep protocol philosophy and design rationale (not daily procedures)  
+**Examples**: Protocol decision reasoning, standards background, compliance philosophy  
+**Target Audience**: Protocol designers, compliance architects (rare reference needs)  
 
 ## File Naming Conventions
 
