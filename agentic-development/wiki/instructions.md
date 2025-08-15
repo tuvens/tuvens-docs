@@ -9,19 +9,19 @@ This document provides Claude Desktop agents with complete instructions for crea
 ## When to Create Wiki Content
 
 ### ✅ Appropriate Wiki Content
-- **System Architecture**: Maybe, although if Claude Code needs to reference this constantly why would I put it in the wiki rather than the agentic development directory?
-- **Agent Documentation**: Definitely not in the wiki
-- **Development Workflows**: Definitely not in the wiki
-- **User Guides**: Yes, this is good, stuff that I will actually need to read, makes sense to be in the wiki.
-- **Reference Documentation**: No I think this would be in tuvens-docs, or maybe in the wiki and referenced in tuvens-docs, I'm not sure.
-- **Protocol Standards**: Definitely not, agents need to use this constantly.
+- **System Architecture**: High-level overviews and conceptual documentation. Detailed specifications that agents need frequent access to should remain in the `agentic-development` directory.
+- **Agent Documentation**: Not suitable for the wiki. Agent roles, capabilities, and interaction protocols belong in the `agentic-development` directory for fast agent access.
+- **Development Workflows**: Not suitable for the wiki. Branching strategies, coordination patterns, and operational procedures belong in the `agentic-development` directory.
+- **User Guides**: Ideal for the wiki. Getting started documentation, tutorials, and how-to guides for human users.
+- **Reference Documentation**: Location depends on usage patterns. Consider placement in `tuvens-docs` or wiki based on access frequency and audience.
+- **Protocol Standards**: Not suitable for the wiki. Safety rules, quality standards, and compliance procedures that agents need constant access to belong in the `agentic-development` directory.
 
 ### ❌ Not Appropriate for Wiki
-- **Temporary Work Notes**: Correct, this should be in untrack temp folders in the dev branch locally, to be discarded relatively quickly.
-- **PR-Specific Content**: Correct, this should be in untrack temp folders in the dev branch locally, to be discarded relatively quickly.
-- **Private Information**: Definitely not in the wiki.
-- **Draft Ideas**: Wrong, this is absolutely ideal for the wiki, I mean it is the core function of the wiki at least in the beginning.
-- **Implementation Logs**: Stuff like this that is not currently needed by agents, so archived from the main repo, could be moved to the wiki as an archive of past implementation tracking and reports, and converted into fixed product or system documentation.
+- **Temporary Work Notes**: Should be kept in local, untracked temporary folders and discarded when no longer needed.
+- **PR-Specific Content**: Should be kept in local, untracked temporary folders during development.
+- **Private Information**: Not suitable for the wiki. Sensitive configuration, credentials, or internal-only content should never be stored in the wiki.
+- **Draft Ideas**: Highly suitable for the wiki. The wiki serves as the primary collaborative space for brainstorming, preliminary concepts, and idea development.
+- **Implementation Logs**: Can be archived to the wiki when no longer actively needed by agents. Historical tracking can be converted into system documentation for reference purposes.
 
 ## Phase 1: Content Creation Workflow
 
@@ -290,6 +290,6 @@ Once PR is created with `wiki-ready` label:
 
 **Last Updated**: 2025-08-15  
 **Maintained By**: Vibe Coder Agent  
-**Version**: 2.0 - Corrected content guidelines alignment  
+**Version**: 2.1 - Professional tone with corrected content guidelines  
 
 *These instructions enable Claude Desktop agents to create high-quality wiki content focused on user guides, draft ideas, and archived documentation through the established branching and coordination workflow.*
