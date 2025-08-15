@@ -10,29 +10,60 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `e36419705365509e7d2add54445aeba09273054d`
-- **Commit Message**: "cleanup: achieve minimal wiki directory structure with Gemini fixes
+- **Latest Commit**: `dfa908ed62446d8991f47e573014f9717ea0f966`
+- **Commit Message**: "feat: implement vibe-coder feedback for wiki workflow enhancement (#149)
 
-Complete minimal wiki directory implementation with all feedback addressed:
+Address vibe-coder suggestions from PR #148 review:
 
-✅ Minimal Structure: Only 4 essential files remain
-✅ Gemini Fixes: All code review feedback addressed  
-✅ Reliable Commands: Production-ready shell scripts
-✅ Consistent Labels: Proper PR creation commands
-✅ Accurate Documentation: Directory structure matches reality
+**1. Restore Architecture & Protocols Categories**
+- Add architecture/ and protocols/ staging directories
+- Remove outdated agents/ and workflows/ directories
+- Update to 5-category structure: guides, drafts, archives, architecture, protocols
 
-Ready for production wiki workflow use."
+**2. Clarify High-Level vs Operational (WHY vs HOW)**
+- Add WHY vs HOW distinction throughout documentation
+- Wiki (WHY): Design rationale, architectural decisions, deep understanding
+- Agentic-dev (HOW): Operational procedures, implementation steps, daily workflows
+- Update content guidelines to reflect this principle
+
+**3. Enhanced Wiki Content Guidelines**
+- User Guides: Human-facing documentation and tutorials
+- Draft Ideas: Brainstorming and evolving documentation (core wiki function)
+- Architecture: High-level system design and decision rationale
+- Protocols: Deep protocol philosophy (not daily procedures)
+- Archives: Historical logs when no longer actively needed
+
+**4. Updated Documentation Structure**
+- wiki/index.md: 5-category structure with WHY vs HOW explanation
+- wiki/instructions.md: Updated content guidelines and examples
+- desktop-project-instructions/README.md: New category descriptions
+- staging/README.md: Comprehensive category documentation
+
+**Integration**: Aligns wiki workflow with updated content guidelines
+from PR #148 while maintaining all existing automation and quality features.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-15T11:59:53+01:00
+- **Timestamp**: 2025-08-15T14:02:29+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* dfa908e` - feat: implement vibe-coder feedback for wiki workflow enhancement (#149)
+- **Date**: 2025-08-15 14:02
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* e2c0b3b` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-15 11:00
+- **Author**: GitHub Actions
+
 #### `* e364197` - cleanup: achieve minimal wiki directory structure with Gemini fixes
 - **Date**: 2025-08-15 11:59
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* db42f8d` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-15 10:07
@@ -138,16 +169,6 @@ Ready for production wiki workflow use."
 - **Author**:  bcf4924
 - **Refs**: tuvens|test: trigger workflow with path fix verification|
 
-#### `` - 2025-07-24 21:03
-- **Date**:  * 
-- **Author**:  98830ea
-- **Refs**: tuvens|fix: correct workflow paths for tuvens-docs subdirectory structure|
-
-#### `` - 2025-07-24 20:59
-- **Date**:  * 
-- **Author**:  36c32d2
-- **Refs**: tuvens|feat: implement automated documentation notification system|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
@@ -160,11 +181,11 @@ Ready for production wiki workflow use."
 - `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
+- `agentic-development/wiki/instructions.md`: 3 changes
+- `agentic-development/wiki/index.md`: 3 changes
+- `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `agentic-development/wiki/vibe-coder-workflow.md`: 2 changes
 - `agentic-development/wiki/staging/architecture/test-wiki-workflow.md`: 2 changes
+- `agentic-development/wiki/staging/README.md`: 2 changes
 - `agentic-development/wiki/phase-reports/phase-2-implementation-summary.md`: 2 changes
-- `agentic-development/wiki/instructions.md`: 2 changes
-- `agentic-development/wiki/index.md`: 2 changes
-- `agentic-development/wiki/claude-desktop-project-instructions.md`: 2 changes
-- `agentic-development/protocols/file-scope-management.md`: 2 changes
 
