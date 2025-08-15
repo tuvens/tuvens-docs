@@ -10,19 +10,65 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `e61ecbf896f8953ddb1b2e8c6b0115935e1c7a59`
-- **Commit Message**: "fix: add CLAUDE.md loading instruction to agent prompts (#144)"
+- **Latest Commit**: `c29ffdb0c498bf708126218d34a3284a28a0fabb`
+- **Commit Message**: "feat: Implement comprehensive wiki workflow for Claude Desktop + Claude Code integration (#146)
+
+* feat: implement comprehensive wiki workflow for Claude Desktop + Claude Code integration
+
+- Add wiki/index.md with content organization and navigation system
+- Add wiki/instructions.md with complete Claude Desktop workflow guide
+- Add wiki/vibe-coder-workflow.md with detailed sync process documentation
+- Create staging directory structure with category-based organization
+- Update desktop-project-instructions/README.md with wiki guidelines
+- Support mobile artifact processing with special markers
+- Implement quality standards and review processes
+- Enable separation of concerns: staging vs permanent content
+- Provide clean repository maintenance with minimal permanent files
+
+Addresses GitHub issue #145 requirements:
+- Claude Desktop can create temp wiki content on branches
+- Vibe coder agent syncs content to GitHub wiki
+- Main repo wiki directory stays clean and minimal
+- Mobile compatibility for phone Claude app artifacts
+- Professional documentation standards and templates
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* docs: add Claude Desktop project instructions for wiki workflow
+
+- Add claude-desktop-project-instructions.md with specific instructions for Claude Desktop
+- Contains wiki workflow guidelines for vibe coder agent
+- Includes mobile artifact support and quality standards
+- Provides quick reference commands and workflow phases
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-15T10:12:05+01:00
+- **Timestamp**: 2025-08-15T11:06:21+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* c29ffdb` - feat: Implement comprehensive wiki workflow for Claude Desktop + Claude Code integration (#146)
+- **Date**: 2025-08-15 11:06
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 268fb56` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-15 09:12
+- **Author**: GitHub Actions
+
 #### `* e61ecbf` - fix: add CLAUDE.md loading instruction to agent prompts (#144)
 - **Date**: 2025-08-15 10:12
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 6fcb8b8` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-15 09:03
@@ -132,40 +178,22 @@
 - **Author**:  bbe3118
 - **Refs**: tuvens|docs: add project-instructions.md generation requirement|
 
-#### `` - 2025-07-24 13:27
-- **Date**:  * 
-- **Author**:  e337a00
-- **Refs**: tuvens|docs: enhance README with comprehensive integration workflow|
-
-#### `` - 2025-07-24 13:26
-- **Date**:  * 
-- **Author**:  17e52c2
-- **Refs**: tuvens|feat: initial shared Claude Code documentation templates|
-
-#### `` - 
-- **Date**:   /  
-- **Author**: 
-
-#### `* / 7126e1e` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-14 21:38
-- **Author**: GitHub Actions
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 9 commits
+- `feat`: 4 commits
 - `fix`: 3 commits
-- `feat`: 3 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 9 changes
-- `agentic-development/wiki/README.md`: 2 changes
 - `agentic-development/protocols/file-scope-management.md`: 2 changes
 - `agentic-development/protocols/emergency-response-procedures.md`: 2 changes
 - `agentic-development/protocols/agent-checkin-validation.md`: 2 changes
 - `.claude/agents/vibe-coder.md`: 2 changes
 - `validation-20250814-232721.log`: 1 changes
 - `validation-20250814-232420.log`: 1 changes
+- `agentic-development/wiki/vibe-coder-workflow.md`: 1 changes
 
