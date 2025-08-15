@@ -1,52 +1,55 @@
 ---
 allowed-tools: Bash, Write, Read, LS, Grep, Task
-description: Create fully automated Claude Code session with context-aware task detection
-argument-hint: [agent-name]
+description: Create fully automated Claude Code session using setup-agent-task.sh
+argument-hint: [agent-name] [task-title] [task-description] [options...]
 ---
 
 # Start New Claude Code Session
 
-I'll analyze the current conversation context and create a fully automated Claude Code session setup.
+I'll create a fully automated Claude Code session using the existing `setup-agent-task.sh` script.
 
 ## Agent Assignment
 Agent: `$ARGUMENTS`
 
-## Context Analysis
+## Automated Session Creation
 
-Let me analyze our current conversation to understand what task needs to be implemented.
+I will use the enhanced `setup-agent-task.sh` script which provides:
+- Environment validation
+- GitHub issue creation with comprehensive templates
+- Worktree setup with proper directory structure
+- Enhanced agent prompt generation
+- iTerm2 automation
+- Branch tracking integration
+- Context file support
+- File validation support
+- Success criteria definition
 
-First, I'll check the current repository context:
-- Repository: !`git remote get-url origin | sed 's/.*\///' | sed 's/\.git//'`
-- Working directory: !`pwd`
-- Current branch: !`git branch --show-current`
+## Usage Patterns Supported
 
-## Automated Session Creation Process
+The script supports multiple usage patterns:
 
-Based on our conversation, I will:
+**Basic Usage:**
+```bash
+./agentic-development/scripts/setup-agent-task.sh <agent> "<task-title>" "<description>"
+```
 
-1. **Analyze Recent Context**: Review our discussion to understand the specific task
-2. **Identify Task Details**: Determine the task title and description from context
-3. **Create GitHub Issue**: Use the `/create-issue` command if needed
-4. **Setup Worktree**: Create proper worktree following `agentic-development/workflows/worktree-organization.md`
-5. **Generate Prompt**: Create agent-specific prompt with all context
-6. **Open iTerm2**: Display the prompt in a new terminal window
+**With Context File:**
+```bash
+./agentic-development/scripts/setup-agent-task.sh <agent> "<task-title>" "<description>" /path/to/context.md
+```
 
-## Dynamic Task Detection
+**With File References:**
+```bash
+./agentic-development/scripts/setup-agent-task.sh <agent> "<task-title>" "<description>" --files="file1.md,file2.js"
+```
 
-I'll now analyze our conversation to determine:
-- What specific task or feature we've been discussing
-- The most appropriate task title
-- A clear task description
-- Which repository this belongs to
-
-Then I'll execute the agent task setup with these context-aware parameters.
+**Full Enhanced Usage:**
+```bash
+./agentic-development/scripts/setup-agent-task.sh <agent> "<task-title>" "<description>" context.md --files="a.md,b.md" --success-criteria="All tests pass"
+```
 
 ## Execution
 
-After analyzing the conversation context, I'll execute the setup automation with the appropriate task details.
+I'll analyze the conversation context to determine task details and execute the setup-agent-task.sh script with appropriate parameters.
 
-The script will handle:
-- GitHub issue creation with proper labels
-- Worktree setup following `[repo]/[agent]/[branch]` pattern
-- Agent prompt generation
-- iTerm2 window automation
+!`./agentic-development/scripts/setup-agent-task.sh $ARGUMENTS`
