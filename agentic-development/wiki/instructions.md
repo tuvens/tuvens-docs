@@ -9,19 +9,19 @@ This document provides Claude Desktop agents with complete instructions for crea
 ## When to Create Wiki Content
 
 ### ✅ Appropriate Wiki Content
-- **System Architecture**: Design patterns, technical specifications, and system overviews
-- **Agent Documentation**: Role definitions, capabilities, and interaction protocols
-- **Development Workflows**: Branching strategies, coordination patterns, and best practices
-- **User Guides**: Getting started documentation, tutorials, and how-to guides
-- **Reference Documentation**: API references, configuration guides, and technical specifications
-- **Protocol Standards**: Safety rules, quality standards, and compliance procedures
+- **System Architecture**: Maybe, although if Claude Code needs to reference this constantly why would I put it in the wiki rather than the agentic development directory?
+- **Agent Documentation**: Definitely not in the wiki
+- **Development Workflows**: Definitely not in the wiki
+- **User Guides**: Yes, this is good, stuff that I will actually need to read, makes sense to be in the wiki.
+- **Reference Documentation**: No I think this would be in tuvens-docs, or maybe in the wiki and referenced in tuvens-docs, I'm not sure.
+- **Protocol Standards**: Definitely not, agents need to use this constantly.
 
 ### ❌ Not Appropriate for Wiki
-- **Temporary Work Notes**: Implementation-specific notes and debugging information
-- **PR-Specific Content**: Pull request descriptions and code review comments
-- **Private Information**: Sensitive configuration, credentials, or internal-only content
-- **Draft Ideas**: Incomplete thoughts or preliminary concepts
-- **Implementation Logs**: Detailed implementation tracking and progress reports
+- **Temporary Work Notes**: Correct, this should be in untrack temp folders in the dev branch locally, to be discarded relatively quickly.
+- **PR-Specific Content**: Correct, this should be in untrack temp folders in the dev branch locally, to be discarded relatively quickly.
+- **Private Information**: Definitely not in the wiki.
+- **Draft Ideas**: Wrong, this is absolutely ideal for the wiki, I mean it is the core function of the wiki at least in the beginning.
+- **Implementation Logs**: Stuff like this that is not currently needed by agents, so archived from the main repo, could be moved to the wiki as an archive of past implementation tracking and reports, and converted into fixed product or system documentation.
 
 ## Phase 1: Content Creation Workflow
 
