@@ -88,6 +88,7 @@ Then start Claude Code in the appropriate repository.
 - **Laravel/PHP** → laravel-dev
 - **Docker/K8s** → devops
 - **Documentation** → vibe-coder
+- **Wiki content** → Wiki workflow (see Wiki Guidelines below)
 
 ### By Repository
 - **tuvens-client** → svelte-dev
@@ -102,6 +103,131 @@ Then start Claude Code in the appropriate repository.
 - **Integration** → Multiple agents coordinated by CTO
 - **Refactoring** → Domain specialist with vibe-coder guidance
 - **System improvement** → vibe-coder
+- **Wiki documentation** → Wiki workflow (any agent can create, vibe-coder syncs)
+
+## Wiki Guidelines
+
+### GitHub Wiki Integration
+The Tuvens system includes comprehensive wiki integration for publishing documentation to the GitHub wiki while keeping the main repository clean and minimal.
+
+**Wiki Access**: https://github.com/tuvens/tuvens-docs/wiki  
+**Workflow Documentation**: `agentic-development/wiki/`
+
+### When to Create Wiki Content
+✅ **System Architecture**: Design patterns, technical specifications, system overviews  
+✅ **Agent Documentation**: Role definitions, capabilities, interaction protocols  
+✅ **Development Workflows**: Branching strategies, coordination patterns, best practices  
+✅ **User Guides**: Getting started documentation, tutorials, how-to guides  
+✅ **Reference Documentation**: API references, configuration guides, technical specs  
+✅ **Protocol Standards**: Safety rules, quality standards, compliance procedures  
+
+### Wiki Content Creation Process
+
+#### Phase 1: Branch and Stage (Claude Desktop)
+```bash
+# Create wiki content branch
+git checkout dev
+git checkout -b [agent-name]/wiki/[descriptive-name]
+
+# Create content in staging directory
+# Structure: agentic-development/wiki/staging/[category]/[content-name].md
+# Categories: architecture, agents, workflows, protocols, guides
+```
+
+#### Phase 2: Pull Request with wiki-ready Label
+```bash
+# Create PR targeting dev branch
+gh pr create --title "Wiki Content: [Descriptive Title]" \
+  --body "Comprehensive [topic] documentation ready for wiki publication" \
+  --label "wiki-ready,documentation" \
+  --base dev
+```
+
+#### Phase 3: Vibe Coder Sync (Automatic)
+The vibe coder agent automatically:
+- Detects `wiki-ready` PRs and validates content quality
+- Syncs approved content to GitHub wiki repository
+- Updates wiki navigation and organization  
+- Cleans up staging files from main repository
+- Merges PR with minimal permanent changes
+
+### Content Categories
+
+#### 🏗️ Architecture (`staging/architecture/`)
+- System design and technical architecture
+- Multi-agent coordination patterns
+- Repository organization strategies
+- Cross-repository integration patterns
+
+#### 🤖 Agents (`staging/agents/`)
+- Individual agent roles and capabilities
+- Agent interaction protocols and standards
+- Development workflow patterns
+- Handoff and coordination procedures
+
+#### 🔄 Workflows (`staging/workflows/`)
+- Branching strategies and conventions
+- Quality assurance and testing protocols
+- Cross-repository development patterns
+- Mobile and desktop development integration
+
+#### 📋 Protocols (`staging/protocols/`)
+- Safety rules and compliance validation
+- Branch protection and security protocols
+- Documentation standards and templates
+- Issue management and coordination standards
+
+#### 📖 Guides (`staging/guides/`)
+- Getting started for new developers
+- Agent-specific usage instructions
+- Mobile artifact handling procedures
+- Troubleshooting and error recovery guides
+
+### Mobile Artifact Support
+
+#### Creating Content on Mobile
+When using Claude app on phone:
+1. **Save content locally** in project with mobile markers
+2. **Transfer to desktop** for proper staging and formatting
+3. **Process through standard workflow** with appropriate categorization
+
+#### Mobile Content Markers
+```markdown
+<!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
+<!-- WIKI_CATEGORY: [architecture/agents/workflows/protocols/guides] -->
+<!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
+```
+
+### Quality Standards
+
+#### Content Requirements
+- **Professional Writing**: Clear, concise, well-structured documentation
+- **Technical Accuracy**: Validated information with proper references
+- **Consistent Formatting**: Following established templates and style guides
+- **Complete Information**: Self-contained with necessary context
+- **Maintenance Info**: Clear ownership and update procedures
+
+#### Review Process
+- **Agent Review**: Initial quality check by creating agent
+- **Vibe Coder Validation**: Final review before wiki publication
+- **Category Verification**: Proper organization and categorization
+- **Link Validation**: Working references and navigation paths
+
+### Quick Commands for Wiki Content
+
+```bash
+# Check wiki workflow status
+ls -la agentic-development/wiki/staging/
+
+# Review wiki instructions
+cat agentic-development/wiki/instructions.md
+
+# Check current wiki content
+open https://github.com/tuvens/tuvens-docs/wiki
+
+# Monitor wiki-ready PRs
+gh pr list --label "wiki-ready"
+```
 
 ## Handoff Templates
 
