@@ -139,7 +139,7 @@ git checkout -b [agent-name]/wiki/[descriptive-name]
 # Create PR targeting dev branch
 gh pr create --title "Wiki Content: [Descriptive Title]" \
   --body "Comprehensive [topic] documentation ready for wiki publication" \
-  --label "wiki-ready,documentation" \
+  --label "wiki-ready,documentation,[agent-name]" \
   --base dev
 ```
 

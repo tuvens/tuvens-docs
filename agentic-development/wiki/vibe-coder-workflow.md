@@ -139,10 +139,13 @@ Please address these issues and I'll re-review once you update the PR.
 ### Wiki Repository Setup
 ```bash
 # Clone or update wiki repository
-if [ ! -d "../wiki-temp" ]; then
-  git clone https://github.com/tuvens/tuvens-docs.wiki.git ../wiki-temp
+WIKI_TEMP_DIR="../wiki-temp"
+if [ ! -d "$WIKI_TEMP_DIR" ]; then
+  git clone https://github.com/tuvens/tuvens-docs.wiki.git "$WIKI_TEMP_DIR"
 else
-  cd ../wiki-temp && git pull origin master && cd -
+  current_dir=$(pwd)
+  cd "$WIKI_TEMP_DIR" && git pull origin master
+  cd "$current_dir"
 fi
 ```
 
@@ -159,9 +162,28 @@ cd ../wiki-temp
 # staging/guides/ → Guide-*.md
 
 # Copy and rename content with proper wiki naming
-for file in ../tuvens-docs/agentic-development/wiki/staging/architecture/*.md; do
-  basename=$(basename "$file" .md)
-  cp "$file" "Architecture-${basename}.md"
+# Handle architecture category
+if ls ../tuvens-docs/agentic-development/wiki/staging/architecture/*.md 1> /dev/null 2>&1; then
+  for file in ../tuvens-docs/agentic-development/wiki/staging/architecture/*.md; do
+    if [ -f "$file" ]; then
+      basename=$(basename "$file" .md)
+      cp "$file" "Architecture-${basename}.md"
+    fi
+  done
+fi
+
+# Handle other categories similarly
+for category in agents workflows protocols guides; do
+  staging_dir="../tuvens-docs/agentic-development/wiki/staging/$category"
+  if ls "$staging_dir"/*.md 1> /dev/null 2>&1; then
+    for file in "$staging_dir"/*.md; do
+      if [ -f "$file" ]; then
+        basename=$(basename "$file" .md)
+        category_capitalized="$(echo "$category" | sed 's/./\U&/')"
+        cp "$file" "${category_capitalized}-${basename}.md"
+      fi
+    done
+  fi
 done
 
 # Update wiki navigation and index

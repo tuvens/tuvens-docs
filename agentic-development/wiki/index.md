@@ -17,14 +17,14 @@ agentic-development/wiki/
 ├── index.md              # This file - wiki content index and navigation
 ├── instructions.md       # Claude Desktop agent wiki workflow instructions
 ├── vibe-coder-workflow.md # Claude Code sync process documentation
-├── staging/              # Temporary directory for wiki-ready content
-│   ├── architecture/     # System architecture and design docs
-│   ├── agents/          # Agent-specific documentation
-│   ├── workflows/       # Development and coordination workflows
-│   ├── protocols/       # Standards and protocols
-│   └── guides/          # User guides and tutorials
-└── coordination/        # Existing orchestration files (preserved)
-    └── phase-reports/   # Implementation phase tracking
+├── claude-desktop-project-instructions.md # Concise Claude Desktop reference
+└── staging/              # Temporary directory for wiki-ready content
+    ├── README.md         # Staging area documentation
+    ├── architecture/     # System architecture and design docs
+    ├── agents/          # Agent-specific documentation
+    ├── workflows/       # Development and coordination workflows
+    ├── protocols/       # Standards and protocols
+    └── guides/          # User guides and tutorials
 ```
 
 ### 🌐 GitHub Wiki Organization

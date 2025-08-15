@@ -195,7 +195,7 @@ Ready for vibe coder agent review and GitHub wiki synchronization.
 🤖 Generated with [Claude Code](https://claude.ai/code)
 EOF
 )" \
-  --label "wiki-ready" \
+  --label "wiki-ready,documentation,[agent-name]" \
   --base dev
 ```
 
