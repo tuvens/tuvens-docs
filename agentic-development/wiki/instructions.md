@@ -28,11 +28,11 @@ This document provides Claude Desktop agents with complete instructions for crea
 ### Step 1: Identify Wiki Content Need
 ```
 Triggers:
-- User requests comprehensive documentation
-- New system feature needs explanation
-- Agent protocols require documentation
-- Development workflow needs standardization
+- User requests comprehensive documentation or guide
+- Draft ideas need collaborative development space
+- Brainstorming and conceptual work requires documentation
 - User guide or tutorial requested
+- Implementation logs need archiving when no longer actively used
 ```
 
 ### Step 2: Create Feature Branch
@@ -40,31 +40,29 @@ Triggers:
 # Branch naming convention: {agent-name}/wiki/{descriptive-name}
 git checkout dev
 git pull origin dev
-git checkout -b vibe-coder/wiki/agent-coordination-protocols
+git checkout -b vibe-coder/wiki/user-getting-started-guide
 ```
 
 **Branch Naming Examples:**
-- `vibe-coder/wiki/system-architecture-overview`
-- `docs-orchestrator/wiki/cross-repo-sync-guide`
-- `devops/wiki/branch-protection-protocols`
-- `react-dev/wiki/component-development-guide`
+- `vibe-coder/wiki/user-getting-started-guide`
+- `docs-orchestrator/wiki/draft-mobile-integration-ideas`
+- `devops/wiki/deployment-troubleshooting-guide`
+- `react-dev/wiki/ui-component-design-concepts`
 
 ### Step 3: Create Staged Content
 Place content in the appropriate staging category:
 
 ```
 agentic-development/wiki/staging/
-├── architecture/     # System design and technical architecture
-├── agents/          # Agent roles, capabilities, and protocols  
-├── workflows/       # Development processes and coordination
-├── protocols/       # Standards, safety rules, and compliance
-└── guides/          # User documentation and tutorials
+├── guides/          # User documentation, tutorials, and how-to guides
+├── drafts/          # Draft ideas, brainstorming, and conceptual work
+└── archives/        # Archived implementation logs and historical documentation
 ```
 
 **File Naming Convention:**
-- Use descriptive, hyphenated names: `multi-agent-coordination-protocols.md`
-- Include agent identifier prefix: `vibe-coder-orchestration-overview.md`
-- Use consistent terminology: `branch-protection-implementation-guide.md`
+- Use descriptive, hyphenated names: `getting-started-guide.md`
+- Include content type prefix: `draft-mobile-integration-concepts.md`
+- Use consistent terminology: `troubleshooting-deployment-issues.md`
 
 ### Step 4: Content Structure Template
 
@@ -92,7 +90,7 @@ agentic-development/wiki/staging/
 ## Related Documentation
 - Links to related wiki pages
 - References to relevant GitHub files
-- Cross-links to agent documentation
+- Cross-links to user documentation
 
 ## Troubleshooting
 - Common issues and solutions
@@ -109,7 +107,7 @@ agentic-development/wiki/staging/
 
 #### Technical Writing Requirements
 - **Clear Structure**: Logical organization with descriptive headings
-- **Professional Tone**: Formal but accessible technical writing
+- **User-Focused Tone**: Accessible writing for intended audience
 - **Complete Information**: Self-contained with necessary context
 - **Accurate References**: Valid links and file path references
 - **Current Content**: Up-to-date with latest system changes
@@ -141,7 +139,7 @@ When creating content on mobile Claude app:
 #### Mobile Content Markers
 ```markdown
 <!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
-<!-- WIKI_CATEGORY: [architecture/agents/workflows/protocols/guides] -->
+<!-- WIKI_CATEGORY: [guides/drafts/archives] -->
 <!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
 
 # [Content Title]
@@ -178,8 +176,8 @@ gh pr create --title "Wiki Content: [Descriptive Title]" \
 Add comprehensive [topic] documentation to wiki staging.
 
 ## Content Overview
-- **Category**: [architecture/agents/workflows/protocols/guides]
-- **Target Audience**: [developers/agents/users]
+- **Category**: [guides/drafts/archives]
+- **Target Audience**: [users/developers/general]
 - **Scope**: [brief description]
 
 ## Quality Checklist
@@ -266,11 +264,11 @@ Once PR is created with `wiki-ready` label:
 - **Follow Conventions**: Adhere to established naming and organizational patterns
 
 ### Quality Assurance
-- **Technical Review**: Have content reviewed by subject matter experts
 - **User Testing**: Validate documentation with intended users
 - **Regular Updates**: Keep content current with system changes
 - **Link Maintenance**: Regularly check and update reference links
 - **Feedback Integration**: Incorporate user feedback and suggestions
+- **Content Review**: Have user-facing content reviewed for clarity
 
 ## Success Validation
 
@@ -291,7 +289,7 @@ Once PR is created with `wiki-ready` label:
 ---
 
 **Last Updated**: 2025-08-15  
-**Maintained By**: DevOps Agent  
-**Version**: 1.0 - Initial wiki workflow implementation  
+**Maintained By**: Vibe Coder Agent  
+**Version**: 2.0 - Corrected content guidelines alignment  
 
-*These instructions enable Claude Desktop agents to create high-quality wiki content through the established branching and coordination workflow.*
+*These instructions enable Claude Desktop agents to create high-quality wiki content focused on user guides, draft ideas, and archived documentation through the established branching and coordination workflow.*
