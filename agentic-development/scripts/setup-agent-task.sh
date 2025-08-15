@@ -442,6 +442,7 @@ I am the $(echo "$AGENT_NAME" | sed 's/-/ /g' | sed 's/\b\w/\U&/g') $GITHUB_ISSU
 Context Loading:
 - Load: .claude/agents/$(echo "$AGENT_NAME").md
 - Load: Implementation reports and workflow documentation
+- Load: CLAUDE.md (critical branch targeting and safety rules)
 EOF
 
 # Add context file loading if provided
