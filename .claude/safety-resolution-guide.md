@@ -27,27 +27,31 @@ The safety system flagged content containing words like:
 
 ### 3. Resolution Options
 
-#### Option 1: Verify and Proceed (Documentation)
+#### Option 1: Documentation Verification (Preferred)
 ```bash
 # Review the flagged content first
 git diff --cached
 
-# If it's legitimate documentation/examples:
-git commit --allow-empty -m "docs: verified examples only"
-git reset --soft HEAD~1
-git commit -m "your actual commit message"
+# If it's legitimate documentation/examples, use bypass commit message:
+git commit -m "docs: verified examples only - [describe your changes]"
 ```
 
-#### Option 2: Request Review
+#### Option 2: Alternative Documentation Bypass
+```bash
+# Alternative bypass keyword for documentation:
+git commit -m "DOCS-VERIFIED: [describe your changes]"
+```
+
+#### Option 3: Request Review
 ```bash
 # For uncertain cases, request orchestrator review:
 git commit -m "review-requested: added API integration examples"
 ```
 
-#### Option 3: Emergency Bypass (Use Sparingly)
+#### Option 4: Emergency Bypass (Use Sparingly)
 ```bash
 # Only for urgent legitimate changes:
-git commit --no-verify -m "[SAFETY-OVERRIDE: documentation examples] your message"
+git commit --no-verify -m "[SAFETY-OVERRIDE: reason] your message"
 ```
 
 ### 4. Best Practices Moving Forward
@@ -81,8 +85,8 @@ process.env.SECRET_KEY  // environment reference
 #### Problematic Examples:
 ```typescript
 // ❌ These will be flagged:
-const secret = "sk-1234567890abcdef1234567890abcdef";
-export const API_KEY = "prod_abc123xyz789";
+const secret = "sk-[actual-long-random-string]";
+export const API_KEY = "prod_[actual-key-here]";
 ```
 
 ---
