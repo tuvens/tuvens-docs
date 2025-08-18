@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 3238284d3771937eaa7b45cb0de452e17d57c612
-- **Commit Message**: Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows
+- **Commit SHA**: b24ad78f3cce8ae3de09e7a7904b1ae912bebefe
+- **Commit Message**: Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
 
-feat: enforce GitHub Comment Standards Protocol in agent workflows
+docs: document future worktree cleanup in wiki (#161)
 - **Author**: tuvens
-- **Timestamp**: 2025-08-18T15:53:03+01:00
+- **Timestamp**: 2025-08-18T16:04:39+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
@@ -26,6 +26,6 @@ feat: enforce GitHub Comment Standards Protocol in agent workflows
 - ✅ `package.json`
 
 ## Documentation Status
-- **Markdown files**: 195
+- **Markdown files**: 197
 - ✅ README.md present
 - ✅ tuvens-docs/ directory present

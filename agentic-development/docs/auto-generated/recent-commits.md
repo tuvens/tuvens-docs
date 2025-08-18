@@ -10,19 +10,19 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `3238284d3771937eaa7b45cb0de452e17d57c612`
-- **Commit Message**: "Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows
+- **Latest Commit**: `b24ad78f3cce8ae3de09e7a7904b1ae912bebefe`
+- **Commit Message**: "Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
 
-feat: enforce GitHub Comment Standards Protocol in agent workflows"
+docs: document future worktree cleanup in wiki (#161)"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-18T15:53:03+01:00
+- **Timestamp**: 2025-08-18T16:04:39+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `*   3238284` - Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows
-- **Date**: 2025-08-18 15:53
+#### `*   b24ad78` - Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
+- **Date**: 2025-08-18 16:04
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
@@ -31,14 +31,37 @@ feat: enforce GitHub Comment Standards Protocol in agent workflows"
 - **Author**: 
 
 #### `` - tuvens
-- **Date**:  * 023bf92
-- **Author**: 2025-08-18 15:49
-- **Refs**: fix: address Gemini code review feedback on validation script
+- **Date**:  * 09e4721
+- **Author**: 2025-08-18 16:02
+- **Refs**: docs: add comprehensive worktree cleanup documentation for issue #161
 
-#### `` - tuvens
-- **Date**:  * 949ed97
-- **Author**: 2025-08-18 15:43
-- **Refs**: feat: enforce GitHub Comment Standards Protocol in agent workflows
+#### `* ` - GitHub Actions
+- **Date**:  8b70c10
+- **Author**: 2025-08-18 14:54
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:    3238284
+- **Author**: 2025-08-18 15:53
+- **Refs**: Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows
+
+#### `` - 
+- **Date**:    
+- **Author**: 
+
+#### `` - 2025-08-18 15:49
+- **Date**:  * 
+- **Author**:  023bf92
+- **Refs**: tuvens|fix: address Gemini code review feedback on validation script|
+
+#### `` - 2025-08-18 15:43
+- **Date**:  * 
+- **Author**:  949ed97
+- **Refs**: tuvens|feat: enforce GitHub Comment Standards Protocol in agent workflows|
+
+#### `` - 
+- **Date**:  
+- **Author**: /  
 
 #### `* ` - GitHub Actions
 - **Date**:  b7e7ec0
@@ -153,34 +176,22 @@ feat: enforce GitHub Comment Standards Protocol in agent workflows"
 - **Date**: 2025-08-15 10:07
 - **Author**: GitHub Actions
 
-#### `* c29ffdb` - feat: Implement comprehensive wiki workflow for Claude Desktop + Claude Code integration (#146)
-- **Date**: 2025-08-15 11:06
-- **Author**: tuvens
-
-#### `* 268fb56` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-15 09:12
-- **Author**: GitHub Actions
-
-#### `* e61ecbf` - fix: add CLAUDE.md loading instruction to agent prompts (#144)
-- **Date**: 2025-08-15 10:12
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 9 commits
-- `fix`: 5 commits
+- `fix`: 4 commits
 - `feat`: 4 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 7 changes
 - `agentic-development/wiki/instructions.md`: 3 changes
 - `agentic-development/wiki/index.md`: 3 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `agentic-development/wiki/vibe-coder-workflow.md`: 2 changes
 - `agentic-development/wiki/staging/architecture/test-wiki-workflow.md`: 2 changes
