@@ -273,11 +273,21 @@ find agentic-development -name "*orchestration*" -o -name "*validation*"
 ls -la agentic-development/scripts/
 ```
 
-### **Priority #3 - MCP Sequential Thinking**
-```bash
-# Add to Claude Desktop config
-echo '"sequential-thinking": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]}' 
+### **Priority #3 - MCP Sequential Thinking Configuration**
+**Manual Configuration Required**: Add the following entry to the "mcpServers" object in your claude_desktop_config.json file:
+
+```json
+"sequential-thinking": {
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+}
 ```
+
+**Steps to Configure**:
+1. Open your Claude Desktop configuration file
+2. Locate the "mcpServers" object
+3. Add the sequential-thinking configuration
+4. Save the file and restart Claude Desktop
 
 ---
 
