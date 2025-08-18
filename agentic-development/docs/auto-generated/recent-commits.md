@@ -10,19 +10,19 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `b24ad78f3cce8ae3de09e7a7904b1ae912bebefe`
-- **Commit Message**: "Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
+- **Latest Commit**: `ff569658c1bccdbdb6c77fe1b3f5a351e63e2656`
+- **Commit Message**: "Merge pull request #162 from tuvens/vibe-coder/wiki/mass-document-organization
 
-docs: document future worktree cleanup in wiki (#161)"
+Vibe Coder: Mass Document Organization for Wiki Publication"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-18T16:04:39+01:00
+- **Timestamp**: 2025-08-18T16:36:11+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `*   b24ad78` - Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
-- **Date**: 2025-08-18 16:04
+#### `*   ff56965` - Merge pull request #162 from tuvens/vibe-coder/wiki/mass-document-organization
+- **Date**: 2025-08-18 16:36
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
@@ -31,169 +31,167 @@ docs: document future worktree cleanup in wiki (#161)"
 - **Author**: 
 
 #### `` - tuvens
-- **Date**:  * 09e4721
-- **Author**: 2025-08-18 16:02
-- **Refs**: docs: add comprehensive worktree cleanup documentation for issue #161
+- **Date**:  * 77ca9b4
+- **Author**: 2025-08-18 16:29
+- **Refs**: Fix misleading configuration instruction - provide clear manual edit steps
 
-#### `* ` - GitHub Actions
-- **Date**:  8b70c10
+#### `` - tuvens
+- **Date**:  * 781b8ac
+- **Author**: 2025-08-18 16:28
+- **Refs**: Fix security vulnerability and cost tracking script bugs
+
+#### `` - tuvens
+- **Date**:  * 7d806d1
+- **Author**: 2025-08-18 16:27
+- **Refs**: Fix critical shell script bugs: tilde expansion and HERE-doc variable substitution
+
+#### `` - tuvens
+- **Date**:  * ae5b267
+- **Author**: 2025-08-18 16:01
+- **Refs**: vibe-coder: add archives category and complete wiki staging organization
+
+#### `` - tuvens
+- **Date**:  * 5794615
+- **Author**: 2025-08-18 15:55
+- **Refs**: vibe-coder: add protocols category documents to wiki staging
+
+#### `` - tuvens
+- **Date**:  * 1d7e65c
+- **Author**: 2025-08-18 14:59
+- **Refs**: vibe-coder: add agents category documents to wiki staging
+
+#### `` - tuvens
+- **Date**:  * 7da42d7
 - **Author**: 2025-08-18 14:54
-- **Refs**: docs: auto-update documentation [skip ci]
+- **Refs**: vibe-coder: add architecture category documents to wiki staging
 
-#### `* ` - tuvens
-- **Date**:    3238284
-- **Author**: 2025-08-18 15:53
-- **Refs**: Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows
+#### `` - tuvens
+- **Date**:  * 8079fdf
+- **Author**: 2025-08-18 14:48
+- **Refs**: vibe-coder: add guides category documents to wiki staging
 
-#### `` - 
-- **Date**:    
-- **Author**: 
-
-#### `` - 2025-08-18 15:49
-- **Date**:  * 
-- **Author**:  023bf92
-- **Refs**: tuvens|fix: address Gemini code review feedback on validation script|
-
-#### `` - 2025-08-18 15:43
-- **Date**:  * 
-- **Author**:  949ed97
-- **Refs**: tuvens|feat: enforce GitHub Comment Standards Protocol in agent workflows|
-
-#### `` - 
-- **Date**:  
-- **Author**: /  
+#### `` - tuvens
+- **Date**:  * 839a5e4
+- **Author**: 2025-08-18 14:45
+- **Refs**: vibe-coder: create wiki staging area for mass document organization
 
 #### `* ` - GitHub Actions
-- **Date**:  b7e7ec0
-- **Author**: 2025-08-18 14:44
+- **Date**:  0b82310
+- **Author**: 2025-08-18 15:05
 - **Refs**: docs: auto-update documentation [skip ci]
 
 #### `* ` - tuvens
-- **Date**:    f936e2c
-- **Author**: 2025-08-18 15:44
-- **Refs**: Merge pull request #159 from tuvens/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script
+- **Date**:    b24ad78
+- **Author**: 2025-08-18 16:04
+- **Refs**: Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
 
 #### `` - 
 - **Date**:    
 - **Author**: 
 
-#### `` - 2025-08-18 15:38
+#### `` - 2025-08-18 16:02
 - **Date**:  * 
-- **Author**:  e5362ba
-- **Refs**: tuvens|refactor: add sanitization function for agent names and task titles|
+- **Author**:  09e4721
+- **Refs**: tuvens|docs: add comprehensive worktree cleanup documentation for issue #161|
 
-#### `` - 2025-08-18 15:23
+#### `* ` - 2025-08-18 14:54
+- **Date**:  
+- **Author**:  8b70c10
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
+
+#### `* ` - 2025-08-18 15:53
+- **Date**:  
+- **Author**:    3238284
+- **Refs**: tuvens|Merge pull request #160 from tuvens/feature/enforce-github-comment-standards-protocol-in-agent-workflows|
+
+#### `` - 
+- **Date**:     
+- **Author**: 
+
+#### `` -  023bf92
 - **Date**:  * 
-- **Author**:  e8c87f2
-- **Refs**: tuvens|fix: include agent name prefix in setup-agent-task.sh branch naming|
+- **Author**:  
+- **Refs**: 2025-08-18 15:49|tuvens|fix: address Gemini code review feedback on validation script|
+
+#### `` -  949ed97
+- **Date**:  * 
+- **Author**:  
+- **Refs**: 2025-08-18 15:43|tuvens|feat: enforce GitHub Comment Standards Protocol in agent workflows|
 
 #### `` - 
 - **Date**:  
-- **Author**: /  
+- **Author**: / /  
 
-#### `* ` - GitHub Actions
-- **Date**:  bc74ee6
-- **Author**: 2025-08-18 14:15
-- **Refs**: docs: auto-update documentation [skip ci]
+#### `* ` - 2025-08-18 14:44
+- **Date**:  
+- **Author**:  b7e7ec0
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
 
-#### `* ` - tuvens
-- **Date**:    c50972d
-- **Author**: 2025-08-18 15:14
-- **Refs**: Merge pull request #156 from tuvens/feature/update-phases-documentation-to-reflect-completed-status
+#### `* ` - 2025-08-18 15:44
+- **Date**:  
+- **Author**:    f936e2c
+- **Refs**: tuvens|Merge pull request #159 from tuvens/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script|
 
 #### `` - 
-- **Date**:    
+- **Date**:     
 - **Author**: 
 
-#### `` - 2025-08-18 14:59
+#### `` -  e5362ba
 - **Date**:  * 
-- **Author**:  f8c2400
-- **Refs**: tuvens|fix: address Gemini feedback - standardize file paths and add missing documentation|
+- **Author**:  
+- **Refs**: 2025-08-18 15:38|tuvens|refactor: add sanitization function for agent names and task titles|
 
-#### `` - 2025-08-18 14:53
+#### `` -  e8c87f2
 - **Date**:  * 
-- **Author**:  5fe3db0
-- **Refs**: tuvens|docs: update phases documentation to reflect completed status|
+- **Author**:  
+- **Refs**: 2025-08-18 15:23|tuvens|fix: include agent name prefix in setup-agent-task.sh branch naming|
 
 #### `` - 
 - **Date**:  
-- **Author**: /  
+- **Author**: / /  
 
-#### `* ` - tuvens
-- **Date**:    f16a510
-- **Author**: 2025-08-18 15:14
-- **Refs**: Merge pull request #155 from tuvens/feature/fix-critical-wiki-document-issues-from-pr-152
-
-#### `` - 
-- **Date**:    
-- **Author**: 
-
-#### `` - 2025-08-18 14:54
-- **Date**:  * 
-- **Author**:  5986179
-- **Refs**: tuvens|feat: improve Linux distribution specificity per Gemini feedback|
-
-#### `` - 2025-08-18 14:51
-- **Date**:  * 
-- **Author**:  34ca530
-- **Refs**: tuvens|fix: resolve critical wiki document issues from PR 152|
-
-#### `` - 
+#### `* ` - 2025-08-18 14:15
 - **Date**:  
-- **Author**: /  
+- **Author**:  bc74ee6
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
 
-#### `* ` - GitHub Actions
-- **Date**:  4f70c54
-- **Author**: 2025-08-15 15:08
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  4eb9b42
-- **Author**: 2025-08-15 16:07
-- **Refs**: Complete agentic development tooling documentation with Gemini fixes
+#### `* ` - 2025-08-18 15:14
+- **Date**:  
+- **Author**:    c50972d
+- **Refs**: tuvens|Merge pull request #156 from tuvens/feature/update-phases-documentation-to-reflect-completed-status|
 
 #### `` - 
-- **Date**: /  
+- **Date**:     
 - **Author**: 
 
-#### `* 8611aa3` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-15 13:03
-- **Author**: GitHub Actions
+#### `` -  f8c2400
+- **Date**:  * 
+- **Author**:  
+- **Refs**: 2025-08-18 14:59|tuvens|fix: address Gemini feedback - standardize file paths and add missing documentation|
 
-#### `* dfa908e` - feat: implement vibe-coder feedback for wiki workflow enhancement (#149)
-- **Date**: 2025-08-15 14:02
-- **Author**: tuvens
-
-#### `* e2c0b3b` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-15 11:00
-- **Author**: GitHub Actions
-
-#### `* e364197` - cleanup: achieve minimal wiki directory structure with Gemini fixes
-- **Date**: 2025-08-15 11:59
-- **Author**: tuvens
-
-#### `* db42f8d` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-15 10:07
-- **Author**: GitHub Actions
+#### `` -  5fe3db0
+- **Date**:  * 
+- **Author**:  
+- **Refs**: 2025-08-18 14:53|tuvens|docs: update phases documentation to reflect completed status|
 
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 9 commits
-- `fix`: 4 commits
-- `feat`: 4 commits
+- `docs`: 6 commits
+- `vibe`: 4 commits
+- `fix`: 3 commits
+- `feat`: 2 commits
 - `refactor`: 1 commits
-- `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 7 changes
-- `agentic-development/wiki/instructions.md`: 3 changes
-- `agentic-development/wiki/index.md`: 3 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 4 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 4 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 4 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 3 changes
-- `agentic-development/desktop-project-instructions/README.md`: 3 changes
-- `agentic-development/wiki/vibe-coder-workflow.md`: 2 changes
-- `agentic-development/wiki/staging/architecture/test-wiki-workflow.md`: 2 changes
-- `agentic-development/wiki/staging/README.md`: 2 changes
+- `agentic-development/wiki/staging/archives/design-mcp-server-setup-script.md`: 2 changes
+- `agentic-development/wiki/staging/architecture/tuvens-multi-agent-implementation-plans-index.md`: 2 changes
+- `agentic-development/scripts/validate-github-comments.sh`: 2 changes
+- `agentic-development/phases/README.md`: 2 changes
+- `agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md`: 1 changes
+- `agentic-development/wiki/staging/protocols/automated-qa-tools-token-efficiency-solutions.md`: 1 changes
 
