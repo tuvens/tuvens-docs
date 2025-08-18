@@ -155,6 +155,8 @@ Start by assessing the current state of all agent activities.
 
 ### For Creating Agent Windows
 
+**Note**: The following iTerm2 automation is macOS-specific. Linux users should adapt these patterns to their terminal emulator or use manual terminal setup.
+
 When creating an agent window with iTerm2, include the full prompt in the window setup:
 
 ```bash
