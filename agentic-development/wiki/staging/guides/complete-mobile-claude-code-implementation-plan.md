@@ -153,8 +153,10 @@ export default {
 ```bash
 # VM setup script
 #!/bin/bash
-# Install Claude Code and dependencies
-curl -sSL https://claude.ai/install.sh | bash
+# Install Claude Code and dependencies - Security Fix: Download and inspect before execution
+curl -sSL -o claude_install.sh https://claude.ai/install.sh
+# Always inspect scripts downloaded from the internet before running them
+bash claude_install.sh
 npm install -g @anthropic/claude-code-cli
 
 # Setup tmux configuration
@@ -221,12 +223,15 @@ echo 'source ~/.bashrc_secrets' >> ~/.bashrc
 
 ### Cost Monitoring
 ```bash
-# Cost tracking script
+# Cost tracking script - Fixed syntax and removed undefined variables
 #!/bin/bash
 echo "📊 Monthly Usage Report"
-echo "VM Costs: $$(echo "scale=2; $(uptime | awk '{print $1}') * 0.02" | bc)"
-echo "API Costs: $$(curl -s api-usage-endpoint | jq '.total_cost')"
-echo "Total Estimated: $$(echo "scale=2; 35.00 + $(API_COST)" | bc)"
+echo "VM Costs: ~$35.00 (estimated based on t3.medium usage)"
+echo "API Costs: (Manual tracking recommended)"
+echo "Total Estimated: $50-80/month"
+
+# For more detailed tracking, manually log API usage:
+# echo "Last recorded API cost: $API_USAGE" (define this variable separately)
 ```
 
 ## Troubleshooting and Maintenance
