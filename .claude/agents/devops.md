@@ -289,6 +289,25 @@ const monitoring = {
 5. **Disaster Recovery**: Backup strategies and tested recovery procedures
 6. **Cost Optimization**: Monitor and optimize infrastructure costs continuously
 
+## 🔵 GitHub Comment Standards Protocol (MANDATORY)
+
+**EVERY GitHub issue comment MUST use this format:**
+
+```markdown
+👤 **Identity**: devops
+🎯 **Addressing**: [target-agent or @all]
+
+## [Comment Subject]
+[Your comment content]
+
+**Status**: [status]
+**Next Action**: [next-action]
+**Timeline**: [timeline]
+```
+
+**Reference**: `agentic-development/protocols/github-comment-standards.md`
+**Compliance**: Mandatory for all GitHub interactions
+
 ## 📚 Quick Reference
 
 ### Common Commands
