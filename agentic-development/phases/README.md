@@ -108,10 +108,12 @@
 - ✅ `agentic-development/scripts/github-mcp-protection.sh` - GitHub MCP integration
 - ✅ `agentic-development/scripts/branch-check` - Interactive validation command
 - ✅ `agentic-development/scripts/validate-phase3-implementation.sh` - Phase validation
+- ✅ `agentic-development/docs/branch-safety-guide.md` - Branch safety documentation
 - ✅ `.pre-commit-config.yaml` - Pre-commit hook configuration
-- ✅ `scripts/hooks/check-branch-naming.sh` - Branch naming validation
-- ✅ `scripts/hooks/check-protected-branches.sh` - Protected branch checks
-- ✅ `scripts/hooks/validate-claude-md.sh` - CLAUDE.md validation
+- ✅ `agentic-development/scripts/hooks/check-branch-naming.sh` - Branch naming validation
+- ✅ `agentic-development/scripts/hooks/check-protected-branches.sh` - Protected branch checks
+- ✅ `agentic-development/scripts/hooks/check-safety-rules.sh` - Safety rules validation
+- ✅ `agentic-development/scripts/hooks/validate-claude-md.sh` - CLAUDE.md validation
 - ✅ Enhanced `.claude/agents/` files with safety protocols
 
 ### Success Criteria Met
@@ -129,12 +131,12 @@
 **Risk Level**: Medium (complex automation)
 
 ### Verification Needs
-- 🔍 **Missing Core Script**: `vibe-coder-orchestration.sh` not yet implemented
+- 🔍 **Missing Core Script**: `agentic-development/scripts/vibe-coder-orchestration.sh` not yet implemented
 - 🔍 **Existing Components**: Several supporting scripts already exist:
-  - `setup-agent-task.sh` - Agent task setup functionality
-  - `trigger-agent-session.js` - Session triggering capabilities
-  - `coordination-manager.js` - Coordination management
-  - `sub-session-manager.js` - Sub-session handling
+  - `agentic-development/scripts/setup-agent-task.sh` - Agent task setup functionality
+  - `agentic-development/scripts/trigger-agent-session.js` - Session triggering capabilities
+  - `agentic-development/scripts/coordination-manager.js` - Coordination management
+  - `agentic-development/scripts/sub-session-manager.js` - Sub-session handling
 - 🔍 **Integration Required**: Need to combine existing components into unified orchestration script
 
 ### Planned Features
@@ -161,11 +163,11 @@
 
 ### Verification Needs
 - 🔍 **Existing Validation Scripts**: Multiple validation components already implemented:
-  - `validate-environment.sh` - Environment validation
-  - `validate-phase3-implementation.sh` - Phase-specific validation
-  - `claude-access-validator.js` - Claude access validation
-  - `branch-safety-validation.sh` - Branch safety checks
-  - `check-before-merge.sh` - Pre-merge validation
+  - `agentic-development/scripts/validate-environment.sh` - Environment validation
+  - `agentic-development/scripts/validate-phase3-implementation.sh` - Phase-specific validation
+  - `agentic-development/scripts/claude-access-validator.js` - Claude access validation
+  - `agentic-development/scripts/branch-safety-validation.sh` - Branch safety checks
+  - `agentic-development/scripts/check-before-merge.sh` - Pre-merge validation
 - 🔍 **Integration Gap**: Need unified work validation framework combining all validators
 - 🔍 **Quality Gates**: Existing hooks provide foundation for quality assurance
 - 🔍 **Documentation Gap**: Work validation guide not yet created
