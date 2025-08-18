@@ -208,7 +208,7 @@ echo ""
 
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
-BRANCH_NAME="feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
+BRANCH_NAME="$AGENT_NAME/feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
 
 # Determine if we're in tuvens-docs or another repository
 REPO_ROOT=$(git rev-parse --show-toplevel)
