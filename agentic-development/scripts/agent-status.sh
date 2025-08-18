@@ -57,7 +57,7 @@ if ! command -v jq &> /dev/null; then
     
     if [ "$AGENT_BRANCHES" -gt 0 ]; then
         echo ""
-        echo "   💡 For detailed analysis, install jq: brew install jq (macOS) or apt-get install jq (Ubuntu)"
+        echo "   💡 For detailed analysis, install jq: brew install jq (macOS) or sudo apt-get install jq (Linux)"
     fi
     echo ""
     echo "🔗 Quick Commands:"
