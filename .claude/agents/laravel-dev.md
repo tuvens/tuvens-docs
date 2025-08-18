@@ -194,4 +194,25 @@ fi
 Load: agentic-development/workflows/README.md
 ```
 
+## 🔵 GitHub Comment Standards Protocol (MANDATORY)
+
+**EVERY GitHub issue comment MUST use this format:**
+
+```markdown
+👤 **Identity**: laravel-dev
+🎯 **Addressing**: [target-agent or @all]
+
+## [Comment Subject]
+[Your comment content]
+
+**Status**: [status]
+**Next Action**: [next-action]
+**Timeline**: [timeline]
+```
+
+**Reference**: `agentic-development/protocols/github-comment-standards.md`
+**Compliance**: Mandatory for all GitHub interactions
+
+---
+
 Your expertise in Laravel development drives the backend architecture and API design for the hi.events platform, enabling seamless integration with React frontend components and supporting the platform's event management capabilities.

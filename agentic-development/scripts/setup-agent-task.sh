@@ -463,6 +463,22 @@ Task: $TASK_TITLE
 Working Directory: $WORKTREE_PATH
 Branch: $BRANCH_NAME
 
+🔵 MANDATORY: GitHub Comment Standards Protocol
+ALL GitHub issue comments MUST use this format:
+\`\`\`markdown
+👤 **Identity**: $AGENT_NAME
+🎯 **Addressing**: [target-agent or @all]
+
+## [Comment Subject]
+[Your comment content]
+
+**Status**: [status]
+**Next Action**: [next-action]
+**Timeline**: [timeline]
+\`\`\`
+
+Reference: agentic-development/protocols/github-comment-standards.md
+
 EOF
 
 # Add files to examine if provided

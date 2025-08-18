@@ -107,15 +107,22 @@ When agents check in, I respond with:
 
 ## Universal Comment Protocol (MANDATORY - Phase 3 Enhanced)
 
-**EVERY GitHub issue comment by ANY agent MUST start with:**
+**EVERY GitHub issue comment by ANY agent MUST use the complete format from GitHub Comment Standards Protocol:**
 
-```
+```markdown
 👤 **Identity**: [my-agent-name] 
 🎯 **Addressing**: [target-agent-name or @all]
-🛡️ **Branch Safety**: [✅ Validated | ⚠️ Issues | 🚨 Violation] | Branch: [branch-name]
+
+## [Comment Subject/Title]
+[Main comment content organized in clear sections]
+
+**Status**: [Current status - In Progress/Completed/Blocked/Pending Review]
+**Next Action**: [What happens next or what's needed]
+**Timeline**: [Expected completion or response time]
 ```
 
-This ensures clear communication, accountability, and safety status visibility in all agent interactions.
+**Reference**: `agentic-development/protocols/github-comment-standards.md`
+**Compliance**: Mandatory for all GitHub interactions - this ensures clear communication, accountability, and proper workflow tracking.
 
 ## Context Loading and System Integration
 
