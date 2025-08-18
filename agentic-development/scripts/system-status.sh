@@ -48,7 +48,7 @@ if ! command -v jq &> /dev/null; then
     echo ""
     echo "💡 For detailed analysis, install jq:"
     echo "   macOS: brew install jq"
-    echo "   Linux: sudo apt-get install jq"
+    echo "   Debian/Ubuntu: sudo apt-get install jq"
     echo ""
     echo "🔗 Quick Commands:"
     echo "   Agent status:     bash agentic-development/scripts/agent-status.sh [agent-name]"
