@@ -206,9 +206,16 @@ echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
 echo ""
 
+# Function to sanitize names for branch naming
+sanitize_for_branch() {
+    echo "$1" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-'
+}
+
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
-BRANCH_NAME="$AGENT_NAME/feature/$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')"
+SANITIZED_AGENT_NAME=$(sanitize_for_branch "$AGENT_NAME")
+SANITIZED_TASK_TITLE=$(sanitize_for_branch "$TASK_TITLE")
+BRANCH_NAME="$SANITIZED_AGENT_NAME/feature/$SANITIZED_TASK_TITLE"
 
 # Determine if we're in tuvens-docs or another repository
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -216,12 +223,12 @@ REPO_NAME=$(basename "$REPO_ROOT")
 
 if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
     # We're in tuvens-docs - use new worktrees structure
-    WORKTREE_PATH="$REPO_ROOT/worktrees/$AGENT_NAME/$BRANCH_NAME"
+    WORKTREE_PATH="$REPO_ROOT/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
     IS_TUVENS_DOCS=true
 else
     # We're in another repository - use repository-specific worktree path
     PARENT_DIR=$(dirname "$REPO_ROOT")
-    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$AGENT_NAME/$BRANCH_NAME"
+    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
     IS_TUVENS_DOCS=false
 fi
 
