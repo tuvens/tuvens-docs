@@ -77,4 +77,4 @@
 
 ## Documentation Statistics
 - **Total documentation files**: 195
-- **Total lines**: 29848
+- **Total lines**: 28753
