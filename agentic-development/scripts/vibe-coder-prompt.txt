@@ -1,9 +1,10 @@
 ═══════════════════════════════════════════════════════════════════════════════
 VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
-GitHub Issue: #104
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates
-Branch: feature/phase-2b---coordinate-reference-updates
+GitHub Issue: #164
+Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
+Branch: feature/address-geminis-comments-on-pr-163
+Files to Examine: agentic-development/wiki/staging/guides/worktree-cleanup-comprehensive-guide.md,agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -13,25 +14,33 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the vibe coder 104 agent.
+I am the vibe coder 164 agent.
 
 Context Loading:
 - Load: .claude/agents/vibe-coder.md
 - Load: Implementation reports and workflow documentation
+- Load: CLAUDE.md (critical branch targeting and safety rules)
 
-🚨 CRITICAL: Read GitHub Issue #104 for complete task context
-Use: `gh issue view 104` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issue #164 for complete task context
+Use: `gh issue view 164` to get the full problem analysis, requirements, and implementation details.
 
-GitHub Issue: #104
-Task: Phase 2B - Coordinate Reference Updates
+GitHub Issue: #164
+Task: Address Gemini's comments on PR 163
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates
-Branch: feature/phase-2b---coordinate-reference-updates
+Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
+Branch: feature/address-geminis-comments-on-pr-163
 
-IMPORTANT: Start by reading the GitHub issue (#104) with `gh issue view 104` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+Priority Files to Examine:
+- agentic-development/wiki/staging/guides/worktree-cleanup-comprehensive-guide.md
+- agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md
+
+Success Criteria:
+Gemini's technical concerns addressed with improved script portability and safety patterns
+
+IMPORTANT: Start by reading the GitHub issue (#164) with `gh issue view 164` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
 
 Start your work by:
-1. Running: `gh issue view 104` to read the full GitHub issue
+1. Running: `gh issue view 164` to read the full GitHub issue
 2. Examining the specified files (if any) to understand current state
 3. Following the 6-step agent workflow pattern
 4. Updating the GitHub issue with your progress and findings
