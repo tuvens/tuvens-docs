@@ -170,7 +170,7 @@ install_mcp_servers() {
 
 # Setup Figma MCP server
 setup_figma_mcp() {
-    local figma_dir="~/mcp-servers/design/figma-mcp"
+    local figma_dir="$HOME/mcp-servers/design/figma-mcp"
     mkdir -p "$figma_dir"
     cd "$figma_dir"
     
@@ -331,7 +331,7 @@ EOF
 
 # Setup Accessibility MCP
 setup_accessibility_mcp() {
-    local a11y_dir="~/mcp-servers/design/accessibility-mcp"
+    local a11y_dir="$HOME/mcp-servers/design/accessibility-mcp"
     mkdir -p "$a11y_dir"
     cd "$a11y_dir"
     
@@ -522,8 +522,8 @@ configure_claude_desktop() {
         log_info "Backed up existing Claude Desktop config"
     fi
     
-    # Create or update config
-    cat > "$config_file" << 'EOF'
+    # Create or update config (Note: Fixed HERE-doc quoting to allow variable expansion)
+    cat > "$config_file" << EOF
 {
   "mcpServers": {
     "tailwind-designer": {
@@ -544,14 +544,14 @@ configure_claude_desktop() {
     },
     "figma-integration": {
       "command": "node",
-      "args": ["~/mcp-servers/design/figma-mcp/server.js"],
+      "args": ["$HOME/mcp-servers/design/figma-mcp/server.js"],
       "env": {
         "FIGMA_API_TOKEN": "${FIGMA_API_TOKEN}"
       }
     },
     "accessibility-validator": {
       "command": "node",
-      "args": ["~/mcp-servers/design/accessibility-mcp/server.js"]
+      "args": ["$HOME/mcp-servers/design/accessibility-mcp/server.js"]
     }
   }
 }
@@ -574,13 +574,13 @@ verify_installation() {
         ((errors++))
     fi
     
-    if [ -f ~/mcp-servers/design/figma-mcp/server.js ]; then
+    if [ -f "$HOME/mcp-servers/design/figma-mcp/server.js" ]; then
         log_success "Figma MCP: Available"
     else
         log_warning "Figma MCP: Not found"
     fi
     
-    if [ -f ~/mcp-servers/design/accessibility-mcp/server.js ]; then
+    if [ -f "$HOME/mcp-servers/design/accessibility-mcp/server.js" ]; then
         log_success "Accessibility MCP: Available"
     else
         log_warning "Accessibility MCP: Not found"
@@ -611,10 +611,10 @@ verify_installation() {
 create_test_scenarios() {
     log_info "Creating test scenarios..."
     
-    mkdir -p ~/mcp-servers/design/tests
+    mkdir -p "$HOME/mcp-servers/design/tests"
     
     # Create test HTML for accessibility testing
-    cat > ~/mcp-servers/design/tests/test-accessibility.html << 'EOF'
+    cat > "$HOME/mcp-servers/design/tests/test-accessibility.html" << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -642,7 +642,7 @@ create_test_scenarios() {
 EOF
     
     # Create Tailwind test configuration
-    cat > ~/mcp-servers/design/tests/test-tailwind.config.js << 'EOF'
+    cat > "$HOME/mcp-servers/design/tests/test-tailwind.config.js" << 'EOF'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./**/*.{html,js}"],
@@ -668,7 +668,7 @@ EOF
 generate_documentation() {
     log_info "Generating usage documentation..."
     
-    cat > ~/mcp-servers/design/README.md << 'EOF'
+    cat > "$HOME/mcp-servers/design/README.md" << 'EOF'
 # Design MCP Servers - Usage Guide
 
 ## Available MCP Servers
@@ -759,12 +759,12 @@ Restart Claude Desktop after running the setup script.
    ```
 3. Test individual servers:
    ```bash
-   node ~/mcp-servers/design/figma-mcp/server.js
+   node $HOME/mcp-servers/design/figma-mcp/server.js
    ```
 
 EOF
     
-    log_success "Documentation generated at ~/mcp-servers/design/README.md"
+    log_success "Documentation generated at $HOME/mcp-servers/design/README.md"
 }
 
 # Main execution
@@ -787,7 +787,7 @@ main() {
         echo "  1. Update API keys in ~/.design_mcp_env"
         echo "  2. Restart Claude Desktop"
         echo "  3. Test the MCP servers with sample prompts"
-        echo "  4. Read the usage guide: ~/mcp-servers/design/README.md"
+        echo "  4. Read the usage guide: $HOME/mcp-servers/design/README.md"
         echo ""
         log_info "Example test prompt:"
         echo '  "Generate a responsive card component using Tailwind CSS"'
@@ -917,7 +917,7 @@ source ~/.design_mcp_env.dev
 
 ```bash
 # Edit the Figma MCP server for custom endpoints
-nano ~/mcp-servers/design/figma-mcp/server.js
+nano $HOME/mcp-servers/design/figma-mcp/server.js
 
 # Add custom functionality:
 # - Additional design token extraction
@@ -935,10 +935,10 @@ npm update -g @devlimelabs/tailwind-designer-mcp
 npm update -g @flyonui/mcp-server
 
 # Update custom servers
-cd ~/mcp-servers/design/figma-mcp
+cd $HOME/mcp-servers/design/figma-mcp
 npm update
 
-cd ~/mcp-servers/design/accessibility-mcp
+cd $HOME/mcp-servers/design/accessibility-mcp
 npm update
 ```
 
@@ -949,8 +949,8 @@ npm update
 ps aux | grep mcp
 
 # Test individual servers
-node ~/mcp-servers/design/figma-mcp/server.js
-node ~/mcp-servers/design/accessibility-mcp/server.js
+node $HOME/mcp-servers/design/figma-mcp/server.js
+node $HOME/mcp-servers/design/accessibility-mcp/server.js
 
 # Verify Claude Desktop configuration
 cat "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
@@ -960,7 +960,7 @@ cat "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
 
 ```bash
 # Create diagnostic script
-cat > ~/mcp-servers/design/diagnose.sh << 'EOF'
+cat > $HOME/mcp-servers/design/diagnose.sh << 'EOF'
 #!/bin/bash
 echo "Design MCP Servers Diagnostic"
 echo "============================"
@@ -972,7 +972,7 @@ echo "Figma token configured: $([ -n "$FIGMA_API_TOKEN" ] && echo 'Yes' || echo 
 echo "FlyonUI key configured: $([ -n "$FLYONUI_API_KEY" ] && echo 'Yes' || echo 'No')"
 
 echo "\nMCP Server Files:"
-ls -la ~/mcp-servers/design/*/server.js 2>/dev/null || echo "No servers found"
+ls -la $HOME/mcp-servers/design/*/server.js 2>/dev/null || echo "No servers found"
 
 echo "\nClaude Desktop Config:"
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -982,7 +982,7 @@ else
 fi
 EOF
 
-chmod +x ~/mcp-servers/design/diagnose.sh
+chmod +x $HOME/mcp-servers/design/diagnose.sh
 ```
 
 This comprehensive setup script provides a robust foundation for integrating design-focused MCP servers into our agentic development environment, with full automation, error handling, and documentation to ensure successful deployment and ongoing maintenance.
