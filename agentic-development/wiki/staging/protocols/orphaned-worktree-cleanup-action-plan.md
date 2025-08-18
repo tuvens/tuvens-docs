@@ -20,10 +20,15 @@ All scripts in this action plan have been updated for cross-platform compatibili
 export TUVENS_CODE_DIR="/path/to/your/Tuvens/repositories"
 ```
 
-**Improvements Made (Based on Gemini Feedback):**
+**Improvements Made (Based on Gemini Feedback - PR 163 & 165):**
 - ✅ Replaced hardcoded paths with configurable `TUVENS_CODE_DIR` variable
-- ✅ Added subshell isolation for safer directory changes
+- ✅ Added subshell isolation for safer directory changes  
 - ✅ Enhanced script portability across different environments
+- ✅ Fixed unsafe date variable usage to prevent midnight boundary issues
+- ✅ Corrected git worktree removal logic using proper repository root detection
+- ✅ Replaced non-portable commands (realpath, date -d) with cross-platform alternatives
+- ✅ Made scripts configurable for different repositories via `REPO_NAME` variables
+- ✅ Optimized find operations for better performance
 - ✅ Maintained all safety procedures and error handling
 
 ### Immediate Impact Assessment
@@ -40,8 +45,9 @@ export TUVENS_CODE_DIR="/path/to/your/Tuvens/repositories"
 #### 1. Complete System Backup
 ```bash
 # Create comprehensive backup directory
-mkdir -p ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)
-cd ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)
+BACKUP_DIR=~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)
+mkdir -p "$BACKUP_DIR"
+cd "$BACKUP_DIR"
 
 # Document current state
 echo "# Tuvens Worktree Cleanup - $(date)" > cleanup-log.md
@@ -53,8 +59,8 @@ for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile eventdigest-ai; d
         echo "### $repo Repository" >> cleanup-log.md
         (
             cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$repo"
-            git worktree list >> ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
-            echo "" >> ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
+            git worktree list >> "$BACKUP_DIR/cleanup-log.md"
+            echo "" >> "$BACKUP_DIR/cleanup-log.md"
         )
     fi
 done
@@ -64,13 +70,14 @@ done
 ```bash
 # Scan for uncommitted changes across all worktrees
 echo "## Uncommitted Work Scan" >> cleanup-log.md
+BACKUP_DIR=~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)
 find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}" -name ".git" -type f | while read gitfile; do
     workdir=$(dirname "$gitfile")
     if [[ "$gitfile" == *"worktree"* ]]; then
         (
             cd "$workdir"
             if ! git diff --quiet HEAD 2>/dev/null || ! git diff --quiet --cached 2>/dev/null; then
-                echo "⚠️  UNCOMMITTED WORK: $workdir" | tee -a ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
+                echo "⚠️  UNCOMMITTED WORK: $workdir" | tee -a "$BACKUP_DIR/cleanup-log.md"
             fi
         )
     fi
@@ -81,10 +88,13 @@ done
 ```bash
 # Ensure tracking system is current
 (
-    cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/tuvens-docs"
-    echo "## Central Tracking Status" >> ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
-    cat agentic-development/branch-tracking/cleanup-queue.json >> ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
-    cat agentic-development/branch-tracking/active-branches.json | jq '.branches | keys' >> ~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)/cleanup-log.md
+    # Replace 'tuvens-docs' with your specific repository
+    REPO_NAME="tuvens-docs"  # Change this to your target repository
+    cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME"
+    BACKUP_DIR=~/tuvens-worktree-cleanup-$(date +%Y%m%d-%H%M)
+    echo "## Central Tracking Status" >> "$BACKUP_DIR/cleanup-log.md"
+    cat agentic-development/branch-tracking/cleanup-queue.json >> "$BACKUP_DIR/cleanup-log.md"
+    cat agentic-development/branch-tracking/active-branches.json | jq '.branches | keys' >> "$BACKUP_DIR/cleanup-log.md"
 )
 ```
 
@@ -147,7 +157,9 @@ done
 #### Phase 1 Steps:
 ```bash
 # 1. Navigate to tracking system
-cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/tuvens-docs/agentic-development"
+# Replace 'tuvens-docs' with your specific repository
+REPO_NAME="tuvens-docs"  # Change this to your target repository
+cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME/agentic-development"
 
 # 2. Review cleanup queue
 cat branch-tracking/cleanup-queue.json
@@ -219,9 +231,8 @@ while read safe_line; do
         repo_root=$(git rev-parse --show-toplevel)
         cd "$repo_root"
         
-        # Remove worktree safely
-        relative_path=$(realpath --relative-to="$repo_root" "$workdir")
-        git worktree remove "$relative_path" --force
+        # Remove worktree safely (using absolute path for portability)
+        git worktree remove "$workdir" --force
         echo "Cleaned: $workdir" >> ~/phase2-cleanup-log.txt
     )
 done < ~/phase2-safe-cleanup.txt
@@ -282,8 +293,8 @@ while read exp_dir; do
         repo_root=$(git rev-parse --show-toplevel)
         cd "$repo_root"
         
-        relative_path=$(realpath --relative-to="$repo_root" "$exp_dir")
-        git worktree remove "$relative_path" --force
+        # Remove worktree safely (using absolute path for portability)
+        git worktree remove "$exp_dir" --force
         echo "Cleaned experimental: $exp_dir" >> ~/phase3-cleanup-log.txt
     )
 done < ~/experimental-worktrees.txt
@@ -374,7 +385,9 @@ for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile eventdigest-ai; d
 done
 
 # 2. Verify central tracking accuracy
-cd /Users/ciarancarroll/Code/Tuvens/tuvens-docs
+# Replace with your specific repository path
+REPO_NAME="tuvens-docs"  # Change this to your target repository
+cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME"
 node agentic-development/scripts/update-branch-tracking.js --action=validate
 
 # 3. Test agent workflow functionality

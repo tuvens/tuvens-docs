@@ -12,7 +12,7 @@ The Tuvens multi-agent development system uses git worktrees extensively to enab
 
 ### Configuration and Portability
 
-All scripts in this guide support cross-platform portability through the `TUVENS_CODE_DIR` environment variable. Set this variable to your Tuvens code directory:
+All scripts in this guide support cross-platform portability and repository flexibility:
 
 ```bash
 # Set the base directory for your Tuvens repositories
@@ -21,11 +21,18 @@ export TUVENS_CODE_DIR="/path/to/your/Tuvens"
 # If not set, scripts default to: /Users/ciarancarroll/Code/Tuvens
 ```
 
-**Portability Features:**
-- Configurable base directory path
-- Subshell isolation for directory changes
-- Cross-platform compatible commands
-- Safe error handling and recovery
+**Repository Flexibility:**
+- Scripts include `REPO_NAME` variables for targeting specific repositories
+- Change `REPO_NAME="tuvens-docs"` to target different repositories
+- Multiple repository operations supported in loop constructs
+
+**Enhanced Portability Features:**
+- ✅ Configurable base directory path  
+- ✅ Subshell isolation prevents directory context pollution
+- ✅ Cross-platform compatible commands (macOS + Linux)
+- ✅ Safe date variable usage prevents midnight boundary issues
+- ✅ Improved git worktree removal logic
+- ✅ Efficient find operations with path predicates
 
 ### Current Situation Analysis
 
@@ -79,8 +86,9 @@ export TUVENS_CODE_DIR="/path/to/your/Tuvens"
 #### 1. Backup and Documentation Review
 ```bash
 # Create comprehensive backup of current state
-mkdir -p ~/worktree-cleanup-$(date +%Y%m%d)
-cd ~/worktree-cleanup-$(date +%Y%m%d)
+BACKUP_DIR=~/worktree-cleanup-$(date +%Y%m%d)
+mkdir -p "$BACKUP_DIR"
+cd "$BACKUP_DIR"
 
 # Document current worktree state
 find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}" -name "worktrees" -type d -exec find {} -maxdepth 3 -type d \; > worktree-inventory.txt
@@ -91,8 +99,8 @@ for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile eventdigest-ai; d
         echo "=== $repo ===" >> git-worktree-status.txt
         (
             cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$repo"
-            git worktree list >> ~/worktree-cleanup-$(date +%Y%m%d)/git-worktree-status.txt
-            echo "" >> ~/worktree-cleanup-$(date +%Y%m%d)/git-worktree-status.txt
+            git worktree list >> "$BACKUP_DIR/git-worktree-status.txt"
+            echo "" >> "$BACKUP_DIR/git-worktree-status.txt"
         )
     fi
 done
@@ -101,16 +109,17 @@ done
 #### 2. Uncommitted Work Scan
 ```bash
 # Scan for uncommitted changes in all worktrees
-find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}" -name "worktrees" -type d -exec find {} -name ".git" -type f \; | while read gitfile; do
+BACKUP_DIR=~/worktree-cleanup-$(date +%Y%m%d)
+find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}" -path '*/worktrees/*' -name ".git" -type f | while read gitfile; do
     workdir=$(dirname "$gitfile")
     echo "Checking: $workdir"
     (
         cd "$workdir"
         if ! git diff --quiet HEAD; then
-            echo "UNCOMMITTED CHANGES: $workdir" >> ~/worktree-cleanup-$(date +%Y%m%d)/uncommitted-changes.txt
+            echo "UNCOMMITTED CHANGES: $workdir" >> "$BACKUP_DIR/uncommitted-changes.txt"
         fi
         if ! git diff --quiet --cached; then
-            echo "STAGED CHANGES: $workdir" >> ~/worktree-cleanup-$(date +%Y%m%d)/staged-changes.txt
+            echo "STAGED CHANGES: $workdir" >> "$BACKUP_DIR/staged-changes.txt"
         fi
     )
 done
@@ -119,14 +128,15 @@ done
 #### 3. Branch Status Verification
 ```bash
 # Verify merge status of all branches
+BACKUP_DIR=~/worktree-cleanup-$(date +%Y%m%d)
 for repo in tuvens-docs tuvens-client tuvens-api tuvens-mobile eventdigest-ai; do
     if [ -d "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$repo" ]; then
         (
             cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$repo"
-            echo "=== $repo Branch Status ===" >> ~/worktree-cleanup-$(date +%Y%m%d)/branch-status.txt
-            git branch -r --merged dev >> ~/worktree-cleanup-$(date +%Y%m%d)/branch-status.txt 2>/dev/null
-            git branch -r --no-merged dev >> ~/worktree-cleanup-$(date +%Y%m%d)/branch-status.txt 2>/dev/null
-            echo "" >> ~/worktree-cleanup-$(date +%Y%m%d)/branch-status.txt
+            echo "=== $repo Branch Status ===" >> "$BACKUP_DIR/branch-status.txt"
+            git branch -r --merged dev >> "$BACKUP_DIR/branch-status.txt" 2>/dev/null
+            git branch -r --no-merged dev >> "$BACKUP_DIR/branch-status.txt" 2>/dev/null
+            echo "" >> "$BACKUP_DIR/branch-status.txt"
         )
     fi
 done
@@ -179,7 +189,9 @@ git log --oneline --graph --decorate $(git branch --show-current) ^dev | head -1
 
 #### Step 1.1: Identify Merged Branches
 ```bash
-cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/tuvens-docs"
+# Replace 'tuvens-docs' with your specific repository
+REPO_NAME="tuvens-docs"  # Change this to your target repository
+cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME"
 git branch -r --merged dev | grep -E "(vibe-coder|devops|feature)" > ~/merged-branches.txt
 ```
 
@@ -190,7 +202,7 @@ while read branch; do
     echo "Processing: $branch_name"
     
     # Check if worktree exists
-    worktree_path="worktrees/$(echo $branch_name | tr '/' '/')"
+    worktree_path="worktrees/$branch_name"
     if [ -d "$worktree_path" ]; then
         echo "Found worktree: $worktree_path"
         # Add to cleanup queue for automated processing
@@ -214,7 +226,9 @@ done < ~/merged-branches.txt
 #### Step 2.1: Identify Stale Branches
 ```bash
 # Find branches with no commits in last 30 days
-find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/tuvens-docs/worktrees" -type d -mtime +30 -maxdepth 3 | while read dir; do
+# Replace 'tuvens-docs' with your specific repository
+REPO_NAME="tuvens-docs"  # Change this to your target repository
+find "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME/worktrees" -type d -mtime +30 -maxdepth 3 | while read dir; do
     if [ -f "$dir/.git" ]; then
         (
             cd "$dir"
@@ -256,15 +270,14 @@ while read branch_path; do
     echo "Cleaning up verified stale branch: $branch_path"
     
     (
-        cd "$(dirname "$branch_path")"
-        worktree_name=$(basename "$branch_path")
+        cd "$branch_path"
         
         # Final safety check
-        cd "$branch_path"
         if git diff --quiet HEAD && git diff --quiet --cached; then
             echo "Safe to cleanup: $branch_path"
-            cd ..
-            git worktree remove "$worktree_name" --force
+            repo_root=$(git rev-parse --show-toplevel)
+            cd "$repo_root"
+            git worktree remove "$branch_path" --force
             echo "Cleaned: $branch_path" >> ~/cleanup-log-phase2.txt
         fi
     )
@@ -321,7 +334,8 @@ while read exp_path; do
             
             # Final backup of any unique files
             mkdir -p ~/experimental-branch-backup/$(date +%Y%m%d)/files/$branch_name
-            find . -name "*.md" -newer $(git log -1 --format="%ct" HEAD~1 | xargs -I {} date -d @{} +%Y%m%d) -exec cp {} ~/experimental-branch-backup/$(date +%Y%m%d)/files/$branch_name/ \; 2>/dev/null
+            # Copy recent markdown files (cross-platform compatible)
+            find . -name "*.md" -newer HEAD~1 -exec cp {} ~/experimental-branch-backup/$(date +%Y%m%d)/files/$branch_name/ \; 2>/dev/null
             
             # Remove worktree
             cd ..
@@ -488,7 +502,9 @@ done
 ```bash
 # Test agent workflow still functions
 (
-    cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/tuvens-docs"
+    # Replace 'tuvens-docs' with your specific repository
+    REPO_NAME="tuvens-docs"  # Change this to your target repository
+    cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME"
     
     # Test worktree creation
     test_branch="test/cleanup-validation-$(date +%s)"
@@ -512,7 +528,9 @@ done
 #### 3. Documentation Update
 ```bash
 # Update tracking system to reflect cleanup
-cd "/path/to/tuvens-docs/agentic-development/branch-tracking"
+# Replace with your specific repository path
+REPO_NAME="tuvens-docs"  # Change this to your target repository
+cd "${TUVENS_CODE_DIR:-/Users/ciarancarroll/Code/Tuvens}/$REPO_NAME/agentic-development/branch-tracking"
 
 # Record cleanup completion
 cat > last-major-cleanup.md << EOF
@@ -529,7 +547,7 @@ cat > last-major-cleanup.md << EOF
 - Safety procedures followed: ✅
 
 ## Next Scheduled Cleanup
-- Date: $(date -d "+1 month" +"%Y-%m-%d")
+- Date: $(if [[ "$(uname)" == "Darwin" ]]; then date -v+1m +"%Y-%m-%d"; else date -d "+1 month" +"%Y-%m-%d"; fi)
 - Type: Regular maintenance
 - Expected scope: 5-10 worktrees
 
