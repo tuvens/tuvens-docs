@@ -30,7 +30,7 @@ PROTOCOL_FILE="$SCRIPT_DIR/../protocols/github-comment-standards.md"
 # Valid agent names from the protocol
 VALID_AGENTS=(
     "vibe-coder"
-    "docs-orchestrator" 
+    "docs-orchestrator"
     "devops"
     "laravel-dev"
     "react-dev"
@@ -183,11 +183,11 @@ validate_issue_comments() {
         exit 1
     fi
     
-    # Get issue comments
-    local comments
-    comments=$(gh issue view "$issue_num" --json comments --jq '.comments[].body' 2>/dev/null)
+    # Get issue comments count first
+    local comment_count
+    comment_count=$(gh issue view "$issue_num" --json comments --jq '.comments | length' 2>/dev/null)
     
-    if [[ -z "$comments" ]]; then
+    if [[ -z "$comment_count" || "$comment_count" -eq 0 ]]; then
         echo "⚠️  No comments found for issue #$issue_num"
         return 0
     fi
@@ -196,8 +196,11 @@ validate_issue_comments() {
     local compliant_comments=0
     local violation_comments=0
     
-    # Process each comment
-    while IFS= read -r comment; do
+    # Process each complete comment individually by index to handle multi-line content
+    for ((i=0; i<comment_count; i++)); do
+        local comment
+        comment=$(gh issue view "$issue_num" --json comments --jq -r ".comments[$i].body" 2>/dev/null)
+        
         if [[ -n "$comment" ]]; then
             total_comments=$((total_comments + 1))
             echo ""
@@ -209,7 +212,7 @@ validate_issue_comments() {
                 violation_comments=$((violation_comments + 1))
             fi
         fi
-    done <<< "$comments"
+    done
     
     # Final report
     echo ""
