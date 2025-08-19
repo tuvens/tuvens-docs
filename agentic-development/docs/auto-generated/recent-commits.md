@@ -10,41 +10,44 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `1ad14e851dbe4ee0fe193f70a2acce93d3fef5fe`
-- **Commit Message**: "feat: split workflows README into focused documentation files (#195)
+- **Latest Commit**: `71e94e1b2aefa19ee21ed9bc351454a19ab660d1`
+- **Commit Message**: "docs: split desktop-project-instructions README into focused micro-docs (#191)
 
-* feat: split workflows README into focused documentation files
+* cleanup: remove wiki staging files after successful publication
 
-Split the 342-line workflows README into 6 specialized files with decision tree navigation:
-- README.md: Decision tree navigation hub (117 lines)
-- multi-agent-coordination-tracking.md: Branch lifecycle & agent coordination (181 lines)
-- ai-agent-safety-governance.md: Safety rules & branch protection (200 lines)
-- agent-context-generation.md: Session memory & documentation (227 lines)
-- infrastructure-health-maintenance.md: System monitoring & maintenance (260 lines)
-- cross-repository-notification.md: Event propagation & sync (286 lines)
-- troubleshooting-debugging-guide.md: Comprehensive debugging (354 lines)
+- Content successfully published to GitHub wiki
+- 16 documents now available at https://github.com/tuvens/tuvens-docs/wiki
+- Staging directory cleaned and restructured for future use
+- Wiki workflow completed successfully
 
-Benefits:
-- Improved navigation with intuitive decision tree structure
-- Content expanded from 342 to 1,625 lines with enhanced technical detail
-- Specialized focus areas for better agent understanding
-- All script references use existing tools and workflow commands
+Co-authored-by: vibe-coder <noreply@anthropic.com>
 
-Addresses Gemini feedback by fixing non-existent script references.
+* docs: split desktop-project-instructions README into focused micro-docs
 
-Closes #182
+Split the 417-line README.md into 5 focused files for better navigation:
+- README.md: Main entry point with navigation and quick start
+- agent-management.md: Agent sessions, task routing, worktree management
+- wiki-integration.md: Complete wiki workflow and content management
+- handoff-templates.md: Templates and inter-agent communication
+- advanced-usage.md: Best practices, context loading, and scenarios
+
+All content preserved with improved organization and navigation.
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 
-* fix: address Gemini feedback on workflow documentation
+* fix: replace hardcoded absolute paths with relative paths
 
-- Remove duplicate pre-commit command in safety governance guide
-- Improve YAML validation robustness with proper for-loop
-- Fix incorrect relative paths in troubleshooting guide
+Address Gemini Code Assist feedback by converting all hardcoded absolute
+paths to relative paths for better portability across development machines:
 
-Addresses all medium-priority feedback from Gemini code review.
+- agentic-development/branch-tracking/active-branches.json: 13 worktree path fixes
+- agentic-development/scripts/devops-prompt.txt: 2 path fixes
+- agentic-development/scripts/vibe-coder-prompt.txt: 2 path fixes
+
+This ensures the agentic development framework works consistently across
+different developer environments without exposing local filesystem details.
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
@@ -52,18 +55,26 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ---------
 
-Co-authored-by: Claude <noreply@anthropic.com>"
+Co-authored-by: vibe-coder <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-19T20:15:16+01:00
+- **Timestamp**: 2025-08-19T20:21:11+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 71e94e1` - docs: split desktop-project-instructions README into focused micro-docs (#191)
+- **Date**: 2025-08-19 20:21
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 3071abd` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-19 19:16
+- **Author**: GitHub Actions
+
 #### `* 1ad14e8` - feat: split workflows README into focused documentation files (#195)
 - **Date**: 2025-08-19 20:15
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 02cbe29` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-19 19:14
@@ -170,20 +181,10 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: 2025-08-18 14:54
 - **Refs**: vibe-coder: add architecture category documents to wiki staging
 
-#### `` - tuvens
-- **Date**:  * 8079fdf
-- **Author**: 2025-08-18 14:48
-- **Refs**: vibe-coder: add guides category documents to wiki staging
-
-#### `` - tuvens
-- **Date**:  * 839a5e4
-- **Author**: 2025-08-18 14:45
-- **Refs**: vibe-coder: create wiki staging area for mass document organization
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 10 commits
+- `docs`: 11 commits
 - `feat`: 5 commits
 - `vibe`: 2 commits
 - `fix`: 1 commits
@@ -193,10 +194,10 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 8 changes
 - `agentic-development/wiki/staging/archives/design-mcp-server-setup-script.md`: 3 changes
+- `agentic-development/branch-tracking/active-branches.json`: 3 changes
 - `agentic-development/workflows/README.md`: 2 changes
 - `agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md`: 2 changes
 - `agentic-development/wiki/staging/protocols/automated-qa-tools-token-efficiency-solutions.md`: 2 changes
 - `agentic-development/wiki/staging/guides/worktree-cleanup-comprehensive-guide.md`: 2 changes
 - `agentic-development/wiki/staging/guides/complete-mobile-claude-code-implementation-plan.md`: 2 changes
-- `agentic-development/wiki/staging/architecture/tuvens-multi-agent-implementation-plans-index.md`: 2 changes
 
