@@ -15,7 +15,7 @@
 ### Key Subsystem Entry Points
 **Load After This Document:**
 - [agentic-development/README.md](./agentic-development/README.md) - Multi-agent system overview
-- [.claude/agents/](./claude/agents/) - Agent configuration files
+- [.claude/agents/](./.claude/agents/) - Agent configuration files
 - [tuvens-docs/README.md](./tuvens-docs/README.md) - Product documentation
 - [CLAUDE.md](./CLAUDE.md) - Critical safety rules and guidelines
 
