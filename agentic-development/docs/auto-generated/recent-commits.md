@@ -10,69 +10,40 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `04e3e8de733030f75709bd98c7352d6ef4fbe0ad`
-- **Commit Message**: "feat: add comprehensive repository reference index (#178)
+- **Latest Commit**: `ef2dcb1a1c44cea367306e46cc7aa852e4556a21`
+- **Commit Message**: "feat: add agent profiles index for desktop user guidance
 
-* cleanup: remove wiki staging files after successful publication
+Complete desktop user guidance for agent selection with hardcoded path fixes
 
-- Content successfully published to GitHub wiki
-- 16 documents now available at https://github.com/tuvens/tuvens-docs/wiki
-- Staging directory cleaned and restructured for future use
-- Wiki workflow completed successfully
-
-Co-authored-by: vibe-coder <noreply@anthropic.com>
-
-* feat: add comprehensive repository reference index
-
-Create tuvens-docs/repositories/README.md with complete ecosystem navigation:
-- All 7 repositories organized by technology stack
-- Agent-specific loading guidance for all agent types
-- Repository relationship mapping with integration flows
-- Multiple navigation patterns for efficient context loading
-
-This index transforms agent onboarding and cross-repository coordination.
+- Created comprehensive agent profiles index with all 7 agent specializations
+- Implemented decision tree for optimal agent selection based on technology stack  
+- Added clear task type mappings and cross-agent coordination patterns
+- Included both automated /start-session and manual workflow patterns
+- Resolved hardcoded path conflicts by adopting relative paths from dev branch
+- Addresses Gemini's portability concerns through  placeholders
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-
-* fix: address Gemini feedback - replace hardcoded paths and fix repository count
-
-- Replace absolute user-specific paths in active-branches.json with relative paths
-- Fix hardcoded paths in agent prompt files (devops-prompt.txt, vibe-coder-prompt.txt)
-- Correct repository count from 7 to 5 (actual repository count) in README.md
-- Improve contributor compatibility by removing user-specific path dependencies
-
-Addresses Gemini's code review feedback on PR #178
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
-* fix: remove remaining hardcoded paths in agent prompt files
-
-- Fix 'Working Directory:' lines in devops-prompt.txt and vibe-coder-prompt.txt
-- Replace absolute paths with relative paths for full portability
-- Complete Gemini's feedback requirements for contributor compatibility
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
----------
-
-Co-authored-by: vibe-coder <noreply@anthropic.com>"
+Co-Authored-By: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-19T16:08:19+01:00
+- **Timestamp**: 2025-08-19T19:26:30+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* ef2dcb1` - feat: add agent profiles index for desktop user guidance
+- **Date**: 2025-08-19 19:26
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* ae742b5` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-19 15:08
+- **Author**: GitHub Actions
+
 #### `* 04e3e8d` - feat: add comprehensive repository reference index (#178)
 - **Date**: 2025-08-19 16:08
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* db7941f` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-19 15:04
@@ -190,25 +161,11 @@ Co-authored-by: vibe-coder <noreply@anthropic.com>"
 - **Author**:  
 - **Refs**: 2025-08-18 15:43|tuvens|feat: enforce GitHub Comment Standards Protocol in agent workflows|
 
-#### `` - 
-- **Date**:  
-- **Author**: / /  
-
-#### `* ` - 2025-08-18 14:44
-- **Date**:  
-- **Author**:  b7e7ec0
-- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
-
-#### `* ` - 2025-08-18 15:44
-- **Date**:  
-- **Author**:    f936e2c
-- **Refs**: tuvens|Merge pull request #159 from tuvens/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 8 commits
-- `feat`: 4 commits
+- `feat`: 5 commits
 - `vibe`: 2 commits
 - `fix`: 2 commits
 - `refactor`: 1 commits
