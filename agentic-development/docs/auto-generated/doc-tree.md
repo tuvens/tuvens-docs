@@ -49,6 +49,7 @@
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md) (Modified: 2025-08-12, 137 lines, 4450 bytes)
 - [`tuvens-docs/integration-examples/frontend-integration/README.md`](./tuvens-docs/integration-examples/frontend-integration/README.md) (Modified: 2025-08-13, 437 lines, 10717 bytes)
 - [`tuvens-docs/integration-examples/frontend-integration/svelte-examples.md`](./tuvens-docs/integration-examples/frontend-integration/svelte-examples.md) (Modified: 2025-08-12, 830 lines, 22041 bytes)
+- [`tuvens-docs/repositories/README.md`](./tuvens-docs/repositories/README.md) (Modified: 2025-08-19, 219 lines, 10043 bytes)
 - [`tuvens-docs/repositories/eventsdigest-ai.md`](./tuvens-docs/repositories/eventsdigest-ai.md) (Modified: 2025-08-12, 24 lines, 823 bytes)
 - [`tuvens-docs/repositories/hi-events.md`](./tuvens-docs/repositories/hi-events.md) (Modified: 2025-08-12, 24 lines, 761 bytes)
 - [`tuvens-docs/repositories/index.md`](./tuvens-docs/repositories/index.md) (Modified: 2025-08-12, 29 lines, 1205 bytes)
@@ -76,5 +77,5 @@
 - [`README.md`](./README.md) (Modified: 2025-08-12, 113 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 194
-- **Total lines**: 27455
+- **Total documentation files**: 195
+- **Total lines**: 27765
