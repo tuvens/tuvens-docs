@@ -10,21 +10,68 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `0e1bca1c0655bdfedf3456aeb6a58d4114160a32`
-- **Commit Message**: "Merge pull request #196 from tuvens/devops/feature/context-loading-guidance-clean
+- **Latest Commit**: `1ad14e851dbe4ee0fe193f70a2acce93d3fef5fe`
+- **Commit Message**: "feat: split workflows README into focused documentation files (#195)
 
-Add context loading guidance system"
+* feat: split workflows README into focused documentation files
+
+Split the 342-line workflows README into 6 specialized files with decision tree navigation:
+- README.md: Decision tree navigation hub (117 lines)
+- multi-agent-coordination-tracking.md: Branch lifecycle & agent coordination (181 lines)
+- ai-agent-safety-governance.md: Safety rules & branch protection (200 lines)
+- agent-context-generation.md: Session memory & documentation (227 lines)
+- infrastructure-health-maintenance.md: System monitoring & maintenance (260 lines)
+- cross-repository-notification.md: Event propagation & sync (286 lines)
+- troubleshooting-debugging-guide.md: Comprehensive debugging (354 lines)
+
+Benefits:
+- Improved navigation with intuitive decision tree structure
+- Content expanded from 342 to 1,625 lines with enhanced technical detail
+- Specialized focus areas for better agent understanding
+- All script references use existing tools and workflow commands
+
+Addresses Gemini feedback by fixing non-existent script references.
+
+Closes #182
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: address Gemini feedback on workflow documentation
+
+- Remove duplicate pre-commit command in safety governance guide
+- Improve YAML validation robustness with proper for-loop
+- Fix incorrect relative paths in troubleshooting guide
+
+Addresses all medium-priority feedback from Gemini code review.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-19T20:13:46+01:00
+- **Timestamp**: 2025-08-19T20:15:16+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 1ad14e8` - feat: split workflows README into focused documentation files (#195)
+- **Date**: 2025-08-19 20:15
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 02cbe29` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-19 19:14
+- **Author**: GitHub Actions
+
 #### `*   0e1bca1` - Merge pull request #196 from tuvens/devops/feature/context-loading-guidance-clean
 - **Date**: 2025-08-19 20:13
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -133,37 +180,23 @@ Add context loading guidance system"
 - **Author**: 2025-08-18 14:45
 - **Refs**: vibe-coder: create wiki staging area for mass document organization
 
-#### `* ` - GitHub Actions
-- **Date**:  0b82310
-- **Author**: 2025-08-18 15:05
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:    b24ad78
-- **Author**: 2025-08-18 16:04
-- **Refs**: Merge pull request #163 from tuvens/feature/document-future-worktree-cleanup-in-wiki
-
-#### `` - 
-- **Date**:    
-- **Author**: 
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 10 commits
-- `feat`: 4 commits
+- `feat`: 5 commits
 - `vibe`: 2 commits
-- `fix`: 2 commits
+- `fix`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 8 changes
 - `agentic-development/wiki/staging/archives/design-mcp-server-setup-script.md`: 3 changes
+- `agentic-development/workflows/README.md`: 2 changes
 - `agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md`: 2 changes
 - `agentic-development/wiki/staging/protocols/automated-qa-tools-token-efficiency-solutions.md`: 2 changes
 - `agentic-development/wiki/staging/guides/worktree-cleanup-comprehensive-guide.md`: 2 changes
 - `agentic-development/wiki/staging/guides/complete-mobile-claude-code-implementation-plan.md`: 2 changes
 - `agentic-development/wiki/staging/architecture/tuvens-multi-agent-implementation-plans-index.md`: 2 changes
-- `agentic-development/branch-tracking/active-branches.json`: 2 changes
 
