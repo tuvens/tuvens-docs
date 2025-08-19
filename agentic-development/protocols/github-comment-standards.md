@@ -22,7 +22,7 @@
 - [agent-checkin-validation.md](./agent-checkin-validation.md) - Session start procedures
 
 **Load With:**
-- [../protocols/README.md](./README.md) - Complete protocol framework context
+- [Complete Protocol Framework Context](./README.md) - Complete protocol framework context
 - Active GitHub issues requiring agent communication
 
 **Load After:**

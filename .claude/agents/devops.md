@@ -17,21 +17,21 @@
 REPO=$(git remote get-url origin | sed 's/.*\///' | sed 's/\.git//')
 case $REPO in
   "tuvens-client")
-    Load: tuvens-docs/repositories/tuvens-client.md
+    echo "Load: tuvens-docs/repositories/tuvens-client.md"
     ;;
   "tuvens-api")
-    Load: tuvens-docs/repositories/tuvens-api.md
+    echo "Load: tuvens-docs/repositories/tuvens-api.md"
     ;;
   "hi.events")
-    Load: tuvens-docs/repositories/hi-events.md
+    echo "Load: tuvens-docs/repositories/hi-events.md"
     ;;
   "eventsdigest-ai")
-    Load: tuvens-docs/repositories/eventsdigest-ai.md
+    echo "Load: tuvens-docs/repositories/eventsdigest-ai.md"
     ;;
 esac
 
 # Always load workflow infrastructure guide
-Load: agentic-development/workflows/README.md
+echo "Load: agentic-development/workflows/README.md"
 ```
 
 ### Essential Context Dependencies
@@ -381,21 +381,21 @@ tail -f /var/log/app.log
 REPO=$(git remote get-url origin | sed 's/.*\///' | sed 's/\.git//')
 case $REPO in
   "tuvens-client")
-    Load: tuvens-docs/repositories/tuvens-client.md
+    echo "Load: tuvens-docs/repositories/tuvens-client.md"
     ;;
   "tuvens-api")
-    Load: tuvens-docs/repositories/tuvens-api.md
+    echo "Load: tuvens-docs/repositories/tuvens-api.md"
     ;;
   "hi.events")
-    Load: tuvens-docs/repositories/hi-events.md
+    echo "Load: tuvens-docs/repositories/hi-events.md"
     ;;
   "eventsdigest-ai")
-    Load: tuvens-docs/repositories/eventsdigest-ai.md
+    echo "Load: tuvens-docs/repositories/eventsdigest-ai.md"
     ;;
 esac
 
 # Always load workflow infrastructure guide
-Load: agentic-development/workflows/README.md
+echo "Load: agentic-development/workflows/README.md"
 ```
 
 ### Universal Deployment Checklist
