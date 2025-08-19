@@ -106,10 +106,10 @@ node update-branch-tracking.js --help
 node process-gemini-feedback.js --help
 
 # Validate JSON files
-cat branch-tracking/*.json | jq . > /dev/null && echo "Valid JSON"
+cat ../branch-tracking/*.json | jq . > /dev/null && echo "Valid JSON"
 
 # Check file permissions
-ls -la branch-tracking/
+ls -la ../branch-tracking/
 ```
 
 ### Network and API Issues

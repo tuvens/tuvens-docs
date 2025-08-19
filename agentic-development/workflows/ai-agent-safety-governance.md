@@ -141,11 +141,8 @@ cat CLAUDE.md | grep -A 5 "Safety Rules"
 # Install or update pre-commit
 pip install pre-commit && pre-commit install
 
-# Run hooks manually
+# Run hooks manually to identify issues
 pre-commit run --all-files
-
-# Test hooks manually to identify issues  
-pre-commit run --all-files  # Run all hooks to identify problems
 ```
 
 ### Protected Branch Violations  

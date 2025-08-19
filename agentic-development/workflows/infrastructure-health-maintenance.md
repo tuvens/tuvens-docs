@@ -105,9 +105,9 @@ gh repo view tuvens/tuvens-docs
 ### Configuration Validation
 ```bash
 # Validate critical configuration files
-cat .github/workflows/*.yml | yq eval . 
+for file in .github/workflows/*.yml; do yq . "$file" > /dev/null || exit 1; done
 cat agentic-development/branch-tracking/active-branches.json | jq .
-cat .pre-commit-config.yaml | yq eval .
+cat .pre-commit-config.yaml | yq .
 ```
 
 ## Maintenance Operations
