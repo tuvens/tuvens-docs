@@ -1,5 +1,31 @@
 # Tuvens Multi-Agent Development System
 
+> **📍 Navigation**: [Root](../README.md) → [agentic-development](./README.md)
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **System Overview**: First document for understanding the multi-agent development system
+- **Agent Setup**: Before configuring or starting any agent session
+- **Architecture Understanding**: When working with cross-agent coordination or system design
+- **Directory Navigation**: As entry point for finding specific subsystem documentation
+- **Integration Projects**: When working on features that span multiple system components
+
+### Dependency Mapping
+**Load First**: This is the main entry point - load before any other agentic-development documents
+
+**Load With:**
+- [CLAUDE.md](../CLAUDE.md) - Safety rules and agent guidelines
+- [desktop-project-instructions/README.md](./desktop-project-instructions/README.md) - Claude Desktop specific guidance
+
+**Key Subsystems to Load After:**
+- [protocols/README.md](./protocols/README.md) - Agent coordination protocols
+- [workflows/README.md](./workflows/README.md) - GitHub Actions infrastructure
+- [branch-tracking/README.md](./branch-tracking/README.md) - Central coordination system
+
+### Context Integration
+This document provides the architectural overview that all other system components depend on. Load this first when working with any multi-agent system functionality.
+
 ## Final Production Structure
 
 This directory contains only the essential files for the multi-agent system:
