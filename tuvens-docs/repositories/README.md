@@ -4,7 +4,7 @@ This repository reference index provides comprehensive navigation and overview o
 
 ## 📋 Repository Overview
 
-The Tuvens ecosystem consists of **7 repositories** spanning documentation, core platform services, specialized applications, and integration management.
+The Tuvens ecosystem consists of **5 repositories** spanning documentation, core platform services, specialized applications, and integration management.
 
 | Repository | Status | Primary Tech Stack | Agents | Purpose |
 |------------|--------|-------------------|---------|---------|
@@ -213,7 +213,7 @@ Each repository maintains detailed technical context in its own `.claude/reposit
 
 ---
 
-**Repository Count**: 7 active repositories  
+**Repository Count**: 5 active repositories  
 **Technology Stacks**: SvelteKit, React, Node.js, Laravel, CodeHooks, Documentation Systems  
 **Agent Specializations**: 7 agents across frontend, backend, and system coordination  
 **Last Updated**: 2025-08-19  

@@ -2,7 +2,7 @@
 DEVOPS AGENT - ENHANCED TASK CONTEXT
 
 GitHub Issue: #158
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/enforce-github-comment-standards-protocol-in-agent-workflows
+Worktree: worktrees/devops/feature/enforce-github-comment-standards-protocol-in-agent-workflows
 Branch: feature/enforce-github-comment-standards-protocol-in-agent-workflows
 Files to Examine: agentic-development/protocols/github-comment-standards.md,agentic-development/scripts/setup-agent-task.sh,.claude/agents/
 ═══════════════════════════════════════════════════════════════════════════════
