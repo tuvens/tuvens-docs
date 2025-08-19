@@ -1,8 +1,35 @@
 # Agent Coordination Protocols
 
+> **📍 Navigation**: [agentic-development](../README.md) → [protocols](./README.md)
+
 **Phase 2 Implementation**: Complete protocol framework  
 **Created**: 2025-08-14  
 **Status**: Active implementation  
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **Agent Onboarding**: All new agent sessions require understanding of coordination protocols
+- **Task Assignment**: Before creating GitHub issues or assigning agent work
+- **Conflict Resolution**: When agents report resource conflicts or communication issues
+- **Protocol Violations**: When branch protection or safety workflows are triggered
+- **Multi-Agent Projects**: Before starting any work requiring agent collaboration
+
+### Dependency Mapping
+**Load Before:**
+- [github-comment-standards.md](./github-comment-standards.md) - Universal communication format
+- [agent-checkin-validation.md](./agent-checkin-validation.md) - Session start procedures
+- [file-scope-management.md](./file-scope-management.md) - Resource conflict prevention
+
+**Load With:**
+- [../workflows/README.md](../workflows/README.md) - Workflow infrastructure context
+- [../.claude/agents/vibe-coder.md](../../.claude/agents/vibe-coder.md) - System orchestrator role
+
+**Load After:**
+- [emergency-response-procedures.md](./emergency-response-procedures.md) - Crisis management protocols
+
+### Context Integration
+This document provides the foundational protocol framework that all other agent coordination depends on. Load this first when working with any multi-agent coordination tasks.
 
 ## Overview
 
