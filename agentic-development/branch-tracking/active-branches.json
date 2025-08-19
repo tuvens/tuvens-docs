@@ -148,7 +148,7 @@
         "lastActivity": "2025-08-15T09:04:52.164Z",
         "taskGroup": null,
         "status": "active",
-        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
+        "worktree": "worktrees/devops/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
         "agent": "feature",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",

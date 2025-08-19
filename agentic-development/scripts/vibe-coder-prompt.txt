@@ -2,7 +2,7 @@
 VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
 GitHub Issue: #164
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
+Worktree: ~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
 Branch: feature/address-geminis-comments-on-pr-163
 Files to Examine: agentic-development/wiki/staging/guides/worktree-cleanup-comprehensive-guide.md,agentic-development/wiki/staging/protocols/orphaned-worktree-cleanup-action-plan.md
 ═══════════════════════════════════════════════════════════════════════════════
@@ -27,7 +27,7 @@ Use: `gh issue view 164` to get the full problem analysis, requirements, and imp
 GitHub Issue: #164
 Task: Address Gemini's comments on PR 163
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
+Working Directory: ~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163
 Branch: feature/address-geminis-comments-on-pr-163
 
 Priority Files to Examine:
