@@ -231,7 +231,7 @@ gh workflow run infrastructure-validation.yml
 gh workflow run branch-protection.yml
 
 # Test scripts locally
-node agentic-development/scripts/test-script.js
+node agentic-development/scripts/update-branch-tracking.js --help
 
 # Validate external integrations
 gh api rate_limit
