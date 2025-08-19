@@ -4,23 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: ef2dcb1a1c44cea367306e46cc7aa852e4556a21
-- **Commit Message**: feat: add agent profiles index for desktop user guidance
+- **Commit SHA**: 0e1bca1c0655bdfedf3456aeb6a58d4114160a32
+- **Commit Message**: Merge pull request #196 from tuvens/devops/feature/context-loading-guidance-clean
 
-Complete desktop user guidance for agent selection with hardcoded path fixes
-
-- Created comprehensive agent profiles index with all 7 agent specializations
-- Implemented decision tree for optimal agent selection based on technology stack  
-- Added clear task type mappings and cross-agent coordination patterns
-- Included both automated /start-session and manual workflow patterns
-- Resolved hardcoded path conflicts by adopting relative paths from dev branch
-- Addresses Gemini's portability concerns through  placeholders
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
+Add context loading guidance system
 - **Author**: tuvens
-- **Timestamp**: 2025-08-19T19:26:30+01:00
+- **Timestamp**: 2025-08-19T20:13:46+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
