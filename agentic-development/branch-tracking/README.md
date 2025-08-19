@@ -1,5 +1,35 @@
 # Central Branch Tracking System
 
+> **📍 Navigation**: [agentic-development](../README.md) → [branch-tracking](./README.md)
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **Session Coordination**: Before starting any agent session to check active work
+- **Branch Creation**: When creating new feature branches to avoid conflicts
+- **Task Handoffs**: When transferring work between agents or completing tasks
+- **Cleanup Operations**: When branches are merged and worktrees need cleanup
+- **System Status Checks**: When investigating coordination issues or system state
+
+### Dependency Mapping
+**Load Before:**
+- [../workflows/central-branch-tracking.md](../workflows/central-branch-tracking.md) - Workflow implementation details
+- [../scripts/update-branch-tracking.js](../scripts/update-branch-tracking.js) - Update script usage
+
+**Load With:**
+- [active-branches.json](./active-branches.json) - Current system state
+- [task-groups.json](./task-groups.json) - Related branch groups
+- [agent-sessions.json](./agent-sessions.json) - Active agent work
+
+**Load After:**
+- [cleanup-queue.json](./cleanup-queue.json) - Branches ready for cleanup
+- [merge-log.json](./merge-log.json) - Recent merge history
+
+### Context Integration
+This system provides real-time coordination state across all repositories. Load when you need to understand what agents are working on and how to coordinate new work without conflicts.
+
+---
+
 This directory contains the implementation of the Central Branch Tracking System for coordinating multi-agent development across the Tuvens ecosystem.
 
 ## Files

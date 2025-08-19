@@ -1,5 +1,32 @@
 # GitHub Actions Workflow Infrastructure Guide
 
+> **📍 Navigation**: [agentic-development](../README.md) → [workflows](./README.md)
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **DevOps Agent Sessions**: Essential for all devops agent tasks and infrastructure work
+- **CI/CD Troubleshooting**: When workflows fail or automation is not working as expected
+- **Multi-Repository Coordination**: Before working on tasks that span multiple repositories
+- **Branch Safety Issues**: When branch protection workflows are triggered or violated
+- **Agent Session Setup**: Understanding workflow impacts on agent coordination
+
+### Dependency Mapping
+**Load Before:**
+- [../protocols/README.md](../protocols/README.md) - Agent coordination foundation
+- [CLAUDE.md](../../CLAUDE.md) - Safety rules that workflows enforce
+
+**Load With:**
+- [../branch-tracking/README.md](../branch-tracking/README.md) - Central coordination system
+- [central-branch-tracking.md](./central-branch-tracking.md) - Branch tracking workflow details
+
+**Load After:**
+- [branching-strategy.md](./branching-strategy.md) - Development workflow patterns
+- [../docs/branch-safety-guide.md](../docs/branch-safety-guide.md) - Safety implementation guide
+
+### Context Integration
+This document is critical for understanding the automated infrastructure that enables multi-agent coordination. Load when working with anything that involves GitHub Actions, branch management, or cross-repository synchronization.
+
 ## Overview
 
 This guide provides agents with essential information about the GitHub Actions workflow infrastructure that powers the Tuvens agentic development system. Understanding these workflows helps agents work effectively within the automated coordination system.
