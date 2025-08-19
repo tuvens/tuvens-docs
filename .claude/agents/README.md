@@ -15,7 +15,7 @@ This directory contains agent configuration files for the Tuvens ecosystem multi
 - **[node-dev.md](./node-dev.md)** - Node.js development agent specializing in backend services and API development.
 - **[codehooks-dev.md](./codehooks-dev.md)** - CodeHooks.io platform specialist for serverless backend development.
 
-### Frontend Development  
+### Frontend Development
 - **[react-dev.md](./react-dev.md)** - React development agent for modern web applications and user interfaces.
 - **[svelte-dev.md](./svelte-dev.md)** - Svelte/SvelteKit development agent for high-performance frontend applications.
 - **[mobile-dev.md](./mobile-dev.md)** - Mobile development agent for cross-platform mobile applications.
@@ -45,7 +45,7 @@ Each agent file contains:
 2. **Infrastructure**: Use `devops` for deployment, CI/CD, monitoring, and operational concerns
 3. **Backend Development**: Choose based on technology stack:
    - `laravel-dev` for PHP/Laravel projects
-   - `node-dev` for Node.js/Express projects  
+   - `node-dev` for Node.js/Express projects
    - `codehooks-dev` for serverless/CodeHooks projects
 4. **Frontend Development**: Choose based on framework:
    - `react-dev` for React applications
