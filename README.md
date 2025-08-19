@@ -1,6 +1,26 @@
 # Tuvens Documentation Repository
 
+> **📍 Navigation**: [Root](./README.md)
+
 **Central documentation hub for the Tuvens product suite and multi-agent development system**
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **System Entry Point**: First document when exploring the Tuvens documentation system
+- **Repository Navigation**: When looking for specific subsystems or documentation areas
+- **Agent Onboarding**: Overview context before diving into specific agent configurations
+- **Architecture Overview**: Understanding the overall structure of the Tuvens ecosystem
+
+### Key Subsystem Entry Points
+**Load After This Document:**
+- [agentic-development/README.md](./agentic-development/README.md) - Multi-agent system overview
+- [.claude/agents/](./.claude/agents/) - Agent configuration files
+- [tuvens-docs/README.md](./tuvens-docs/README.md) - Product documentation
+- [CLAUDE.md](./CLAUDE.md) - Critical safety rules and guidelines
+
+### Context Integration
+This is the main entry point for the entire documentation system. Load this first to understand the repository structure before navigating to specific subsystems.
 
 ## Repository Structure
 
