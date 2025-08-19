@@ -55,8 +55,6 @@ agentic-development/
 
 **System Scripts:**
 - `setup-agent-task.sh` - Creates worktrees, issues, prompts + updates branch tracking + **Enhanced Onboarding**
-- `agent-status.sh` - **NEW: Quick agent workload analysis and task recommendations**
-- `system-status.sh` - **NEW: System-wide overview of all agent activity**
 - `cleanup-merged-branches.sh` - Removes merged branches and worktrees automatically  
 - `update-branch-tracking.js` - Updates central tracking from GitHub Actions
 - `validate-environment.sh` - Checks prerequisites

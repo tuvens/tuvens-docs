@@ -121,7 +121,7 @@ jobs:
               status: 'active',
               changeType: payload.changeType,
               environment: payload.environment,
-              worktree: `~/Code/Tuvens/${payload.repository}/worktrees/${payload.branch}`,
+              worktree: `${process.env.TUVENS_PROJECT_ROOT || '~/Code/Tuvens'}/${payload.repository}/worktrees/${payload.branch}`,
               agent: determineAgent(payload.repository, payload.changeType),
               relatedBranches: [],
               githubUrl: payload.githubUrl,
