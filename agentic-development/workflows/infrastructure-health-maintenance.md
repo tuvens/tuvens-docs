@@ -186,10 +186,10 @@ npm update && pip3 install --upgrade -r requirements.txt
 
 # Validate tool configurations
 pre-commit run --all-files
-./scripts/branch-check
+agentic-development/scripts/branch-check
 
 # Reset to known-good configuration (targeted approach)
-git checkout HEAD -- .pre-commit-config.yaml .github/workflows/
+git checkout HEAD -- .pre-commit-config.yaml .github/workflows/ agentic-development/branch-tracking/
 ```
 
 ### System Performance Degradation  

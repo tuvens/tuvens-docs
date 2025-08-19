@@ -76,7 +76,7 @@ Static safety validation hooks are available to prevent common violations:
 Setup: `pip install pre-commit && pre-commit install`
 
 ### Interactive Validation
-- **`./scripts/branch-check`** - Command-line validation of current repository state
+- **`agentic-development/scripts/branch-check`** - Command-line validation of current repository state
 - **Enhanced workflow error messages** - Detailed guidance when validation fails
 - **Branch tracking integration** - Automatic validation status recording
 
