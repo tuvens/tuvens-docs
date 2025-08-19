@@ -28,7 +28,7 @@ tools: Read, Write, Edit, Bash, Glob, Grep, Task
 ### System Orchestration Context
 **Load When Coordinating:**
 - [agentic-development/desktop-project-instructions/](../../agentic-development/desktop-project-instructions/) - Agent orchestration patterns
-- All agent identity files in [.claude/agents/](../) directory for coordination
+- All agent identity files in the [.claude/agents/ directory](./) for coordination
 - [agentic-development/scripts/](../../agentic-development/scripts/) - Automation tools for coordination
 
 ### Integration Notes

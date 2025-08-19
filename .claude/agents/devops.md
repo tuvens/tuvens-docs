@@ -16,22 +16,13 @@
 # Auto-load context based on repository
 REPO=$(git remote get-url origin | sed 's/.*\///' | sed 's/\.git//')
 case $REPO in
-  "tuvens-client")
-    Load: tuvens-docs/repositories/tuvens-client.md
-    ;;
-  "tuvens-api")
-    Load: tuvens-docs/repositories/tuvens-api.md
-    ;;
-  "hi.events")
-    Load: tuvens-docs/repositories/hi-events.md
-    ;;
-  "eventsdigest-ai")
-    Load: tuvens-docs/repositories/eventsdigest-ai.md
+  "tuvens-client"|"tuvens-api"|"hi.events"|"eventsdigest-ai")
+    echo "Load: tuvens-docs/repositories/$REPO.md"
     ;;
 esac
 
 # Always load workflow infrastructure guide
-Load: agentic-development/workflows/README.md
+echo "Load: agentic-development/workflows/README.md"
 ```
 
 ### Essential Context Dependencies
@@ -373,29 +364,6 @@ docker compose up -d
 curl /health
 curl /metrics
 tail -f /var/log/app.log
-```
-
-### Repository Context Loading
-```bash
-# Auto-load context based on repository
-REPO=$(git remote get-url origin | sed 's/.*\///' | sed 's/\.git//')
-case $REPO in
-  "tuvens-client")
-    Load: tuvens-docs/repositories/tuvens-client.md
-    ;;
-  "tuvens-api")
-    Load: tuvens-docs/repositories/tuvens-api.md
-    ;;
-  "hi.events")
-    Load: tuvens-docs/repositories/hi-events.md
-    ;;
-  "eventsdigest-ai")
-    Load: tuvens-docs/repositories/eventsdigest-ai.md
-    ;;
-esac
-
-# Always load workflow infrastructure guide
-Load: agentic-development/workflows/README.md
 ```
 
 ### Universal Deployment Checklist
