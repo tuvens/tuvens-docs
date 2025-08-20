@@ -4,18 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 0599ab6c7c5997c7372f225d07b572f1fb4e9a84
-- **Commit Message**: Add Claude Desktop to Claude Code handoff pattern recognition
+- **Commit SHA**: ada200b7d2eaaed9adb924cfcb9b29e7844905a4
+- **Commit Message**: Merge pull request #211 from tuvens/vibe-coder/fix/session-startup-instructions
 
-Establishes foundation for iTerm MCP automation by defining:
-- Agent-to-directory mappings for all agents
-- Pattern recognition for /start-session commands  
-- Simple user interface specifications
-- Integration points for automation layer
-
-Sets up foundation for Issue #203 implementation to build upon.
+Fix: Add agent session startup automation to vibe-coder instructions
 - **Author**: tuvens
-- **Timestamp**: 2025-08-20T12:09:37+01:00
+- **Timestamp**: 2025-08-20T16:16:55+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
