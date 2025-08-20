@@ -163,7 +163,7 @@ class TuvensPerformanceMonitor {
     this.monitor.track('component_render', {
       component_name: componentName,
       render_time: renderTime,
-      timestamp: new Date().toIISOString()
+      timestamp: new Date().toISOString()
     });
   }
 }
@@ -270,7 +270,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: tuvens/frontend:latest
+        image: tuvens/frontend:v1.0.0
         ports:
         - containerPort: 80
         env:
