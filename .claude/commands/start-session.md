@@ -66,12 +66,9 @@ The setup script will be called with the format:
 
 ## iTerm MCP Integration
 
-After the session setup is complete, I will use the iTerm MCP bridge to automatically open the Claude Code session:
+The setup script now includes automatic iTerm MCP integration:
+- If iTerm MCP server is configured, it will be used automatically
+- Falls back to AppleScript if MCP is unavailable  
+- Provides manual instructions as final fallback
 
-```javascript
-// Load and execute iTerm MCP bridge
-const { enhanceStartSession } = require('./.claude/commands/iterm-session-bridge.js');
-await enhanceStartSession(agentName, taskDescription);
-```
-
-This integration uses your configured iTerm MCP server to open a terminal session in the correct directory and start Claude Code automatically.
+This ensures the session opens in iTerm automatically using your configured MCP server when available.

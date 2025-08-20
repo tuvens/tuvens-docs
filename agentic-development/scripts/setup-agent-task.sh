@@ -521,11 +521,45 @@ EOF
 echo "✅ Created agent prompt: $PROMPT_FILE"
 echo ""
 
-# Step 5: Create iTerm2 window (macOS only)
-if [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
-    echo "Step 5: Creating iTerm2 window..."
+# Step 5: Create iTerm2 window with MCP integration (if available) or AppleScript fallback
+if command -v node &>/dev/null && [ -f "$SCRIPT_DIR/../.claude/commands/iterm-session-bridge.js" ]; then
+    echo "Step 5: Creating iTerm2 window using MCP integration..."
     
-    # Create AppleScript for iTerm2 window
+    # Call iTerm MCP bridge with proper error handling
+    node -e "
+    const { enhanceStartSession } = require('$SCRIPT_DIR/../.claude/commands/iterm-session-bridge.js');
+    enhanceStartSession('$AGENT_NAME', '$WORKTREE_PATH', '$PROMPT_FILE')
+      .then(() => console.log('✅ Created iTerm2 window with MCP integration'))
+      .catch(err => {
+        console.error('❌ MCP integration failed:', err.message);
+        console.log('Falling back to manual setup');
+        process.exit(1);
+      });
+    " || {
+        echo "MCP integration failed, falling back to AppleScript..."
+        # AppleScript fallback
+        if [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
+            APPLESCRIPT_CONTENT="
+tell application \"iTerm\"
+    create window with default profile
+    tell current session of current window
+        set name to \"$AGENT_NAME Agent\"
+        write text \"cd \\\"$WORKTREE_PATH\\\"\"
+        write text \"cat \\\"$PROMPT_FILE\\\"\"
+        write text \"claude\"
+    end tell
+end tell"
+            echo "$APPLESCRIPT_CONTENT" | osascript
+            echo "✅ Created iTerm2 window with AppleScript fallback"
+        else
+            echo "❌ Both MCP and AppleScript unavailable"
+            echo "   Manual setup: Open terminal, cd to $WORKTREE_PATH, then cat $PROMPT_FILE"
+        fi
+    }
+elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
+    echo "Step 5: Creating iTerm2 window using AppleScript..."
+    
+    # Original AppleScript approach
     APPLESCRIPT_CONTENT="
 tell application \"iTerm\"
     create window with default profile
@@ -538,13 +572,12 @@ tell application \"iTerm\"
 end tell"
     
     echo "$APPLESCRIPT_CONTENT" | osascript
-    echo "✅ Created iTerm2 window with agent prompt"
-    echo ""
+    echo "✅ Created iTerm2 window with AppleScript"
 else
-    echo "Step 5: iTerm2 window creation skipped (not macOS or osascript unavailable)"
+    echo "Step 5: iTerm2 window creation skipped (no MCP, not macOS, or osascript unavailable)"
     echo "   Manual setup: Open terminal, cd to $WORKTREE_PATH, then cat $PROMPT_FILE"
-    echo ""
 fi
+echo ""
 
 # Step 6: Final validation
 echo "Step 6: Final validation..."

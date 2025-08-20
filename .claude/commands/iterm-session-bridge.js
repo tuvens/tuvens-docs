@@ -1,35 +1,46 @@
-// iTerm MCP Bridge for /start-session Integration
-// Issue #203: Simple MCP bridge that connects Claude Desktop → iTerm MCP → Claude Code
+// iTerm MCP Bridge for setup-agent-task.sh Integration
+// Issue #203: MCP bridge called by setup-agent-task.sh script
 // 
-// Purpose: Enhance existing /start-session command with iTerm automation
-// Usage: Called automatically when /start-session is used
+// Purpose: Replace AppleScript iTerm automation with MCP integration
+// Usage: Called by setup-agent-task.sh with proper error handling
 // Integration: Works with user's existing iTerm MCP configuration
 
-async function enhanceStartSession(agentName, taskDescription) {
-  // Agent directory mappings (matches PR #204 specifications exactly)
-  const agentDirs = {
-    'vibe-coder': '/Users/ciarancarroll/Code/Tuvens/tuvens-docs',
-    'devops': '/Users/ciarancarroll/Code/Tuvens/tuvens-docs',
-    'react-dev': '/Users/ciarancarroll/Code/Tuvens/hi.events',
-    'laravel-dev': '/Users/ciarancarroll/Code/Tuvens/hi.events',
-    'node-dev': '/Users/ciarancarroll/Code/Tuvens/tuvens-api',
-    'svelte-dev': '/Users/ciarancarroll/Code/Tuvens/tuvens-client'
-  };
+async function enhanceStartSession(agentName, worktreePath, promptFile) {
+  try {
+    // Input validation
+    if (!agentName || !worktreePath || !promptFile) {
+      throw new Error('Missing required parameters: agentName, worktreePath, promptFile');
+    }
 
-  // Use user's configured iTerm MCP server
-  const session = await iterm.open_terminal({
-    name: `${agentName}-session`,
-    directory: agentDirs[agentName]
-  });
+    // Validate that the iTerm MCP is available
+    if (typeof iterm === 'undefined') {
+      throw new Error('iTerm MCP server not available - ensure it is configured in Claude Desktop');
+    }
 
-  // Start Claude Code in the iTerm session (real command, no fabricated flags)
-  await iterm.execute_command({
-    sessionId: session.id,
-    command: 'claude'
-  });
-  
-  return session;
+    // Use user's configured iTerm MCP server
+    const session = await iterm.open_terminal({
+      name: `${agentName}-agent-session`,
+      directory: worktreePath
+    });
+
+    // Display the agent prompt file
+    await iterm.execute_command({
+      sessionId: session.id,
+      command: `cat "${promptFile}"`
+    });
+
+    // Start Claude Code in the iTerm session (real command, no fabricated flags)
+    await iterm.execute_command({
+      sessionId: session.id,
+      command: 'claude'
+    });
+    
+    return session;
+  } catch (error) {
+    console.error('iTerm MCP Bridge Error:', error.message);
+    throw error;
+  }
 }
 
-// Export for use by /start-session command
+// Export for use by setup-agent-task.sh
 module.exports = { enhanceStartSession };
