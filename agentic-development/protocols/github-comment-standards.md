@@ -1,9 +1,36 @@
 # GitHub Comment Standards Protocol
 
+> **📍 Navigation**: [agentic-development](../README.md) → [protocols](./README.md) → [github-comment-standards.md](./github-comment-standards.md)
+
 **Protocol**: Universal Comment Identity System for GitHub Interactions  
 **Version**: 1.0  
 **Created**: 2025-08-14  
 **Phase**: 2 Implementation  
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **Agent Communication**: Before making ANY GitHub issue comment (mandatory for all agents)
+- **Issue Creation**: When creating GitHub issues that involve agent assignment or coordination
+- **Protocol Violations**: When comment format violations are detected and need correction
+- **Agent Onboarding**: Essential for all new agent sessions - this protocol is universal
+- **Multi-Agent Projects**: Before any collaborative work requiring clear communication
+
+### Dependency Mapping
+**Load Before:**
+- Any GitHub issue interaction by any agent
+- [agent-checkin-validation.md](./agent-checkin-validation.md) - Session start procedures
+
+**Load With:**
+- [Complete Protocol Framework Context](./README.md) - Complete protocol framework context
+- Active GitHub issues requiring agent communication
+
+**Load After:**
+- [file-scope-management.md](./file-scope-management.md) - Resource coordination protocols
+- [emergency-response-procedures.md](./emergency-response-procedures.md) - Crisis communication protocols
+
+### Context Integration
+This protocol is mandatory for ALL agents. Every GitHub comment by any agent must follow these standards. Load this immediately when working with GitHub issues or agent coordination.
 
 ## Overview
 

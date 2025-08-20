@@ -1,5 +1,73 @@
 # GitHub Actions Workflow Infrastructure Guide
 
+> **📍 Navigation**: [agentic-development](../README.md) → [workflows](./README.md)
+
+## 📚 When to Load This Document
+
+### Primary Context Loading Scenarios
+- **DevOps Agent Sessions**: Essential for all devops agent tasks and infrastructure work
+- **CI/CD Troubleshooting**: When workflows fail or automation is not working as expected
+- **Multi-Repository Coordination**: Before working on tasks that span multiple repositories
+- **Branch Safety Issues**: When branch protection workflows are triggered or violated
+- **Agent Session Setup**: Understanding workflow impacts on agent coordination
+
+### Dependency Mapping
+**Load Before:**
+- [../protocols/README.md](../protocols/README.md) - Agent coordination foundation
+- [CLAUDE.md](../../CLAUDE.md) - Safety rules that workflows enforce
+
+**Load With:**
+- [../branch-tracking/README.md](../branch-tracking/README.md) - Central coordination system
+- [central-branch-tracking.md](./central-branch-tracking.md) - Branch tracking workflow details
+
+**Load After:**
+- [branching-strategy.md](./branching-strategy.md) - Development workflow patterns
+- [../docs/branch-safety-guide.md](../docs/branch-safety-guide.md) - Safety implementation guide
+
+### Context Integration
+This document is critical for understanding the automated infrastructure that enables multi-agent coordination. Load when working with anything that involves GitHub Actions, branch management, or cross-repository synchronization.
+
+## Quick Navigation Decision Tree
+
+**Choose your path based on what you need:**
+
+### 🤖 I need to understand agent coordination
+→ **[Multi-Agent Coordination & Tracking](multi-agent-coordination-tracking.md)**
+- Branch lifecycle management across repositories
+- Agent task coordination and session continuity
+- External feedback routing (Gemini integration)
+- Central tracking system
+
+### 🛡️ I need to understand safety rules and governance
+→ **[AI Agent Safety & Governance](ai-agent-safety-governance.md)**
+- CLAUDE.md safety rule enforcement
+- Branch protection and naming conventions
+- Quality gates and validation processes
+
+### 📚 I need to understand context generation
+→ **[Agent Context Generation](agent-context-generation.md)**
+- Automatic documentation generation
+- Agent session memory and onboarding
+- Development continuity systems
+
+### 🔧 I need to understand infrastructure monitoring
+→ **[Infrastructure Health & Maintenance](infrastructure-health-maintenance.md)**
+- System health monitoring and validation
+- Proactive maintenance workflows
+- Tool reliability assurance
+
+### 📡 I need to understand cross-repository coordination
+→ **[Cross-Repository Notification](cross-repository-notification.md)**
+- Event propagation across repositories
+- Dependency management and updates
+- System-wide synchronization
+
+### 🐛 I need to troubleshoot workflow issues
+→ **[Troubleshooting & Debugging Guide](troubleshooting-debugging-guide.md)**
+- Common workflow issues and solutions
+- Debugging approaches and tools
+- Network and API troubleshooting
+
 ## Overview
 
 This guide provides agents with essential information about the GitHub Actions workflow infrastructure that powers the Tuvens agentic development system. Understanding these workflows helps agents work effectively within the automated coordination system.
@@ -19,75 +87,6 @@ This guide provides agents with essential information about the GitHub Actions w
 | `infrastructure-validation.yml` | Validates system infrastructure health | 🔍 Monitors infrastructure reliability |
 | `auto-documentation.yml` | Generates context documentation automatically | 📚 Creates agent session context |
 | `vibe-coder-maintenance.yml` | Automated maintenance and health checks | 🔧 Maintains agent coordination infrastructure |
-
-## The 5-Category Workflow System
-
-### 1. Multi-Agent Coordination & Tracking System (6 workflows)
-**Workflows**: `branch-tracking.yml`, `central-tracking-handler.yml`, `branch-created.yml`, `branch-deleted.yml`, `branch-merged.yml`, `gemini-code-review-integration.yml`
-
-**Purpose**:
-- Cross-repository synchronization - Tracks branch lifecycle events across all Tuvens repositories
-- Agent coordination - Maintains a central registry of what agents are working on which branches  
-- Session continuity - Ensures agents can pick up where others left off
-- External feedback routing - Routes Gemini code review feedback to appropriate agents
-
-**Value to Agentic Development**:
-- ✅ Prevents conflicts - Agents know what others are doing
-- ✅ Maintains context - Branch tracking provides session memory across agent interactions
-- ✅ Enables collaboration - Multiple agents can coordinate on complex multi-repo tasks
-- ✅ External integration - Automatically processes external code review feedback
-
-### 2. AI Agent Safety & Governance (1 workflow)
-**Workflows**: `branch-protection.yml`
-
-**Purpose**:
-- Enforces CLAUDE.md safety rules - Validates agents follow naming conventions and safety protocols
-- Branch protection - Prevents agents from directly committing to protected branches
-- Quality gates - Ensures infrastructure requirements are met before merges
-
-**Value to Agentic Development**:
-- ✅ Safety first - Prevents agents from making destructive changes
-- ✅ Consistent patterns - Enforces standard agent behaviors across all repositories
-- ✅ Quality control - Automated validation of agent work
-
-### 3. Agent Context Generation (1 workflow)
-**Workflows**: `auto-documentation.yml`
-
-**Purpose**:
-- Automatic documentation - Generates context documents from git history
-- Agent onboarding - Provides new agent sessions with recent development context
-- Development continuity - Maintains historical context for decision making
-
-**Value to Agentic Development**:
-- ✅ Session memory - Agents understand what happened in previous sessions
-- ✅ Reduces redundancy - Agents don't repeat work already done
-- ✅ Better decisions - Context-aware agents make more informed choices
-
-### 4. Infrastructure Health & Maintenance (2 workflows)
-**Workflows**: `infrastructure-validation.yml`, `vibe-coder-maintenance.yml`
-
-**Purpose**:
-- Continuous validation - Ensures all infrastructure remains operational
-- Proactive maintenance - Creates maintenance issues before problems occur
-- System health monitoring - Validates workflows, dependencies, and tools
-
-**Value to Agentic Development**:
-- ✅ Reliability - Catches issues before they impact agents
-- ✅ Predictive maintenance - Prevents system degradation
-- ✅ Tool confidence - Agents know their tools work correctly
-
-### 5. Cross-Repository Notification (2 workflows)
-**Workflows**: `notify-repositories.yml`, `notify-repositories-test.yml`
-
-**Purpose**:
-- Event propagation - Notifies related repositories of important changes
-- Dependency management - Updates dependent systems when core changes occur
-- System-wide coordination - Ensures all parts of Tuvens ecosystem stay synchronized
-
-**Value to Agentic Development**:
-- ✅ System coherence - Changes propagate across the entire ecosystem
-- ✅ Reduced manual work - Automatic updates eliminate coordination overhead
-- ✅ Consistency - All repositories maintain compatible states
 
 ## 🧠 Core Value Proposition
 
@@ -109,203 +108,6 @@ When these workflows fail:
 - The entire multi-agent system becomes unreliable
 
 **Critical**: Always investigate workflow failures immediately as they can cascade and affect all agent operations.
-
-## Agent Integration Points
-
-### Branch Tracking System
-- **File**: `agentic-development/branch-tracking/active-branches.json`
-- **Integration**: All workflows update this central tracking file
-- **Agent Usage**: Check branch status, see related tasks, understand agent assignments
-
-### CLAUDE.md Safety Integration
-- **Validation**: `branch-protection.yml` enforces CLAUDE.md compliance
-- **Safety Rules**: All workflows respect safety boundaries defined in CLAUDE.md
-- **Agent Behavior**: Agents must follow CLAUDE.md rules; workflows will enforce them
-
-### Agent Session Context
-- **Context Loading**: Workflows prepare context for agent sessions from multiple sources
-- **Task Coordination**: Branch tracking provides visibility into related agent work
-- **Documentation**: Workflows maintain documentation that becomes agent context
-
-### GitHub Issues Integration
-- **Issue Creation**: `gemini-code-review-integration.yml` creates issues for agent work
-- **Labeling**: Issues are automatically labeled with agent assignments and priorities
-- **Status Tracking**: Issues link to branch tracking and workflow execution status
-
-## Workflow Triggers and Dependencies
-
-### Branch Lifecycle Triggers
-```mermaid
-graph LR
-    A[Branch Created] --> B[branch-created.yml]
-    B --> C[branch-tracking.yml]
-    C --> D[Agent Context Generated]
-    
-    E[Branch Merged] --> F[branch-merged.yml]
-    F --> G[branch-tracking.yml]
-    G --> H[Cleanup Queued]
-    
-    I[Branch Deleted] --> J[branch-deleted.yml] 
-    J --> K[branch-tracking.yml]
-    K --> L[Records Cleaned]
-```
-
-### External Integrations
-```mermaid
-graph LR
-    A[Gemini Review] --> B[Repository Dispatch]
-    B --> C[gemini-code-review-integration.yml]
-    C --> D[Issue Created]
-    C --> E[Agent Triggered]
-    
-    F[Safety Violation] --> G[branch-protection.yml]
-    G --> H[Workflow Blocked]
-    G --> I[Agent Notified]
-```
-
-## Troubleshooting Guide
-
-### Common Issues and Solutions
-
-#### Workflow Not Triggering
-**Symptoms**: Expected automation not happening, no workflow runs visible
-**Causes**: 
-- Repository dispatch event not sent correctly
-- Workflow file syntax errors
-- Token permission issues
-
-**Solutions**:
-```bash
-# Check recent workflow runs
-gh run list --limit 10
-
-# View specific workflow runs  
-gh run view [run-id] --log
-
-# Test repository dispatch
-gh api repos/tuvens/tuvens-docs/dispatches \
-  --field event_type='test' \
-  --field 'client_payload={}'
-```
-
-#### Branch Tracking Out of Sync
-**Symptoms**: Branch tracking shows incorrect status, missing branches
-**Causes**:
-- Workflow execution failures
-- Network issues during execution
-- Concurrent updates causing conflicts
-
-**Solutions**:
-```bash
-# Manually trigger branch tracking update
-node agentic-development/scripts/update-branch-tracking.js --help
-
-# Check branch tracking file consistency
-cat agentic-development/branch-tracking/active-branches.json | jq .
-
-# Reset branch tracking (if necessary)
-git checkout HEAD -- agentic-development/branch-tracking/
-```
-
-#### Agent Session Not Triggered
-**Symptoms**: Critical feedback doesn't trigger agent assignment
-**Causes**:
-- Feedback priority not meeting thresholds
-- Agent assignment rules not matching file patterns
-- Session triggering script failures
-
-**Solutions**:
-```bash
-# Test feedback processing manually
-node agentic-development/scripts/process-gemini-feedback.js \
-  --payload='{"title":"test","description":"critical security issue"}'
-
-# Check agent session logs
-cat agentic-development/branch-tracking/agent-sessions.json | jq .
-
-# Verify agent assignment rules in process-gemini-feedback.js
-```
-
-#### Safety Workflow Failures
-**Symptoms**: PRs blocked, branch protection failures
-**Causes**:
-- Branch naming convention violations
-- CLAUDE.md missing or invalid
-- Attempts to commit to protected branches
-
-**Solutions**:
-```bash
-# Check branch naming
-./scripts/hooks/check-branch-naming.sh
-
-# Validate CLAUDE.md
-./scripts/hooks/validate-claude-md.sh
-
-# Review safety rules
-cat CLAUDE.md | grep -A 5 "Safety Rules"
-```
-
-### Debugging Workflow Execution
-
-#### GitHub Actions Logs
-```bash
-# View recent workflow runs
-gh run list --workflow=branch-tracking.yml
-
-# Get detailed logs for specific run
-gh run view [run-id] --log
-
-# Download logs for offline analysis
-gh run download [run-id]
-```
-
-#### Local Testing
-```bash
-# Test individual scripts locally
-cd agentic-development/scripts/
-node update-branch-tracking.js --help
-node process-gemini-feedback.js --help
-node trigger-agent-session.js --help
-
-# Validate JSON files
-cat branch-tracking/*.json | jq . > /dev/null && echo "Valid JSON"
-
-# Check file permissions
-ls -la branch-tracking/
-```
-
-#### Network and API Issues
-```bash
-# Test GitHub API connectivity
-gh api user
-
-# Check repository dispatch permissions
-gh api repos/tuvens/tuvens-docs --jq .permissions
-
-# Verify token scopes
-gh auth status
-```
-
-## Best Practices for Agents
-
-### Working with Workflows
-1. **Understand Dependencies**: Know which workflows affect your work
-2. **Monitor Status**: Check workflow runs when automation seems broken  
-3. **Follow Safety Rules**: Expect and comply with branch protection workflows
-4. **Use Context**: Leverage the context generated by workflow systems
-5. **Report Issues**: Create GitHub issues when workflows consistently fail
-
-### Integration Guidelines
-1. **Branch Naming**: Follow `{agent}/{type}/{description}` convention
-2. **CLAUDE.md Compliance**: Ensure safety file exists and is valid
-3. **Issue Linking**: Reference issues that relate to your work
-4. **Documentation Updates**: Keep documentation current as you work
-
-### Debugging Approach
-1. **Check Workflow Logs**: Start with GitHub Actions logs for recent runs
-2. **Validate Local Files**: Ensure branch tracking files are consistent
-3. **Test Manually**: Use provided scripts to test components individually
-4. **Escalate Systematically**: Follow the troubleshooting guide step by step
 
 ## Integration with Agent Configuration
 
@@ -335,9 +137,9 @@ This workflow infrastructure integrates with agent configuration files in `agent
 
 ---
 
-**Last Updated**: 2025-08-08  
-**Version**: 1.0  
-**Maintained By**: Vibe Coder Agent  
+**Last Updated**: 2025-08-19  
+**Version**: 2.0 - Split into focused workflow documentation files  
+**Maintained By**: DevOps Agent  
 **Review Process**: Multi-agent collaborative review (DevOps + Task Orchestrator + Gemini Code Assist)
 
 *This guide is part of the Tuvens agentic development infrastructure. For questions or issues, create a GitHub issue with the `workflow-infrastructure` label.*
