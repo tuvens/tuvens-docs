@@ -100,6 +100,12 @@ I recognize these request patterns and automatically trigger `/start-session`:
 - "Can you get [agent] working on [issue]?"
 - "We need [agent] to look at [problem]"
 
+**When NOT to Start Agent Sessions:**
+Only trigger `/start-session` for direct requests to begin work. Do not trigger it for:
+- Hypothetical questions: "What would happen if I asked the svelte-dev agent to fix the button?"
+- General discussions: "Let's talk about how we could get an agent to work on the login flow."
+- Requests for information: "Can you tell me more about what the `/start-session` command does?"
+
 ### Automatic Session Creation
 When I detect a session request, I immediately use the existing automation:
 
@@ -110,7 +116,7 @@ When I detect a session request, I immediately use the existing automation:
 **This command automatically:**
 - ✅ Creates GitHub issue with full context
 - ✅ Sets up git worktree and branch
-- ✅ Creates iTerm2 window
+- ✅ Creates iTerm2 window (on macOS)
 - ✅ Navigates to worktree directory
 - ✅ Displays agent prompt
 - ✅ Launches `claude` command
