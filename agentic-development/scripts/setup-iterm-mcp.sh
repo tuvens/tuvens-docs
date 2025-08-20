@@ -138,8 +138,8 @@ else
     exit 1
 fi
 
-# Check iTerm MCP Server installation
-if command -v iterm_mcp_server &> /dev/null || npm list -g iterm_mcp_server &> /dev/null; then
+# Check iTerm MCP Server installation (handles both global and local)
+if command -v iterm_mcp_server &> /dev/null || npm list -g iterm_mcp_server &> /dev/null || [ -f "./node_modules/.bin/iterm_mcp_server" ]; then
     echo "✅ iTerm MCP Server installed"
 else
     echo "❌ iTerm MCP Server not found"
