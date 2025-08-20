@@ -36,6 +36,7 @@ agentic-development/
 │   ├── cleanup-merged-branches.sh  # **NEW: Automated branch cleanup**
 │   ├── update-branch-tracking.js   # **NEW: Branch tracking updates**
 │   ├── validate-environment.sh     # Environment checks
+│   ├── start-session.sh           # **NEW: Simple iTerm automation script**
 │   └── maintenance-check.sh        # System health validation
 └── cross-repo-sync-automation/     # Repository synchronization
     ├── README.md                   # Automation documentation
@@ -69,7 +70,7 @@ agentic-development/
 - **Automated Cleanup**: Remove merged branches and worktrees automatically
 - **GitHub Integration**: Real-time updates via GitHub Actions webhooks
 
-**Key Usage Scenarios:**
+**Usage Scenarios:**
 1. **Agent Coordination**: Check `active-branches.json` before starting to avoid duplicating work
 2. **Cross-Repo Features**: Use `task-groups.json` to coordinate work across tuvens-client, tuvens-api, hi.events
 3. **Workload Management**: Use `agent-status.sh [agent-name]` for quick workload analysis  
@@ -113,6 +114,26 @@ All design documents, analysis, and development artifacts are in `.temp/`:
 1. **Claude Desktop Project**: Use content from `.temp/migration-guides/DESKTOP_PROJECT_UPDATE.md`
 2. **Start Session**: Use `/start-session [agent-name]` command
 3. **Claude Code**: Will load appropriate agent identity automatically
+
+### 🖥️ Optional: Terminal Automation
+
+```bash
+# Simple iTerm session creation (no complex setup required)
+./scripts/start-session.sh [agent-name] [optional-task]
+```
+
+Enables automated Claude Desktop → Claude Code handoffs via iTerm sessions using simple AppleScript.
+
+**Examples:**
+```bash
+./scripts/start-session.sh react-dev "fix button styling"
+./scripts/start-session.sh vibe-coder "update documentation"
+```
+
+**Troubleshooting:**
+- Requires iTerm2 and macOS
+- May need to grant automation permissions in System Preferences
+- Fallback solution when complex MCP servers have permission issues
 
 ### 🔧 System Maintenance
 
