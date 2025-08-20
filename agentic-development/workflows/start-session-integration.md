@@ -7,6 +7,43 @@ The `/start-session` command orchestrates multi-agent development by:
 2. Creating appropriate worktrees
 3. Setting up Claude Code sessions with proper context
 4. Maintaining awareness of repository locations
+5. **NEW**: Leveraging iTerm MCP Server integration when available
+
+## iTerm MCP Integration
+
+### What is iTerm MCP Integration?
+
+The iTerm MCP (Model Context Protocol) server allows Claude Desktop to directly interact with your terminal, enabling:
+- **Direct terminal command execution** from Claude Desktop
+- **Real-time terminal output reading** and analysis
+- **Interactive REPL sessions** with Claude assistance
+- **Seamless workflow automation** without manual copy/paste
+
+### Benefits for /start-session
+
+When iTerm MCP is configured:
+1. **Automated Setup**: Claude Desktop can run setup-agent-task.sh directly
+2. **Real-time Monitoring**: Claude can watch command output and react
+3. **Interactive Debugging**: Claude can troubleshoot issues as they occur
+4. **Streamlined Workflow**: Reduces context switching between applications
+
+### Installation and Setup
+
+Use the automated installation script:
+```bash
+# Install iTerm MCP server and configure Claude Desktop
+./agentic-development/infrastructure/iterm-mcp/install-iterm-mcp.sh
+
+# Validate the installation
+./agentic-development/infrastructure/iterm-mcp/validate-setup.sh
+```
+
+### Integration Detection
+
+The `/start-session` workflow automatically detects iTerm MCP availability:
+1. Checks for Claude Desktop configuration
+2. Tests iTerm MCP server accessibility
+3. Falls back to traditional manual setup if unavailable
 
 ## Repository Structure
 
