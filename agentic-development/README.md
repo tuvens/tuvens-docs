@@ -39,6 +39,7 @@ agentic-development/
 │   ├── README.md                      # Main entry point for Desktop
 │   ├── agents/                      # Agent-specific handoffs
 │   ├── handoff-templates/           # Task-type templates
+│   ├── terminal-automation.md      # **NEW: iTerm MCP Server guide**
 │   └── workflows/                   # Multi-agent protocols
 ├── workflows/                       # Technical workflows
 │   ├── README.md                    # **NEW: GitHub Actions workflow infrastructure guide**
@@ -59,6 +60,7 @@ agentic-development/
 │   └── merge-log.json              # Recently merged branch history
 ├── scripts/                        # System automation
 │   ├── setup-agent-task.sh         # Creates sessions + branch tracking
+│   ├── setup-iterm-mcp.sh          # **NEW: iTerm MCP Server setup**
 │   ├── cleanup-merged-branches.sh  # **NEW: Automated branch cleanup**
 │   ├── update-branch-tracking.js   # **NEW: Branch tracking updates**
 │   ├── validate-environment.sh     # Environment checks
@@ -73,17 +75,40 @@ agentic-development/
 **For Claude Desktop:**
 - Load `desktop-project-instructions/README.md`
 - References other files based on task needs
+- **NEW**: Terminal automation via `terminal-automation.md`
 
 **For Claude Code:**
 - Loads agent identity from `.claude/agents/[agent].md`
 - Additional context from `workflows/`
 - **Branch Tracking**: Context from `branch-tracking/` for coordination
+- **Terminal Automation**: Access to iTerm MCP Server capabilities
 
 **System Scripts:**
 - `setup-agent-task.sh` - Creates worktrees, issues, prompts + updates branch tracking + **Enhanced Onboarding**
+- `setup-iterm-mcp.sh` - **NEW**: Installs and configures iTerm MCP Server for terminal automation
 - `cleanup-merged-branches.sh` - Removes merged branches and worktrees automatically  
 - `update-branch-tracking.js` - Updates central tracking from GitHub Actions
 - `validate-environment.sh` - Checks prerequisites
+
+### 🖥️ Terminal Automation System **NEW**
+
+**iTerm MCP Server Integration:**
+- **Agent Terminal Isolation**: Each agent maintains separate, named terminal sessions
+- **Command Execution**: Automated command running with output monitoring
+- **Development Environment**: Automated server startup, testing, and deployment
+- **Cross-Repository Operations**: Coordinated terminal operations across all Tuvens repositories
+
+**Key Features:**
+1. **Session Management**: Named terminals per agent and purpose (`node-dev-main`, `laravel-dev-serve`, etc.)
+2. **Command Monitoring**: Read output to verify command success and detect errors
+3. **Environment Automation**: Automated development server startup and management
+4. **Git Integration**: Terminal-based git operations with validation
+5. **Multi-Process Coordination**: Parallel development servers, test runners, and monitoring
+
+**Setup Requirements:**
+- macOS with iTerm2 installed
+- Node.js 14+
+- Claude Desktop with MCP configuration
 
 ### 🌐 Branch Tracking System
 
@@ -108,13 +133,17 @@ agentic-development/
 - **Workload Analysis**: Agent-specific recommendations based on current branches  
 - **Interactive Coordination**: Prompts to join existing task groups or create new ones
 - **Cross-Repository Awareness**: Shows related work in other repositories
+- **Terminal Environment**: Automatic terminal session setup for development tasks
 
 **Quick Status Commands**:
 ```bash
+# Setup terminal automation
+bash agentic-development/scripts/setup-iterm-mcp.sh
+
 # Clean up merged branches and obsolete worktrees
 bash agentic-development/scripts/cleanup-merged-branches.sh
 
-# Validate environment setup
+# Validate environment setup (including iTerm MCP)
 bash agentic-development/scripts/validate-environment.sh
 ```
 
@@ -129,9 +158,10 @@ All design documents, analysis, and development artifacts are in `.temp/`:
 
 ### 🚀 Quick Start
 
-1. **Claude Desktop Project**: Use content from `.temp/migration-guides/DESKTOP_PROJECT_UPDATE.md`
-2. **Start Session**: Use `/start-session [agent-name]` command
-3. **Claude Code**: Will load appropriate agent identity automatically
+1. **Terminal Automation Setup**: Run `./scripts/setup-iterm-mcp.sh` for automated terminal capabilities
+2. **Claude Desktop Project**: Use content from `.temp/migration-guides/DESKTOP_PROJECT_UPDATE.md`
+3. **Start Session**: Use `/start-session [agent-name]` command with terminal automation
+4. **Claude Code**: Will load appropriate agent identity automatically with terminal access
 
 ### 🔧 System Maintenance
 
@@ -139,11 +169,12 @@ All design documents, analysis, and development artifacts are in `.temp/`:
 
 Automated maintenance issues are created via GitHub Actions on every push to `develop`. The Vibe Coder should:
 - Verify structure accuracy in this README
-- Update file counts and descriptions (currently 37 production files) 
+- Update file counts and descriptions (currently 38 production files including iTerm MCP integration) 
 - Check for orphaned or missing references
 - Validate that all load paths work correctly
 - Archive outdated files to `.temp/`
+- Test terminal automation functionality
 
 **Maintenance Issues**: Look for GitHub issues titled `[Vibe Coder] System Maintenance Check - [Date]`
 
-This structure maintains only what's needed for production use of the multi-agent system.
+This structure maintains only what's needed for production use of the multi-agent system, now enhanced with comprehensive terminal automation capabilities.
