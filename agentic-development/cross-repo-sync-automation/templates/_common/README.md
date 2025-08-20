@@ -10,7 +10,7 @@ This directory contains reusable template components that are shared across all 
 - **`help-section.md`** - Help and support information section
 - **`timeline-requirements.md`** - Timeline expectations and scheduling information
 
-### 🔧 Automation Components  
+### 🔧 Automation Components
 - **`automated-verification-setup.md`** - Instructions for setting up automated verification
 - **`submodule-update-step.md`** - Step-by-step submodule update procedures
 
@@ -38,7 +38,7 @@ This directory contains reusable template components that are shared across all 
 #### **vibe-coder** - Content and messaging
 - Updating notification text and messaging
 - Improving clarity and readability
-- Managing help and support content
+- Managing help and support conten
 - README and documentation updates
 
 #### **devops** - Automation and procedures
@@ -47,7 +47,7 @@ This directory contains reusable template components that are shared across all 
 - Timeline and scheduling requirements
 - Technical procedure documentation
 
-#### **Any specialist agent** - Domain-specific content
+#### **Any specialist agent** - Domain-specific conten
 - For content related to specific technology stacks
 - When components need technical accuracy review
 - For integration with specific development workflows
@@ -63,7 +63,7 @@ Common components use placeholder variables that are replaced during template bu
 - `[REPO_NAME]` - Target repository name
 
 ### Modification Guidelines
-1. **Preserve variables**: Keep placeholder syntax intact when editing content
+1. **Preserve variables**: Keep placeholder syntax intact when editing conten
 2. **Test compatibility**: Verify changes work across all repository types
 3. **Update build script**: If adding new components, update `../build-templates.sh`
 4. **Document changes**: Update this README when adding or removing components
