@@ -47,7 +47,12 @@
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-seeding.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/database-seeding.md) (Modified: 2025-08-12, 47 lines, 1510 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/entity-definition.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/entity-definition.md) (Modified: 2025-08-12, 81 lines, 2208 bytes)
 - [`tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md`](./tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/migration-script.md) (Modified: 2025-08-12, 137 lines, 4450 bytes)
-- [`tuvens-docs/integration-examples/frontend-integration/README.md`](./tuvens-docs/integration-examples/frontend-integration/README.md) (Modified: 2025-08-13, 437 lines, 10717 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/01-quick-start-setup.md`](./tuvens-docs/integration-examples/frontend-integration/01-quick-start-setup.md) (Modified: 2025-08-20, 137 lines, 3867 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/02-design-system-integration.md`](./tuvens-docs/integration-examples/frontend-integration/02-design-system-integration.md) (Modified: 2025-08-20, 279 lines, 6460 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/03-api-integration-patterns.md`](./tuvens-docs/integration-examples/frontend-integration/03-api-integration-patterns.md) (Modified: 2025-08-20, 359 lines, 9554 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/04-testing-error-handling.md`](./tuvens-docs/integration-examples/frontend-integration/04-testing-error-handling.md) (Modified: 2025-08-20, 449 lines, 12721 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/05-analytics-deployment.md`](./tuvens-docs/integration-examples/frontend-integration/05-analytics-deployment.md) (Modified: 2025-08-20, 482 lines, 12094 bytes)
+- [`tuvens-docs/integration-examples/frontend-integration/README.md`](./tuvens-docs/integration-examples/frontend-integration/README.md) (Modified: 2025-08-20, 91 lines, 4297 bytes)
 - [`tuvens-docs/integration-examples/frontend-integration/svelte-examples.md`](./tuvens-docs/integration-examples/frontend-integration/svelte-examples.md) (Modified: 2025-08-12, 830 lines, 22041 bytes)
 - [`tuvens-docs/repositories/README.md`](./tuvens-docs/repositories/README.md) (Modified: 2025-08-19, 219 lines, 10043 bytes)
 - [`tuvens-docs/repositories/eventsdigest-ai.md`](./tuvens-docs/repositories/eventsdigest-ai.md) (Modified: 2025-08-12, 24 lines, 823 bytes)
@@ -77,5 +82,5 @@
 - [`README.md`](./README.md) (Modified: 2025-08-19, 133 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 211
-- **Total lines**: 29902
+- **Total documentation files**: 216
+- **Total lines**: 31280
