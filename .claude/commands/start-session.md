@@ -13,16 +13,18 @@ Agent: `$ARGUMENTS`
 
 ## Automated Session Creation
 
-I will use the enhanced `setup-agent-task.sh` script which provides:
+I will use the enhanced `setup-agent-task.sh` script with iTerm MCP integration:
 - Environment validation
 - GitHub issue creation with comprehensive templates
 - Worktree setup with proper directory structure
 - Enhanced agent prompt generation
-- iTerm2 automation
+- **iTerm MCP automation** (uses configured iTerm MCP server)
 - Branch tracking integration
 - Context file support
 - File validation support
 - Success criteria definition
+
+After creating the session setup, I will automatically open iTerm with Claude Code using the iTerm MCP bridge.
 
 ## Usage Patterns Supported
 
@@ -61,3 +63,15 @@ The setup script will be called with the format:
 ```bash
 ./agentic-development/scripts/setup-agent-task.sh [agent] "[context-derived-title]" "[context-derived-description]"
 ```
+
+## iTerm MCP Integration
+
+After the session setup is complete, I will use the iTerm MCP bridge to automatically open the Claude Code session:
+
+```javascript
+// Load and execute iTerm MCP bridge
+const { enhanceStartSession } = require('./.claude/commands/iterm-session-bridge.js');
+await enhanceStartSession(agentName, taskDescription);
+```
+
+This integration uses your configured iTerm MCP server to open a terminal session in the correct directory and start Claude Code automatically.
