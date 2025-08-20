@@ -81,8 +81,6 @@ agentic-development/
 
 **System Scripts:**
 - `setup-agent-task.sh` - Creates worktrees, issues, prompts + updates branch tracking + **Enhanced Onboarding**
-- `agent-status.sh` - **NEW: Quick agent workload analysis and task recommendations**
-- `system-status.sh` - **NEW: System-wide overview of all agent activity**
 - `cleanup-merged-branches.sh` - Removes merged branches and worktrees automatically  
 - `update-branch-tracking.js` - Updates central tracking from GitHub Actions
 - `validate-environment.sh` - Checks prerequisites
@@ -98,11 +96,9 @@ agentic-development/
 **Key Usage Scenarios:**
 1. **Agent Coordination**: Check `active-branches.json` before starting to avoid duplicating work
 2. **Cross-Repo Features**: Use `task-groups.json` to coordinate work across tuvens-client, tuvens-api, hi.events
-3. **Workload Management**: Use `agent-status.sh [agent-name]` for quick workload analysis  
-4. **System Overview**: Use `system-status.sh` for full system activity dashboard
-5. **Enhanced Onboarding**: `/start-session` now includes task recommendations and coordination prompts
-6. **Maintenance**: Run `cleanup-merged-branches.sh` to clean up obsolete worktrees
-7. **Task Handoffs**: See related branches when taking over work from another agent
+3. **Enhanced Onboarding**: `/start-session` now includes task recommendations and coordination prompts
+4. **Maintenance**: Run `cleanup-merged-branches.sh` to clean up obsolete worktrees
+5. **Task Handoffs**: See related branches when taking over work from another agent
 
 ### 🚀 Enhanced Agent Onboarding Features
 
@@ -115,14 +111,11 @@ agentic-development/
 
 **Quick Status Commands**:
 ```bash
-# Check specific agent workload and get recommendations
-bash agentic-development/scripts/agent-status.sh vibe-coder
+# Clean up merged branches and obsolete worktrees
+bash agentic-development/scripts/cleanup-merged-branches.sh
 
-# Get system-wide overview of all agent activity  
-bash agentic-development/scripts/system-status.sh
-
-# Check agent status in specific repository
-bash agentic-development/scripts/agent-status.sh svelte-dev tuvens-client
+# Validate environment setup
+bash agentic-development/scripts/validate-environment.sh
 ```
 
 ### 🗂️ Archived Materials

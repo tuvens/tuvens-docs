@@ -64,7 +64,7 @@ jobs:
           echo "### Detailed Commit History" >> agentic-development/docs/auto-generated/recent-commits.md
           echo "" >> agentic-development/docs/auto-generated/recent-commits.md
           
-          git log --oneline --decorate --graph -25 --pretty=format:"%h|%ad|%an|%s|%D" --date=format:"%Y-%m-%d %H:%M" | while IFS='|' read hash date author message refs; do
+          git log --decorate -25 --pretty=format:"%h|%ad|%an|%s|%D" --date=format:"%Y-%m-%d %H:%M" | while IFS='|' read -r hash date author message refs; do
             echo "#### \`$hash\` - $message" >> agentic-development/docs/auto-generated/recent-commits.md
             echo "- **Date**: $date" >> agentic-development/docs/auto-generated/recent-commits.md
             echo "- **Author**: $author" >> agentic-development/docs/auto-generated/recent-commits.md
