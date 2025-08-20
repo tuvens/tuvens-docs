@@ -140,10 +140,13 @@ agentic-development/
 # Setup terminal automation
 bash agentic-development/scripts/setup-iterm-mcp.sh
 
+# Validate iTerm MCP Server installation specifically
+bash validate-iterm-mcp.sh
+
 # Clean up merged branches and obsolete worktrees
 bash agentic-development/scripts/cleanup-merged-branches.sh
 
-# Validate environment setup (including iTerm MCP)
+# Validate environment setup
 bash agentic-development/scripts/validate-environment.sh
 ```
 
