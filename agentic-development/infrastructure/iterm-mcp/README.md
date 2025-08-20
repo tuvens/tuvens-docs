@@ -248,7 +248,7 @@ Your svelte-dev agent session is now ready! The Claude Code session should be st
 ```bash
 # In iTerm terminal
 Ctrl+C          # Stop current command
-killall node    # Stop all Node.js processes (including MCP server)
+pkill -f iterm-mcp    # Stop iTerm MCP server specifically
 ```
 
 #### Disable MCP Integration

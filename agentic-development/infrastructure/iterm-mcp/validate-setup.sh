@@ -244,7 +244,7 @@ test_security() {
     
     # Configuration file permissions
     if [[ -f "$CLAUDE_CONFIG_FILE" ]]; then
-        local perms=$(stat -f "%A" "$CLAUDE_CONFIG_FILE" 2>/dev/null || stat -c "%a" "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo "unknown")
+        local perms=$(stat -f "%Lp" "$CLAUDE_CONFIG_FILE" 2>/dev/null || stat -c "%a" "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo "unknown")
         if [[ "$perms" == "600" || "$perms" == "644" ]]; then
             log "SUCCESS" "✓ Configuration file permissions: $perms"
             ((TESTS_PASSED++))
@@ -266,10 +266,10 @@ test_performance() {
     log "INFO" "Testing performance characteristics..."
     
     # Measure iTerm MCP startup time
-    local start_time=$(date +%s%N)
+    local start_time=$(date +%s)
     if timeout 10 npx -y iterm-mcp --version &>/dev/null; then
-        local end_time=$(date +%s%N)
-        local duration_ms=$(( (end_time - start_time) / 1000000 ))
+        local end_time=$(date +%s)
+        local duration_ms=$(( (end_time - start_time) * 1000 ))
         
         if [[ $duration_ms -lt 5000 ]]; then
             log "SUCCESS" "✓ iTerm MCP startup time: ${duration_ms}ms (good)"
@@ -299,7 +299,7 @@ show_troubleshooting_info() {
     
     if [[ -f "$CLAUDE_CONFIG_FILE" ]]; then
         log "INFO" "  Config file size: $(wc -c < "$CLAUDE_CONFIG_FILE") bytes"
-        log "INFO" "  Config file modified: $(stat -f "%Sm" "$CLAUDE_CONFIG_FILE" 2>/dev/null || stat -c "%y" "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo 'unknown')"
+        log "INFO" "  Config file modified: $(stat -f "%Sm" -t "%Y-%m-%d %H:%M:%S" "$CLAUDE_CONFIG_FILE" 2>/dev/null || stat -c "%y" "$CLAUDE_CONFIG_FILE" 2>/dev/null || echo 'unknown')"
     fi
     
     log "INFO" ""
@@ -334,7 +334,7 @@ generate_report() {
     log "WARN" "Skipped: $TESTS_SKIPPED"
     
     local success_rate=0
-    if [[ $total_tests -gt 0 ]]; then
+    if [[ $total_tests -gt 0 && $((TESTS_PASSED + TESTS_FAILED)) -gt 0 ]]; then
         success_rate=$(( (TESTS_PASSED * 100) / (TESTS_PASSED + TESTS_FAILED) ))
     fi
     

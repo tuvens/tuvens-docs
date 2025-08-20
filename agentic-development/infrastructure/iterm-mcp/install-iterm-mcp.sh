@@ -232,7 +232,7 @@ update_claude_config() {
             # Use jq to merge if available, otherwise manual merge
             if command -v jq &> /dev/null; then
                 # Create temporary merged config
-                local temp_config="/tmp/claude_config_merged_$$"
+                local temp_config=$(mktemp)
                 jq -s '.[0] * .[1]' "$CLAUDE_CONFIG_FILE" <(echo "$mcp_config") > "$temp_config"
                 mv "$temp_config" "$CLAUDE_CONFIG_FILE"
                 log "SUCCESS" "Merged iTerm MCP configuration with existing config"
@@ -311,7 +311,7 @@ uninstall_iterm_mcp() {
             log "INFO" "[DRY RUN] Would remove iTerm MCP from Claude config"
         else
             # Remove iTerm MCP server from config
-            local temp_config="/tmp/claude_config_cleaned_$$"
+            local temp_config=$(mktemp)
             jq 'del(.mcpServers."iterm-mcp")' "$CLAUDE_CONFIG_FILE" > "$temp_config"
             
             # If mcpServers is now empty, remove it entirely

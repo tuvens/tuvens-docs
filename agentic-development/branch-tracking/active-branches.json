@@ -1,50 +1,5 @@
 {
   "branches": {
-    "test-repo": [
-      {
-        "name": "feature/test",
-        "author": "gemini-integration",
-        "created": "2025-08-11T20:06:08.926Z",
-        "lastActivity": "2025-08-11T20:06:08.926Z",
-        "taskGroup": null,
-        "status": "agent-session-active",
-        "worktree": null,
-        "agent": "vibe-coder",
-        "relatedBranches": [],
-        "githubUrl": "https://github.com/tuvens/test-repo/tree/feature/test",
-        "issues": [
-          "tuvens/test-repo#123"
-        ],
-        "gemini_feedback": {
-          "feedback_id": "a5797ff1bf41e52f",
-          "priority": "critical",
-          "session_id": "gemini-1754942768925-w2d16vv7p",
-          "triggered_at": "2025-08-11T20:06:08.925Z"
-        }
-      },
-      {
-        "name": "feature/security-fix",
-        "author": "gemini-integration",
-        "created": "2025-08-11T20:06:08.983Z",
-        "lastActivity": "2025-08-11T20:06:08.984Z",
-        "taskGroup": null,
-        "status": "gemini-critical-feedback",
-        "worktree": null,
-        "agent": "vibe-coder",
-        "relatedBranches": [],
-        "githubUrl": "https://github.com/tuvens/test-repo/tree/feature/security-fix",
-        "issues": [],
-        "gemini_feedback_history": [
-          {
-            "feedback_id": "test-feedback-123",
-            "category": "security-vulnerability",
-            "priority": "critical",
-            "received_at": "2025-08-11T20:06:08.984Z",
-            "agent_assigned": "vibe-coder"
-          }
-        ]
-      }
-    ],
     "tuvens-docs": [
       {
         "name": "feature/sub-session-system-implementation",
@@ -67,7 +22,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "worktrees/vibe-coder/feature/critical-directory-structure-cleanup",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/critical-directory-structure-cleanup",
         "issues": "tuvens-docs#92"
@@ -97,7 +52,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/directory-structure-analysis-and-reference-mapping",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/directory-structure-analysis-and-reference-mapping",
         "issues": "tuvens-docs#102"
@@ -110,7 +65,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/feature/phase-2a---create-new-directory-structure",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2a---create-new-directory-structure",
         "issues": "tuvens-docs#103"
@@ -123,7 +78,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/vibe-coder/feature/phase-2b---coordinate-reference-updates",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2b---coordinate-reference-updates",
         "issues": "tuvens-docs#104"
@@ -136,7 +91,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/devops/feature/phase-2c---execute-file-moves",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2c---execute-file-moves",
         "issues": "tuvens-docs#105"
@@ -149,7 +104,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
         "issues": "tuvens-docs#143"
@@ -162,7 +117,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/deploy-wiki-workflow-as-described",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/deploy-wiki-workflow-as-described",
         "issues": "tuvens-docs#145"
@@ -175,7 +130,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/fix-critical-wiki-document-issues-from-pr-152",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-critical-wiki-document-issues-from-pr-152",
         "issues": "tuvens-docs#153"
@@ -188,7 +143,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/update-phases-documentation-to-reflect-completed-status",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/update-phases-documentation-to-reflect-completed-status",
         "issues": "tuvens-docs#154"
@@ -201,7 +156,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script",
         "issues": "tuvens-docs#157"
@@ -214,7 +169,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/feature/enforce-github-comment-standards-protocol-in-agent-workflows",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/enforce-github-comment-standards-protocol-in-agent-workflows",
         "issues": "tuvens-docs#158"
@@ -227,7 +182,7 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/document-future-worktree-cleanup-in-wiki",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/document-future-worktree-cleanup-in-wiki",
         "issues": "tuvens-docs#161"
@@ -240,38 +195,10 @@
         "taskGroup": null,
         "status": "active",
         "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163",
-        "agent": "feature",
+        "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/address-geminis-comments-on-pr-163",
         "issues": "tuvens-docs#164"
-      }
-    ],
-    "devops-feature-iterm-mcp-server-infrastructure-setup": [
-      {
-        "name": "devops/feature/iterm-mcp-server-infrastructure-setup",
-        "author": "tuvens",
-        "created": "2025-08-20T12:32:16.519Z",
-        "lastActivity": "2025-08-20T12:32:16.520Z",
-        "taskGroup": null,
-        "status": "active",
-        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops-feature-iterm-mcp-server-infrastructure-setup/worktrees/devops/devops/feature/iterm-mcp-server-infrastructure-setup",
-        "agent": "devops",
-        "relatedBranches": [],
-        "githubUrl": "https://github.com/tuvens/devops-feature-iterm-mcp-server-infrastructure-setup/tree/devops/feature/iterm-mcp-server-infrastructure-setup",
-        "issues": "devops-feature-iterm-mcp-server-infrastructure-setup#208"
-      },
-      {
-        "name": "devops/feature/iterm-mcp-server-infrastructure-setup",
-        "author": "tuvens",
-        "created": "2025-08-20T12:32:17.183Z",
-        "lastActivity": "2025-08-20T12:32:17.190Z",
-        "taskGroup": null,
-        "status": "active",
-        "worktree": "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops-feature-iterm-mcp-server-infrastructure-setup/worktrees/devops/devops/feature/iterm-mcp-server-infrastructure-setup",
-        "agent": "devops",
-        "relatedBranches": [],
-        "githubUrl": "https://github.com/tuvens/devops-feature-iterm-mcp-server-infrastructure-setup/tree/devops/feature/iterm-mcp-server-infrastructure-setup",
-        "issues": "devops-feature-iterm-mcp-server-infrastructure-setup#209"
       }
     ]
   },
