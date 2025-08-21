@@ -1,2 +1,0 @@
-- **Mobile Standards**: Review mobile-relevant sections in `shared-protocols/`
-- **Authentication**: Check `implementation-guides/cross-app-authentication/README.md`
