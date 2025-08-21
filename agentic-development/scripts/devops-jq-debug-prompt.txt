@@ -1,0 +1,45 @@
+═══════════════════════════════════════════════════════════════════════════════
+DEVOPS AGENT - DEBUG JQ HANGING ISSUE
+
+GitHub Issue: {{ISSUE_NUMBER}}
+Worktree: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS:
+1. Type: claude
+2. Copy and paste the prompt below
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUDE PROMPT:
+
+I am the {{AGENT_NAME}} agent working on GitHub issue {{ISSUE_NUMBER}}.
+
+Context Loading:
+- Load: .claude/agents/devops.md
+- Load: Implementation reports and workflow documentation
+
+🚨 CRITICAL: Read GitHub Issue {{ISSUE_NUMBER}} for complete task context
+Use: `gh issue view {{ISSUE_NUMBER}}` to get the full problem analysis, requirements, and implementation details.
+
+Task: {{TASK_TITLE}}
+Working Directory: {{WORKTREE_PATH}}
+Branch: {{BRANCH_NAME}}
+
+Problem: The jq command on lines 251-255 in setup-agent-task.sh that searches for related task groups is hanging, likely due to complex regex matching on the task-groups.json file. This affects all /start-session automation.
+
+Priority Files to Examine:
+- agentic-development/scripts/setup-agent-task.sh (lines 251-255)
+- agentic-development/branch-tracking/task-groups.json
+
+Start your work by:
+1. Running: `gh issue view {{ISSUE_NUMBER}}` to read the full GitHub issue
+2. Examine the problematic jq command in setup-agent-task.sh
+3. Test the jq command in isolation to identify the hanging issue
+4. Fix the regex matching or simplify the logic
+5. Test the complete automation flow to ensure it works
+6. Update GitHub issue {{ISSUE_NUMBER}} with findings and solution
+
+Success Criteria: JQ command fixed and setup-agent-task.sh completes successfully without hanging
+
+═══════════════════════════════════════════════════════════════════════════════
