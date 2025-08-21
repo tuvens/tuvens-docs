@@ -348,16 +348,38 @@ if [[ "$CURRENT_BRANCH" == "$BRANCH_NAME" ]]; then
     git checkout dev 2>/dev/null || git checkout develop 2>/dev/null || git checkout main
 fi
 
-# Create worktree (remove if exists)
+# Check if worktree already exists - if so, use it instead of creating new one
 if [[ -d "$WORKTREE_PATH" ]]; then
-    echo "   Removing existing worktree..."
-    git worktree remove "$WORKTREE_PATH" --force || true
+    echo "   Existing worktree found: $WORKTREE_PATH"
+    echo "   Using existing worktree instead of creating new one"
+    echo "✅ Using existing worktree: $WORKTREE_PATH"
+    
+    # Check if branch exists and is associated with this worktree
+    if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
+        echo "✅ Using existing branch: $BRANCH_NAME"
+    else
+        echo "⚠️  Branch $BRANCH_NAME doesn't exist, but worktree does"
+        echo "   This is fine - continuing with existing worktree"
+    fi
+else
+    # Create new worktree since it doesn't exist
+    mkdir -p "$(dirname "$WORKTREE_PATH")"
+    
+    # Remove existing branch if it exists (only if we're creating new worktree)
+    if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
+        echo "   Removing existing orphaned branch: $BRANCH_NAME"
+        git branch -D "$BRANCH_NAME" 2>/dev/null || true
+    fi
+    
+    if git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"; then
+        echo "✅ Created worktree: $WORKTREE_PATH"
+        echo "✅ Created branch: $BRANCH_NAME"
+    else
+        echo "❌ ERROR: Failed to create worktree: $WORKTREE_PATH"
+        echo "   This may indicate a Git configuration issue"
+        exit 1
+    fi
 fi
-
-mkdir -p "$(dirname "$WORKTREE_PATH")"
-git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"
-echo "✅ Created worktree: $WORKTREE_PATH"
-echo "✅ Created branch: $BRANCH_NAME"
 
 # Step 3a: Clone tuvens-docs (if not already in tuvens-docs)
 if [[ "$IS_TUVENS_DOCS" == "false" ]]; then
@@ -521,8 +543,12 @@ EOF
 echo "✅ Created agent prompt: $PROMPT_FILE"
 echo ""
 
-# Step 5: Create iTerm2 window (macOS only)
-if [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
+# Step 5: Create iTerm2 window (Claude Code mode only)
+if [[ "${SKIP_ITERM_AUTOMATION:-false}" == "true" ]]; then
+    echo "Step 5: iTerm2 window creation skipped (Claude Desktop mode)"
+    echo "   iTerm automation will be handled by Claude Desktop MCP integration"
+    echo ""
+elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
     echo "Step 5: Creating iTerm2 window..."
     
     # Create AppleScript for iTerm2 window

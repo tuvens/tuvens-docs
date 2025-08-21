@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# File: start-session
+# Purpose: Claude Desktop /start-session command implementation
+# 
+# This script provides the /start-session functionality for Claude Desktop
+# using iTerm2 MCP integration instead of AppleScript
+
+set -euo pipefail
+
+# Usage function
+usage() {
+    echo "Usage: /start-session <agent_name> <task_title> <task_description> [context_file] [--files=file1,file2] [--success-criteria='criteria']"
+    echo ""
+    echo "Claude Desktop /start-session command"
+    echo "Creates GitHub issue, worktree, and uses MCP for iTerm automation"
+    echo ""
+    echo "Examples:"
+    echo "  /start-session vibe-coder 'API Documentation' 'Create comprehensive API docs'"
+    echo "  /start-session vibe-coder 'Fix Docs' 'Update branching docs' /tmp/task-context.md"
+    echo ""
+    exit 1
+}
+
+# Check minimum arguments
+if [[ $# -lt 3 ]]; then
+    usage
+fi
+
+# Find the script directory relative to this file
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+AGENTIC_SCRIPTS_DIR="$SCRIPT_DIR/agentic-development/scripts"
+
+# Check if we have the desktop adapter script
+DESKTOP_SCRIPT="$AGENTIC_SCRIPTS_DIR/setup-agent-task-desktop.sh"
+
+if [[ ! -f "$DESKTOP_SCRIPT" ]]; then
+    echo "❌ ERROR: Desktop adapter script not found: $DESKTOP_SCRIPT"
+    echo "   Make sure you're running this from the tuvens-docs root directory"
+    exit 1
+fi
+
+echo "🚀 /start-session for Claude Desktop"
+echo "===================================="
+echo ""
+
+# Execute the desktop adapter with all arguments
+"$DESKTOP_SCRIPT" "$@"

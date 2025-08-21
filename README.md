@@ -4,6 +4,13 @@
 
 **Central documentation hub for the Tuvens product suite and multi-agent development system**
 
+## 🚀 NEW: Claude Desktop Automation
+
+**For Claude Desktop users:** The `/start-session` command now works automatically!
+**→ [Claude Desktop Automation Guide](./CLAUDE-DESKTOP-AUTOMATION.md)** ← Click here for instant agent handoffs
+
+---
+
 ## 📚 When to Load This Document
 
 ### Primary Context Loading Scenarios

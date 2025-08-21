@@ -2,6 +2,8 @@
 
 ← [Back to Main](./README.md)
 
+> **💡 Start Wiki Work**: *"Get vibe-coder to create wiki documentation for [topic] in Claude Code"*
+
 ## GitHub Wiki Integration
 
 The Tuvens system includes comprehensive wiki integration for publishing documentation to the GitHub wiki while keeping the main repository clean and minimal.
