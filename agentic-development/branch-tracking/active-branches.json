@@ -245,9 +245,76 @@
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/address-geminis-comments-on-pr-163",
         "issues": "tuvens-docs#164"
       }
+    ],
+    "fix-claude-desktop-workflow-automation": [
+      {
+        "name": "devops/feature/test-desktop-automation",
+        "author": "tuvens",
+        "created": "2025-08-21T17:38:16.218Z",
+        "lastActivity": "2025-08-21T17:38:16.219Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/devops/devops/feature/test-desktop-automation",
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/fix-claude-desktop-workflow-automation/tree/devops/feature/test-desktop-automation",
+        "issues": "fix-claude-desktop-workflow-automation#226"
+      },
+      {
+        "name": "vibe-coder/feature/test-desktop-automation",
+        "author": "tuvens",
+        "created": "2025-08-21T19:02:20.534Z",
+        "lastActivity": "2025-08-21T19:02:20.535Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/test-desktop-automation",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/fix-claude-desktop-workflow-automation/tree/vibe-coder/feature/test-desktop-automation",
+        "issues": "fix-claude-desktop-workflow-automation#229"
+      },
+      {
+        "name": "vibe-coder/feature/test-mcp-integration",
+        "author": "tuvens",
+        "created": "2025-08-21T19:02:44.793Z",
+        "lastActivity": "2025-08-21T19:02:44.800Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/test-mcp-integration",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/fix-claude-desktop-workflow-automation/tree/vibe-coder/feature/test-mcp-integration",
+        "issues": "fix-claude-desktop-workflow-automation#231"
+      },
+      {
+        "name": "vibe-coder/feature/test-automation-flow",
+        "author": "tuvens",
+        "created": "2025-08-21T19:04:20.816Z",
+        "lastActivity": "2025-08-21T19:04:20.825Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/test-automation-flow",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/fix-claude-desktop-workflow-automation/tree/vibe-coder/feature/test-automation-flow",
+        "issues": "fix-claude-desktop-workflow-automation#233"
+      },
+      {
+        "name": "vibe-coder/feature/desktop-workflow-test",
+        "author": "tuvens",
+        "created": "2025-08-21T20:01:01.632Z",
+        "lastActivity": "2025-08-21T20:01:01.635Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/desktop-workflow-test",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/fix-claude-desktop-workflow-automation/tree/vibe-coder/feature/desktop-workflow-test",
+        "issues": "fix-claude-desktop-workflow-automation#237"
+      }
     ]
   },
-  "lastUpdated": "2025-08-18T15:10:47.561Z",
-  "generatedBy": "GitHub Actions",
+  "lastUpdated": "2025-08-21T20:44:33.134Z",
+  "generatedBy": "Deduplication Script",
   "tuvensStrategy": "5-branch-flow"
 }

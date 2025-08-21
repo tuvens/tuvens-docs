@@ -4,17 +4,33 @@
 
 ## Starting Agent Sessions
 
-### Automated Method (Preferred)
-```bash
-/start-session [agent-name]
+### Natural Language Method (Primary)
+Simply ask in natural conversation:
+```
+"Get vibe-coder to work on this documentation in Claude Code"
+"Have devops handle this deployment issue"
+"Ask react-dev to fix this UI bug"
+"Let's use Claude Code with laravel-dev for this"
 ```
 
-This command:
-- Analyzes current conversation context
+**Claude Desktop will confirm and execute:**
 - Creates GitHub issue with task details
-- Sets up isolated worktree with branch mapping
+- Sets up isolated worktree with branch mapping  
 - Opens iTerm2 with ready-to-paste prompt
+- Launches Claude Code with full agent context
 - Maintains awareness of repository locations
+
+### Direct Command Method (Alternative)
+For power users:
+```bash
+/start-session [agent-name] "[task-title]" "[description]"
+```
+
+**Examples:**
+```bash
+/start-session vibe-coder "Fix Documentation" "Update API reference docs"
+/start-session devops "Deploy Pipeline" "Set up CI/CD for staging"
+```
 
 **Full Implementation Details**: See [start-session integration guide](../workflows/start-session-integration.md)
 **Branching Strategy**: See [Tuvens branching strategy](../workflows/tuvens-branching-strategy.md)

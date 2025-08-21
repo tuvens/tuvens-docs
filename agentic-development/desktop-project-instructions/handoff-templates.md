@@ -2,6 +2,8 @@
 
 ← [Back to Main](./README.md)
 
+> **💡 Quick Handoff**: Simply ask Claude Desktop: *"Get [agent] to handle this [task type] in Claude Code"*
+
 ## Handoff Templates
 
 Load the appropriate template based on task complexity:
@@ -43,8 +45,9 @@ Load: agentic-development/desktop-project-instructions/workflows/system-improvem
 ## Best Practices
 
 ### DO
-- ✅ Use `/start-session` for automatic context transfer
-- ✅ Create GitHub issues for task tracking
+- ✅ Use natural language requests for intuitive handoffs
+- ✅ Use `/start-session` command for direct automation
+- ✅ Create GitHub issues for task tracking (automatic)
 - ✅ Respect agent domain authority
 - ✅ Load only necessary instruction files
 - ✅ Keep handoffs focused and specific

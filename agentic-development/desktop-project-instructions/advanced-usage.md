@@ -2,6 +2,10 @@
 
 ← [Back to Main](./README.md)
 
+> **💡 Quick Start**: For any scenario below, simply ask Claude Desktop naturally:  
+> *"Get [agent] to work on [task description] in Claude Code"*  
+> See [Agent Management](./agent-management.md) for details.
+
 ## Custom Prompt Templates
 
 For task-specific prompts beyond the automated system:
