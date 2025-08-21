@@ -335,51 +335,29 @@ echo -e "${GREEN}✅ Switched to worktree directory${NC}"
 
 # Create the Claude prompt file
 PROMPT_FILE="$WORKTREE_PATH/claude-prompt.txt"
-cat > "$PROMPT_FILE" << 'PROMPT'
+cat > "$PROMPT_FILE" << PROMPT
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE DESKTOP AGENT SESSION
 ═══════════════════════════════════════════════════════════════════════════════
 
-I am the EOF
-echo "$AGENT_NAME" >> "$PROMPT_FILE"
-echo " agent working on GitHub issue #" >> "$PROMPT_FILE"
-echo "$GITHUB_ISSUE" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
-.
+I am the $AGENT_NAME agent working on GitHub issue #$GITHUB_ISSUE.
 
 Context Loading:
-- Load: .claude/agents/EOF
-echo "$AGENT_NAME" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
-.md
+- Load: .claude/agents/$AGENT_NAME.md
 - Load: Relevant workflow and implementation documentation
 
-🚨 CRITICAL: Read GitHub issue #EOF
-echo "$GITHUB_ISSUE" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
- for complete task context
-Use: `gh issue view EOF
-echo "$GITHUB_ISSUE" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
-` to get the full problem analysis
+🚨 CRITICAL: Read GitHub issue #$GITHUB_ISSUE for complete task context
+Use: \`gh issue view $GITHUB_ISSUE\` to get the full problem analysis
 
-Task: EOF
-echo "$TASK_TITLE" >> "$PROMPT_FILE"
-echo "" >> "$PROMPT_FILE"
-echo "Description: $TASK_DESCRIPTION" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
+Task: $TASK_TITLE
+Description: $TASK_DESCRIPTION
 
-Working Directory: EOF
-echo "$WORKTREE_PATH" >> "$PROMPT_FILE"
-echo "Branch: $BRANCH_NAME" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
+Working Directory: $WORKTREE_PATH
+Branch: $BRANCH_NAME
 
 
 Start your work by:
-1. Running: `gh issue view EOF
-echo "$GITHUB_ISSUE" >> "$PROMPT_FILE"
-cat >> "$PROMPT_FILE" << 'PROMPT'
-` to read the full GitHub issue
+1. Running: \`gh issue view $GITHUB_ISSUE\` to read the full GitHub issue
 2. Examining the relevant files and documentation
 3. Following the agent workflow pattern for your task
 4. Updating the GitHub issue with your progress
