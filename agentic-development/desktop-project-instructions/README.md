@@ -4,7 +4,7 @@
 
 ## Quick Start
 
-You are orchestrating a multi-agent development system. Each agent has its own Claude Desktop project and specialized responsibilities.
+You are orchestrating a multi-agent development system. Each agent has its own specialized responsibilities.
 
 ### Available Agents
 - **vibe-coder** - System architecture, documentation, agent improvement
@@ -20,64 +20,6 @@ You coordinate these agents by:
 1. Analyzing tasks to determine the appropriate agent
 2. Creating structured handoffs to Claude Code
 3. Managing inter-agent communication via GitHub issues
-4. **NEW**: Recognizing Claude Desktop to Claude Code handoff patterns
-
-## Claude Desktop Handoff Pattern
-
-### When you see this pattern:
-```
-/start-session [agent-name] [task description]
-```
-
-**Immediately translate it to iTerm commands with task context:**
-
-#### **Vibe Coder (System Architecture)**
-```
-open_terminal name="vibe-coder-session"
-execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && claude-code --agent vibe-coder --message '[task description]'"
-```
-
-#### **Node Dev (tuvens-api)**
-```
-open_terminal name="node-dev-session"
-execute_command terminal="node-dev-session" command="cd ~/Code/Tuvens/tuvens-api && claude-code --agent node-dev --message '[task description]'"
-```
-
-#### **Laravel Dev (hi.events)**
-```
-open_terminal name="laravel-dev-session"
-execute_command terminal="laravel-dev-session" command="cd ~/Code/Tuvens/hi.events && claude-code --agent laravel-dev --message '[task description]'"
-```
-
-#### **React Dev (hi.events frontend)**
-```
-open_terminal name="react-dev-session"
-execute_command terminal="react-dev-session" command="cd ~/Code/Tuvens/hi.events && claude-code --agent react-dev --message '[task description]'"
-```
-
-#### **Svelte Dev (tuvens-client)**
-```
-open_terminal name="svelte-dev-session"
-execute_command terminal="svelte-dev-session" command="cd ~/Code/Tuvens/tuvens-client && claude-code --agent svelte-dev --message '[task description]'"
-```
-
-#### **DevOps (Infrastructure) - Context Sensitive**
-*Note: DevOps tasks may affect any repository. Ask for clarification if needed.*
-```
-# Default to infrastructure scripts repository
-open_terminal name="devops-session"
-execute_command terminal="devops-session" command="cd ~/Code/Tuvens/tuvens-docs && claude-code --agent devops --message '[task description]'"
-
-# For repository-specific DevOps tasks, adjust the path:
-# cd ~/Code/Tuvens/[target-repository] && claude-code --agent devops --message '[task description]'
-```
-
-**Pattern Recognition:**
-- Always recognize variations like `/start-session vibe-coder fix the thing we're talking about`
-- Extract the task description and pass it as `--message '[task description]'`
-- Map the agent name to the correct repository and claude-code command
-- Use descriptive terminal names that include the agent name
-- For DevOps: clarify target repository if the task isn't infrastructure-specific
 
 ## Prerequisites
 
@@ -101,50 +43,225 @@ echo "/tuvens-docs" >> .gitignore
 
 This enables agents to access shared documentation regardless of which repository they're working in.
 
-### Terminal Automation Setup
-Optional enhancement for Claude Desktop to Claude Code handoffs:
+## Starting Agent Sessions
+
+### Method 1: Claude Code (Fully Automated)
+
+**When using Claude Code**, use the automatic workflow:
+
 ```bash
-# Install iTerm MCP Server (optional)
-npm install -g iterm_mcp_server
+/start-session [agent-name]
 ```
 
-## Navigation - Detailed Guides
+This command:
+- Analyzes current conversation context
+- Creates GitHub issue with task details
+- Sets up isolated worktree with branch mapping
+- Opens iTerm2 with ready-to-paste prompt (via AppleScript)
+- Maintains awareness of repository locations
 
-This documentation is split into focused micro-docs for better navigation:
+**Full Implementation Details**: See [start-session integration guide](../workflows/start-session-integration.md)
 
-### 📋 [Agent Management](./agent-management.md)
-- Starting agent sessions with `/start-session`
-- Task routing by technology, repository, and type
-- Automated worktree creation and branch mapping
-- Manual session creation methods
+### Method 2: Claude Desktop with iTerm MCP (Semi-Automated)
 
-### 📚 [Wiki Integration](./wiki-integration.md)
-- GitHub wiki workflow and content creation
-- Content categories and quality standards
-- Mobile artifact support
-- Wiki publication process
+**When using Claude Desktop**, you'll coordinate the workflow:
 
-### 🔄 [Handoff Templates](./handoff-templates.md)
-- Simple task templates
-- Complex feature templates
-- Inter-agent communication protocols
-- System improvement workflows
+#### Step 1: User Request
+When a user says something like:
+```
+"Start a vibe-coder session to fix authentication issues"
+```
 
-### ⚙️ [Advanced Usage](./advanced-usage.md)
-- Best practices and guidelines
-- Context loading by task type
-- Repository-specific workflows
-- Common task scenarios and examples
+#### Step 2: Claude Desktop Response
+```
+I'll set up a vibe-coder session for fixing authentication issues.
 
-## Quick Commands
+1. First, let me prepare the task setup
+2. Then I'll open an iTerm window using the MCP tool
+3. Finally, I'll guide you through starting Claude Code
+```
+
+#### Step 3: Claude Desktop Actions
+1. **Prepare the task** (internally run or reference):
+   ```bash
+   ./agentic-development/scripts/desktop-agent-task.sh vibe-coder "Fix authentication" "Debug and fix OAuth flow issues"
+   ```
+
+2. **Use iTerm MCP** to open a terminal window
+
+3. **In the opened terminal**, instruct to run:
+   ```bash
+   bash "/path/to/generated/desktop-setup-vibe-coder-[timestamp].sh"
+   ```
+
+4. **Guide the user**:
+   ```
+   Now in the terminal:
+   1. Type: claude
+   2. Copy and paste the prompt from claude-prompt.txt
+   3. Begin your agent work
+   ```
+
+**Desktop Workflow Details**: See [desktop-iterm-workflow.md](../docs/desktop-iterm-workflow.md)
+
+### Method 3: Manual Control
+
+For specific control over the task:
+```bash
+/create-issue [your-agent] [target-agent] "[Task Title]" [repository]
+```
+
+Then start Claude Code in the appropriate repository.
+
+## Workflow Comparison
+
+| Aspect | Claude Code | Claude Desktop |
+|--------|-------------|----------------|
+| **Command** | `/start-session agent-name` | Natural language request |
+| **Automation** | Fully automated | Semi-automated with MCP |
+| **Terminal** | AppleScript opens iTerm | iTerm MCP opens terminal |
+| **Setup** | Automatic worktree + prompt | Run setup script manually |
+| **User Effort** | Single command | Follow guided steps |
+| **GitHub Issue** | Automatic | Automatic |
+| **Worktree** | Automatic | Created by setup script |
+
+## Worktree Structure
+
+Both workflows create dedicated worktrees matching branch names:
+```
+~/Code/Tuvens/tuvens-client/worktrees/svelte-dev-feature-auth-ui/
+~/Code/Tuvens/tuvens-api/worktrees/node-dev-fix-validation/
+~/Code/Tuvens/hi.events/worktrees/laravel-dev-update-cors/
+```
+
+This enables parallel work and easy cleanup when branches are merged.
+
+## Supporting Documentation
+
+- **Branching Strategy**: See [Tuvens branching strategy](../workflows/tuvens-branching-strategy.md)
+- **Central Tracking**: See [central branch tracking system](../workflows/central-branch-tracking.md)
+- **Claude Code Workflow**: See [start-session integration](../workflows/start-session-integration.md)
+- **Claude Desktop Workflow**: See [desktop iTerm workflow](../docs/desktop-iterm-workflow.md)
+
+## Wiki Content Workflow
+
+### For Claude Desktop
+
+#### Writing Wiki Content
+Claude Desktop can create and refine wiki content directly:
+
+1. **Create high-quality content** in conversation
+2. **Stage content locally** in appropriate category:
+   ```
+   agentic-development/wiki/staging/[category]/[content-name].md
+   ```
+3. **Follow wiki workflow** for review and publication
+
+#### Mobile Artifact Collection
+When using mobile Claude app:
+
+1. **Save content locally** in project with mobile markers
+2. **Transfer to desktop** for proper staging and formatting
+3. **Process through standard workflow** with appropriate categorization
+
+#### Mobile Content Markers
+```markdown
+<!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
+<!-- WIKI_CATEGORY: [architecture/agents/workflows/protocols/guides] -->
+<!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
+```
+
+### Quality Standards
+
+#### Content Requirements
+- **Professional Writing**: Clear, concise, well-structured documentation
+- **Technical Accuracy**: Validated information with proper references
+- **Consistent Formatting**: Following established templates and style guides
+- **Complete Information**: Self-contained with necessary context
+- **Maintenance Info**: Clear ownership and update procedures
+
+#### Review Process
+- **Agent Review**: Initial quality check by creating agent
+- **Vibe Coder Validation**: Final review before wiki publication
+- **Category Verification**: Proper organization and categorization
+- **Link Validation**: Working references and navigation paths
+
+### Quick Commands for Wiki Content
 
 ```bash
-# Start agent session with context (now works from Claude Desktop!)
-/start-session [agent-name] [task description]
+# Check wiki workflow status
+ls -la agentic-development/wiki/staging/
 
-# Terminal automation (when iTerm MCP configured)
-open_terminal name="[agent]-session"
-execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/[repo] && claude-code --agent [agent] --message '[task description]'"
+# Review wiki instructions
+cat agentic-development/wiki/instructions.md
+
+# Check current wiki content
+open https://github.com/tuvens/tuvens-docs/wiki
+
+# Monitor wiki-ready PRs
+gh pr list --label "wiki-ready"
+```
+
+## Handoff Templates
+
+Load the appropriate template based on task complexity:
+
+### Simple Tasks (1-2 files)
+```markdown
+Load: agentic-development/desktop-project-instructions/handoff-templates/simple-task.md
+```
+
+### Complex Features (multi-file)
+```markdown
+Load: agentic-development/desktop-project-instructions/handoff-templates/complex-feature.md
+```
+
+### Refactoring
+```markdown
+Load: agentic-development/desktop-project-instructions/handoff-templates/refactoring.md
+```
+
+### Debugging
+```markdown
+Load: agentic-development/desktop-project-instructions/handoff-templates/debugging.md
+```
+
+## Inter-Agent Communication
+
+For tasks requiring multiple agents:
+```markdown
+Load: agentic-development/desktop-project-instructions/workflows/inter-agent-communication.md
+```
+
+## System Improvements
+
+When agents fail or need enhancement:
+```markdown
+Load: agentic-development/desktop-project-instructions/workflows/system-improvement.md
+```
+
+## Best Practices
+
+### DO
+- ✅ Use appropriate method based on your environment (Claude Code vs Desktop)
+- ✅ Create GitHub issues for task tracking
+- ✅ Respect agent domain authority
+- ✅ Load only necessary instruction files
+- ✅ Keep handoffs focused and specific
+
+### DON'T
+- ❌ Duplicate agent context (it's in `.claude/agents/`)
+- ❌ Override domain decisions without evidence
+- ❌ Start complex tasks without proper setup
+- ❌ Mix multiple unrelated tasks
+- ❌ Skip the worktree organization
+
+## Quick Commands Reference
+
+### Claude Code Commands
+```bash
+# Start agent session with context
+/start-session [agent-name]
 
 # Create cross-agent task
 /create-issue [from] [to] "[Title]" [repo]
@@ -159,10 +276,132 @@ execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/[repo] && c
 /refactor-code [path]
 ```
 
+### Claude Desktop Workflow
+```bash
+# Step 1: Run adapter script (Claude Desktop runs this)
+./agentic-development/scripts/desktop-agent-task.sh [agent] "[title]" "[description]"
+
+# Step 2: Use iTerm MCP to open terminal
+# (Claude Desktop uses MCP tool)
+
+# Step 3: In terminal, run setup script
+bash /path/to/desktop-setup-[agent]-[timestamp].sh
+
+# Step 4: Start Claude
+claude
+```
+
+## Advanced Usage
+
+### Custom Prompt Templates
+For task-specific prompts beyond the automated system:
+```markdown
+Load: agentic-development/workflows/agent-terminal-prompts.md
+```
+
+This provides detailed, copy-paste ready prompts for specific task types and contexts.
+
+## Context Loading by Task Type
+
+### Backend API Development
+When working on Node.js/NestJS API tasks:
+```markdown
+Load: .claude/agents/node-dev.md
+Load: tuvens-docs/implementation-guides/cross-app-authentication/README.md
+Load: tuvens-docs/tuvens-docs/shared-protocols/ (API patterns)
+```
+
+### Frontend Component Work
+For Svelte frontend development:
+```markdown
+Load: .claude/agents/svelte-dev.md
+Load: tuvens-docs/tuvens-docs/shared-protocols/frontend-integration/README.md
+Load: tuvens-docs/tuvens-docs/integration-examples/frontend-integration/README.md
+```
+
+For React frontend development:
+```markdown
+Load: .claude/agents/react-dev.md
+Load: tuvens-docs/tuvens-docs/hi-events-integration/frontend-integration/README.md
+Load: tuvens-docs/tuvens-docs/shared-protocols/frontend-integration/README.md
+```
+
+### Integration Tasks
+For Hi.Events integration work:
+```markdown
+Load: .claude/agents/[relevant-dev].md
+Load: tuvens-docs/tuvens-docs/hi-events-integration/README.md
+Load: tuvens-docs/tuvens-docs/implementation-guides/cross-app-authentication/README.md
+```
+
+### DevOps/Infrastructure
+For deployment and infrastructure:
+```markdown
+Load: .claude/agents/devops.md
+Load: agentic-development/workflows/README.md
+Load: tuvens-docs/tuvens-docs/repositories/[target-repo].md
+Load: agentic-development/workflows/cross-repository-development/README.md
+```
+
+### Documentation Updates
+For documentation improvements:
+```markdown
+Load: .claude/agents/vibe-coder.md
+Load: agentic-development/workflows/worktree-organization.md
+Load: [relevant section documentation]
+```
+
+## Repository-Specific Context
+
+### Working in tuvens-client (Svelte)
+Essential context files:
+- `tuvens-docs/shared-protocols/frontend-integration/README.md`
+- `tuvens-docs/shared-protocols/frontend-integration/architecture-standards.md`
+- `tuvens-docs/repositories/tuvens-client.md`
+
+### Working in tuvens-api (Node.js/NestJS)
+Essential context files:
+- `tuvens-docs/implementation-guides/cross-app-authentication/README.md`
+- `tuvens-docs/implementation-guides/cross-app-authentication/database-implementation/README.md`
+- `tuvens-docs/repositories/tuvens-api.md`
+
+### Working in hi.events (Laravel/React)
+Essential context files:
+- `tuvens-docs/hi-events-integration/README.md`
+- `tuvens-docs/hi-events-integration/backend-testing-guide.md`
+- `tuvens-docs/repositories/hi-events.md`
+
+## Common Task Scenarios
+
+### "Add new API endpoint"
+- **Agent**: `node-dev`
+- **Context**: `implementation-guides/cross-app-authentication/` + `shared-protocols/`
+- **Template**: `complex-feature.md`
+
+### "Fix frontend component bug"
+- **Agent**: `svelte-dev` or `react-dev` 
+- **Context**: `shared-protocols/frontend-integration/` + specific component docs
+- **Template**: `simple-task.md`
+
+### "Update integration flow"
+- **Agent**: Depends on primary repository
+- **Context**: `hi-events-integration/` + `implementation-guides/`
+- **Template**: `complex-feature.md`
+
+### "Deploy new feature"
+- **Agent**: `devops`
+- **Context**: `repositories/` + `cross-repository-development/`
+- **Template**: `complex-feature.md`
+
+### "Write documentation"
+- **Agent**: `vibe-coder`
+- **Context**: Relevant domain documentation + `workflows/`
+- **Template**: `simple-task.md`
+
 ## Need Help?
 
 - **Agent responsibilities**: Load specific agent instruction file
 - **Workflow details**: Load relevant workflow file
-- **System architecture**: `/start-session vibe-coder` for analysis
+- **System architecture**: Start vibe-coder session for analysis
 - **Custom prompts**: Load agent-terminal-prompts.md for task-specific templates
-- **Terminal handoffs**: Use the patterns above for Claude Desktop to Claude Code transitions
+- **Claude Code vs Desktop**: Choose workflow based on your environment
