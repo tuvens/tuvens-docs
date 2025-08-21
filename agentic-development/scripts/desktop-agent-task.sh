@@ -262,9 +262,10 @@ echo ""
 # Step 3: Create worktree
 print_step "Step 3: Creating worktree..."
 
-# Determine repository and worktree path (same logic as Claude Code)
+# Determine repository and worktree path
+# FIXED: Don't duplicate agent name in path since BRANCH_NAME already contains it
 REPO_NAME=$(basename "$REPO_ROOT")
-WORKTREE_PATH="$REPO_ROOT/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
+WORKTREE_PATH="$REPO_ROOT/worktrees/$BRANCH_NAME"
 
 # Ensure we're not on the target branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
