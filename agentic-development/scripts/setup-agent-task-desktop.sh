@@ -31,6 +31,13 @@ echo "🏢 Claude Desktop Agent Setup (via iTerm2 MCP)"
 echo "=============================================="
 echo ""
 
+# Function to convert absolute paths to portable format using ~
+make_path_portable() {
+    local abs_path="$1"
+    # Replace user's home directory with ~
+    echo "$abs_path" | sed "s|^$HOME|~|"
+}
+
 # Step 1: Use existing setup-agent-task.sh for core functionality
 # but skip the iTerm automation step
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -81,7 +88,7 @@ echo ""
 echo "📋 Agent Context:"
 echo "================"
 echo "• GitHub Issue: #$(grep -o 'GitHub Issue: #[0-9]\+' "$PROMPT_FILE" | cut -d'#' -f2)"
-echo "• Worktree: $WORKTREE_PATH"
+echo "• Worktree: $(make_path_portable "$WORKTREE_PATH")"
 echo "• Branch: $BRANCH_NAME"
 echo ""
 

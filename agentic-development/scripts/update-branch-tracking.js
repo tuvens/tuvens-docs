@@ -93,8 +93,21 @@ function handleBranchCreated(payload) {
         }
     }
     
-    // Add to active branches
-    activeBranches.branches[payload.repository].push(newBranch);
+    // Check if branch already exists and update it, otherwise add new entry
+    const branches = activeBranches.branches[payload.repository];
+    const existingIndex = branches.findIndex(b => b.name === payload.branch);
+    
+    if (existingIndex !== -1) {
+        // Update existing branch entry
+        console.log(`   Updating existing branch entry for ${payload.branch}`);
+        branches[existingIndex] = { ...branches[existingIndex], ...newBranch, 
+                                     lastActivity: new Date().toISOString() };
+    } else {
+        // Add new branch entry
+        console.log(`   Creating new branch entry for ${payload.branch}`);
+        branches.push(newBranch);
+    }
+    
     activeBranches.lastUpdated = new Date().toISOString();
     activeBranches.generatedBy = 'GitHub Actions';
     

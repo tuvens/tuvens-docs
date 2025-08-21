@@ -88,6 +88,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 "$SCRIPT_DIR/validate-environment.sh"
 echo ""
 
+# Function to convert absolute paths to portable format using ~
+make_path_portable() {
+    local abs_path="$1"
+    # Replace user's home directory with ~
+    echo "$abs_path" | sed "s|^$HOME|~|"
+}
+
 # Step 2: Create GitHub issue
 echo "Step 2: Creating GitHub issue..."
 
@@ -330,12 +337,13 @@ echo ""
 # Update local branch tracking
 if [ -f "$SCRIPT_DIR/update-branch-tracking.js" ]; then
     echo "📊 Updating central branch tracking locally..."
+    PORTABLE_WORKTREE_PATH=$(make_path_portable "$WORKTREE_PATH")
     node "$SCRIPT_DIR/update-branch-tracking.js" \
         --action="create" \
         --repository="$CURRENT_REPO" \
         --branch="$BRANCH_NAME" \
         --author="$(git config user.name || echo 'local-user')" \
-        --worktree="$WORKTREE_PATH" \
+        --worktree="$PORTABLE_WORKTREE_PATH" \
         --agent="$AGENT_NAME" \
         --task-group="$TASK_GROUP_ID" \
         --issues="$CURRENT_REPO#$GITHUB_ISSUE"
@@ -438,7 +446,7 @@ cat > "$PROMPT_FILE" << EOF
 $(echo "$AGENT_NAME" | tr '[:lower:]' '[:upper:]' | tr '-' ' ') AGENT - ENHANCED TASK CONTEXT
 
 GitHub Issue: #$GITHUB_ISSUE
-Worktree: $WORKTREE_PATH
+Worktree: $(make_path_portable "$WORKTREE_PATH")
 Branch: $BRANCH_NAME
 EOF
 
@@ -489,7 +497,7 @@ Use: \`gh issue view $GITHUB_ISSUE\` to get the full problem analysis, requireme
 GitHub Issue: #$GITHUB_ISSUE
 Task: $TASK_TITLE
 
-Working Directory: $WORKTREE_PATH
+Working Directory: $(make_path_portable "$WORKTREE_PATH")
 Branch: $BRANCH_NAME
 
 🔵 MANDATORY: GitHub Comment Standards Protocol

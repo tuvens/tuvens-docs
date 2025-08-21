@@ -55,7 +55,7 @@ For power users, the direct command still works:
 When you type `/start-session`, Claude Desktop executes:
 ```bash
 open_terminal name="[agent]-session"
-execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent] \"[title]\" \"[description]\""
+execute_command terminal="[agent]-session" command="cd /path/to/tuvens-docs && ./start-session [agent] \"[title]\" \"[description]\""
 ```
 
 ## 📁 Implementation Files
