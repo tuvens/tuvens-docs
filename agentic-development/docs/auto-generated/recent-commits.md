@@ -10,28 +10,37 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `e756104a88f0af5a0bdbbe3b5212bd747cd70b44`
-- **Commit Message**: "Add desktop-to-iterm bridge script for Claude Desktop automation
+- **Latest Commit**: `a51feaf5b493d6a9745288fc3c8eacb702ab3a09`
+- **Commit Message**: "Add desktop-session-setup.sh for Claude Desktop iTerm automation
 
-This script enables Claude Desktop to create automated iTerm2 sessions that:
-- Open new iTerm window with Claude Code
-- Navigate to correct project directory  
-- Display formatted prompt for easy copy/paste
-- Provide both automated and manual session options
-- Validate agent exists before creating session
+This script is based on setup-agent-task.sh but removes the AppleScript iTerm window creation (Step 5) since Claude Desktop will create the iTerm window using iTerm MCP.
 
-Usage: ./desktop-to-iterm.sh [agent-name] [task-description]"
+Key differences from setup-agent-task.sh:
+- No AppleScript iTerm automation 
+- Displays prompt directly in terminal for copy/paste
+- Navigates to worktree directory
+- Maintains all other functionality (GitHub issue, worktree, branch, prompt generation)
+
+Usage: Called from Claude Desktop after iTerm MCP creates the terminal window."
 - **Author**: tuvens
-- **Timestamp**: 2025-08-21T14:25:42+01:00
+- **Timestamp**: 2025-08-21T14:40:34+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* a51feaf` - Add desktop-session-setup.sh for Claude Desktop iTerm automation
+- **Date**: 2025-08-21 14:40
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* eea81e6` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-21 13:26
+- **Author**: GitHub Actions
+
 #### `* e756104` - Add desktop-to-iterm bridge script for Claude Desktop automation
 - **Date**: 2025-08-21 14:25
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* f04d369` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-20 15:17
@@ -181,31 +190,21 @@ Usage: ./desktop-to-iterm.sh [agent-name] [task-description]"
 - **Author**:  
 - **Refs**:  96e517b|2025-08-19 20:24|tuvens|fix: address additional Gemini feedback on hotfix PR|
 
-#### `` -  
-- **Date**:  * 
-- **Author**:  
-- **Refs**:  7351696|2025-08-19 20:20|tuvens|fix: address critical Gemini feedback missed in PR #195|
-
-#### `* ` -  
-- **Date**:  
-- **Author**:  
-- **Refs**:  eea5f44|2025-08-19 19:33|GitHub Actions|docs: auto-update documentation [skip ci]|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 9 commits
-- `fix`: 3 commits
+- `fix`: 2 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
 - `.claude/agents/vibe-coder.md`: 3 changes
 - `tuvens-docs/integration-examples/frontend-integration/05-analytics-deployment.md`: 2 changes
-- `agentic-development/workflows/troubleshooting-debugging-guide.md`: 2 changes
-- `agentic-development/workflows/infrastructure-health-maintenance.md`: 2 changes
-- `agentic-development/desktop-project-instructions/README.md`: 2 changes
 - `tuvens-docs/integration-examples/frontend-integration/README.md`: 1 changes
 - `tuvens-docs/integration-examples/frontend-integration/04-testing-error-handling.md`: 1 changes
+- `tuvens-docs/integration-examples/frontend-integration/03-api-integration-patterns.md`: 1 changes
+- `tuvens-docs/integration-examples/frontend-integration/02-design-system-integration.md`: 1 changes
+- `tuvens-docs/integration-examples/frontend-integration/01-quick-start-setup.md`: 1 changes
 

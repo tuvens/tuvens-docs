@@ -4,19 +4,20 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: e756104a88f0af5a0bdbbe3b5212bd747cd70b44
-- **Commit Message**: Add desktop-to-iterm bridge script for Claude Desktop automation
+- **Commit SHA**: a51feaf5b493d6a9745288fc3c8eacb702ab3a09
+- **Commit Message**: Add desktop-session-setup.sh for Claude Desktop iTerm automation
 
-This script enables Claude Desktop to create automated iTerm2 sessions that:
-- Open new iTerm window with Claude Code
-- Navigate to correct project directory  
-- Display formatted prompt for easy copy/paste
-- Provide both automated and manual session options
-- Validate agent exists before creating session
+This script is based on setup-agent-task.sh but removes the AppleScript iTerm window creation (Step 5) since Claude Desktop will create the iTerm window using iTerm MCP.
 
-Usage: ./desktop-to-iterm.sh [agent-name] [task-description]
+Key differences from setup-agent-task.sh:
+- No AppleScript iTerm automation 
+- Displays prompt directly in terminal for copy/paste
+- Navigates to worktree directory
+- Maintains all other functionality (GitHub issue, worktree, branch, prompt generation)
+
+Usage: Called from Claude Desktop after iTerm MCP creates the terminal window.
 - **Author**: tuvens
-- **Timestamp**: 2025-08-21T14:25:42+01:00
+- **Timestamp**: 2025-08-21T14:40:34+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
