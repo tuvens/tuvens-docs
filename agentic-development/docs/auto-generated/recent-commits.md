@@ -10,21 +10,36 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `ada200b7d2eaaed9adb924cfcb9b29e7844905a4`
-- **Commit Message**: "Merge pull request #211 from tuvens/vibe-coder/fix/session-startup-instructions
+- **Latest Commit**: `e756104a88f0af5a0bdbbe3b5212bd747cd70b44`
+- **Commit Message**: "Add desktop-to-iterm bridge script for Claude Desktop automation
 
-Fix: Add agent session startup automation to vibe-coder instructions"
+This script enables Claude Desktop to create automated iTerm2 sessions that:
+- Open new iTerm window with Claude Code
+- Navigate to correct project directory  
+- Display formatted prompt for easy copy/paste
+- Provide both automated and manual session options
+- Validate agent exists before creating session
+
+Usage: ./desktop-to-iterm.sh [agent-name] [task-description]"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-20T16:16:55+01:00
+- **Timestamp**: 2025-08-21T14:25:42+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* e756104` - Add desktop-to-iterm bridge script for Claude Desktop automation
+- **Date**: 2025-08-21 14:25
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* f04d369` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-20 15:17
+- **Author**: GitHub Actions
+
 #### `*   ada200b` - Merge pull request #211 from tuvens/vibe-coder/fix/session-startup-instructions
 - **Date**: 2025-08-20 16:16
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -176,37 +191,21 @@ Fix: Add agent session startup automation to vibe-coder instructions"
 - **Author**:  
 - **Refs**:  eea5f44|2025-08-19 19:33|GitHub Actions|docs: auto-update documentation [skip ci]|
 
-#### `* ` -  
-- **Date**:  
-- **Author**:  
-- **Refs**:  5910f8d|2025-08-19 20:33|tuvens|Fix Gemini Code Assist feedback from context loading guidance PR (#198)|
-
-#### `* ` -  
-- **Date**:  
-- **Author**:  
-- **Refs**:  262293e|2025-08-19 19:21|GitHub Actions|docs: auto-update documentation [skip ci]|
-
-#### `* ` -  
-- **Date**:  
-- **Author**:  
-- **Refs**:  71e94e1|2025-08-19 20:21|tuvens|docs: split desktop-project-instructions README into focused micro-docs (#191)|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 9 commits
 - `fix`: 3 commits
-- `feat`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 8 changes
-- `agentic-development/workflows/troubleshooting-debugging-guide.md`: 3 changes
-- `agentic-development/workflows/infrastructure-health-maintenance.md`: 3 changes
 - `.claude/agents/vibe-coder.md`: 3 changes
 - `tuvens-docs/integration-examples/frontend-integration/05-analytics-deployment.md`: 2 changes
-- `agentic-development/workflows/ai-agent-safety-governance.md`: 2 changes
+- `agentic-development/workflows/troubleshooting-debugging-guide.md`: 2 changes
+- `agentic-development/workflows/infrastructure-health-maintenance.md`: 2 changes
 - `agentic-development/desktop-project-instructions/README.md`: 2 changes
 - `tuvens-docs/integration-examples/frontend-integration/README.md`: 1 changes
+- `tuvens-docs/integration-examples/frontend-integration/04-testing-error-handling.md`: 1 changes
 
