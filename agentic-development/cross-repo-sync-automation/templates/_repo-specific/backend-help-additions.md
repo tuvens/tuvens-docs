@@ -1,0 +1,3 @@
+- **Implementation Guide**: Follow `implementation-guides/cross-app-authentication/README.md`
+- **API Specifications**: Review `integration-guides/hi-events/api-requirements.md`
+- **Development Standards**: Check `agentic-development/workflows/cross-repository-development/README.md`

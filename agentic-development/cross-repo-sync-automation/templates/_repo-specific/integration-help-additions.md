@@ -1,0 +1,4 @@
+- **Integration Overview**: Start with `integration-guides/hi-events/README.md`
+- **Authentication Flow**: Review `integration-guides/hi-events/authentication-flow.md`
+- **API Requirements**: Check `integration-guides/hi-events/api-requirements.md`
+- **Frontend Integration**: See `integration-guides/hi-events/frontend-integration/README.md`
