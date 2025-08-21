@@ -97,7 +97,7 @@ claude
 
 ### Step 5: Load the Prompt
 
-Copy and paste the content from the generated `claude-prompt.txt` file.
+Copy and paste the content from the generated `claude-prompt.txt` file (located in the worktree directory).
 
 ## File Structure
 
@@ -108,10 +108,12 @@ agentic-development/
 │   └── desktop-agent-task.sh       # Claude Desktop adapter
 ├── prompts/
 │   ├── desktop-setup-*.sh          # Generated setup scripts
-│   ├── desktop-iterm-command-*.txt # MCP command references
-│   └── claude-prompt.txt           # Generated prompts
+│   └── desktop-iterm-command-*.txt # MCP command references
 └── docs/
     └── desktop-iterm-workflow.md   # This documentation
+
+worktrees/[agent]/[branch]/
+└── claude-prompt.txt               # Generated prompt (in worktree)
 ```
 
 ## Workflow Comparison
