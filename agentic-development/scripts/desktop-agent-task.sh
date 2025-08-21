@@ -299,7 +299,7 @@ REPO_ROOT="$REPO_ROOT"
 
 EOF
 
-# Add the worktree setup logic
+# Add the worktree setup logic (FIXED: Don't duplicate agent name in path)
 cat >> "$SETUP_SCRIPT" << 'EOF'
 # Navigate to repository
 cd "$REPO_ROOT" || exit 1
@@ -308,10 +308,9 @@ cd "$REPO_ROOT" || exit 1
 ACTUAL_REPO=$(basename "$(pwd)")
 echo -e "${GREEN}Working in repository: $ACTUAL_REPO${NC}"
 
-# Determine worktree path
-WORKTREE_BASE="$REPO_ROOT/worktrees/$AGENT_NAME"
-mkdir -p "$WORKTREE_BASE"
-WORKTREE_PATH="$WORKTREE_BASE/$BRANCH_NAME"
+# Determine worktree path - BRANCH_NAME already includes agent prefix
+WORKTREE_PATH="$REPO_ROOT/worktrees/$BRANCH_NAME"
+mkdir -p "$(dirname "$WORKTREE_PATH")"
 
 # Create the worktree
 echo -e "\n${BLUE}Creating worktree...${NC}"
@@ -403,7 +402,7 @@ Step 2: In the opened iTerm window, run this command:
 bash "$SETUP_SCRIPT"
 
 This will:
-- Create the Git worktree at: $REPO_ROOT/worktrees/$AGENT_NAME/$BRANCH_NAME
+- Create the Git worktree at: $REPO_ROOT/worktrees/$BRANCH_NAME
 - Generate the Claude prompt file
 - Prepare the development environment
 
