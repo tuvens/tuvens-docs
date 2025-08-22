@@ -31,16 +31,12 @@ echo "🏢 Claude Desktop Agent Setup (via iTerm2 MCP)"
 echo "=============================================="
 echo ""
 
-# Function to convert absolute paths to portable format using ~
-make_path_portable() {
-    local abs_path="$1"
-    # Replace user's home directory with ~
-    echo "$abs_path" | sed "s|^$HOME|~|"
-}
+# Source shared functions to prevent code duplication and synchronization bugs
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/shared-functions.sh"
 
 # Step 1: Use existing setup-agent-task.sh for core functionality
 # but skip the iTerm automation step
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CORE_SCRIPT="$SCRIPT_DIR/setup-agent-task.sh"
 
 if [[ ! -f "$CORE_SCRIPT" ]]; then
@@ -62,20 +58,31 @@ export SKIP_ITERM_AUTOMATION=true
 AGENT_NAME="$1"
 TASK_TITLE="$2"
 
-# Extract paths that the core script created
-SANITIZED_AGENT_NAME=$(echo "$AGENT_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
-SANITIZED_TASK_TITLE=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
-BRANCH_NAME="$SANITIZED_AGENT_NAME/feature/$SANITIZED_TASK_TITLE"
+# Use shared library functions to prevent duplication and synchronization bugs
+BRANCH_NAME=$(calculate_branch_name "$AGENT_NAME" "$TASK_TITLE")
 
-# Determine worktree path (same logic as core script)
-REPO_ROOT=$(git rev-parse --show-toplevel)
-REPO_NAME=$(basename "$REPO_ROOT")
+# Get the actual worktree path from git using shared library function
+# The core script already created the worktree, so query git for the real path
+WORKTREE_PATH=$(get_worktree_path "$BRANCH_NAME")
 
-if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
-    WORKTREE_PATH="$REPO_ROOT/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
-else
-    PARENT_DIR=$(dirname "$REPO_ROOT")
-    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
+# Fallback: If git worktree list fails, expand any portable paths manually
+if [[ -z "$WORKTREE_PATH" ]]; then
+    echo "⚠️  Could not find worktree for branch $BRANCH_NAME via git worktree list"
+    echo "   Attempting to expand portable path from branch tracking..."
+    
+    # Try to get the portable path from the prompt file and expand it
+    PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
+    if [[ -f "$PROMPT_FILE" ]]; then
+        PORTABLE_PATH=$(grep "Worktree:" "$PROMPT_FILE" | cut -d' ' -f2)
+        WORKTREE_PATH=$(expand_portable_path "$PORTABLE_PATH")
+    fi
+fi
+
+# Final check that we have a valid worktree path
+if [[ -z "$WORKTREE_PATH" ]]; then
+    echo "❌ ERROR: Could not determine worktree path for branch $BRANCH_NAME"
+    echo "   This usually means the core script failed to create the worktree"
+    exit 1
 fi
 
 PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
