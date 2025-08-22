@@ -10,29 +10,29 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `579f7caca7ec8b5cf4911535a6670bfc05f694ae`
-- **Commit Message**: "refactor: streamline wiki integration workflow for direct Claude Code creation
+- **Latest Commit**: `e4e6454ed2f3bd221d1885cd81c12dde91ad8087`
+- **Commit Message**: "docs: add code quality tools documentation to wiki staging
 
-Complete refactoring of wiki creation workflow from 3-phase staging to direct publication.
-
-- Eliminate intermediate staging directory complexity
-- Implement direct Claude Code workflow integration  
-- Update natural language patterns for intuitive user experience
-- Resolve all documentation consistency issues identified by code review
-- Add clear deprecation notices for old workflow approaches
-
-Fixes #256"
+Add comprehensive documentation for Sourcery AI and CodeRabbit as future additions to the agentic development environment. Includes integration timeline, implementation strategy, and configuration guidelines for post-vibe-setup deployment. Fixes #260"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T17:44:48+01:00
+- **Timestamp**: 2025-08-22T19:05:18+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* e4e6454` - docs: add code quality tools documentation to wiki staging
+- **Date**: 2025-08-22 19:05
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 157affb` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 16:45
+- **Author**: GitHub Actions
+
 #### `* 579f7ca` - refactor: streamline wiki integration workflow for direct Claude Code creation
 - **Date**: 2025-08-22 17:44
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 1a141ee` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 16:41
@@ -150,35 +150,21 @@ Fixes #256"
 - **Author**: 2025-08-21 17:53
 - **Refs**: clean: remove additional prompt files created today
 
-#### `` - tuvens
-- **Date**:  * a009f14
-- **Author**: 2025-08-21 17:50
-- **Refs**: clean: remove all experimental files created today from failed attempts
-
-#### `` - tuvens
-- **Date**:  * 0d60da1
-- **Author**: 2025-08-21 17:05
-- **Refs**: feat: add Claude Desktop workflow adapter for iTerm MCP integration
-
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 8 commits
+- `docs`: 9 commits
 - `fix`: 3 commits
-- `feat`: 3 commits
 - `restore`: 2 commits
+- `feat`: 2 commits
 - `clean`: 2 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 7 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 6 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 5 changes
 - `agentic-development/scripts/vibe-coder-prompt.txt`: 4 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
