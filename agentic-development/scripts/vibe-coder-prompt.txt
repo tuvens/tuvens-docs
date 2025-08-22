@@ -1,9 +1,9 @@
 ═══════════════════════════════════════════════════════════════════════════════
 VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
-GitHub Issue: #237
-Worktree: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/desktop-workflow-test
-Branch: vibe-coder/feature/desktop-workflow-test
+GitHub Issue: #241
+Worktree: ~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/multi-llm-integration-system
+Branch: vibe-coder/feature/multi-llm-integration-system
 ═══════════════════════════════════════════════════════════════════════════════
 
 INSTRUCTIONS:
@@ -13,21 +13,21 @@ INSTRUCTIONS:
 ═══════════════════════════════════════════════════════════════════════════════
 CLAUDE PROMPT:
 
-I am the vibe coder 237 agent.
+I am the vibe coder 241 agent.
 
 Context Loading:
 - Load: .claude/agents/vibe-coder.md
 - Load: Implementation reports and workflow documentation
 - Load: CLAUDE.md (critical branch targeting and safety rules)
 
-🚨 CRITICAL: Read GitHub Issue #237 for complete task context
-Use: `gh issue view 237` to get the full problem analysis, requirements, and implementation details.
+🚨 CRITICAL: Read GitHub Issue #241 for complete task context
+Use: `gh issue view 241` to get the full problem analysis, requirements, and implementation details.
 
-GitHub Issue: #237
-Task: Desktop Workflow Test
+GitHub Issue: #241
+Task: Multi-LLM Integration System
 
-Working Directory: /Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/desktop-workflow-test
-Branch: vibe-coder/feature/desktop-workflow-test
+Working Directory: ~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-claude-desktop-workflow-automation/worktrees/vibe-coder/vibe-coder/feature/multi-llm-integration-system
+Branch: vibe-coder/feature/multi-llm-integration-system
 
 🔵 MANDATORY: GitHub Comment Standards Protocol
 ALL GitHub issue comments MUST use this format:
@@ -45,10 +45,10 @@ ALL GitHub issue comments MUST use this format:
 
 Reference: agentic-development/protocols/github-comment-standards.md
 
-IMPORTANT: Start by reading the GitHub issue (#237) with `gh issue view 237` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
+IMPORTANT: Start by reading the GitHub issue (#241) with `gh issue view 241` to understand the complete context and requirements before proceeding with any work. The issue contains detailed analysis, specific file references, and success criteria that are essential for completing this task correctly.
 
 Start your work by:
-1. Running: `gh issue view 237` to read the full GitHub issue
+1. Running: `gh issue view 241` to read the full GitHub issue
 2. Examining the specified files (if any) to understand current state
 3. Following the 6-step agent workflow pattern
 4. Updating the GitHub issue with your progress and findings

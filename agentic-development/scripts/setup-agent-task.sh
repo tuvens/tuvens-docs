@@ -82,18 +82,15 @@ echo "Description: $TASK_DESCRIPTION"
 [[ -n "$SUCCESS_CRITERIA" ]] && echo "Success Criteria: $SUCCESS_CRITERIA"
 echo ""
 
-# Step 1: Environment validation
-echo "Step 1: Environment validation..."
+# Step 1: Environment validation and shared library setup
+echo "Step 1: Environment validation and shared library setup..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source shared functions to prevent code duplication and synchronization bugs
+source "$SCRIPT_DIR/shared-functions.sh"
+
 "$SCRIPT_DIR/validate-environment.sh"
 echo ""
-
-# Function to convert absolute paths to portable format using ~
-make_path_portable() {
-    local abs_path="$1"
-    # Replace user's home directory with ~
-    echo "$abs_path" | sed "s|^$HOME|~|"
-}
 
 # Step 2: Create GitHub issue
 echo "Step 2: Creating GitHub issue..."
@@ -213,31 +210,18 @@ echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
 echo ""
 
-# Function to sanitize names for branch naming
-sanitize_for_branch() {
-    echo "$1" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-'
-}
-
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
-SANITIZED_AGENT_NAME=$(sanitize_for_branch "$AGENT_NAME")
-SANITIZED_TASK_TITLE=$(sanitize_for_branch "$TASK_TITLE")
-BRANCH_NAME="$SANITIZED_AGENT_NAME/feature/$SANITIZED_TASK_TITLE"
+# Use shared library functions to prevent duplication and synchronization bugs
+BRANCH_NAME=$(calculate_branch_name "$AGENT_NAME" "$TASK_TITLE")
 
-# Determine if we're in tuvens-docs or another repository
+# Calculate worktree path using shared library function
+WORKTREE_PATH=$(calculate_worktree_path "$AGENT_NAME" "$BRANCH_NAME")
+
+# Determine repository type for legacy compatibility
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_NAME=$(basename "$REPO_ROOT")
-
-if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
-    # We're in tuvens-docs - use new worktrees structure
-    WORKTREE_PATH="$REPO_ROOT/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
-    IS_TUVENS_DOCS=true
-else
-    # We're in another repository - use repository-specific worktree path
-    PARENT_DIR=$(dirname "$REPO_ROOT")
-    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
-    IS_TUVENS_DOCS=false
-fi
+IS_TUVENS_DOCS=$([[ "$REPO_NAME" == "tuvens-docs" ]] && echo true || echo false)
 
 # Step 3a: Update branch tracking (local)
 echo ""
