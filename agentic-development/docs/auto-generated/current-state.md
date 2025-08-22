@@ -4,23 +4,57 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 4fa647eed73a64052551f99f5d884b3f1ebb12c5
-- **Commit Message**: feat: add dangerous mode with review safeguards to session setup scripts (#267)
+- **Commit SHA**: 00c56943b2c4cd6c59d48a250d86caa747e0f705
+- **Commit Message**: feat: implement automated AI code review triggering (#275)
 
-- Add check_pr_review_safeguards() function to shared-functions.sh
-- Modify setup-agent-task.sh to use --dangerously-skip-permissions by default
-- Modify setup-agent-task-desktop.sh to use --dangerously-skip-permissions by default
-- Block dangerous mode when PR has comments from reviewers (gemini-code-assist, qodo-merge-pro, tuvens)
-- Provide clear messaging when dangerous mode is enabled/disabled
-- Maintain manual override capability for users
+* feat: implement Qodo review automation workflow
 
-Resolves #266
+- Add automated @CodiumAI-Agent /review commenting on new PRs
+- Include duplicate prevention to avoid multiple review requests
+- Trigger on PR opened, synchronize, and reopened events
+- Support both pull_request and pull_request_target triggers
+- Use TUVENS_DOCS_TOKEN for proper repository access
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* feat: add Greptile AI review automation alongside Qodo
+
+- Update workflow to trigger both @CodiumAI-Agent and @greptileai reviews
+- Add independent duplicate prevention for each service
+- Rename workflow to 'AI Code Review Automation' for clarity
+- Update documentation to reflect dual AI review capability
+- Maintain separate logic for each review service
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: address critical security and logic issues in AI review automation
+
+CRITICAL FIXES:
+- Remove pull_request_target trigger to eliminate security vulnerability
+- Fix duplicate detection logic by removing Bot user type filter
+- Prevent infinite duplicate review requests
+
+SECURITY ISSUES RESOLVED:
+- Eliminates dangerous dual trigger configuration
+- Removes potential for untrusted code execution
+
+LOGIC FIXES:
+- Duplicate detection now properly identifies existing review comments
+- Works correctly since workflow creates comments as authenticated user, not bot
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
 Co-authored-by: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T20:54:19+01:00
+- **Timestamp**: 2025-08-22T21:23:29+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

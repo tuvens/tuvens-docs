@@ -10,32 +10,74 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `4fa647eed73a64052551f99f5d884b3f1ebb12c5`
-- **Commit Message**: "feat: add dangerous mode with review safeguards to session setup scripts (#267)
+- **Latest Commit**: `00c56943b2c4cd6c59d48a250d86caa747e0f705`
+- **Commit Message**: "feat: implement automated AI code review triggering (#275)
 
-- Add check_pr_review_safeguards() function to shared-functions.sh
-- Modify setup-agent-task.sh to use --dangerously-skip-permissions by default
-- Modify setup-agent-task-desktop.sh to use --dangerously-skip-permissions by default
-- Block dangerous mode when PR has comments from reviewers (gemini-code-assist, qodo-merge-pro, tuvens)
-- Provide clear messaging when dangerous mode is enabled/disabled
-- Maintain manual override capability for users
+* feat: implement Qodo review automation workflow
 
-Resolves #266
+- Add automated @CodiumAI-Agent /review commenting on new PRs
+- Include duplicate prevention to avoid multiple review requests
+- Trigger on PR opened, synchronize, and reopened events
+- Support both pull_request and pull_request_target triggers
+- Use TUVENS_DOCS_TOKEN for proper repository access
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* feat: add Greptile AI review automation alongside Qodo
+
+- Update workflow to trigger both @CodiumAI-Agent and @greptileai reviews
+- Add independent duplicate prevention for each service
+- Rename workflow to 'AI Code Review Automation' for clarity
+- Update documentation to reflect dual AI review capability
+- Maintain separate logic for each review service
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: address critical security and logic issues in AI review automation
+
+CRITICAL FIXES:
+- Remove pull_request_target trigger to eliminate security vulnerability
+- Fix duplicate detection logic by removing Bot user type filter
+- Prevent infinite duplicate review requests
+
+SECURITY ISSUES RESOLVED:
+- Eliminates dangerous dual trigger configuration
+- Removes potential for untrusted code execution
+
+LOGIC FIXES:
+- Duplicate detection now properly identifies existing review comments
+- Works correctly since workflow creates comments as authenticated user, not bot
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
 Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T20:54:19+01:00
+- **Timestamp**: 2025-08-22T21:23:29+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 00c5694` - feat: implement automated AI code review triggering (#275)
+- **Date**: 2025-08-22 21:23
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 1ffbe9e` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 19:54
+- **Author**: GitHub Actions
+
 #### `* 4fa647e` - feat: add dangerous mode with review safeguards to session setup scripts (#267)
 - **Date**: 2025-08-22 20:54
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 596c440` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 18:05
@@ -149,35 +191,25 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**:   
 - **Author**: 
 
-#### `` - tuvens
-- **Date**:  * 3983011
-- **Author**: 2025-08-21 18:05
-- **Refs**: restore: bring back entire cross-repo-sync-automation system
-
-#### `` - tuvens
-- **Date**:  * a4f514c
-- **Author**: 2025-08-21 18:01
-- **Refs**: restore: bring back critical claude-desktop-project-instructions.md file
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 10 commits
+- `docs`: 11 commits
+- `feat`: 4 commits
 - `fix`: 3 commits
-- `feat`: 3 commits
-- `restore`: 2 commits
+- `restore`: 1 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 6 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 5 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 3 changes
 - `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
+- `agentic-development/scripts/vibe-coder-prompt.txt`: 2 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
 
