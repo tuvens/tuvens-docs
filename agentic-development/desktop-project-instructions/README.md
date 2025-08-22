@@ -4,8 +4,19 @@
 
 ## 🚀 Quick Start: Trigger Agent Automation
 
-### Method 1: Natural Language (Recommended)
-Simply ask in normal conversation:
+### Method 1: Enhanced Natural Language Recognition
+Claude Desktop now recognizes MANY flexible patterns:
+
+**Start Session Patterns:**
+```
+"start session with vibe-coder"
+"begin devops session for deployment"
+"start working with react-dev on this bug"
+"initiate laravel-dev session"
+"get vibe-coder started on documentation"
+```
+
+**Traditional Handoff Patterns:**
 ```
 "Get vibe-coder to work on this documentation in Claude Code"
 "Have the devops agent handle this deployment issue"
@@ -13,16 +24,22 @@ Simply ask in normal conversation:
 "Let's use Claude Code with laravel-dev for this database task"
 "Get Claude Code working on this documentation with vibe coder"
 "Have devops set up the CI pipeline in Claude Code"
-"Create wiki documentation for the API endpoints"
-"Have vibe-coder document the authentication system in the wiki"
-"Document the deployment process in the wiki"
+```
+
+**Casual /start-session Commands:**
+```
+"/start-session vibe-coder fix the docs"
+"/start-session react-dev UI bug"
+"/start-session devops"
+"/start-session laravel-dev API endpoints"
 ```
 
 Claude Desktop will automatically:
-1. Recognize your intent and extract the task details
-2. Confirm the agent and task with you
-3. **Execute iTerm2 MCP commands** to trigger automation
-4. Create GitHub issue, setup worktree, and launch Claude Code
+1. **Recognize flexible patterns** - `/start-session`, natural language, or casual formats
+2. **Extract context intelligently** - from conversation, explicit descriptions, or recent messages  
+3. **Fuzzy match agent names** - "vibe" → "vibe-coder", "react" → "react-dev"
+4. **Confirm and trigger** - Show confirmation then execute iTerm2 MCP automation
+5. **Complete automation** - Create GitHub issue, setup worktree, and launch Claude Code
 
 ### Method 2: Direct Command
 For precise control:
@@ -57,18 +74,39 @@ You coordinate these agents by:
 1. Analyzing tasks to determine the appropriate agent
 2. Creating structured handoffs to Claude Code
 3. Managing inter-agent communication via GitHub issues
-4. **NEW**: Recognizing Claude Desktop to Claude Code handoff patterns
+4. **NEW**: Recognizing flexible Claude Desktop to Claude Code handoff patterns
 
 ## Claude Desktop Automated Handoff
 
-### 🚀 NEW: Automated /start-session Workflow
+### 🚀 NEW: Enhanced /start-session Pattern Recognition
 
-When you see this pattern:
+**Claude Desktop now recognizes FLEXIBLE /start-session patterns:**
+
+**Exact Command Format:**
 ```
 /start-session [agent-name] [task-title] [task-description]
 ```
 
-**Claude Desktop should automatically execute this MCP automation:**
+**Natural Language Variations:**
+```
+"start session with [agent]"
+"begin [agent] session"  
+"start [agent] work on [task]"
+"initiate [agent] session for [task]"
+"/start-session [agent]" (with context from conversation)
+"start working with [agent] on this"
+"get [agent] started on [task]"
+```
+
+**Casual Format Examples:**
+```
+"/start-session vibe-coder fix the docs"
+"/start-session react-dev UI bug fix" 
+"start session with devops for deployment"
+"start working with laravel-dev on the API"
+```
+
+**Claude Desktop should automatically execute this MCP automation for ANY of these patterns:**
 
 ## ⚡ How The Automation Works
 
