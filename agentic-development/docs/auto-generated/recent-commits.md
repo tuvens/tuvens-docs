@@ -10,21 +10,40 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `e4e6454ed2f3bd221d1885cd81c12dde91ad8087`
-- **Commit Message**: "docs: add code quality tools documentation to wiki staging
+- **Latest Commit**: `4fa647eed73a64052551f99f5d884b3f1ebb12c5`
+- **Commit Message**: "feat: add dangerous mode with review safeguards to session setup scripts (#267)
 
-Add comprehensive documentation for Sourcery AI and CodeRabbit as future additions to the agentic development environment. Includes integration timeline, implementation strategy, and configuration guidelines for post-vibe-setup deployment. Fixes #260"
+- Add check_pr_review_safeguards() function to shared-functions.sh
+- Modify setup-agent-task.sh to use --dangerously-skip-permissions by default
+- Modify setup-agent-task-desktop.sh to use --dangerously-skip-permissions by default
+- Block dangerous mode when PR has comments from reviewers (gemini-code-assist, qodo-merge-pro, tuvens)
+- Provide clear messaging when dangerous mode is enabled/disabled
+- Maintain manual override capability for users
+
+Resolves #266
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T19:05:18+01:00
+- **Timestamp**: 2025-08-22T20:54:19+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 4fa647e` - feat: add dangerous mode with review safeguards to session setup scripts (#267)
+- **Date**: 2025-08-22 20:54
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 596c440` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 18:05
+- **Author**: GitHub Actions
+
 #### `* e4e6454` - docs: add code quality tools documentation to wiki staging
 - **Date**: 2025-08-22 19:05
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 157affb` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 16:45
@@ -140,36 +159,25 @@ Add comprehensive documentation for Sourcery AI and CodeRabbit as future additio
 - **Author**: 2025-08-21 18:01
 - **Refs**: restore: bring back critical claude-desktop-project-instructions.md file
 
-#### `` - tuvens
-- **Date**:  * d75114c
-- **Author**: 2025-08-21 17:58
-- **Refs**: Revert "clean: remove additional prompt files created today"
-
-#### `` - tuvens
-- **Date**:  * 94eb368
-- **Author**: 2025-08-21 17:53
-- **Refs**: clean: remove additional prompt files created today
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 9 commits
+- `docs`: 10 commits
 - `fix`: 3 commits
+- `feat`: 3 commits
 - `restore`: 2 commits
-- `feat`: 2 commits
-- `clean`: 2 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 7 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 5 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 4 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 6 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 5 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/scripts/devops-prompt.txt`: 3 changes
+- `agentic-development/scripts/vibe-coder-prompt.txt`: 3 changes
 - `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
+- `agentic-development/scripts/shared-functions.sh`: 2 changes
 

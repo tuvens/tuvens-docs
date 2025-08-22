@@ -4,12 +4,23 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: e4e6454ed2f3bd221d1885cd81c12dde91ad8087
-- **Commit Message**: docs: add code quality tools documentation to wiki staging
+- **Commit SHA**: 4fa647eed73a64052551f99f5d884b3f1ebb12c5
+- **Commit Message**: feat: add dangerous mode with review safeguards to session setup scripts (#267)
 
-Add comprehensive documentation for Sourcery AI and CodeRabbit as future additions to the agentic development environment. Includes integration timeline, implementation strategy, and configuration guidelines for post-vibe-setup deployment. Fixes #260
+- Add check_pr_review_safeguards() function to shared-functions.sh
+- Modify setup-agent-task.sh to use --dangerously-skip-permissions by default
+- Modify setup-agent-task-desktop.sh to use --dangerously-skip-permissions by default
+- Block dangerous mode when PR has comments from reviewers (gemini-code-assist, qodo-merge-pro, tuvens)
+- Provide clear messaging when dangerous mode is enabled/disabled
+- Maintain manual override capability for users
+
+Resolves #266
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T19:05:18+01:00
+- **Timestamp**: 2025-08-22T20:54:19+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
