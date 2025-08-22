@@ -1,0 +1,181 @@
+name: Qodo Code Review Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to trigger review on'
+        required: true
+        type: number
+
+jobs:
+  trigger-qodo-review:
+    runs-on: ubuntu-latest
+    # Only run on PRs that are not from the main or staging branches
+    if: |
+      github.event_name == 'workflow_dispatch' || 
+      (github.event.pull_request && 
+       !contains(github.event.pull_request.head.ref, 'main') && 
+       !contains(github.event.pull_request.head.ref, 'staging'))
+    
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR number
+        id: pr
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "number=${{ github.event.inputs.pr_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if Qodo review already triggered
+        id: check
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr_number = ${{ steps.pr.outputs.number }};
+            
+            // Get all comments on the PR
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number
+            });
+            
+            // Check if Qodo has already been triggered
+            const qodoTriggered = comments.data.some(comment => 
+              comment.body.includes('@CodiumAI-Agent') && 
+              comment.body.includes('/review')
+            );
+            
+            // Also check if Qodo has already reviewed
+            const qodoReviewed = comments.data.some(comment => 
+              comment.user.login === 'CodiumAI-Agent' ||
+              comment.user.login === 'qodo-merge-pro[bot]'
+            );
+            
+            console.log(`Qodo already triggered: ${qodoTriggered}`);
+            console.log(`Qodo already reviewed: ${qodoReviewed}`);
+            
+            return !qodoTriggered && !qodoReviewed;
+
+      - name: Trigger Qodo Code Review
+        if: steps.check.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr_number = ${{ steps.pr.outputs.number }};
+            
+            // Create the review trigger comment
+            const comment = await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number,
+              body: `@CodiumAI-Agent /review`
+            });
+            
+            console.log(`Created Qodo trigger comment: ${comment.data.html_url}`);
+            
+            // Add a label to indicate review has been requested
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr_number,
+                labels: ['qodo-review-requested']
+              });
+            } catch (error) {
+              console.log('Could not add label (may not exist): ', error.message);
+            }
+
+      - name: Add status comment
+        if: steps.check.outputs.result == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr_number = ${{ steps.pr.outputs.number }};
+            
+            const statusComment = await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number,
+              body: `🤖 **Automated Code Review Status**
+            
+            ✅ Qodo Code Review has been automatically triggered for this PR.
+            
+            The review will analyze:
+            - Code quality and best practices
+            - Potential bugs and security issues
+            - Performance considerations
+            - Documentation completeness
+            
+            Results will appear as review comments shortly.
+            
+            ---
+            *Triggered by Qodo Review Automation Workflow*`
+            });
+            
+            console.log(`Created status comment: ${statusComment.data.html_url}`);
+
+      - name: Log skip reason
+        if: steps.check.outputs.result == 'false'
+        run: |
+          echo "Skipping Qodo trigger - review already requested or completed for PR #${{ steps.pr.outputs.number }}"
+
+  # Optional: Clean up old Qodo trigger comments to keep PR clean
+  cleanup-old-triggers:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'synchronize'
+    permissions:
+      pull-requests: write
+    
+    steps:
+      - name: Clean up duplicate triggers
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr_number = ${{ github.event.pull_request.number }};
+            
+            // Get all comments
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr_number
+            });
+            
+            // Find all Qodo trigger comments
+            const triggerComments = comments.data.filter(comment => 
+              comment.body === '@CodiumAI-Agent /review'
+            );
+            
+            // Keep only the most recent trigger, delete others
+            if (triggerComments.length > 1) {
+              const toDelete = triggerComments.slice(0, -1);
+              
+              for (const comment of toDelete) {
+                await github.rest.issues.deleteComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment.id
+                });
+                console.log(`Deleted duplicate trigger comment: ${comment.id}`);
+              }
+            }
