@@ -10,62 +10,59 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `7131b53b2df3a3e4ae92b9784bfc39d0cb1cee58`
-- **Commit Message**: "feat: enhance iTerm window naming with issue numbers (#250)
+- **Latest Commit**: `72c44a3ab6549f76c6f9a5757062530403472ea2`
+- **Commit Message**: "Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
 
-* feat: enhance iTerm window naming with issue numbers
-
-Update shell scripts to use agent-name issue-number format for persistent window names.
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
-* security: add input validation for GitHub issue numbers
-
-Address security vulnerability identified by Gemini Code Assist:
-
-- Add validation for empty GITHUB_ISSUE extraction
-- Implement strict digit-only validation to prevent command injection
-- Add security documentation in AppleScript section
-- Improve error handling with descriptive messages
-
-Security improvements:
-- Prevents command injection in AppleScript context
-- Validates GITHUB_ISSUE contains only digits (^[0-9]+$)
-- Graceful error handling for malformed issue numbers
-- Defense-in-depth validation approach
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
----------
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+Fix duplicate GitHub issue creation bug"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T14:52:29+01:00
+- **Timestamp**: 2025-08-22T17:16:43+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* 7131b53` - feat: enhance iTerm window naming with issue numbers (#250)
-- **Date**: 2025-08-22 14:52
+#### `*   72c44a3` - Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
+- **Date**: 2025-08-22 17:16
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
-#### `* 4e7f6e5` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 13:44
-- **Author**: GitHub Actions
+#### `` - 
+- **Date**:   
+- **Author**: 
 
-#### `* 81aba00` - cleanup: remove obsolete test data from branch tracking (#249)
-- **Date**: 2025-08-22 14:43
-- **Author**: tuvens
+#### `` - tuvens
+- **Date**:  * 7a940d6
+- **Author**: 2025-08-22 17:10
+- **Refs**: fix: prevent duplicate GitHub issue creation in agent scripts
 
-#### `* 863e7e6` - fix: consolidate Claude Desktop documentation for clarity and consistency (#248)
-- **Date**: 2025-08-22 14:43
-- **Author**: tuvens
+#### `* ` - GitHub Actions
+- **Date**:  8519091
+- **Author**: 2025-08-22 13:53
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  7131b53
+- **Author**: 2025-08-22 14:52
+- **Refs**: feat: enhance iTerm window naming with issue numbers (#250)
+
+#### `* ` - GitHub Actions
+- **Date**:  4e7f6e5
+- **Author**: 2025-08-22 13:44
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  81aba00
+- **Author**: 2025-08-22 14:43
+- **Refs**: cleanup: remove obsolete test data from branch tracking (#249)
+
+#### `* ` - tuvens
+- **Date**:  863e7e6
+- **Author**: 2025-08-22 14:43
+- **Refs**: fix: consolidate Claude Desktop documentation for clarity and consistency (#248)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
 
 #### `* 3a0aaea` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 10:06
@@ -159,46 +156,24 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**: 2025-08-21 14:25
 - **Author**: tuvens
 
-#### `* f04d369` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-20 15:17
-- **Author**: GitHub Actions
-
-#### `*   ada200b` - Merge pull request #211 from tuvens/vibe-coder/fix/session-startup-instructions
-- **Date**: 2025-08-20 16:16
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 2de2db4
-- **Author**: 2025-08-20 16:14
-- **Refs**: Address Gemini Code Assist feedback on PR #211
-
-#### `` - tuvens
-- **Date**:  * 7024c73
-- **Author**: 2025-08-20 16:05
-- **Refs**: Add agent session startup automation to vibe-coder instructions
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 6 commits
+- `docs`: 7 commits
+- `fix`: 3 commits
 - `feat`: 3 commits
 - `restore`: 2 commits
-- `fix`: 2 commits
 - `clean`: 2 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 6 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 6 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 5 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 7 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 7 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 6 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 5 changes
 - `agentic-development/scripts/vibe-coder-prompt.txt`: 4 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
 - `agentic-development/scripts/devops-prompt.txt`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
 - `agentic-development/wiki/claude-desktop-project-instructions.md`: 2 changes
