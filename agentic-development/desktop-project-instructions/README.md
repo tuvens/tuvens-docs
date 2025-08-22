@@ -25,17 +25,21 @@ Claude Desktop will automatically:
 4. Create GitHub issue, setup worktree, and launch Claude Code
 
 ### Method 2: Direct Command
-For precise control:
+**ANY mention of `/start-session` should trigger automation - format flexibility is key:**
+
 ```
 /start-session [agent-name] "[task-title]" "[task-description]"
 ```
 
-**Examples:**
+**Examples that ALL should work:**
 ```
 /start-session vibe-coder "Fix Documentation" "Update API reference docs"
-/start-session react-dev "UI Bug Fix" "Fix mobile menu not closing"
-/start-session devops "Deploy Pipeline" "Set up CI/CD for staging"
+/start-session react-dev UI Bug Fix
+/start-session devops Deploy Pipeline Set up CI/CD for staging
+/start-session agent-name task description
 ```
+
+**Important**: Don't worry about perfect formatting - the system should recognize and trigger on ANY `/start-session` mention.
 
 ---
 
@@ -63,10 +67,13 @@ You coordinate these agents by:
 
 ### 🚀 NEW: Automated /start-session Workflow
 
-When you see this pattern:
-```
-/start-session [agent-name] [task-title] [task-description]
-```
+**Claude Desktop should trigger automation for ANY mention of `/start-session`**, including:
+- `/start-session [agent-name] [task-title] [task-description]` (exact format)
+- Partial formats like `/start-session agent-name task`
+- Natural language containing `/start-session` (e.g., "use /start-session to get devops working")
+- Any variation or typo in spacing/formatting
+
+**Key Point**: The automation is flexible - don't worry about perfect format matching. ANY mention of `/start-session` should trigger the MCP automation workflow.
 
 **Claude Desktop should automatically execute this MCP automation:**
 
