@@ -1,0 +1,82 @@
+name: AI Code Review Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  trigger-ai-reviews:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if AI reviews already requested
+        id: check-existing
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            const qodoComments = comments.filter(comment => 
+              comment.body.includes('@CodiumAI-Agent /review')
+            );
+            
+            const greptileComments = comments.filter(comment => 
+              comment.body.includes('@greptileai')
+            );
+            
+            console.log(`Found ${qodoComments.length} existing Qodo review comments`);
+            console.log(`Found ${greptileComments.length} existing Greptile review comments`);
+            
+            return {
+              qodo: qodoComments.length > 0,
+              greptile: greptileComments.length > 0
+            };
+
+      - name: Request Qodo code review
+        if: fromJSON(steps.check-existing.outputs.result).qodo == false
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '@CodiumAI-Agent /review'
+            });
+            
+            console.log('✅ Qodo review requested for PR #' + context.issue.number);
+
+      - name: Request Greptile code review
+        if: fromJSON(steps.check-existing.outputs.result).greptile == false
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '@greptileai'
+            });
+            
+            console.log('✅ Greptile review requested for PR #' + context.issue.number);
+
+      - name: Log automation results
+        run: |
+          echo "🤖 AI Code Review Automation Results:"
+          echo "   - PR Number: ${{ github.event.number }}"
+          echo "   - Event Type: ${{ github.event_name }}"
+          echo "   - Qodo Already Requested: ${{ fromJSON(steps.check-existing.outputs.result).qodo }}"
+          echo "   - Greptile Already Requested: ${{ fromJSON(steps.check-existing.outputs.result).greptile }}"
+          echo "   - Qodo Review Triggered: ${{ fromJSON(steps.check-existing.outputs.result).qodo == false }}"
+          echo "   - Greptile Review Triggered: ${{ fromJSON(steps.check-existing.outputs.result).greptile == false }}"

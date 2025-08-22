@@ -77,6 +77,7 @@ This guide provides agents with essential information about the GitHub Actions w
 | Workflow | Purpose | Agent Impact |
 |----------|---------|--------------|
 | `gemini-code-review-integration.yml` | Processes Gemini feedback into GitHub issues with agent assignment | 🤖 Auto-assigns critical feedback to agents |
+| `qodo-review-automation.yml` | Automatically triggers Qodo and Greptile AI code reviews on all PRs | 🔍 Ensures consistent dual AI code quality review on all pull requests |
 | `branch-tracking.yml` | Central coordination of branch lifecycle across repositories | 📊 Updates agent task visibility and coordination |
 | `branch-created.yml` | Notifies central system of new branches | 🌿 Triggers agent context loading and task setup |
 | `branch-merged.yml` | Processes branch merges and cleanup | 🔀 Updates task completion status and cleanup queue |
