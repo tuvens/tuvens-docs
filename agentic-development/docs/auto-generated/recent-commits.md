@@ -10,21 +10,127 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `cf278ac34367b98ae551495ba7e4c9e537b7dbba`
-- **Commit Message**: "Merge pull request #238 from tuvens/devops/feature/fix-claude-desktop-workflow-automation
+- **Latest Commit**: `b1cefc1a7a692cdc74e93829f1f723c31d3746a1`
+- **Commit Message**: "Complete fix: Claude Desktop automation with shared library architecture (#242)
 
-feat: implement Claude Desktop workflow automation"
+* fix: resolve critical path mismatch in desktop adapter
+
+**Critical Bug Fix:**
+- Desktop adapter was recalculating worktree paths instead of querying actual locations
+- Core script creates worktree at real path, desktop adapter tried calculated path
+- Mismatch caused `cd` failures and automation breakage
+
+**Solution:**
+- Desktop adapter now queries git for actual worktree location via `git worktree list`
+- Eliminates path calculation synchronization issues
+- Maintains portable path storage while using real paths for operations
+
+**Technical Details:**
+- Replaced path recalculation with `git worktree list | grep "\\[$BRANCH_NAME\\]"`
+- Added fallback to expand portable paths from prompt file if needed
+- Added validation to ensure worktree path is found before proceeding
+
+**Test Results:**
+✅ Worktree path resolution works correctly
+✅ Desktop adapter can successfully change directories
+✅ End-to-end Claude Desktop automation functional
+
+**Follow-up Required:**
+Need to implement shared library to eliminate code duplication between scripts
+(tracked separately per vibe coder architecture guidance)
+
+Resolves critical automation failure identified by vibe coder agent.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* feat: implement shared library to eliminate code duplication and prevent sync bugs
+
+**Architecture Fix:**
+- Created comprehensive shared-functions.sh library
+- Eliminated all duplicated logic between setup-agent-task.sh and setup-agent-task-desktop.sh
+- Single source of truth prevents future synchronization bugs
+
+**Shared Functions Implemented:**
+- `make_path_portable()` / `expand_portable_path()` - Path format conversion
+- `sanitize_for_branch()` / `calculate_branch_name()` - Branch name standardization
+- `get_worktree_path()` - Query actual worktree locations from git
+- `calculate_worktree_path()` - Standardized path calculation for creation
+- `validate_required_tools()` / `validate_git_repo()` - Common validations
+- `handle_script_error()` - Standardized error handling
+
+**Code Deduplication Results:**
+- ✅ Agent name sanitization - now shared function
+- ✅ Branch name calculation - now shared function
+- ✅ Path formatting - now shared functions
+- ✅ Worktree path handling - now shared function
+- ✅ Error handling patterns - now shared function
+
+**Bug Prevention:**
+This architectural change prevents the entire class of synchronization bugs
+that occurred during PR #238 review process, where path handling changes
+were applied to one script but not synchronized with the other.
+
+**Backward Compatibility:**
+Both scripts maintain identical external behavior while using shared internals.
+
+**Test Results:**
+✅ Round-trip path conversion successful
+✅ Branch name calculation matches previous logic
+✅ Worktree path resolution works with existing worktrees
+✅ Both scripts pass syntax validation
+
+As recommended by vibe coder architectural guidance:
+"Code deduplication prevents future sync bugs through proper design."
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: address Gemini Code Assist code review feedback on PR #242
+
+HIGH SEVERITY FIXES:
+- Fix unsafe array assignment in calculate_worktree_path() for paths with spaces
+- Replace repo_info=($(get_repo_paths)) with temp file approach
+- Modify get_repo_paths() to output each path on separate lines
+
+MEDIUM SEVERITY IMPROVEMENTS:
+- Use expand_portable_path() instead of manual path expansion logic
+- Replace complex one-liner with explicit if/else for IS_TUVENS_DOCS
+- Improve grep pattern in get_worktree_path() using -F flag and head -n1
+
+These changes improve code safety, maintainability, and handle edge cases
+with file paths containing spaces or special characters.
+
+Addresses feedback from Gemini Code Assist on PR #242.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-21T21:47:52+01:00
+- **Timestamp**: 2025-08-22T11:06:04+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* b1cefc1` - Complete fix: Claude Desktop automation with shared library architecture (#242)
+- **Date**: 2025-08-22 11:06
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 80c2c42` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-21 20:48
+- **Author**: GitHub Actions
+
 #### `*   cf278ac` - Merge pull request #238 from tuvens/devops/feature/fix-claude-desktop-workflow-automation
 - **Date**: 2025-08-21 21:47
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -148,16 +254,6 @@ feat: implement Claude Desktop workflow automation"
 - **Date**:   
 - **Author**: 
 
-#### `` - tuvens
-- **Date**:  * 336d9fa
-- **Author**: 2025-08-20 09:46
-- **Refs**: [SAFETY-OVERRIDE: legitimate documentation examples] fix: address Gemini code review feedback
-
-#### `` - tuvens
-- **Date**:  * 03baee8
-- **Author**: 2025-08-20 09:24
-- **Refs**: [SAFETY-OVERRIDE: legitimate documentation examples] feat: split frontend integration README into focused implementation guides
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
@@ -171,11 +267,11 @@ feat: implement Claude Desktop workflow automation"
 - `agentic-development/docs/auto-generated/recent-commits.md`: 6 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 6 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 5 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 3 changes
+- `agentic-development/scripts/vibe-coder-prompt.txt`: 4 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
 - `agentic-development/scripts/devops-prompt.txt`: 3 changes
+- `agentic-development/branch-tracking/active-branches.json`: 3 changes
 - `agentic-development/wiki/claude-desktop-project-instructions.md`: 2 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 2 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 2 changes
 - `agentic-development/scripts/mobile-dev-prompt.txt`: 2 changes
-- `agentic-development/scripts/mobile-dev-manual-prompt.txt`: 2 changes
 
