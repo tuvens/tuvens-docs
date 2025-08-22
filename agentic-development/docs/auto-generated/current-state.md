@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 72c44a3ab6549f76c6f9a5757062530403472ea2
-- **Commit Message**: Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
+- **Commit SHA**: 83d4e54bdee6f592ffa0f1bd400b3ff54c28241e
+- **Commit Message**: docs: add MCP Documentation Server guide to wiki staging
 
-Fix duplicate GitHub issue creation bug
+Add comprehensive documentation for MCP Documentation Server as agentic development tool. Includes semantic search capabilities, installation instructions, and integration guidance for Tuvens agents. Fixes #263
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T17:16:43+01:00
+- **Timestamp**: 2025-08-22T17:40:08+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
@@ -26,6 +26,6 @@ Fix duplicate GitHub issue creation bug
 - ✅ `package.json`
 
 ## Documentation Status
-- **Markdown files**: 218
+- **Markdown files**: 219
 - ✅ README.md present
 - ✅ tuvens-docs/ directory present

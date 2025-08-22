@@ -10,21 +10,29 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `72c44a3ab6549f76c6f9a5757062530403472ea2`
-- **Commit Message**: "Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
+- **Latest Commit**: `83d4e54bdee6f592ffa0f1bd400b3ff54c28241e`
+- **Commit Message**: "docs: add MCP Documentation Server guide to wiki staging
 
-Fix duplicate GitHub issue creation bug"
+Add comprehensive documentation for MCP Documentation Server as agentic development tool. Includes semantic search capabilities, installation instructions, and integration guidance for Tuvens agents. Fixes #263"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T17:16:43+01:00
+- **Timestamp**: 2025-08-22T17:40:08+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 83d4e54` - docs: add MCP Documentation Server guide to wiki staging
+- **Date**: 2025-08-22 17:40
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 6ef057e` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 16:17
+- **Author**: GitHub Actions
+
 #### `*   72c44a3` - Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
 - **Date**: 2025-08-22 17:16
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -148,18 +156,10 @@ Fix duplicate GitHub issue creation bug"
 - **Date**: 2025-08-21 14:40
 - **Author**: tuvens
 
-#### `* eea81e6` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-21 13:26
-- **Author**: GitHub Actions
-
-#### `* e756104` - Add desktop-to-iterm bridge script for Claude Desktop automation
-- **Date**: 2025-08-21 14:25
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 7 commits
+- `docs`: 8 commits
 - `fix`: 3 commits
 - `feat`: 3 commits
 - `restore`: 2 commits
