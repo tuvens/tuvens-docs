@@ -18,6 +18,9 @@ Instead of rigid commands, users can naturally say:
 "Let's use Claude Code with laravel-dev for this database task"
 "Get Claude Code working on this documentation with vibe coder"
 "Have devops set up the CI pipeline in Claude Code"
+"Create wiki documentation for the API endpoints"
+"Have vibe-coder document the authentication system in the wiki"
+"Document the deployment process in the wiki"
 ```
 
 **Claude Desktop Response:**
