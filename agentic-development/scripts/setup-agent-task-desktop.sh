@@ -62,20 +62,38 @@ export SKIP_ITERM_AUTOMATION=true
 AGENT_NAME="$1"
 TASK_TITLE="$2"
 
-# Extract paths that the core script created
+# Extract branch info that the core script created
 SANITIZED_AGENT_NAME=$(echo "$AGENT_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
 SANITIZED_TASK_TITLE=$(echo "$TASK_TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
 BRANCH_NAME="$SANITIZED_AGENT_NAME/feature/$SANITIZED_TASK_TITLE"
 
-# Determine worktree path (same logic as core script)
-REPO_ROOT=$(git rev-parse --show-toplevel)
-REPO_NAME=$(basename "$REPO_ROOT")
+# Get the actual worktree path from git (don't calculate it ourselves)
+# The core script already created the worktree, so query git for the real path
+# Use the simple git worktree list format which is more reliable
+WORKTREE_PATH=$(git worktree list | grep "\\[$BRANCH_NAME\\]" | awk '{print $1}')
 
-if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
-    WORKTREE_PATH="$REPO_ROOT/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
-else
-    PARENT_DIR=$(dirname "$REPO_ROOT")
-    WORKTREE_PATH="$PARENT_DIR/$REPO_NAME/worktrees/$SANITIZED_AGENT_NAME/$BRANCH_NAME"
+# Fallback: If git worktree list fails, expand any portable paths manually
+if [[ -z "$WORKTREE_PATH" ]]; then
+    echo "⚠️  Could not find worktree for branch $BRANCH_NAME via git worktree list"
+    echo "   Attempting to expand portable path from branch tracking..."
+    
+    # Try to get the portable path from the prompt file and expand it
+    PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
+    if [[ -f "$PROMPT_FILE" ]]; then
+        PORTABLE_PATH=$(grep "Worktree:" "$PROMPT_FILE" | cut -d' ' -f2)
+        if [[ "$PORTABLE_PATH" == \~/* ]]; then
+            WORKTREE_PATH="${HOME}${PORTABLE_PATH#\~}"
+        else
+            WORKTREE_PATH="$PORTABLE_PATH"
+        fi
+    fi
+fi
+
+# Final check that we have a valid worktree path
+if [[ -z "$WORKTREE_PATH" ]]; then
+    echo "❌ ERROR: Could not determine worktree path for branch $BRANCH_NAME"
+    echo "   This usually means the core script failed to create the worktree"
+    exit 1
 fi
 
 PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
