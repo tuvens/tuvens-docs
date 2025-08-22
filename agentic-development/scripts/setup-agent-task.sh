@@ -92,8 +92,14 @@ source "$SCRIPT_DIR/shared-functions.sh"
 "$SCRIPT_DIR/validate-environment.sh"
 echo ""
 
-# Step 2: Create GitHub issue
-echo "Step 2: Creating GitHub issue..."
+# Step 2: Create GitHub issue (skip if called from desktop script)
+if [[ "${SKIP_GITHUB_ISSUE_CREATION:-false}" == "true" ]]; then
+    echo "Step 2: Skipping GitHub issue creation (handled by desktop wrapper)..."
+    # Use the issue number provided by desktop script
+    GITHUB_ISSUE="${DESKTOP_GITHUB_ISSUE:-TBD}"
+    echo ""
+else
+    echo "Step 2: Creating GitHub issue..."
 
 # Function to validate and format file references
 validate_files() {
@@ -205,10 +211,27 @@ ISSUE_URL=$(gh issue create \
     --label "agent-task,$AGENT_NAME")
 
 GITHUB_ISSUE=$(echo "$ISSUE_URL" | grep -o '[0-9]\+$')
+
+# Security and robustness validation for GITHUB_ISSUE
+if [[ -z "$GITHUB_ISSUE" ]]; then
+    echo "❌ ERROR: Failed to extract GitHub issue number from URL: $ISSUE_URL"
+    rm -f "$TEMP_BODY_FILE"
+    exit 1
+fi
+
+# Additional security validation: ensure GITHUB_ISSUE contains only digits
+if ! [[ "$GITHUB_ISSUE" =~ ^[0-9]+$ ]]; then
+    echo "❌ ERROR: Invalid GitHub issue number format: $GITHUB_ISSUE"
+    echo "   Issue number must contain only digits for security"
+    rm -f "$TEMP_BODY_FILE"
+    exit 1
+fi
+
 rm -f "$TEMP_BODY_FILE"
 echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
 echo ""
+fi
 
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
@@ -548,11 +571,13 @@ elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
     echo "Step 5: Creating iTerm2 window..."
     
     # Create AppleScript for iTerm2 window
+    # Security note: GITHUB_ISSUE is validated above to contain only digits (^[0-9]+$)
+    # This prevents command injection in the AppleScript context
     APPLESCRIPT_CONTENT="
 tell application \"iTerm\"
     create window with default profile
     tell current session of current window
-        set name to \"$AGENT_NAME Agent\"
+        set name to \"$AGENT_NAME #$GITHUB_ISSUE\"
         write text \"cd \\\"$WORKTREE_PATH\\\"\"
         write text \"cat \\\"$PROMPT_FILE\\\"\"
         write text \"claude\"

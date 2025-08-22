@@ -2,19 +2,14 @@
 
 **[DESKTOP] - This file is loaded by Claude Desktop projects for orchestration**
 
-## 🚀 NATURAL LANGUAGE AGENT HANDOFFS
+## 🚀 Quick Start: Trigger Agent Automation
 
-**Claude Desktop now recognizes natural language requests for agent handoffs!**
-
-Instead of rigid commands, users can naturally say:
-
-### 💬 Natural Language Examples
-
-**Common Patterns:**
+### Method 1: Natural Language (Recommended)
+Simply ask in normal conversation:
 ```
-"Get vibe-coder to work on this in Claude Code"
+"Get vibe-coder to work on this documentation in Claude Code"
 "Have the devops agent handle this deployment issue"
-"Ask react-dev to fix this UI bug" 
+"Ask react-dev to fix this UI bug"
 "Let's use Claude Code with laravel-dev for this database task"
 "Get Claude Code working on this documentation with vibe coder"
 "Have devops set up the CI pipeline in Claude Code"
@@ -23,24 +18,24 @@ Instead of rigid commands, users can naturally say:
 "Document the deployment process in the wiki"
 ```
 
-**Claude Desktop Response:**
-```
-I understand you want [agent] to work on [parsed-task]. 
-Should I set up a Claude Code session with:
-- Agent: [agent-name]
-- Task: [task-title] 
-- Context: [description]
+Claude Desktop will automatically:
+1. Recognize your intent and extract the task details
+2. Confirm the agent and task with you
+3. **Execute iTerm2 MCP commands** to trigger automation
+4. Create GitHub issue, setup worktree, and launch Claude Code
 
-Would you like me to proceed? [Yes/No]
+### Method 2: Direct Command
+For precise control:
 ```
-
-### ⚡ Quick Commands (Alternative)
-For power users, the direct command still works:
-```
-/start-session [agent-name] "[task-title]" "[description]"
+/start-session [agent-name] "[task-title]" "[task-description]"
 ```
 
-**Status: Enhanced Natural Language Support** - Much more intuitive!
+**Examples:**
+```
+/start-session vibe-coder "Fix Documentation" "Update API reference docs"
+/start-session react-dev "UI Bug Fix" "Fix mobile menu not closing"
+/start-session devops "Deploy Pipeline" "Set up CI/CD for staging"
+```
 
 ---
 
@@ -75,88 +70,90 @@ When you see this pattern:
 
 **Claude Desktop should automatically execute this MCP automation:**
 
-#### **MCP Automation Pattern**
+## ⚡ How The Automation Works
+
+When Claude Desktop sees `/start-session` or natural language patterns, it executes:
+
 ```bash
-# Open iTerm terminal with descriptive name
+# Opens iTerm2 with descriptive name
 open_terminal name="[agent-name]-session"
 
-# Execute the automation script in that terminal
+# Runs automation in the terminal 
 execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent-name] \"[task-title]\" \"[task-description]\""
 ```
 
-**Examples:**
+### What Happens Step-by-Step
+1. **GitHub Issue Created** - Task is logged with agent assignment
+2. **Git Worktree Setup** - Isolated workspace with proper branch naming
+3. **Agent Prompt Generated** - Full context prompt appears in terminal
+4. **Claude Code Launches** - Ready for you to paste the prompt and begin work
+
+## 🔧 Setup Requirements
+
+### Essential Prerequisites
 ```bash
-# When user says: /start-session vibe-coder "API Documentation" "Create comprehensive API docs"
-open_terminal name="vibe-coder-session"
-execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session vibe-coder \"API Documentation\" \"Create comprehensive API docs\""
-
-# When user says: /start-session react-dev "Fix UI Bug" "Button not responding on mobile"  
-open_terminal name="react-dev-session"
-execute_command terminal="react-dev-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session react-dev \"Fix UI Bug\" \"Button not responding on mobile\""
-```
-
-#### **What Happens in the Terminal:**
-1. **Script runs** `setup-agent-task.sh` to create GitHub issue
-2. **Sets up** isolated Git worktree with proper branch naming
-3. **Generates** agent prompt with full context
-4. **Changes directory** to the new worktree
-5. **Displays** the agent prompt for copying
-6. **Launches** Claude Code automatically (`exec claude`)
-
-#### **User Experience:**
-- User types `/start-session` in Claude Desktop chat
-- Claude Desktop opens iTerm and runs the automation
-- Terminal shows progress, displays prompt, launches Claude Code
-- User copies the displayed prompt into Claude Code
-- Agent work begins with full context
-
-### 📋 Manual Fallback (Legacy)
-
-If automation fails, use manual MCP commands:
-
-#### **Vibe Coder (System Architecture)**
-```
-open_terminal name="vibe-coder-session"
-execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && claude-code --agent vibe-coder --message '[task description]'"
-```
-
-#### **Other Agents**
-Similar patterns for node-dev, laravel-dev, react-dev, svelte-dev - adjust repository paths accordingly.
-
-**Pattern Recognition:**
-- Always recognize variations like `/start-session vibe-coder fix the thing we're talking about`
-- Extract the task description and pass it as `--message '[task description]'`
-- Map the agent name to the correct repository and claude-code command
-- Use descriptive terminal names that include the agent name
-- For DevOps: clarify target repository if the task isn't infrastructure-specific
-
-## Prerequisites
-
-### Repository Structure Setup
-All Tuvens repositories should be siblings under a common directory:
-```
+# 1. Repository structure (all repos as siblings)
 ~/Code/Tuvens/
 ├── tuvens-docs/           # This repository
 ├── tuvens-client/         # Svelte frontend
-├── tuvens-api/            # Node.js backend  
-├── hi.events/             # Laravel/React fullstack
-└── eventsdigest-ai/       # Svelte 5 frontend
+├── tuvens-api/            # Node.js backend
+├── hi.events/             # Laravel/React app
+└── eventsdigest-ai/       # Additional projects
 ```
 
-Each project repository should have a local copy of `tuvens-docs` (gitignored):
+### 2. iTerm2 MCP Integration
 ```bash
-# In each project root
+# Install iTerm MCP server
+npm install -g iterm_mcp_server
+
+# Verify it's running
+ps aux | grep iterm_mcp_server
+```
+
+### 3. GitHub CLI Authentication
+```bash
+# Authenticate GitHub CLI
+gh auth login
+
+# Verify authentication
+gh auth status
+```
+
+## 🐛 Troubleshooting
+
+**If automation fails to trigger:**
+1. Check repository structure: `ls ~/Code/Tuvens/` should show all repos
+2. Verify start-session script: `ls ~/Code/Tuvens/tuvens-docs/start-session`
+3. Test GitHub CLI: `gh repo view` should work
+4. Check iTerm MCP: Look for `iterm_mcp_server` in running processes
+
+**Common issues:**
+- **"Script not found"**: Ensure you're in `~/Code/Tuvens/tuvens-docs`
+- **"GitHub authentication failed"**: Run `gh auth login`
+- **"iTerm not responding"**: Restart iTerm MCP server
+
+### 📋 Manual Fallback (If Automation Fails)
+
+If the automated `/start-session` doesn't work, use manual MCP commands:
+
+**For any agent:**
+```
+open_terminal name="[agent-name]-session"
+execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent-name] \"[task-title]\" \"[task-description]\""
+```
+
+**Example:**
+```
+open_terminal name="vibe-coder-session"
+execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session vibe-coder \"Documentation Fix\" \"Update API reference\""
+```
+
+### 🔗 Repository Linking (Optional)
+For easier agent access across repositories:
+```bash
+# In each project root (tuvens-client, tuvens-api, hi.events)
 ln -s ../tuvens-docs tuvens-docs
 echo "/tuvens-docs" >> .gitignore
-```
-
-This enables agents to access shared documentation regardless of which repository they're working in.
-
-### Terminal Automation Setup
-Optional enhancement for Claude Desktop to Claude Code handoffs:
-```bash
-# Install iTerm MCP Server (optional)
-npm install -g iterm_mcp_server
 ```
 
 ## Navigation - Detailed Guides
@@ -187,39 +184,49 @@ This documentation is split into focused micro-docs for better navigation:
 - Repository-specific workflows
 - Common task scenarios and examples
 
-## Quick Commands
+---
 
+## 📋 Available Agents
+
+Choose the right agent for your task:
+
+- **vibe-coder** - System architecture, documentation, agent coordination
+- **react-dev** - React frontend development (hi.events)
+- **laravel-dev** - Laravel backend development (hi.events)
+- **svelte-dev** - Svelte frontend development (tuvens-client)
+- **node-dev** - Node.js backend development (tuvens-api)
+- **devops** - Infrastructure, deployment, CI/CD
+
+## 📖 Additional Resources
+
+### Cross-Agent Commands
 ```bash
-# 🚀 NEW: Automated start-session (type in Claude Desktop chat)
-/start-session [agent-name] "[task-title]" "[task-description]"
+# Create task for another agent
+/create-issue [from-agent] [to-agent] "[Title]" [repository]
 
-# Examples to type in Claude Desktop:
-/start-session vibe-coder "Fix Documentation" "Update API reference docs"
-/start-session react-dev "UI Bug Fix" "Fix mobile menu not closing"
-/start-session devops "Deploy Fix" "Fix staging deployment"
-
-# Claude Desktop will automatically:
-# 1. Open iTerm terminal
-# 2. Run: cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent] "[title]" "[desc]"
-# 3. Create GitHub issue, worktree, and launch Claude Code
-
-# Create cross-agent task
-/create-issue [from] [to] "[Title]" [repo]
-
-# Resolve issues
+# Resolve GitHub issues
 /resolve-issue [issue-number]
 
-# Ask cross-repo questions
-/ask-question [repo] "[Question]"
-
-# Refactor code properly
-/refactor-code [path]
+# Ask questions across repositories  
+/ask-question [repository] "[Question]"
 ```
 
-## Need Help?
+### Advanced Guides
+- **[Agent Management](./agent-management.md)** - Detailed agent selection and task routing
+- **[Natural Language Patterns](./natural-language-patterns.md)** - Intent recognition guide
+- **[Advanced Usage](./advanced-usage.md)** - Complex scenarios and best practices
 
-- **Agent responsibilities**: Load specific agent instruction file
-- **Workflow details**: Load relevant workflow file
-- **System architecture**: `/start-session vibe-coder` for analysis
-- **Custom prompts**: Load agent-terminal-prompts.md for task-specific templates
-- **Terminal handoffs**: Use the patterns above for Claude Desktop to Claude Code transitions
+## ✅ Success Indicators
+
+**You'll know the automation is working when:**
+1. Typing `/start-session [agent] "[task]" "[description]"` opens iTerm2
+2. The terminal shows GitHub issue creation and worktree setup
+3. Claude Code launches automatically with the agent context
+4. The agent prompt appears ready to copy into Claude Code
+
+**If any step fails, check the [Troubleshooting](#-troubleshooting) section above.**
+
+---
+
+*For questions about agent responsibilities or system architecture, use:*  
+`/start-session vibe-coder "System Help" "Explain [your question]"`
