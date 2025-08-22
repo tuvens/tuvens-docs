@@ -10,28 +10,58 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `81aba00807df31a83715c1450873b220f2adca92`
-- **Commit Message**: "cleanup: remove obsolete test data from branch tracking (#249)
+- **Latest Commit**: `7131b53b2df3a3e4ae92b9784bfc39d0cb1cee58`
+- **Commit Message**: "feat: enhance iTerm window naming with issue numbers (#250)
 
-- Remove test-repo section with 2 gemini-integration test branches
-- Remove fix-claude-desktop-workflow-automation section with 6 debug branches
-- Maintain JSON structure integrity
-- Keep only legitimate tuvens-docs branches
+* feat: enhance iTerm window naming with issue numbers
+
+Update shell scripts to use agent-name issue-number format for persistent window names.
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* security: add input validation for GitHub issue numbers
+
+Address security vulnerability identified by Gemini Code Assist:
+
+- Add validation for empty GITHUB_ISSUE extraction
+- Implement strict digit-only validation to prevent command injection
+- Add security documentation in AppleScript section
+- Improve error handling with descriptive messages
+
+Security improvements:
+- Prevents command injection in AppleScript context
+- Validates GITHUB_ISSUE contains only digits (^[0-9]+$)
+- Graceful error handling for malformed issue numbers
+- Defense-in-depth validation approach
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
 Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T14:43:14+01:00
+- **Timestamp**: 2025-08-22T14:52:29+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 7131b53` - feat: enhance iTerm window naming with issue numbers (#250)
+- **Date**: 2025-08-22 14:52
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 4e7f6e5` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 13:44
+- **Author**: GitHub Actions
+
 #### `* 81aba00` - cleanup: remove obsolete test data from branch tracking (#249)
 - **Date**: 2025-08-22 14:43
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 863e7e6` - fix: consolidate Claude Desktop documentation for clarity and consistency (#248)
 - **Date**: 2025-08-22 14:43
@@ -151,21 +181,13 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: 2025-08-20 16:05
 - **Refs**: Add agent session startup automation to vibe-coder instructions
 
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
-#### `* e83a40d` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-20 11:10
-- **Author**: GitHub Actions
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 6 commits
+- `feat`: 3 commits
 - `restore`: 2 commits
 - `fix`: 2 commits
-- `feat`: 2 commits
 - `clean`: 2 commits
 - `cleanup`: 1 commits
 
@@ -174,10 +196,10 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - `agentic-development/docs/auto-generated/current-state.md`: 6 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 5 changes
 - `agentic-development/scripts/vibe-coder-prompt.txt`: 4 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
 - `agentic-development/scripts/devops-prompt.txt`: 3 changes
-- `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
+- `agentic-development/wiki/claude-desktop-project-instructions.md`: 2 changes
 
