@@ -10,66 +10,43 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `00c56943b2c4cd6c59d48a250d86caa747e0f705`
-- **Commit Message**: "feat: implement automated AI code review triggering (#275)
+- **Latest Commit**: `bbc3c21464e6877ebb9bb59bdfa114be686b31ba`
+- **Commit Message**: "[SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
 
-* feat: implement Qodo review automation workflow
+Replace rigid format matching with flexible pattern recognition in Claude Desktop instructions.
 
-- Add automated @CodiumAI-Agent /review commenting on new PRs
-- Include duplicate prevention to avoid multiple review requests
-- Trigger on PR opened, synchronize, and reopened events
-- Support both pull_request and pull_request_target triggers
-- Use TUVENS_DOCS_TOKEN for proper repository access
+SAFETY JUSTIFICATION: The flagged content at line 28 contains 'format flexibility is key:' which is legitimate documentation text explaining the system's flexibility, not an actual secret or key.
 
-🤖 Generated with [Claude Code](https://claude.ai/code)
+Changes made:
+- Updated README.md to clarify ANY mention of /start-session should trigger automation
+- Added flexible format examples showing variations that should work
+- Replaced rigid structure requirements with user-friendly guidance
+- Simple 10-line clarification approach vs complex specification
 
-Co-Authored-By: Claude <noreply@anthropic.com>
-
-* feat: add Greptile AI review automation alongside Qodo
-
-- Update workflow to trigger both @CodiumAI-Agent and @greptileai reviews
-- Add independent duplicate prevention for each service
-- Rename workflow to 'AI Code Review Automation' for clarity
-- Update documentation to reflect dual AI review capability
-- Maintain separate logic for each review service
+Resolves #277
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
-* fix: address critical security and logic issues in AI review automation
-
-CRITICAL FIXES:
-- Remove pull_request_target trigger to eliminate security vulnerability
-- Fix duplicate detection logic by removing Bot user type filter
-- Prevent infinite duplicate review requests
-
-SECURITY ISSUES RESOLVED:
-- Eliminates dangerous dual trigger configuration
-- Removes potential for untrusted code execution
-
-LOGIC FIXES:
-- Duplicate detection now properly identifies existing review comments
-- Works correctly since workflow creates comments as authenticated user, not bot
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-
----------
 
 Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T21:23:29+01:00
+- **Timestamp**: 2025-08-22T21:41:30+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* bbc3c21` - [SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
+- **Date**: 2025-08-22 21:41
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 8922810` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 20:24
+- **Author**: GitHub Actions
+
 #### `* 00c5694` - feat: implement automated AI code review triggering (#275)
 - **Date**: 2025-08-22 21:23
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 1ffbe9e` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 19:54
@@ -179,36 +156,23 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: 2025-08-21 21:25
 - **Refs**: feat: implement Claude Desktop workflow automation
 
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
-#### `*   5e4d129` - Merge pull request #223 from tuvens/devops/feature/clean-up-files-edited-today-in-dev-branch
-- **Date**: 2025-08-21 18:12
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 11 commits
+- `docs`: 12 commits
 - `feat`: 4 commits
 - `fix`: 3 commits
-- `restore`: 1 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 10 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 6 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 5 changes
+- `agentic-development/desktop-project-instructions/README.md`: 4 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
 - `agentic-development/scripts/vibe-coder-prompt.txt`: 2 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
