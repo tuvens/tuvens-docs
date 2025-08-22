@@ -1,0 +1,149 @@
+# LiteLLM Router Configuration
+# Multi-provider LLM routing with automatic fallbacks
+
+model_list:
+  # Premium Tier - Complex Tasks
+  - model_name: claude-opus
+    litellm_params:
+      model: claude-3-opus-20240229
+      api_key: os.environ/ANTHROPIC_API_KEY
+      max_tokens: 4096
+    
+  - model_name: claude-sonnet
+    litellm_params:
+      model: claude-3-5-sonnet-20241022
+      api_key: os.environ/ANTHROPIC_API_KEY
+      max_tokens: 8192
+  
+  - model_name: gpt-4
+    litellm_params:
+      model: gpt-4-turbo-preview
+      api_key: os.environ/OPENAI_API_KEY
+      max_tokens: 4096
+
+  # Standard Tier - General Development  
+  - model_name: deepseek-coder
+    litellm_params:
+      model: openrouter/deepseek/deepseek-coder-33b-instruct
+      api_key: os.environ/OPENROUTER_API_KEY
+      max_tokens: 4096
+  
+  - model_name: gemini-flash
+    litellm_params:
+      model: gemini/gemini-2.0-flash-latest
+      api_key: os.environ/GOOGLE_API_KEY
+      max_tokens: 8192
+      
+  - model_name: qwen-coder
+    litellm_params:
+      model: together_ai/Qwen/Qwen2.5-Coder-32B-Instruct
+      api_key: os.environ/TOGETHER_API_KEY
+      max_tokens: 4096
+
+  # Specialist Tier - Domain Tasks
+  - model_name: llama-vision
+    litellm_params:
+      model: together_ai/meta-llama/Llama-Vision-Free
+      api_key: os.environ/TOGETHER_API_KEY
+      supports_vision: true
+      
+  - model_name: llama-vision-backup
+    litellm_params:
+      model: openrouter/meta-llama/llama-3.2-90b-vision-instruct
+      api_key: os.environ/OPENROUTER_API_KEY
+      supports_vision: true
+  
+  - model_name: qwen-math
+    litellm_params:
+      model: together_ai/Qwen/QwQ-32B-Preview
+      api_key: os.environ/TOGETHER_API_KEY
+      max_tokens: 4096
+      
+  - model_name: mistral-fast
+    litellm_params:
+      model: groq/mixtral-8x7b-32768
+      api_key: os.environ/GROQ_API_KEY
+      max_tokens: 32768
+
+# Router Settings
+router_settings:
+  routing_strategy: usage-based-routing-v2
+  redis_host: os.environ/REDIS_HOST
+  redis_port: os.environ/REDIS_PORT
+  redis_password: os.environ/REDIS_PASSWORD
+  
+  # Semantic Caching
+  cache_responses: true
+  cache_ttl: 3600
+  similarity_threshold: 0.95
+  
+  # Model Selection Rules
+  model_group_alias:
+    complex_tasks: ["claude-opus", "claude-sonnet", "gpt-4"]
+    standard_tasks: ["deepseek-coder", "gemini-flash", "qwen-coder"]
+    vision_tasks: ["llama-vision", "llama-vision-backup"]
+    math_tasks: ["qwen-math", "deepseek-coder"]
+    fast_tasks: ["mistral-fast", "gemini-flash"]
+  
+  # Fallback Chains
+  fallbacks:
+    - model: claude-opus
+      fallback: ["claude-sonnet", "gpt-4"]
+    - model: deepseek-coder
+      fallback: ["qwen-coder", "gemini-flash"]
+    - model: llama-vision
+      fallback: ["llama-vision-backup", "gpt-4-vision"]
+    - model: qwen-math
+      fallback: ["deepseek-coder", "gpt-4"]
+
+  # Rate Limiting
+  max_parallel_requests: 100
+  max_requests_per_minute:
+    claude-opus: 50
+    claude-sonnet: 100
+    gpt-4: 60
+    deepseek-coder: 1000
+    gemini-flash: 15
+    qwen-coder: 60
+    
+  # Cost Optimization
+  enable_cost_tracking: true
+  cost_budget_per_day: 100.00
+  prefer_free_models: true
+  
+  # Retry Policy
+  num_retries: 3
+  retry_after: 1
+  allowed_fails: 2
+
+# General Settings
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  otel_endpoint: os.environ/OTEL_ENDPOINT
+  
+  # Logging
+  log_level: INFO
+  log_to_file: true
+  log_file_path: /var/log/litellm/router.log
+  
+  # Health Checks
+  health_check_interval: 30
+  model_warmup: true
+  
+  # Security
+  allowed_ips: []
+  block_ips: []
+  enforce_https: true
+  
+# Environment Settings
+environment_variables:
+  OPENAI_API_KEY: os.environ/OPENAI_API_KEY
+  ANTHROPIC_API_KEY: os.environ/ANTHROPIC_API_KEY
+  GOOGLE_API_KEY: os.environ/GOOGLE_API_KEY
+  TOGETHER_API_KEY: os.environ/TOGETHER_API_KEY
+  OPENROUTER_API_KEY: os.environ/OPENROUTER_API_KEY
+  GROQ_API_KEY: os.environ/GROQ_API_KEY
+  REDIS_HOST: os.environ/REDIS_HOST
+  REDIS_PORT: os.environ/REDIS_PORT
+  REDIS_PASSWORD: os.environ/REDIS_PASSWORD

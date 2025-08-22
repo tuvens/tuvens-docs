@@ -1,0 +1,154 @@
+# Task Complexity Routing Rules
+# Determines which model tier handles different task types
+
+task_classification:
+  # High Complexity - Premium Models Required
+  high_complexity:
+    indicators:
+      - "system architecture"
+      - "cross-repository"
+      - "authentication flow"
+      - "security implementation"
+      - "performance optimization"
+      - "complex debugging"
+      - "API design"
+      - "database schema"
+      - "multi-agent coordination"
+    preferred_models: ["claude-opus", "claude-sonnet"]
+    fallback_models: ["gpt-4"]
+    max_tokens: 4096
+    temperature: 0.7
+    
+  # Medium Complexity - Standard Models Sufficient
+  medium_complexity:
+    indicators:
+      - "implement feature"
+      - "write tests"
+      - "code review"
+      - "refactor"
+      - "documentation"
+      - "bug fix"
+      - "UI component"
+      - "data validation"
+    preferred_models: ["deepseek-coder", "qwen-coder"]
+    fallback_models: ["gemini-flash", "claude-sonnet"]
+    max_tokens: 2048
+    temperature: 0.5
+    
+  # Low Complexity - Fast/Free Models
+  low_complexity:
+    indicators:
+      - "format code"
+      - "add comments"
+      - "simple query"
+      - "explain concept"
+      - "list items"
+      - "generate boilerplate"
+      - "syntax check"
+    preferred_models: ["gemini-flash", "mistral-fast"]
+    fallback_models: ["deepseek-coder"]
+    max_tokens: 1024
+    temperature: 0.3
+
+# Specialized Task Routing
+specialized_tasks:
+  vision_analysis:
+    triggers:
+      - "analyze image"
+      - "screenshot"
+      - "UI mockup"
+      - "visual debug"
+      - "extract from image"
+    preferred_models: ["llama-vision"]
+    fallback_models: ["llama-vision-backup", "gpt-4-vision"]
+    
+  mathematical_reasoning:
+    triggers:
+      - "calculate"
+      - "mathematical proof"
+      - "algorithm complexity"
+      - "statistical analysis"
+      - "optimization problem"
+    preferred_models: ["qwen-math"]
+    fallback_models: ["deepseek-coder", "gpt-4"]
+    
+  rapid_iteration:
+    triggers:
+      - "quick fix"
+      - "hotfix"
+      - "urgent"
+      - "immediate"
+    preferred_models: ["mistral-fast"]
+    fallback_models: ["gemini-flash"]
+    max_latency_ms: 1000
+
+# Agent-Specific Preferences
+agent_routing:
+  vibe-coder:
+    default_tier: "high_complexity"
+    preferred_models: ["claude-opus", "claude-sonnet"]
+    cache_enabled: true
+    
+  react-dev:
+    default_tier: "medium_complexity"
+    preferred_models: ["deepseek-coder", "qwen-coder"]
+    vision_enabled: true
+    
+  laravel-dev:
+    default_tier: "medium_complexity"
+    preferred_models: ["deepseek-coder", "gemini-flash"]
+    
+  svelte-dev:
+    default_tier: "medium_complexity"
+    preferred_models: ["qwen-coder", "deepseek-coder"]
+    
+  node-dev:
+    default_tier: "medium_complexity"
+    preferred_models: ["deepseek-coder", "gemini-flash"]
+    
+  devops:
+    default_tier: "high_complexity"
+    preferred_models: ["claude-sonnet", "gpt-4"]
+    security_checks: true
+
+# Cost Optimization Rules
+cost_optimization:
+  enable_progressive_complexity: true
+  
+  # Start with cheaper model, escalate if needed
+  progressive_chain:
+    - tier: "low_complexity"
+      confidence_threshold: 0.8
+    - tier: "medium_complexity"
+      confidence_threshold: 0.9
+    - tier: "high_complexity"
+      confidence_threshold: 1.0
+      
+  # Batch similar requests
+  batch_processing:
+    enabled: true
+    min_batch_size: 3
+    max_wait_time_ms: 500
+    applicable_models: ["gemini-flash", "deepseek-coder"]
+    
+  # Cache similar queries
+  semantic_caching:
+    enabled: true
+    similarity_threshold: 0.95
+    ttl_seconds: 3600
+    max_cache_size_mb: 1000
+
+# Quality Assurance
+quality_checks:
+  # Validate responses from free models
+  validation_required:
+    models: ["gemini-flash", "deepseek-coder", "qwen-coder"]
+    validation_model: "claude-sonnet"
+    validation_probability: 0.1  # Validate 10% of responses
+    
+  # Automatic escalation on failure
+  escalation_triggers:
+    - "error in response"
+    - "incomplete code"
+    - "confidence < 0.7"
+    - "user rejection"
