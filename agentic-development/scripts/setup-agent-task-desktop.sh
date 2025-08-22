@@ -74,11 +74,7 @@ if [[ -z "$WORKTREE_PATH" ]]; then
     PROMPT_FILE="$SCRIPT_DIR/${AGENT_NAME}-prompt.txt"
     if [[ -f "$PROMPT_FILE" ]]; then
         PORTABLE_PATH=$(grep "Worktree:" "$PROMPT_FILE" | cut -d' ' -f2)
-        if [[ "$PORTABLE_PATH" == \~/* ]]; then
-            WORKTREE_PATH="${HOME}${PORTABLE_PATH#\~}"
-        else
-            WORKTREE_PATH="$PORTABLE_PATH"
-        fi
+        WORKTREE_PATH=$(expand_portable_path "$PORTABLE_PATH")
     fi
 fi
 

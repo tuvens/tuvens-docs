@@ -44,9 +44,9 @@ calculate_branch_name() {
 get_worktree_path() {
     local branch_name="$1"
     
-    # Query git for the actual worktree location
+    # Query git for the actual worktree location with improved pattern matching
     local worktree_path
-    worktree_path=$(git worktree list | grep "\\[$branch_name\\]" | awk '{print $1}')
+    worktree_path=$(git worktree list | grep -F "[$branch_name]" | head -n1 | awk '{print $1}')
     
     if [[ -n "$worktree_path" ]]; then
         echo "$worktree_path"
@@ -64,7 +64,9 @@ get_repo_paths() {
     repo_root=$(git rev-parse --show-toplevel)
     repo_name=$(basename "$repo_root")
     
-    echo "$repo_root" "$repo_name"
+    # Output each path on separate lines to handle spaces safely
+    echo "$repo_root"
+    echo "$repo_name"
 }
 
 # Function to calculate expected worktree path (for creation, not querying)
@@ -72,10 +74,16 @@ calculate_worktree_path() {
     local agent_name="$1"
     local branch_name="$2"
     
-    local repo_info
-    repo_info=($(get_repo_paths))
-    local repo_root="${repo_info[0]}"
-    local repo_name="${repo_info[1]}"
+    # Get repository paths safely using temporary file approach
+    local temp_file
+    temp_file=$(mktemp)
+    get_repo_paths > "$temp_file"
+    
+    local repo_root
+    local repo_name
+    repo_root=$(head -n1 "$temp_file")
+    repo_name=$(tail -n1 "$temp_file")
+    rm -f "$temp_file"
     
     local sanitized_agent
     sanitized_agent=$(sanitize_for_branch "$agent_name")

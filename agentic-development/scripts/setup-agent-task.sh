@@ -221,7 +221,11 @@ WORKTREE_PATH=$(calculate_worktree_path "$AGENT_NAME" "$BRANCH_NAME")
 # Determine repository type for legacy compatibility
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_NAME=$(basename "$REPO_ROOT")
-IS_TUVENS_DOCS=$([[ "$REPO_NAME" == "tuvens-docs" ]] && echo true || echo false)
+if [[ "$REPO_NAME" == "tuvens-docs" ]]; then
+    IS_TUVENS_DOCS=true
+else
+    IS_TUVENS_DOCS=false
+fi
 
 # Step 3a: Update branch tracking (local)
 echo ""
