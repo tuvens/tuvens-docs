@@ -205,6 +205,22 @@ ISSUE_URL=$(gh issue create \
     --label "agent-task,$AGENT_NAME")
 
 GITHUB_ISSUE=$(echo "$ISSUE_URL" | grep -o '[0-9]\+$')
+
+# Security and robustness validation for GITHUB_ISSUE
+if [[ -z "$GITHUB_ISSUE" ]]; then
+    echo "❌ ERROR: Failed to extract GitHub issue number from URL: $ISSUE_URL"
+    rm -f "$TEMP_BODY_FILE"
+    exit 1
+fi
+
+# Additional security validation: ensure GITHUB_ISSUE contains only digits
+if ! [[ "$GITHUB_ISSUE" =~ ^[0-9]+$ ]]; then
+    echo "❌ ERROR: Invalid GitHub issue number format: $GITHUB_ISSUE"
+    echo "   Issue number must contain only digits for security"
+    rm -f "$TEMP_BODY_FILE"
+    exit 1
+fi
+
 rm -f "$TEMP_BODY_FILE"
 echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
@@ -548,6 +564,8 @@ elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
     echo "Step 5: Creating iTerm2 window..."
     
     # Create AppleScript for iTerm2 window
+    # Security note: GITHUB_ISSUE is validated above to contain only digits (^[0-9]+$)
+    # This prevents command injection in the AppleScript context
     APPLESCRIPT_CONTENT="
 tell application \"iTerm\"
     create window with default profile
