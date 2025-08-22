@@ -1,0 +1,35 @@
+{
+  "name": "start-session-pattern-recognition",
+  "version": "1.0.0",
+  "description": "Flexible pattern recognition system for /start-session commands in Claude Desktop",
+  "main": "session-orchestrator.js",
+  "scripts": {
+    "test": "node test-suite.js",
+    "demo": "node session-orchestrator.js",
+    "validate": "node test-suite.js && echo 'Validation complete'",
+    "test-patterns": "node pattern-matcher.js",
+    "test-agents": "node agent-resolver.js",
+    "test-context": "node context-extractor.js",
+    "test-confirmation": "node confirmation-handler.js"
+  },
+  "keywords": [
+    "claude-desktop",
+    "pattern-recognition",
+    "mcp",
+    "automation",
+    "agent-orchestration"
+  ],
+  "author": "Tuvens DevOps Agent",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "*.js",
+    "README.md"
+  ],
+  "bin": {
+    "recognize-pattern": "./session-orchestrator.js",
+    "test-recognition": "./test-suite.js"
+  }
+}
