@@ -10,21 +10,37 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `83d4e54bdee6f592ffa0f1bd400b3ff54c28241e`
-- **Commit Message**: "docs: add MCP Documentation Server guide to wiki staging
+- **Latest Commit**: `579f7caca7ec8b5cf4911535a6670bfc05f694ae`
+- **Commit Message**: "refactor: streamline wiki integration workflow for direct Claude Code creation
 
-Add comprehensive documentation for MCP Documentation Server as agentic development tool. Includes semantic search capabilities, installation instructions, and integration guidance for Tuvens agents. Fixes #263"
+Complete refactoring of wiki creation workflow from 3-phase staging to direct publication.
+
+- Eliminate intermediate staging directory complexity
+- Implement direct Claude Code workflow integration  
+- Update natural language patterns for intuitive user experience
+- Resolve all documentation consistency issues identified by code review
+- Add clear deprecation notices for old workflow approaches
+
+Fixes #256"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T17:40:08+01:00
+- **Timestamp**: 2025-08-22T17:44:48+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 579f7ca` - refactor: streamline wiki integration workflow for direct Claude Code creation
+- **Date**: 2025-08-22 17:44
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 1a141ee` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 16:41
+- **Author**: GitHub Actions
+
 #### `* 83d4e54` - docs: add MCP Documentation Server guide to wiki staging
 - **Date**: 2025-08-22 17:40
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 6ef057e` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 16:17
@@ -148,14 +164,6 @@ Add comprehensive documentation for MCP Documentation Server as agentic developm
 - **Date**: /  
 - **Author**: 
 
-#### `* 51b442d` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-21 13:41
-- **Author**: GitHub Actions
-
-#### `* a51feaf` - Add desktop-session-setup.sh for Claude Desktop iTerm automation
-- **Date**: 2025-08-21 14:40
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
@@ -164,6 +172,7 @@ Add comprehensive documentation for MCP Documentation Server as agentic developm
 - `feat`: 3 commits
 - `restore`: 2 commits
 - `clean`: 2 commits
+- `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
@@ -175,6 +184,6 @@ Add comprehensive documentation for MCP Documentation Server as agentic developm
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
 - `agentic-development/branch-tracking/active-branches.json`: 4 changes
 - `agentic-development/scripts/devops-prompt.txt`: 3 changes
+- `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
-- `agentic-development/wiki/claude-desktop-project-instructions.md`: 2 changes
 
