@@ -135,6 +135,59 @@ get_current_repo() {
     basename "$(git rev-parse --show-toplevel)"
 }
 
+# Function to check if current branch has a PR with reviewer comments
+check_pr_review_safeguards() {
+    local branch_name="$1"
+    
+    # Check if gh is available
+    if ! command -v gh &> /dev/null; then
+        echo "⚠️  Warning: gh CLI not available, skipping PR review check"
+        return 0
+    fi
+    
+    # Find PR for current branch
+    local pr_number
+    pr_number=$(gh pr list --head "$branch_name" --json number --jq '.[0].number' 2>/dev/null || echo "")
+    
+    if [[ -z "$pr_number" || "$pr_number" == "null" ]]; then
+        # No PR exists for this branch
+        return 0
+    fi
+    
+    # Get PR comments from known reviewer accounts
+    local reviewer_logins=("gemini-code-assist" "qodo-merge-pro" "tuvens")
+    local has_reviews=false
+    
+    for reviewer in "${reviewer_logins[@]}"; do
+        local review_count
+        review_count=$(gh pr view "$pr_number" --json comments --jq "[.comments[] | select(.author.login == \"$reviewer\")] | length" 2>/dev/null || echo "0")
+        
+        if [[ "$review_count" -gt 0 ]]; then
+            echo "🔒 REVIEW SAFEGUARD TRIGGERED"
+            echo "   Branch: $branch_name"
+            echo "   PR: #$pr_number"
+            echo "   Reviewer comments found from: $reviewer ($review_count comments)"
+            has_reviews=true
+        fi
+    done
+    
+    if [[ "$has_reviews" == "true" ]]; then
+        echo ""
+        echo "⚠️  DANGEROUS MODE DISABLED"
+        echo "   This branch has active code review feedback that must be addressed"
+        echo "   Using --dangerously-skip-permissions would bypass these important safeguards"
+        echo ""
+        echo "   To proceed with dangerous mode after addressing reviews:"
+        echo "   1. Address all reviewer feedback"
+        echo "   2. Get reviewer approval"
+        echo "   3. Or use: claude --dangerously-skip-permissions (manual override)"
+        echo ""
+        return 1
+    fi
+    
+    return 0
+}
+
 # Export functions so they can be used by sourcing scripts
 export -f make_path_portable
 export -f expand_portable_path
@@ -147,6 +200,7 @@ export -f handle_script_error
 export -f validate_required_tools
 export -f validate_git_repo
 export -f get_current_repo
+export -f check_pr_review_safeguards
 
 # Prevent running this script directly
 if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then

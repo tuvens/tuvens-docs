@@ -127,6 +127,15 @@ echo "🚀 Launching Claude Code..."
 echo "When Claude Code opens, copy and paste the prompt above."
 echo ""
 
+# Check for review safeguards before enabling dangerous mode
+CLAUDE_COMMAND="claude"
+if check_pr_review_safeguards "$BRANCH_NAME"; then
+    echo "✅ No active reviews detected, enabling dangerous mode for faster development"
+    CLAUDE_COMMAND="claude --dangerously-skip-permissions"
+else
+    echo "🔒 Reviews detected, using standard Claude mode for safety"
+fi
+
 # Verify we can launch claude before exec
 if ! command -v claude &> /dev/null; then
     echo "❌ ERROR: 'claude' command not found. Please install Claude Code CLI."
@@ -135,5 +144,8 @@ if ! command -v claude &> /dev/null; then
     exit 1
 fi
 
+echo "Launching: $CLAUDE_COMMAND"
+echo ""
+
 # Launch claude in the worktree with the agent context ready
-exec claude
+exec $CLAUDE_COMMAND
