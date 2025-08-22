@@ -92,8 +92,14 @@ source "$SCRIPT_DIR/shared-functions.sh"
 "$SCRIPT_DIR/validate-environment.sh"
 echo ""
 
-# Step 2: Create GitHub issue
-echo "Step 2: Creating GitHub issue..."
+# Step 2: Create GitHub issue (skip if called from desktop script)
+if [[ "${SKIP_GITHUB_ISSUE_CREATION:-false}" == "true" ]]; then
+    echo "Step 2: Skipping GitHub issue creation (handled by desktop wrapper)..."
+    # Use the issue number provided by desktop script
+    GITHUB_ISSUE="${DESKTOP_GITHUB_ISSUE:-TBD}"
+    echo ""
+else
+    echo "Step 2: Creating GitHub issue..."
 
 # Function to validate and format file references
 validate_files() {
@@ -225,6 +231,7 @@ rm -f "$TEMP_BODY_FILE"
 echo "✅ Created GitHub issue #$GITHUB_ISSUE"
 echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
 echo ""
+fi
 
 # Step 3: Setup worktree
 echo "Step 3: Setting up worktree..."
