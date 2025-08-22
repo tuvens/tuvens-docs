@@ -3,8 +3,6 @@ name: AI Code Review Automation
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  pull_request_target:
-    types: [opened, synchronize, reopened]
 
 jobs:
   trigger-ai-reviews:
@@ -28,13 +26,11 @@ jobs:
             });
             
             const qodoComments = comments.filter(comment => 
-              comment.body.includes('@CodiumAI-Agent /review') && 
-              comment.user.type === 'Bot'
+              comment.body.includes('@CodiumAI-Agent /review')
             );
             
             const greptileComments = comments.filter(comment => 
-              comment.body.includes('@greptileai') && 
-              comment.user.type === 'Bot'
+              comment.body.includes('@greptileai')
             );
             
             console.log(`Found ${qodoComments.length} existing Qodo review comments`);
