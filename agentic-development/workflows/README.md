@@ -68,6 +68,12 @@ This document is critical for understanding the automated infrastructure that en
 - Debugging approaches and tools
 - Network and API troubleshooting
 
+### 🤖 I need to understand code review automation
+→ **[Qodo Review Automation](qodo-review-automation.md)**
+- Automatic code review triggering
+- Review quality gates and standards
+- Integration with agent workflows
+
 ## Overview
 
 This guide provides agents with essential information about the GitHub Actions workflow infrastructure that powers the Tuvens agentic development system. Understanding these workflows helps agents work effectively within the automated coordination system.
@@ -76,6 +82,7 @@ This guide provides agents with essential information about the GitHub Actions w
 
 | Workflow | Purpose | Agent Impact |
 |----------|---------|--------------|
+| `qodo-review-automation.yml` | Automatically triggers Qodo code reviews on PRs | 🤖 Ensures code quality for all agent PRs |
 | `gemini-code-review-integration.yml` | Processes Gemini feedback into GitHub issues with agent assignment | 🤖 Auto-assigns critical feedback to agents |
 | `branch-tracking.yml` | Central coordination of branch lifecycle across repositories | 📊 Updates agent task visibility and coordination |
 | `branch-created.yml` | Notifies central system of new branches | 🌿 Triggers agent context loading and task setup |
@@ -97,6 +104,7 @@ These workflows create a "nervous system" for AI agents providing:
 3. **Safety** - Automated governance prevents destructive actions
 4. **Context** - Agents understand the broader system state
 5. **Reliability** - Infrastructure self-monitors and self-heals
+6. **Quality** - Automated code reviews ensure consistent standards
 
 ## 🚨 Why Workflow Failures Matter
 
@@ -105,6 +113,7 @@ When these workflows fail:
 - Branch tracking becomes inconsistent  
 - Safety validations don't run
 - Cross-repository synchronization fails
+- Code quality checks are bypassed
 - The entire multi-agent system becomes unreliable
 
 **Critical**: Always investigate workflow failures immediately as they can cascade and affect all agent operations.
@@ -117,6 +126,7 @@ This workflow infrastructure integrates with agent configuration files in `agent
 2. **Understand workflow impacts** on their specific role
 3. **Follow workflow-driven task assignment** 
 4. **Report workflow issues** that affect their work
+5. **Wait for automated reviews** before merging PRs
 
 ## Maintenance and Updates
 
@@ -129,6 +139,7 @@ This workflow infrastructure integrates with agent configuration files in `agent
 - All workflow changes go through PR review
 - Safety-critical workflows require additional validation
 - Documentation is updated with each workflow modification
+- Code reviews are automatically triggered on all PRs
 
 ### Monitoring
 - Workflow execution is logged and monitored
@@ -137,9 +148,9 @@ This workflow infrastructure integrates with agent configuration files in `agent
 
 ---
 
-**Last Updated**: 2025-08-19  
-**Version**: 2.0 - Split into focused workflow documentation files  
+**Last Updated**: 2025-08-22  
+**Version**: 2.1 - Added Qodo review automation  
 **Maintained By**: DevOps Agent  
-**Review Process**: Multi-agent collaborative review (DevOps + Task Orchestrator + Gemini Code Assist)
+**Review Process**: Multi-agent collaborative review (DevOps + Task Orchestrator + Qodo + Gemini Code Assist)
 
 *This guide is part of the Tuvens agentic development infrastructure. For questions or issues, create a GitHub issue with the `workflow-infrastructure` label.*
