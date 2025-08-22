@@ -552,7 +552,7 @@ elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
 tell application \"iTerm\"
     create window with default profile
     tell current session of current window
-        set name to \"$AGENT_NAME Agent\"
+        set name to \"$AGENT_NAME #$GITHUB_ISSUE\"
         write text \"cd \\\"$WORKTREE_PATH\\\"\"
         write text \"cat \\\"$PROMPT_FILE\\\"\"
         write text \"claude\"
