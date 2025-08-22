@@ -2,7 +2,7 @@
 
 ← [Back to Main](./README.md)
 
-> **💡 Start Wiki Work**: *"Get vibe-coder to create wiki documentation for [topic] in Claude Code"*
+> **💡 Start Wiki Work**: *"Create wiki documentation for [topic]" or "Have vibe-coder work on [topic] wiki documentation"*
 
 ## GitHub Wiki Integration
 
@@ -20,82 +20,75 @@ The Tuvens system includes comprehensive wiki integration for publishing documen
 ✅ **Reference Documentation**: API references, configuration guides, technical specs  
 ✅ **Protocol Standards**: Safety rules, quality standards, compliance procedures  
 
-## Wiki Content Creation Process
+## Direct Wiki Creation Process
 
-### Phase 1: Branch and Stage (Claude Desktop)
-```bash
-# Create wiki content branch
-git checkout dev
-git checkout -b [agent-name]/wiki/[descriptive-name]
+### Using Claude Desktop Natural Language
+Simply tell Claude Desktop what wiki content you need:
 
-# Create content in staging directory
-# Structure: agentic-development/wiki/staging/[category]/[content-name].md
-# Categories: guides, drafts, archives, architecture, protocols
+**Natural Language Examples:**
+```
+"Create wiki documentation for API endpoints"
+"Have vibe-coder document the branching strategy"
+"Create comprehensive wiki guide for new developers"
+"Document the authentication system in the wiki"
 ```
 
-### Phase 2: Pull Request with wiki-ready Label
-```bash
-# Create PR targeting dev branch
-gh pr create --title "Wiki Content: [Descriptive Title]" \
-  --body "Comprehensive [topic] documentation ready for wiki publication" \
-  --label "wiki-ready,documentation,[agent-name]" \
-  --base dev
+**Claude Desktop Response:**
+```
+I understand you want wiki documentation for [topic]. 
+Should I set up a Claude Code session with:
+- Agent: vibe-coder
+- Task: Create Wiki Documentation for [topic]
+- Context: [details]
+
+Would you like me to proceed? [Yes/No]
 ```
 
-### Phase 3: Vibe Coder Sync (Automatic)
-The vibe coder agent automatically:
-- Detects `wiki-ready` PRs and validates content quality
-- Syncs approved content to GitHub wiki repository
-- Updates wiki navigation and organization  
-- Cleans up staging files from main repository
-- Merges PR with minimal permanent changes
+### Automated Claude Code Workflow
+When you confirm, Claude Desktop automatically:
 
-## Content Categories
+1. **Creates GitHub Issue** - Documents the wiki task with proper labels
+2. **Sets Up Git Worktree** - Isolated branch with proper naming: `vibe-coder/wiki/[descriptive-name]`
+3. **Launches Claude Code** - Pre-loaded with context and ready to create content
+4. **Direct Wiki Publication** - Content is created directly in GitHub wiki format
+5. **Pull Request Creation** - Minimal changes to main repository, wiki content published directly
 
-### 📖 Guides (`staging/guides/`)
+## Wiki Content Categories
+
+Wiki content is organized into these main categories:
+
+### 📖 Guides
 - Getting started for new developers
 - User documentation and tutorials
 - How-to guides for human users
 - Troubleshooting and error recovery guides
 
-### 💡 Drafts (`staging/drafts/`)
-- Brainstorming and preliminary concepts
-- Ideas that evolve into permanent documentation
-- Initial concept formulation
-- Collaborative development content
-
-### 📚 Archives (`staging/archives/`)
-- Historical implementation logs
-- Project evolution records
-- Completed project documentation
-- Content no longer actively needed by agents
-
-### 🏗️ Architecture (`staging/architecture/`)
+### 🏗️ Architecture
 - High-level system design (WHY decisions were made)
 - Architectural decision rationale
 - System design philosophy
 - Cross-repository integration reasoning
 
-### 📋 Protocols (`staging/protocols/`)
+### 📋 Protocols
 - Deep protocol philosophy and design rationale
 - Protocol decision reasoning (not daily procedures)
 - Standards background and justification
 - Compliance philosophy and principles
 
-## Mobile Artifact Support
+### 📚 Reference
+- API documentation and technical specifications
+- Configuration guides and command references
+- Agent capabilities and interaction protocols
+- Historical implementation records
 
-### Creating Content on Mobile
+## Mobile Content Creation
+
+### Creating Wiki Content on Mobile
 When using Claude app on phone:
-1. **Save content locally** in project with mobile markers
-2. **Transfer to desktop** for proper staging and formatting
-3. **Process through standard workflow** with appropriate categorization
-
-### Mobile Content Markers
-```markdown
-<!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
-<!-- WIKI_CATEGORY: [architecture/agents/workflows/protocols/guides] -->
-<!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
-```
+1. **Draft content** using natural language conversation
+2. **Use desktop Claude Desktop** to convert drafts to wiki format
+3. **Say**: *"Convert this mobile draft to wiki documentation for [topic]"*
+4. **Automatic processing** through the standard Claude Code workflow
 
 ## Quality Standards
 
@@ -107,23 +100,23 @@ When using Claude app on phone:
 - **Maintenance Info**: Clear ownership and update procedures
 
 ### Review Process
-- **Agent Review**: Initial quality check by creating agent
-- **Vibe Coder Validation**: Final review before wiki publication
-- **Category Verification**: Proper organization and categorization
-- **Link Validation**: Working references and navigation paths
+- **Automated Quality Check**: Built-in validation during Claude Code session
+- **Direct Publication**: Content published immediately to GitHub wiki
+- **Category Organization**: Automatic wiki navigation structure updates
+- **Link Validation**: Working references and cross-wiki navigation
 
-## Quick Commands for Wiki Content
+## Quick Access
 
-```bash
-# Check wiki workflow status
-ls -la agentic-development/wiki/staging/
+### Wiki Resources
+- **Wiki Home**: https://github.com/tuvens/tuvens-docs/wiki
+- **Start Wiki Work**: Use natural language in Claude Desktop
+- **Agent for Wiki Tasks**: vibe-coder (specialized in documentation)
 
-# Review wiki instructions
-cat agentic-development/wiki/instructions.md
+### Example Requests
+```
+Natural Language → Claude Desktop → Claude Code → Published Wiki
 
-# Check current wiki content
-open https://github.com/tuvens/tuvens-docs/wiki
-
-# Monitor wiki-ready PRs
-gh pr list --label "wiki-ready"
+"Document the API authentication system" → Automatic wiki creation
+"Create troubleshooting guide for deployment" → Direct wiki publication  
+"Explain the agent coordination patterns" → Comprehensive wiki documentation
 ```

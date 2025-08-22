@@ -1,50 +1,75 @@
-# Wiki Staging Area
+# Wiki Staging Area - DEPRECATED
 
-**Purpose**: Temporary staging area for wiki-destined content before publication
+**Status**: ⚠️ **WORKFLOW DEPRECATED** - This staging approach has been replaced with direct wiki creation
 
-## Current Status
+## Workflow Change Notice
 
-✅ **Wiki Publication Complete** (2025-08-18)
-- **16 documents** successfully published to GitHub wiki
-- **6 architecture documents** → Architecture-* pages
-- **1 agent document** → Agent-* page  
-- **5 guide documents** → Guide-* pages
-- **2 protocol documents** → Protocol-* pages
-- **1 archive document** → Archive-* page
-- **Navigation updated** with organized categorization
+As of **2025-08-22**, the wiki staging workflow has been replaced with a streamlined direct creation process.
 
-## Published Content
+### ❌ Old Workflow (Deprecated)
+1. Create content in staging directories
+2. Use intermediate staging files
+3. Create PRs with `wiki-ready` labels
+4. Wait for vibe-coder to sync content
+5. Clean up staging files
 
-All previously staged content has been published to: https://github.com/tuvens/tuvens-docs/wiki
+### ✅ New Workflow (Active)
+1. **Natural Language Request**: "Create wiki documentation for [topic]"
+2. **Automatic Claude Code Setup**: Direct wiki creation session
+3. **Immediate Publication**: Content published directly to GitHub wiki
+4. **No Staging Required**: Eliminates intermediate steps
 
-### Categories Published
+## How to Create Wiki Content Now
+
+### Using Claude Desktop Natural Language
+Simply request wiki content using natural language:
+
+```
+"Create wiki documentation for API authentication"
+"Have vibe-coder document the deployment process"
+"Create user guide for new developers"
+```
+
+**Result**: Claude Desktop automatically sets up Claude Code session for direct wiki creation.
+
+### Direct Access
+- **Wiki Home**: https://github.com/tuvens/tuvens-docs/wiki
+- **New Workflow Guide**: See `agentic-development/desktop-project-instructions/wiki-integration.md`
+- **Agent Instructions**: See `agentic-development/wiki/vibe-coder-workflow.md`
+
+## Migration Complete
+
+✅ **All staged content successfully published** (2025-08-18)
+- **16 documents** migrated to GitHub wiki with proper organization
+- **Wiki navigation** updated with categorized structure
+- **Cross-references** established between related content
+
+### Published Content Categories
 - **🏗️ System Architecture** (6 documents)
 - **🤖 Agent Documentation** (1 document)  
 - **📚 User Guides** (5 documents)
 - **🔧 Protocols & Standards** (2 documents)
 - **📊 Archives & Reference** (1 document)
 
-## Staging Directory Structure
+## Directory Status
 
-This directory maintains the following structure for future content:
+This staging directory structure is maintained for historical reference only:
 
 ```
 staging/
-├── README.md          # This file
-├── drafts/           # Work-in-progress content  
-├── agents/           # Agent-specific documentation
-├── architecture/     # System design documents
-├── guides/           # User-facing guides and tutorials
-├── protocols/        # Standards and procedures
-└── archives/         # Historical reference material
+├── README.md          # This deprecation notice
+├── drafts/           # Empty - no longer used
+├── agents/           # Empty - no longer used
+├── architecture/     # Empty - no longer used
+├── guides/           # Empty - no longer used
+├── protocols/        # Empty - no longer used
+└── archives/         # Empty - no longer used
 ```
 
-## Future Usage
+**Important**: Do not add new content to these directories. Use the direct wiki creation workflow instead.
 
-When adding new wiki content:
-1. Place documents in appropriate category subdirectory
-2. Follow naming conventions: `descriptive-name.md`
-3. Ensure content quality and completeness
-4. The vibe-coder agent will sync to wiki automatically
+---
 
-**Last Sync**: 2025-08-18 | **Status**: All staged content published
+**Last Updated**: 2025-08-22  
+**Status**: Workflow deprecated, direct creation active  
+**Migration**: Complete - all content successfully published to wiki

@@ -1,10 +1,10 @@
-# Wiki Content Creation Instructions for Claude Desktop Agents
+# Wiki Content Creation Instructions for Claude Desktop
 
-**Comprehensive guide for creating wiki-destined content using the Claude Desktop + Claude Code workflow**
+**Direct workflow guide for creating wiki content using Claude Desktop natural language integration**
 
 ## Overview
 
-This document provides Claude Desktop agents with complete instructions for creating content that will be published to the GitHub wiki through the vibe coder agent coordination system.
+This document provides instructions for creating wiki content using Claude Desktop's natural language interface with direct Claude Code workflow integration.
 
 ## When to Create Wiki Content
 
@@ -32,50 +32,38 @@ This document provides Claude Desktop agents with complete instructions for crea
 - Wiki: "Multi-agent coordination architecture: rationale and design principles"
 - Agentic-dev: "Agent coordination protocols: implementation procedures"
 
-## Phase 1: Content Creation Workflow
+## Direct Wiki Creation Workflow
 
-### Step 1: Identify Wiki Content Need
-```
-Triggers:
-- User requests comprehensive documentation
-- New system feature needs explanation
-- Agent protocols require documentation
-- Development workflow needs standardization
-- User guide or tutorial requested
-```
+### Step 1: Natural Language Request
+Simply tell Claude Desktop what wiki content you need:
 
-### Step 2: Create Feature Branch
-```bash
-# Branch naming convention: {agent-name}/wiki/{descriptive-name}
-git checkout dev
-git pull origin dev
-git checkout -b vibe-coder/wiki/agent-coordination-protocols
+**Natural Language Examples:**
+```
+"Create wiki documentation for agent coordination protocols"
+"Document the system architecture overview in the wiki"
+"Have vibe-coder create a branch protection guide for the wiki"
+"Create comprehensive user guide for new developers"
 ```
 
-**Branch Naming Examples:**
-- `vibe-coder/wiki/system-architecture-overview`
-- `docs-orchestrator/wiki/cross-repo-sync-guide`
-- `devops/wiki/branch-protection-protocols`
-- `react-dev/wiki/component-development-guide`
-
-### Step 3: Create Staged Content
-Place content in the appropriate staging category:
-
+### Step 2: Automated Claude Desktop Response
 ```
-agentic-development/wiki/staging/
-├── guides/          # User documentation and tutorials
-├── drafts/          # Ideas that evolve into permanent docs
-├── archives/        # Historical implementation logs
-├── architecture/    # High-level system design (WHY decisions)
-└── protocols/       # Deep protocol documentation (rare reference)
+I understand you want wiki documentation for [topic]. 
+Should I set up a Claude Code session with:
+- Agent: vibe-coder
+- Task: Create Wiki Documentation for [topic]
+- Context: [details]
+
+Would you like me to proceed? [Yes/No]
 ```
 
-**File Naming Convention:**
-- Use descriptive, hyphenated names: `multi-agent-coordination-protocols.md`
-- Include agent identifier prefix: `vibe-coder-orchestration-overview.md`
-- Use consistent terminology: `branch-protection-implementation-guide.md`
+### Step 3: Automated Claude Code Setup
+When confirmed, Claude Desktop automatically:
+1. **Creates GitHub Issue** - Documents the wiki task
+2. **Sets Up Git Worktree** - Branch: `vibe-coder/wiki/[descriptive-name]`
+3. **Launches Claude Code** - Pre-loaded with context
+4. **Direct Wiki Creation** - Content created directly in GitHub wiki format
 
-### Step 4: Content Structure Template
+### Wiki Content Structure Template
 
 ```markdown
 # [Document Title]
@@ -114,7 +102,7 @@ agentic-development/wiki/staging/
 **Version**: [Version Number]
 ```
 
-### Step 5: Content Quality Standards
+### Content Quality Standards
 
 #### Technical Writing Requirements
 - **Clear Structure**: Logical organization with descriptive headings
@@ -137,106 +125,34 @@ agentic-development/wiki/staging/
 - **Usefulness**: Practical value for documentation consumers
 - **Maintenance**: Clear ownership and update procedures
 
-## Phase 2: Mobile Artifact Processing
+## Mobile Content Creation
 
-### Mobile Content Creation
-When creating content on mobile Claude app:
+### Creating Wiki Content on Mobile
+When using Claude app on phone:
+1. **Draft content** using natural language conversation
+2. **Use desktop Claude Desktop** to convert drafts to wiki format
+3. **Say**: *"Convert this mobile draft to wiki documentation for [topic]"*
+4. **Automatic processing** through the standard Claude Code workflow
 
-1. **Save Content Locally**: Create markdown files in project directory
-2. **Use Special Markers**: Identify mobile-created content with tags
-3. **Transfer to Desktop**: Process content through desktop Claude workflow
-4. **Apply Standard Formatting**: Convert to proper staging format
+## Automated Publication Workflow
 
-#### Mobile Content Markers
-```markdown
-<!-- MOBILE_ARTIFACT: Created on [Date] via phone Claude app -->
-<!-- WIKI_CATEGORY: [guides/drafts/archives/architecture/protocols] -->
-<!-- PROCESSING_REQUIRED: Desktop formatting and validation needed -->
+### Direct Wiki Publication
+Once Claude Code session is launched:
+1. **Content Creation** - Wiki content created directly in GitHub wiki format
+2. **Quality Validation** - Automated quality checks during creation
+3. **Direct Publication** - Content published immediately to GitHub wiki
+4. **Navigation Updates** - Wiki organization and navigation updated automatically
+5. **Pull Request** - Minimal changes to main repository for tracking
 
-# [Content Title]
-[Content here...]
+## Quality Assurance Process
 
-<!-- END_MOBILE_ARTIFACT -->
-```
-
-### Desktop Processing Workflow
-1. **Identify Mobile Artifacts**: Search for mobile markers in project files
-2. **Validate Content**: Review for completeness and accuracy  
-3. **Format Properly**: Apply standard template and formatting
-4. **Categorize Correctly**: Place in appropriate staging directory
-5. **Remove Mobile Markers**: Clean up temporary processing tags
-6. **Follow Standard PR Process**: Create wiki-ready PR as normal
-
-## Phase 3: Pull Request Creation
-
-### PR Creation Requirements
-```bash
-# Commit with descriptive message
-git add agentic-development/wiki/staging/[category]/[content-file].md
-git commit -m "docs: add [descriptive title] to wiki staging
-
-- Comprehensive documentation for [topic]
-- Includes examples, troubleshooting, and references
-- Ready for wiki publication via vibe coder sync"
-
-# Push and create PR
-git push origin [branch-name]
-gh pr create --title "Wiki Content: [Descriptive Title]" \
-  --body "$(cat <<'EOF'
-## Summary
-Add comprehensive [topic] documentation to wiki staging.
-
-## Content Overview
-- **Category**: [guides/drafts/archives/architecture/protocols]
-- **Target Audience**: [developers/agents/users]
-- **Scope**: [brief description]
-
-## Quality Checklist
-- [ ] Content follows template structure
-- [ ] Technical accuracy verified
-- [ ] Links and references validated
-- [ ] Formatting standards applied
-- [ ] Mobile artifacts properly processed (if applicable)
-
-## Wiki Publication
-Ready for vibe coder agent review and GitHub wiki synchronization.
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-EOF
-)" \
-  --label "wiki-ready,documentation,[agent-name]" \
-  --base dev
-```
-
-### Required PR Labels
-- **`wiki-ready`**: Indicates content ready for wiki synchronization
-- **`documentation`**: Standard documentation label
-- **`[agent-name]`**: Agent responsible for content creation
-
-### PR Review Process
-1. **Self Review**: Validate content completeness and quality
-2. **Wiki Category Check**: Confirm appropriate staging directory
-3. **Link Validation**: Test all internal and external references
-4. **Format Verification**: Ensure consistent formatting and structure
-5. **Ready for Sync**: Add `wiki-ready` label when complete
-
-## Phase 4: Coordination with Vibe Coder Agent
-
-### Handoff Process
-Once PR is created with `wiki-ready` label:
-
-1. **Automatic Detection**: Vibe coder agent monitors for wiki-ready PRs
-2. **Content Review**: Vibe coder validates quality and completeness  
-3. **Wiki Synchronization**: Content synced to GitHub wiki repository
-4. **Index Update**: Wiki index and organization updated
-5. **Staging Cleanup**: Temporary staging files removed from main repo
-6. **PR Completion**: PR merged with minimal permanent changes
-
-### Communication Protocol
-- **PR Comments**: All coordination via PR comment threads
-- **Status Updates**: Vibe coder provides sync status and any issues
-- **Quality Issues**: Feedback provided for content improvements
-- **Success Confirmation**: Notification when wiki publication complete
+### Built-in Validation
+The direct workflow includes:
+1. **Real-time Quality Checks** - Validation during content creation
+2. **Template Compliance** - Automatic formatting standards application
+3. **Link Verification** - Automatic validation of references
+4. **Category Organization** - Proper wiki navigation structure
+5. **Publication Confirmation** - Immediate feedback on successful publication
 
 ## Error Handling and Recovery
 
@@ -291,16 +207,16 @@ Once PR is created with `wiki-ready` label:
 ✅ **Maintainability**: Clear ownership and update procedures  
 
 ### Workflow Efficiency Metrics  
-✅ **Fast Creation**: Streamlined content development process  
-✅ **Quality Review**: Effective validation before wiki publication  
-✅ **Clean Repository**: Minimal permanent files in main repo  
-✅ **Easy Navigation**: Clear organization and findable content  
-✅ **Mobile Support**: Effective processing of mobile-created content  
+✅ **Fast Creation**: Direct wiki creation without intermediate steps  
+✅ **Quality Review**: Real-time validation during content creation  
+✅ **Clean Repository**: Minimal impact on main repository  
+✅ **Easy Navigation**: Automatic wiki organization and structure  
+✅ **Mobile Support**: Seamless mobile-to-desktop workflow integration  
 
 ---
 
-**Last Updated**: 2025-08-15  
-**Maintained By**: DevOps Agent  
-**Version**: 1.0 - Initial wiki workflow implementation  
+**Last Updated**: 2025-08-22  
+**Maintained By**: Vibe Coder Agent  
+**Version**: 2.0 - Direct Claude Code workflow integration  
 
-*These instructions enable Claude Desktop agents to create high-quality wiki content through the established branching and coordination workflow.*
+*These instructions enable streamlined wiki content creation through Claude Desktop natural language interface with direct GitHub wiki publication.*

@@ -63,7 +63,7 @@ Then start Claude Code in the appropriate repository.
 - **Laravel/PHP** → laravel-dev
 - **Docker/K8s** → devops
 - **Documentation** → vibe-coder
-- **Wiki content** → Wiki workflow (see Wiki Guidelines below)
+- **Wiki content** → Direct wiki creation (natural language to vibe-coder)
 
 ### By Repository
 - **tuvens-client** → svelte-dev
@@ -78,4 +78,4 @@ Then start Claude Code in the appropriate repository.
 - **Integration** → Multiple agents coordinated by CTO
 - **Refactoring** → Domain specialist with vibe-coder guidance
 - **System improvement** → vibe-coder
-- **Wiki documentation** → Wiki workflow (any agent can create, vibe-coder syncs)
+- **Wiki documentation** → Direct creation via natural language to vibe-coder
