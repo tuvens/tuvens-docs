@@ -10,30 +10,44 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `16f2cc51fad8c83f67016d62525b424b53498348`
-- **Commit Message**: "EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
+- **Latest Commit**: `8e63d180aa4487fc9570d8e609e4d00694759dd4`
+- **Commit Message**: "Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
 
-fix: remove incorrect local variable declaration in setup script
-
-- Remove 'local' keyword from has_context variable declaration in setup-agent-task.sh:113
-- Local keyword can only be used inside functions in bash
-- Both setup scripts now pass bash syntax validation
-- Setup script was failing due to syntax error, preventing infrastructure operations
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+feat: move script to proper location and clean directory structure"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T20:10:26+01:00
+- **Timestamp**: 2025-08-25T20:55:44+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* 16f2cc5` - EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
-- **Date**: 2025-08-25 20:10
+#### `*   8e63d18` - Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
+- **Date**: 2025-08-25 20:55
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * d780dec
+- **Author**: 2025-08-25 20:47
+- **Refs**: EMERGENCY-SCOPE-OVERRIDE: move script to proper location - task assigned via GitHub issue #318
+
+#### `* ` - GitHub Actions
+- **Date**:  9f92705
+- **Author**: 2025-08-25 19:11
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  16f2cc5
+- **Author**: 2025-08-25 20:10
+- **Refs**: EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
 
 #### `* 3f9665e` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-25 18:25
@@ -173,23 +187,11 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**: 2025-08-22 20:24
 - **Author**: GitHub Actions
 
-#### `* 00c5694` - feat: implement automated AI code review triggering (#275)
-- **Date**: 2025-08-22 21:23
-- **Author**: tuvens
-
-#### `* 1ffbe9e` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 19:54
-- **Author**: GitHub Actions
-
-#### `* 4fa647e` - feat: add dangerous mode with review safeguards to session setup scripts (#267)
-- **Date**: 2025-08-22 20:54
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 9 commits
-- `feat`: 5 commits
+- `docs`: 8 commits
+- `feat`: 4 commits
 - `test`: 1 commits
 - `resolve`: 1 commits
 - `fix`: 1 commits
@@ -197,13 +199,13 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/scripts/shared-functions.sh`: 2 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
+- `package.json`: 2 changes
 - `start-session`: 1 changes
-- `agentic-development/scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
-- `package.json`: 1 changes
+- `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
+- `agentic-development/workflows/README.md`: 1 changes
 

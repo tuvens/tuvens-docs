@@ -4,21 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 16f2cc51fad8c83f67016d62525b424b53498348
-- **Commit Message**: EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
+- **Commit SHA**: 8e63d180aa4487fc9570d8e609e4d00694759dd4
+- **Commit Message**: Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
 
-fix: remove incorrect local variable declaration in setup script
-
-- Remove 'local' keyword from has_context variable declaration in setup-agent-task.sh:113
-- Local keyword can only be used inside functions in bash
-- Both setup scripts now pass bash syntax validation
-- Setup script was failing due to syntax error, preventing infrastructure operations
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>
+feat: move script to proper location and clean directory structure
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T20:10:26+01:00
+- **Timestamp**: 2025-08-25T20:55:44+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
