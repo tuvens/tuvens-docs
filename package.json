@@ -33,6 +33,8 @@
     "system-status": "./agentic-development/scripts/system-status.sh",
     "pre-merge": "./agentic-development/scripts/check-before-merge.sh",
     "check-before-merge": "./agentic-development/scripts/check-before-merge.sh",
+    "pre-commit": "npm run test:tdd:syntax && npm run lint:scripts",
+    "test-pr": "npm run test:tdd && npm run lint && echo 'PR ready for submission'",
     "generate-docs": "node agentic-development/scripts/generate-doc-tree.js",
     "generate-doc-tree": "node agentic-development/scripts/generate-doc-tree.js",
     "dev": "npm run setup && npm run validate",
