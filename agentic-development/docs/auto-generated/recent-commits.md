@@ -195,6 +195,6 @@ feat: implement context enhancement pattern for start-session workflows"
 - `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
 - `start-session`: 1 changes
-- `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
+- `agentic-development/scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
 - `package.json`: 1 changes
 
