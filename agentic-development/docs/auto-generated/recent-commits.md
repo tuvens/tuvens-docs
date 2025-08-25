@@ -10,59 +10,72 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `4feaafd591bdcb6eb7525d143a798084b1cccbb2`
-- **Commit Message**: "feat: consolidate session scripts (#301)
+- **Latest Commit**: `d42bda7536db31d59b2d8711a6588ff454c76a37`
+- **Commit Message**: "Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
 
-Consolidate session scripts and remove redundancy
-
-- Remove redundant start-session wrapper script at root
-- Consolidate duplicate validate_files() and GitHub issue creation logic
-- Add shared functions to centralize common operations
-- Update both setup scripts to use centralized shared functions
-
-This architectural cleanup eliminates 130+ lines of duplicate code while
-maintaining full functionality for both Claude Code and Claude Desktop workflows.
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
+fix: resolve pre-commit hook hanging issue"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T16:50:22+01:00
+- **Timestamp**: 2025-08-25T19:13:03+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* 4feaafd` - feat: consolidate session scripts (#301)
-- **Date**: 2025-08-25 16:50
+#### `*   d42bda7` - Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
+- **Date**: 2025-08-25 19:13
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
-
-#### `* 974a0b4` - feat: Add Scope Protection Pre-commit Hook (#302)
-- **Date**: 2025-08-25 16:50
-- **Author**: tuvens
-
-#### `* 20c03c3` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-25 13:45
-- **Author**: GitHub Actions
-
-#### `*   be620e9` - Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
-- **Date**: 2025-08-25 14:45
-- **Author**: tuvens
 
 #### `` - 
 - **Date**:   
 - **Author**: 
 
 #### `` - tuvens
-- **Date**:  * 2f22256
-- **Author**: 2025-08-25 14:28
-- **Refs**: [SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README
+- **Date**:  * 0906de8
+- **Author**: 2025-08-25 18:38
+- **Refs**: test: verify commit functionality works
+
+#### `* ` - GitHub Actions
+- **Date**:  c8d0636
+- **Author**: 2025-08-25 15:51
+- **Refs**: docs: auto-update documentation [skip ci]
 
 #### `* ` - tuvens
-- **Date**:  4c9b94b
-- **Author**: 2025-08-25 14:44
-- **Refs**: fix: correct argument passing in setup-agent-task-desktop.sh (#296)
+- **Date**:  4feaafd
+- **Author**: 2025-08-25 16:50
+- **Refs**: feat: consolidate session scripts (#301)
+
+#### `* ` - tuvens
+- **Date**:  974a0b4
+- **Author**: 2025-08-25 16:50
+- **Refs**: feat: Add Scope Protection Pre-commit Hook (#302)
+
+#### `* ` - GitHub Actions
+- **Date**:  20c03c3
+- **Author**: 2025-08-25 13:45
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:    be620e9
+- **Author**: 2025-08-25 14:45
+- **Refs**: Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
+
+#### `` - 
+- **Date**:    
+- **Author**: 
+
+#### `` - 2025-08-25 14:28
+- **Date**:  * 
+- **Author**:  2f22256
+- **Refs**: tuvens|[SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README|
+
+#### `` - 
+- **Date**:  
+- **Author**: /  
+
+#### `* / 4c9b94b` - fix: correct argument passing in setup-agent-task-desktop.sh (#296)
+- **Date**: 2025-08-25 14:44
+- **Author**: tuvens
 
 #### `` - 
 - **Date**: /  
@@ -133,39 +146,24 @@ Co-Authored-By: Claude <noreply@anthropic.com>"
 - **Author**: 2025-08-22 17:10
 - **Refs**: fix: prevent duplicate GitHub issue creation in agent scripts
 
-#### `* ` - GitHub Actions
-- **Date**:  8519091
-- **Author**: 2025-08-22 13:53
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  7131b53
-- **Author**: 2025-08-22 14:52
-- **Refs**: feat: enhance iTerm window naming with issue numbers (#250)
-
-#### `* ` - GitHub Actions
-- **Date**:  4e7f6e5
-- **Author**: 2025-08-22 13:44
-- **Refs**: docs: auto-update documentation [skip ci]
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 12 commits
-- `feat`: 5 commits
+- `feat`: 4 commits
 - `fix`: 2 commits
+- `test`: 1 commits
 - `refactor`: 1 commits
-- `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
 - `start-session`: 1 changes
-- `agentic-development/workflows/README.md`: 1 changes
-- `agentic-development/wiki/vibe-coder-workflow.md`: 1 changes
+- `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
+- `package.json`: 1 changes
 
