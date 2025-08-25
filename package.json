@@ -20,7 +20,7 @@
     "setup": "npm install",
     "setup:hooks": "pip install pre-commit && pre-commit install",
     "setup:env": "./agentic-development/scripts/setup-environment.sh",
-    "fix-hooks": "./scripts/fix-legacy-pre-commit-hooks.sh",
+    "fix-hooks": "./agentic-development/scripts/fix-legacy-pre-commit-hooks.sh",
     "validate-hooks": "pre-commit run --all-files",
     "validate": "./agentic-development/scripts/branch-check",
     "branch-check": "./agentic-development/scripts/branch-check",

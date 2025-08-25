@@ -204,6 +204,6 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
 - `start-session`: 1 changes
-- `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
+- `agentic-development/scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
 - `package.json`: 1 changes
 
