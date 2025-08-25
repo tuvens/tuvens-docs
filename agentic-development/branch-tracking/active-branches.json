@@ -200,9 +200,24 @@
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/address-geminis-comments-on-pr-163",
         "issues": "tuvens-docs#164"
       }
+    ],
+    "improve-start-session-command-context-handling": [
+      {
+        "name": "test-agent/feature/test-task",
+        "author": "tuvens",
+        "created": "2025-08-25T16:13:38.129Z",
+        "lastActivity": "2025-08-25T16:13:38.134Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/improve-start-session-command-context-handling/worktrees/test-agent/test-agent/feature/test-task",
+        "agent": "test-agent",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/improve-start-session-command-context-handling/tree/test-agent/feature/test-task",
+        "issues": "improve-start-session-command-context-handling#TBD"
+      }
     ]
   },
-  "lastUpdated": "2025-08-22T09:05:00.185Z",
+  "lastUpdated": "2025-08-25T16:13:38.134Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }

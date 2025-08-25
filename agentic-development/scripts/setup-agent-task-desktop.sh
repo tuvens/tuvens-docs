@@ -89,6 +89,36 @@ done
 GITHUB_ISSUE=$(create_github_issue "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION" "$CONTEXT_FILE" "$FILES_TO_EXAMINE" "$SUCCESS_CRITERIA")
 echo ""
 
+# Context enhancement reminder for complex tasks
+echo "💡 CONTEXT ENHANCEMENT GUIDANCE"
+echo "================================"
+echo ""
+if [[ -n "$CONTEXT_CONTENT" ]] || [[ -n "$VALIDATED_FILES" ]] || [[ -n "$SUCCESS_CRITERIA" ]]; then
+    echo "✅ Task includes enhanced context (context file, files, or success criteria)"
+    echo "   The receiving agent will have comprehensive task information"
+else
+    echo "📋 For complex tasks requiring detailed analysis or planning:"
+    echo ""
+    echo "   1. Add a GitHub comment with complete context using this format:"
+    echo "      👤 **Identity**: [your-agent-name] (coordinating agent)"  
+    echo "      🎯 **Addressing**: $AGENT_NAME"
+    echo ""
+    echo "      ## Complete Context Analysis"
+    echo "      [Include your detailed analysis, findings, and requirements]"
+    echo ""
+    echo "   2. Include specific implementation guidance, discovered patterns,"
+    echo "      file locations, and any complex requirements you've identified"
+    echo ""
+    echo "   3. Add timeline expectations and coordination notes if relevant"
+    echo ""
+    echo "   Command to add context comment:"
+    echo "   gh issue comment $GITHUB_ISSUE --body-file /path/to/context.md"
+    echo ""
+    echo "   This prevents the receiving agent from having to rediscover"
+    echo "   context that you already have, improving task handoff efficiency."
+fi
+echo ""
+
 # Export the GitHub issue number for the core script to use in prompt generation
 export DESKTOP_GITHUB_ISSUE="$GITHUB_ISSUE"
 
