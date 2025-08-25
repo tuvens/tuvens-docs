@@ -10,21 +10,52 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `dac6c99f0ea5d511975c4258ae4ef1e58cbd5fd1`
-- **Commit Message**: "Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
+- **Latest Commit**: `8e63d180aa4487fc9570d8e609e4d00694759dd4`
+- **Commit Message**: "Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
 
-feat: implement context enhancement pattern for start-session workflows"
+feat: move script to proper location and clean directory structure"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:24:41+01:00
+- **Timestamp**: 2025-08-25T20:55:44+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `*   8e63d18` - Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
+- **Date**: 2025-08-25 20:55
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * d780dec
+- **Author**: 2025-08-25 20:47
+- **Refs**: EMERGENCY-SCOPE-OVERRIDE: move script to proper location - task assigned via GitHub issue #318
+
+#### `* ` - GitHub Actions
+- **Date**:  9f92705
+- **Author**: 2025-08-25 19:11
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  16f2cc5
+- **Author**: 2025-08-25 20:10
+- **Refs**: EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
+
+#### `* 3f9665e` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-25 18:25
+- **Author**: GitHub Actions
+
 #### `*   dac6c99` - Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
 - **Date**: 2025-08-25 19:24
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -156,31 +187,11 @@ feat: implement context enhancement pattern for start-session workflows"
 - **Date**: 2025-08-22 20:24
 - **Author**: GitHub Actions
 
-#### `* 00c5694` - feat: implement automated AI code review triggering (#275)
-- **Date**: 2025-08-22 21:23
-- **Author**: tuvens
-
-#### `* 1ffbe9e` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 19:54
-- **Author**: GitHub Actions
-
-#### `* 4fa647e` - feat: add dangerous mode with review safeguards to session setup scripts (#267)
-- **Date**: 2025-08-22 20:54
-- **Author**: tuvens
-
-#### `* 596c440` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 18:05
-- **Author**: GitHub Actions
-
-#### `* e4e6454` - docs: add code quality tools documentation to wiki staging
-- **Date**: 2025-08-22 19:05
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 10 commits
-- `feat`: 5 commits
+- `docs`: 8 commits
+- `feat`: 4 commits
 - `test`: 1 commits
 - `resolve`: 1 commits
 - `fix`: 1 commits
@@ -188,13 +199,13 @@ feat: implement context enhancement pattern for start-session workflows"
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 3 changes
-- `agentic-development/scripts/shared-functions.sh`: 2 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
+- `package.json`: 2 changes
 - `start-session`: 1 changes
 - `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
-- `package.json`: 1 changes
+- `agentic-development/workflows/README.md`: 1 changes
 

@@ -110,7 +110,7 @@ else
     echo ""
     
     # Check if enhanced context was provided by looking for context indicators
-    local has_context=false
+    has_context=false
     if [[ -n "$CONTEXT_FILE" && -f "$CONTEXT_FILE" ]] || [[ -n "$FILES_TO_EXAMINE" ]] || [[ -n "$SUCCESS_CRITERIA" ]]; then
         has_context=true
     fi
