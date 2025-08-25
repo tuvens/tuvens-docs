@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: dac6c99f0ea5d511975c4258ae4ef1e58cbd5fd1
-- **Commit Message**: Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
+- **Commit SHA**: 8e63d180aa4487fc9570d8e609e4d00694759dd4
+- **Commit Message**: Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
 
-feat: implement context enhancement pattern for start-session workflows
+feat: move script to proper location and clean directory structure
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:24:41+01:00
+- **Timestamp**: 2025-08-25T20:55:44+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
