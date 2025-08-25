@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-08-25T22:46:44.252Z",
+  "totalFiles": 294,
+  "totalReferences": 1713,
+  "validReferences": 751,
+  "invalidReferences": 962,
+  "coveragePercentage": 43.84,
+  "brokenReferenceCount": 962,
+  "statistics": {
+    "byFileType": {
+      ".md": 1320,
+      ".yaml": 17,
+      ".json": 41,
+      ".yml": 80,
+      ".sh": 125,
+      ".js": 89,
+      ".txt": 21,
+      ".log": 20
+    },
+    "byReferenceType": {
+      "relative-path": 876,
+      "load-statement": 183,
+      "agent-file": 99,
+      "documentation": 555
+    },
+    "coveragePercentage": 43.84
+  },
+  "gitCommit": "3f9665e89ac0f1fb40bd2707c1809ebc10abedf5",
+  "testCoverage": {
+    "scriptsRequiringTests": [],
+    "scriptsWithTests": [],
+    "untestedScripts": [],
+    "testCoveragePercentage": 0
+  },
+  "issueTracking": {
+    "enabled": false,
+    "createdIssues": [],
+    "updatedIssues": [],
+    "closedIssues": [],
+    "existingIssuesCount": 0
+  }
+}

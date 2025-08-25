@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-08-25T20:45:00Z",
+  "description": "Test coverage manifest tracking script-to-test file mappings for automated validation",
+  "coverageRequirements": {
+    "minimumCoverage": 80,
+    "strictMode": false,
+    "requiredPatterns": {
+      "shellScripts": [
+        "tests/unit/{script-name}.bats",
+        "tests/{script-name}.bats",
+        "test/{script-name}.bats"
+      ],
+      "javascriptFiles": [
+        "tests/unit/{script-name}.test.js",
+        "tests/{script-name}.test.js", 
+        "test/{script-name}.test.js",
+        "__tests__/{script-name}.test.js"
+      ]
+    }
+  },
+  "excludePatterns": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/test/**",
+    "**/tests/**", 
+    "**/*test*",
+    "**/*spec*"
+  ],
+  "baseline": {
+    "totalScripts": 32,
+    "testedScripts": 0,
+    "untestedScripts": 32,
+    "coveragePercentage": 0,
+    "lastUpdated": "2025-08-25T20:45:00Z",
+    "gitCommit": "unknown"
+  },
+  "untestedScripts": [
+    "agentic-development/scripts/agent-status.sh",
+    "agentic-development/scripts/branch-safety-validation.sh",
+    "agentic-development/scripts/check-before-merge.sh",
+    "agentic-development/scripts/claude-access-validator.js",
+    "agentic-development/scripts/cleanup-merged-branches.sh",
+    "agentic-development/scripts/coordination-manager.js",
+    "agentic-development/scripts/deduplicate-branches.js",
+    "agentic-development/scripts/file-reference-scanner.js",
+    "agentic-development/scripts/generate-doc-tree.js",
+    "agentic-development/scripts/github-mcp-protection.sh",
+    "agentic-development/scripts/hooks/check-branch-naming.sh",
+    "agentic-development/scripts/hooks/check-protected-branches.sh",
+    "agentic-development/scripts/hooks/check-safety-rules.sh",
+    "agentic-development/scripts/hooks/check-scope-protection.sh",
+    "agentic-development/scripts/hooks/validate-claude-md.sh",
+    "agentic-development/scripts/maintenance-check.sh",
+    "agentic-development/scripts/process-gemini-feedback.js",
+    "agentic-development/scripts/setup-agent-task-desktop.sh",
+    "agentic-development/scripts/setup-agent-task.sh",
+    "agentic-development/scripts/setup-environment.sh",
+    "agentic-development/scripts/shared-functions.sh",
+    "agentic-development/scripts/start-sub-session.sh",
+    "agentic-development/scripts/sub-session-integration.js",
+    "agentic-development/scripts/sub-session-manager.js",
+    "agentic-development/scripts/system-status.sh",
+    "agentic-development/scripts/trigger-agent-session.js",
+    "agentic-development/scripts/update-branch-tracking.js",
+    "agentic-development/scripts/utils.js",
+    "agentic-development/scripts/validate-environment.sh",
+    "agentic-development/scripts/validate-github-comments.sh",
+    "agentic-development/scripts/validate-phase3-implementation.sh",
+    "scripts/fix-legacy-pre-commit-hooks.sh"
+  ],
+  "testMapping": {
+    "comment": "This section will be populated as tests are created",
+    "mappings": {}
+  },
+  "validationRules": {
+    "blockOnUntested": true,
+    "allowLegacyScripts": false,
+    "enforceTDD": true,
+    "createIssuesForViolations": true
+  },
+  "integrationPoints": {
+    "githubActions": [
+      ".github/workflows/test-coverage-enforcement.yml",
+      ".github/workflows/file-reference-validation.yml"
+    ],
+    "preCommitHooks": [
+      ".pre-commit-config.yaml"
+    ],
+    "npmScripts": [
+      "test-coverage",
+      "test-coverage:ci",
+      "validate-all",
+      "validate-all:ci"
+    ]
+  }
+}
