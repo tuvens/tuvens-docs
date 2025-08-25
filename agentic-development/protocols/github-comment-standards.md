@@ -172,6 +172,106 @@ The following agent names are registered and valid for use:
   - `**Timeline**: Review requested within 2 hours`
   - `**Timeline**: Blocked - no timeline until dependency resolved`
 
+## Context Enhancement Comments for Complex Tasks
+
+### When to Use Context Enhancement
+
+For complex tasks created via `/start-session` that require extensive analysis, planning, or specific implementation guidance, the basic GitHub issue may not provide sufficient context. In these cases, **add a detailed context comment** immediately after issue creation.
+
+### Context Enhancement Template
+
+Use this specialized template when adding comprehensive context to support task handoffs:
+
+```markdown
+👤 **Identity**: [coordinating-agent] (coordinating agent)
+🎯 **Addressing**: [receiving-agent]
+
+## Complete Context Analysis
+
+### Problem Statement
+[Detailed explanation of the issue, requirement, or task complexity]
+
+### Current State Analysis  
+[What you've discovered about the current implementation, architecture, or situation]
+
+### Implementation Requirements
+[Specific technical requirements, constraints, dependencies, and considerations]
+
+### Recommended Approach
+[Your suggested implementation strategy, architecture decisions, or methodology]
+
+### Key Files and Locations
+[Specific files, functions, classes, and line numbers relevant to the task]
+- `path/to/file.ext:line-number` - [description of relevance]
+- `another/file.ext:function-name` - [what needs to be modified]
+
+### Success Criteria  
+[Detailed, measurable outcomes for task completion]
+- [ ] [Specific completion requirement]
+- [ ] [Testing requirement]
+- [ ] [Documentation requirement]
+
+### Implementation Guidance
+[Step-by-step approach, gotchas to avoid, patterns to follow]
+
+**Status**: Context provided - ready for implementation
+**Next Action**: [receiving-agent] to begin implementation with provided context
+**Timeline**: [expected timeline based on complexity]
+
+---
+*Context enhancement for complex task handoff - prevents re-discovery of analysis*
+```
+
+### Context Enhancement Guidelines
+
+#### When Context Enhancement is Required
+**✅ ADD CONTEXT ENHANCEMENT FOR:**
+- Complex refactoring tasks spanning multiple files
+- Feature implementation requiring architectural decisions  
+- Bug fixes needing deep system understanding
+- Tasks involving integration between multiple systems
+- Documentation requiring technical analysis and discovery
+- Tasks with non-obvious implementation approaches
+
+**❌ BASIC TASKS (Standard Issue Sufficient):**
+- Simple file updates or content changes
+- Straightforward bug fixes with clear scope
+- Standard documentation updates
+- Well-defined feature requests with clear requirements
+
+#### Context Enhancement Best Practices
+
+##### 1. Comprehensive Analysis
+- Include all discovered patterns, constraints, and requirements
+- Reference specific code locations with file paths and line numbers
+- Explain the reasoning behind recommended approaches
+- Identify potential pitfalls or edge cases
+
+##### 2. Clear Implementation Path
+- Provide step-by-step guidance for complex tasks
+- Include specific patterns or conventions to follow
+- Reference similar implementations or examples in the codebase
+- Explain any architectural decisions or trade-offs
+
+##### 3. Measurable Success Criteria
+- Define specific, testable completion requirements
+- Include testing expectations and validation steps
+- Specify documentation or communication requirements
+- Set clear quality standards and acceptance criteria
+
+#### Quick Commands for Context Enhancement
+
+```bash
+# Add context comment from file
+gh issue comment [issue-number] --body-file /path/to/context.md
+
+# Add context inline (for shorter contexts)
+gh issue comment [issue-number] --body "👤 **Identity**: vibe-coder (coordinating)..."
+
+# View issue to confirm context was added
+gh issue view [issue-number] --comments
+```
+
 ## Implementation Examples
 
 ### Example 1: Task Completion Report
@@ -245,7 +345,67 @@ The API documentation needs updating to reflect recent backend changes before fr
 *Blocking Issue: Frontend integration cannot proceed without accurate API docs*
 ```
 
-### Example 3: Emergency Escalation
+### Example 3: Context Enhancement for Complex Task
+
+```markdown
+👤 **Identity**: vibe-coder (coordinating agent)
+🎯 **Addressing**: react-dev
+
+## Complete Context Analysis
+
+### Problem Statement  
+The desktop-project-instructions directory needs reorganization to improve navigation and reduce cognitive load. Current structure has lengthy single files that mix multiple concepts, making it difficult for agents to find specific guidance.
+
+### Current State Analysis
+- README.md contains 240+ lines mixing quick start, setup, troubleshooting, and advanced usage
+- Natural language patterns scattered across multiple sections
+- Agent management guidance buried in comprehensive overview
+- No clear separation between basic and advanced usage patterns
+
+### Implementation Requirements
+- Maintain all existing functionality and guidance
+- Preserve all natural language patterns and examples  
+- Keep cross-references working and comprehensive
+- Ensure mobile-friendly documentation structure
+- Follow existing micro-docs navigation pattern
+
+### Recommended Approach
+1. **Extract Quick Start Guide** - Pull essential `/start-session` patterns into standalone file
+2. **Separate Troubleshooting** - Create dedicated troubleshooting.md with all error scenarios
+3. **Reorganize Natural Language** - Focus natural-language-patterns.md on intent recognition only
+4. **Create Advanced Usage** - Move complex scenarios and edge cases to advanced-usage.md
+5. **Update Navigation** - Ensure all files have proper cross-links and breadcrumbs
+
+### Key Files and Locations
+- `agentic-development/desktop-project-instructions/README.md:1-240` - Main restructuring target  
+- `agentic-development/desktop-project-instructions/natural-language-patterns.md:15-45` - Intent patterns to preserve
+- `agentic-development/desktop-project-instructions/agent-management.md:1-30` - Cross-reference dependencies
+- Navigation links at lines 167-194 need updating for new structure
+
+### Success Criteria
+- [ ] README.md under 100 lines focused on essential quick start
+- [ ] All troubleshooting content in dedicated troubleshooting.md
+- [ ] Natural language patterns focused and concise
+- [ ] All cross-references working correctly
+- [ ] No functionality or examples lost in reorganization
+- [ ] Mobile navigation improved with shorter page loads
+
+### Implementation Guidance
+1. Start by extracting troubleshooting section (lines 129-157) to new file
+2. Move advanced scenarios (lines 188-225) to advanced-usage.md
+3. Preserve all MCP command examples and ensure they're easily discoverable
+4. Test all navigation links after reorganization
+5. Follow the existing micro-docs pattern with clear breadcrumb navigation
+
+**Status**: Context provided - ready for implementation  
+**Next Action**: react-dev to begin restructuring with provided analysis and file locations
+**Timeline**: Reorganization complete within this session
+
+---
+*Context enhancement for complex task handoff - prevents re-discovery of analysis*
+```
+
+### Example 4: Emergency Escalation
 
 ```markdown
 👤 **Identity**: devops

@@ -25,7 +25,7 @@ Claude Desktop will automatically:
 4. Create GitHub issue, setup worktree, and launch Claude Code
 
 ### Method 2: Direct Command
-**ANY mention of `/start-session` should trigger automation - format flexibility is key:**
+**ANY mention of `/start-session` should trigger automation - format flexibility is essential:**
 
 ```
 /start-session [agent-name] "[task-title]" "[task-description]"
@@ -94,6 +94,77 @@ execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens
 2. **Git Worktree Setup** - Isolated workspace with proper branch naming
 3. **Agent Prompt Generated** - Full context prompt appears in terminal
 4. **Claude Code Launches** - Ready for you to paste the prompt and begin work
+
+## 🧠 Enhanced Context Handling for Complex Tasks
+
+### When to Add Detailed Context Comments
+
+For complex tasks that require extensive analysis, planning, or have specific implementation requirements, the basic GitHub issue may not provide sufficient context. In these cases, **add a detailed context comment** to the GitHub issue immediately after creation.
+
+### Context Comment Pattern
+
+After creating an issue with `/start-session`, add comprehensive context using this standardized format:
+
+```markdown
+👤 **Identity**: [your-agent-name] (coordinating agent)
+🎯 **Addressing**: [target-agent-name]
+
+## Complete Context Analysis
+
+### Problem Statement
+[Detailed explanation of the issue or requirement]
+
+### Current State Analysis
+[What you've discovered about the current implementation]
+
+### Implementation Requirements
+[Specific technical requirements and constraints]
+
+### Recommended Approach
+[Your suggested implementation strategy]
+
+### Key Files and Locations
+[Specific files, functions, and line numbers relevant to the task]
+
+### Success Criteria
+[Detailed, measurable outcomes for task completion]
+
+**Status**: [current status]
+**Next Action**: [specific next steps]
+**Timeline**: [expected timeline]
+```
+
+### Quick Commands for Context Enhancement
+
+```bash
+# Add context comment to the GitHub issue
+gh issue comment [issue-number] --body-file /path/to/context.md
+
+# Or add context inline
+gh issue comment [issue-number] --body "👤 **Identity**: vibe-coder (coordinating)..."
+```
+
+### Benefits of Enhanced Context
+
+- **Prevents Re-discovery**: Receiving agent doesn't need to reanalyze what you've already studied
+- **Faster Task Startup**: Agent can begin implementation immediately with your guidance
+- **Better Coordination**: Clear communication of complex requirements and constraints
+- **Improved Quality**: Reduces misunderstandings and implementation errors
+
+### Examples of When to Use Enhanced Context
+
+**✅ ADD CONTEXT FOR:**
+- Complex refactoring tasks with multiple file changes
+- Feature implementation requiring architectural decisions
+- Bug fixes that need deep system understanding
+- Tasks involving integration between multiple systems
+- Documentation that requires technical analysis
+
+**❌ BASIC TASKS (No Extra Context Needed):**
+- Simple file updates
+- Straightforward bug fixes
+- Standard documentation updates
+- Clear, well-defined feature requests
 
 ## 🔧 Setup Requirements
 
