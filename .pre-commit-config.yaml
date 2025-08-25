@@ -38,3 +38,11 @@ repos:
         stages: [pre-commit]
         pass_filenames: false
         always_run: true
+
+      - id: file-reference-validation
+        name: File Reference Validation
+        entry: node agentic-development/scripts/file-reference-scanner.js
+        language: system
+        files: '\.(md|js|json|yml|yaml|sh)$'
+        stages: [pre-commit]
+        pass_filenames: false
