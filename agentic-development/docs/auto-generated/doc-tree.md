@@ -77,11 +77,11 @@
 
 ### Root Level Documentation
 - [`CLAUDE-DESKTOP-AUTOMATION.md`](./CLAUDE-DESKTOP-AUTOMATION.md) (Modified: 2025-08-22, 30 lines)
-- [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-15, 174 lines)
+- [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-25, 175 lines)
 - [`IDEA-PIPELINE-WORKFLOW.md`](./IDEA-PIPELINE-WORKFLOW.md) (Modified: 2025-08-15, 198 lines)
 - [`ORCHESTRATOR-VALIDATION.md`](./ORCHESTRATOR-VALIDATION.md) (Modified: 2025-08-15, 204 lines)
 - [`README.md`](./README.md) (Modified: 2025-08-21, 140 lines)
 
 ## Documentation Statistics
 - **Total documentation files**: 220
-- **Total lines**: 31687
+- **Total lines**: 31706

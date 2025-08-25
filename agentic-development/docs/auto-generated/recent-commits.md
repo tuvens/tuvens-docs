@@ -10,21 +10,45 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `be620e991fb5419d7eba56b59c42ce8ddc29f9f3`
-- **Commit Message**: "Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
+- **Latest Commit**: `4feaafd591bdcb6eb7525d143a798084b1cccbb2`
+- **Commit Message**: "feat: consolidate session scripts (#301)
 
-docs: tidy desktop-project-instructions README"
+Consolidate session scripts and remove redundancy
+
+- Remove redundant start-session wrapper script at root
+- Consolidate duplicate validate_files() and GitHub issue creation logic
+- Add shared functions to centralize common operations
+- Update both setup scripts to use centralized shared functions
+
+This architectural cleanup eliminates 130+ lines of duplicate code while
+maintaining full functionality for both Claude Code and Claude Desktop workflows.
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T14:45:05+01:00
+- **Timestamp**: 2025-08-25T16:50:22+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 4feaafd` - feat: consolidate session scripts (#301)
+- **Date**: 2025-08-25 16:50
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 974a0b4` - feat: Add Scope Protection Pre-commit Hook (#302)
+- **Date**: 2025-08-25 16:50
+- **Author**: tuvens
+
+#### `* 20c03c3` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-25 13:45
+- **Author**: GitHub Actions
+
 #### `*   be620e9` - Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
 - **Date**: 2025-08-25 14:45
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -124,30 +148,12 @@ docs: tidy desktop-project-instructions README"
 - **Author**: 2025-08-22 13:44
 - **Refs**: docs: auto-update documentation [skip ci]
 
-#### `* ` - tuvens
-- **Date**:  81aba00
-- **Author**: 2025-08-22 14:43
-- **Refs**: cleanup: remove obsolete test data from branch tracking (#249)
-
-#### `* ` - tuvens
-- **Date**:  863e7e6
-- **Author**: 2025-08-22 14:43
-- **Refs**: fix: consolidate Claude Desktop documentation for clarity and consistency (#248)
-
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
-#### `* 3a0aaea` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 10:06
-- **Author**: GitHub Actions
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 12 commits
-- `fix`: 3 commits
-- `feat`: 3 commits
+- `feat`: 5 commits
+- `fix`: 2 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
@@ -157,9 +163,9 @@ docs: tidy desktop-project-instructions README"
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
 - `agentic-development/scripts/setup-agent-task.sh`: 4 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
-- `agentic-development/desktop-project-instructions/README.md`: 4 changes
+- `agentic-development/desktop-project-instructions/README.md`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
-- `agentic-development/branch-tracking/active-branches.json`: 2 changes
+- `start-session`: 1 changes
 - `agentic-development/workflows/README.md`: 1 changes
 - `agentic-development/wiki/vibe-coder-workflow.md`: 1 changes
 
