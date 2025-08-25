@@ -2,7 +2,35 @@
 
 **[DESKTOP] - This file is loaded by Claude Desktop projects for orchestration**
 
-## 🚀 Quick Start: Trigger Agent Automation
+## 🚀 Quick Start
+
+You are orchestrating a multi-agent development system. Each agent has its own Claude Desktop project and specialized responsibilities.
+
+### Available Agents
+- **vibe-coder** - System architecture, documentation, agent improvement
+- **react-dev** - React frontend (hi.events)
+- **laravel-dev** - Laravel backend (hi.events)
+- **svelte-dev** - Svelte frontend (tuvens-client)
+- **node-dev** - Node.js backend (tuvens-api)
+- **devops** - Infrastructure and deployment
+
+### Your Role
+You coordinate these agents by:
+1. Analyzing tasks to determine the appropriate agent
+2. Creating structured handoffs to Claude Code
+3. Managing inter-agent communication via GitHub issues
+4. **NEW**: Recognizing Claude Desktop to Claude Code handoff patterns
+
+## 📚 Documentation Navigation
+
+This documentation is split into focused micro-docs for better navigation:
+
+- **[Agent Management](./agent-management.md)** - Starting sessions, task routing, branch management
+- **[Wiki Integration](./wiki-integration.md)** - GitHub wiki workflow and content creation
+- **[Handoff Templates](./handoff-templates.md)** - Task templates and communication protocols
+- **[Advanced Usage](./advanced-usage.md)** - Best practices and complex scenarios
+
+## 🎯 Triggering Agent Automation
 
 ### Method 1: Natural Language (Recommended)
 Simply ask in normal conversation:
@@ -40,42 +68,6 @@ Claude Desktop will automatically:
 ```
 
 **Important**: Don't worry about perfect formatting - the system should recognize and trigger on ANY `/start-session` mention.
-
----
-
-## Quick Start
-
-You are orchestrating a multi-agent development system. Each agent has its own Claude Desktop project and specialized responsibilities.
-
-### Available Agents
-- **vibe-coder** - System architecture, documentation, agent improvement
-- **react-dev** - React frontend (hi.events)
-- **laravel-dev** - Laravel backend (hi.events)
-- **svelte-dev** - Svelte frontend (tuvens-client)
-- **node-dev** - Node.js backend (tuvens-api)
-- **devops** - Infrastructure and deployment
-
-## Your Role
-
-You coordinate these agents by:
-1. Analyzing tasks to determine the appropriate agent
-2. Creating structured handoffs to Claude Code
-3. Managing inter-agent communication via GitHub issues
-4. **NEW**: Recognizing Claude Desktop to Claude Code handoff patterns
-
-## Claude Desktop Automated Handoff
-
-### 🚀 NEW: Automated /start-session Workflow
-
-**Claude Desktop should trigger automation for ANY mention of `/start-session`**, including:
-- `/start-session [agent-name] [task-title] [task-description]` (exact format)
-- Partial formats like `/start-session agent-name task`
-- Natural language containing `/start-session` (e.g., "use /start-session to get devops working")
-- Any variation or typo in spacing/formatting
-
-**Key Point**: The automation is flexible - don't worry about perfect format matching. ANY mention of `/start-session` should trigger the MCP automation workflow.
-
-**Claude Desktop should automatically execute this MCP automation:**
 
 ## ⚡ How The Automation Works
 
@@ -126,20 +118,28 @@ gh auth login
 gh auth status
 ```
 
+### 4. Repository Linking (Optional)
+For easier agent access across repositories:
+```bash
+# In each project root (tuvens-client, tuvens-api, hi.events)
+ln -s ../tuvens-docs tuvens-docs
+echo "/tuvens-docs" >> .gitignore
+```
+
 ## 🐛 Troubleshooting
 
-**If automation fails to trigger:**
+### If automation fails to trigger:
 1. Check repository structure: `ls ~/Code/Tuvens/` should show all repos
 2. Verify start-session script: `ls ~/Code/Tuvens/tuvens-docs/start-session`
 3. Test GitHub CLI: `gh repo view` should work
 4. Check iTerm MCP: Look for `iterm_mcp_server` in running processes
 
-**Common issues:**
+### Common issues:
 - **"Script not found"**: Ensure you're in `~/Code/Tuvens/tuvens-docs`
 - **"GitHub authentication failed"**: Run `gh auth login`
 - **"iTerm not responding"**: Restart iTerm MCP server
 
-### 📋 Manual Fallback (If Automation Fails)
+### Manual Fallback (If Automation Fails)
 
 If the automated `/start-session` doesn't work, use manual MCP commands:
 
@@ -155,55 +155,6 @@ open_terminal name="vibe-coder-session"
 execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session vibe-coder \"Documentation Fix\" \"Update API reference\""
 ```
 
-### 🔗 Repository Linking (Optional)
-For easier agent access across repositories:
-```bash
-# In each project root (tuvens-client, tuvens-api, hi.events)
-ln -s ../tuvens-docs tuvens-docs
-echo "/tuvens-docs" >> .gitignore
-```
-
-## Navigation - Detailed Guides
-
-This documentation is split into focused micro-docs for better navigation:
-
-### 📋 [Agent Management](./agent-management.md)
-- Starting agent sessions with `/start-session`
-- Task routing by technology, repository, and type
-- Automated worktree creation and branch mapping
-- Manual session creation methods
-
-### 📚 [Wiki Integration](./wiki-integration.md)
-- GitHub wiki workflow and content creation
-- Content categories and quality standards
-- Mobile artifact support
-- Wiki publication process
-
-### 🔄 [Handoff Templates](./handoff-templates.md)
-- Simple task templates
-- Complex feature templates
-- Inter-agent communication protocols
-- System improvement workflows
-
-### ⚙️ [Advanced Usage](./advanced-usage.md)
-- Best practices and guidelines
-- Context loading by task type
-- Repository-specific workflows
-- Common task scenarios and examples
-
----
-
-## 📋 Available Agents
-
-Choose the right agent for your task:
-
-- **vibe-coder** - System architecture, documentation, agent coordination
-- **react-dev** - React frontend development (hi.events)
-- **laravel-dev** - Laravel backend development (hi.events)
-- **svelte-dev** - Svelte frontend development (tuvens-client)
-- **node-dev** - Node.js backend development (tuvens-api)
-- **devops** - Infrastructure, deployment, CI/CD
-
 ## 📖 Additional Resources
 
 ### Cross-Agent Commands
@@ -218,12 +169,7 @@ Choose the right agent for your task:
 /ask-question [repository] "[Question]"
 ```
 
-### Advanced Guides
-- **[Agent Management](./agent-management.md)** - Detailed agent selection and task routing
-- **[Natural Language Patterns](./natural-language-patterns.md)** - Intent recognition guide
-- **[Advanced Usage](./advanced-usage.md)** - Complex scenarios and best practices
-
-## ✅ Success Indicators
+### ✅ Success Indicators
 
 **You'll know the automation is working when:**
 1. Typing `/start-session [agent] "[task]" "[description]"` opens iTerm2
