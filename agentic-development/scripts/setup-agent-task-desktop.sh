@@ -209,8 +209,26 @@ export CLAUDE_DESKTOP_MODE=true
 export SKIP_ITERM_AUTOMATION=true
 export SKIP_GITHUB_ISSUE_CREATION=true
 
-# Run the core script with all provided arguments
-"$CORE_SCRIPT" "$@"
+# Run the core script with the properly reconstructed arguments
+# Build the arguments array
+CORE_ARGS=("$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION")
+
+# Add context file if provided
+if [[ -n "$CONTEXT_FILE" ]]; then
+    CORE_ARGS+=("$CONTEXT_FILE")
+fi
+
+# Add optional arguments
+if [[ -n "$FILES_TO_EXAMINE" ]]; then
+    CORE_ARGS+=("--files=$FILES_TO_EXAMINE")
+fi
+
+if [[ -n "$SUCCESS_CRITERIA" ]]; then
+    CORE_ARGS+=("--success-criteria=$SUCCESS_CRITERIA")
+fi
+
+# Run the core script with the reconstructed arguments
+"$CORE_SCRIPT" "${CORE_ARGS[@]}"
 
 # AGENT_NAME and TASK_TITLE already captured above
 
