@@ -10,21 +10,43 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `d42bda7536db31d59b2d8711a6588ff454c76a37`
-- **Commit Message**: "Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
+- **Latest Commit**: `55965027bd4410d95cd344a218186fc56bb158ea`
+- **Commit Message**: "Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
 
-fix: resolve pre-commit hook hanging issue"
+Reorganize desktop-project-instructions using micro-docs pattern"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:13:03+01:00
+- **Timestamp**: 2025-08-25T19:16:25+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `*   5596502` - Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
+- **Date**: 2025-08-25 19:16
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 0d253f8
+- **Author**: 2025-08-25 17:22
+- **Refs**: debug: bypass pre-commit
+
+#### `* ` - GitHub Actions
+- **Date**:  3b378a0
+- **Author**: 2025-08-25 18:14
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
+
 #### `*   d42bda7` - Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
 - **Date**: 2025-08-25 19:13
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -129,40 +151,24 @@ fix: resolve pre-commit hook hanging issue"
 - **Date**: 2025-08-22 17:40
 - **Author**: tuvens
 
-#### `* 6ef057e` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 16:17
-- **Author**: GitHub Actions
-
-#### `*   72c44a3` - Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
-- **Date**: 2025-08-22 17:16
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 7a940d6
-- **Author**: 2025-08-22 17:10
-- **Refs**: fix: prevent duplicate GitHub issue creation in agent scripts
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 12 commits
 - `feat`: 4 commits
-- `fix`: 2 commits
 - `test`: 1 commits
 - `refactor`: 1 commits
+- `fix`: 1 commits
+- `debug`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
-- `agentic-development/desktop-project-instructions/README.md`: 3 changes
+- `agentic-development/desktop-project-instructions/README.md`: 4 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 2 changes
 - `start-session`: 1 changes
 - `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
 - `package.json`: 1 changes

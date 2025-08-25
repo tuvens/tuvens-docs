@@ -83,5 +83,5 @@
 - [`README.md`](./README.md) (Modified: 2025-08-21, 140 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 220
-- **Total lines**: 31692
+- **Total documentation files**: 224
+- **Total lines**: 31968
