@@ -10,35 +10,47 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `bbc3c21464e6877ebb9bb59bdfa114be686b31ba`
-- **Commit Message**: "[SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
+- **Latest Commit**: `be620e991fb5419d7eba56b59c42ce8ddc29f9f3`
+- **Commit Message**: "Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
 
-Replace rigid format matching with flexible pattern recognition in Claude Desktop instructions.
-
-SAFETY JUSTIFICATION: The flagged content at line 28 contains 'format flexibility is key:' which is legitimate documentation text explaining the system's flexibility, not an actual secret or key.
-
-Changes made:
-- Updated README.md to clarify ANY mention of /start-session should trigger automation
-- Added flexible format examples showing variations that should work
-- Replaced rigid structure requirements with user-friendly guidance
-- Simple 10-line clarification approach vs complex specification
-
-Resolves #277
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+docs: tidy desktop-project-instructions README"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T21:41:30+01:00
+- **Timestamp**: 2025-08-25T14:45:05+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `*   be620e9` - Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
+- **Date**: 2025-08-25 14:45
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 2f22256
+- **Author**: 2025-08-25 14:28
+- **Refs**: [SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README
+
+#### `* ` - tuvens
+- **Date**:  4c9b94b
+- **Author**: 2025-08-25 14:44
+- **Refs**: fix: correct argument passing in setup-agent-task-desktop.sh (#296)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
+
+#### `* 85fdabb` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 20:42
+- **Author**: GitHub Actions
+
 #### `* bbc3c21` - [SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
 - **Date**: 2025-08-22 21:41
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 8922810` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 20:24
@@ -130,38 +142,12 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**: 2025-08-22 10:06
 - **Author**: GitHub Actions
 
-#### `* b1cefc1` - Complete fix: Claude Desktop automation with shared library architecture (#242)
-- **Date**: 2025-08-22 11:06
-- **Author**: tuvens
-
-#### `* 80c2c42` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-21 20:48
-- **Author**: GitHub Actions
-
-#### `*   cf278ac` - Merge pull request #238 from tuvens/devops/feature/fix-claude-desktop-workflow-automation
-- **Date**: 2025-08-21 21:47
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 11e10e0
-- **Author**: 2025-08-21 21:46
-- **Refs**: fix: address all review feedback from Gemini and vibe coder
-
-#### `` - tuvens
-- **Date**:  * f5cb78d
-- **Author**: 2025-08-21 21:25
-- **Refs**: feat: implement Claude Desktop workflow automation
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 12 commits
-- `feat`: 4 commits
 - `fix`: 3 commits
+- `feat`: 3 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
@@ -169,11 +155,11 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 6 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 5 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 2 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
+- `agentic-development/branch-tracking/active-branches.json`: 2 changes
+- `agentic-development/workflows/README.md`: 1 changes
+- `agentic-development/wiki/vibe-coder-workflow.md`: 1 changes
 
