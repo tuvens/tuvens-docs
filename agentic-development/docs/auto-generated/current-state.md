@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 55965027bd4410d95cd344a218186fc56bb158ea
-- **Commit Message**: Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
+- **Commit SHA**: dac6c99f0ea5d511975c4258ae4ef1e58cbd5fd1
+- **Commit Message**: Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
 
-Reorganize desktop-project-instructions using micro-docs pattern
+feat: implement context enhancement pattern for start-session workflows
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:16:25+01:00
+- **Timestamp**: 2025-08-25T19:24:41+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

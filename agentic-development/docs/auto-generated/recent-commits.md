@@ -10,19 +10,19 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `55965027bd4410d95cd344a218186fc56bb158ea`
-- **Commit Message**: "Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
+- **Latest Commit**: `dac6c99f0ea5d511975c4258ae4ef1e58cbd5fd1`
+- **Commit Message**: "Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
 
-Reorganize desktop-project-instructions using micro-docs pattern"
+feat: implement context enhancement pattern for start-session workflows"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:16:25+01:00
+- **Timestamp**: 2025-08-25T19:24:41+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `*   5596502` - Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
-- **Date**: 2025-08-25 19:16
+#### `*   dac6c99` - Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
+- **Date**: 2025-08-25 19:24
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
@@ -31,73 +31,114 @@ Reorganize desktop-project-instructions using micro-docs pattern"
 - **Author**: 
 
 #### `` - tuvens
-- **Date**:  * 0d253f8
-- **Author**: 2025-08-25 17:22
-- **Refs**: debug: bypass pre-commit
-
-#### `* ` - GitHub Actions
-- **Date**:  3b378a0
-- **Author**: 2025-08-25 18:14
-- **Refs**: docs: auto-update documentation [skip ci]
+- **Date**:  *   b2b8eb7
+- **Author**: 2025-08-25 19:24
+- **Refs**: resolve: merge conflicts from dev branch reorganization
 
 #### `` - 
-- **Date**: /  
-- **Author**: 
-
-#### `*   d42bda7` - Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
-- **Date**: 2025-08-25 19:13
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 0906de8
-- **Author**: 2025-08-25 18:38
-- **Refs**: test: verify commit functionality works
-
-#### `* ` - GitHub Actions
-- **Date**:  c8d0636
-- **Author**: 2025-08-25 15:51
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  4feaafd
-- **Author**: 2025-08-25 16:50
-- **Refs**: feat: consolidate session scripts (#301)
-
-#### `* ` - tuvens
-- **Date**:  974a0b4
-- **Author**: 2025-08-25 16:50
-- **Refs**: feat: Add Scope Protection Pre-commit Hook (#302)
-
-#### `* ` - GitHub Actions
-- **Date**:  20c03c3
-- **Author**: 2025-08-25 13:45
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:    be620e9
-- **Author**: 2025-08-25 14:45
-- **Refs**: Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
-
-#### `` - 
-- **Date**:    
-- **Author**: 
-
-#### `` - 2025-08-25 14:28
-- **Date**:  * 
-- **Author**:  2f22256
-- **Refs**: tuvens|[SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README|
+- **Date**:  
+- **Author**:   
 
 #### `` - 
 - **Date**:  
 - **Author**: /  
 
-#### `* / 4c9b94b` - fix: correct argument passing in setup-agent-task-desktop.sh (#296)
+#### `` - 
+- **Date**: /
+- **Author**:    
+
+#### `* ` - GitHub Actions
+- **Date**:  7855991
+- **Author**: 2025-08-25 18:17
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:    5596502
+- **Author**: 2025-08-25 19:16
+- **Refs**: Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
+
+#### `` - 
+- **Date**:    
+- **Author**: 
+
+#### `` - 2025-08-25 17:22
+- **Date**:  * 
+- **Author**:  0d253f8
+- **Refs**: tuvens|debug: bypass pre-commit|
+
+#### `* ` - 2025-08-25 18:14
+- **Date**:  
+- **Author**:  3b378a0
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
+
+#### `` - 
+- **Date**: / /  
+- **Author**: 
+
+#### `* ` - tuvens
+- **Date**:    d42bda7
+- **Author**: 2025-08-25 19:13
+- **Refs**: Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
+
+#### `` - 
+- **Date**:    
+- **Author**: 
+
+#### `` - 2025-08-25 18:38
+- **Date**:  * 
+- **Author**:  0906de8
+- **Refs**: tuvens|test: verify commit functionality works|
+
+#### `* ` - 2025-08-25 15:51
+- **Date**:  
+- **Author**:  c8d0636
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
+
+#### `* ` - 2025-08-25 16:50
+- **Date**:  
+- **Author**:  4feaafd
+- **Refs**: tuvens|feat: consolidate session scripts (#301)|
+
+#### `* ` - 2025-08-25 16:50
+- **Date**:  
+- **Author**:  974a0b4
+- **Refs**: tuvens|feat: Add Scope Protection Pre-commit Hook (#302)|
+
+#### `* ` - 2025-08-25 13:45
+- **Date**:  
+- **Author**:  20c03c3
+- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
+
+#### `* ` - 2025-08-25 14:45
+- **Date**:  
+- **Author**:    be620e9
+- **Refs**: tuvens|Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme|
+
+#### `` - 
+- **Date**:     
+- **Author**: 
+
+#### `` -  2f22256
+- **Date**:  * 
+- **Author**:  
+- **Refs**: 2025-08-25 14:28|tuvens|[SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README|
+
+#### `` - 
+- **Date**:  
+- **Author**: / /  
+
+#### `* / / 4c9b94b` - fix: correct argument passing in setup-agent-task-desktop.sh (#296)
 - **Date**: 2025-08-25 14:44
 - **Author**: tuvens
+
+#### `` - 
+- **Date**: / /  
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * a42d116
+- **Author**: 2025-08-25 18:33
+- **Refs**: feat: implement context enhancement pattern for start-session workflows
 
 #### `` - 
 - **Date**: /  
@@ -135,40 +176,24 @@ Reorganize desktop-project-instructions using micro-docs pattern"
 - **Date**: 2025-08-22 19:05
 - **Author**: tuvens
 
-#### `* 157affb` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 16:45
-- **Author**: GitHub Actions
-
-#### `* 579f7ca` - refactor: streamline wiki integration workflow for direct Claude Code creation
-- **Date**: 2025-08-22 17:44
-- **Author**: tuvens
-
-#### `* 1a141ee` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 16:41
-- **Author**: GitHub Actions
-
-#### `* 83d4e54` - docs: add MCP Documentation Server guide to wiki staging
-- **Date**: 2025-08-22 17:40
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 12 commits
-- `feat`: 4 commits
+- `docs`: 10 commits
+- `feat`: 5 commits
 - `test`: 1 commits
-- `refactor`: 1 commits
+- `resolve`: 1 commits
 - `fix`: 1 commits
 - `debug`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 10 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 2 changes
 - `start-session`: 1 changes
 - `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
 - `package.json`: 1 changes
