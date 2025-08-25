@@ -10,35 +10,106 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `bbc3c21464e6877ebb9bb59bdfa114be686b31ba`
-- **Commit Message**: "[SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
+- **Latest Commit**: `55965027bd4410d95cd344a218186fc56bb158ea`
+- **Commit Message**: "Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
 
-Replace rigid format matching with flexible pattern recognition in Claude Desktop instructions.
-
-SAFETY JUSTIFICATION: The flagged content at line 28 contains 'format flexibility is key:' which is legitimate documentation text explaining the system's flexibility, not an actual secret or key.
-
-Changes made:
-- Updated README.md to clarify ANY mention of /start-session should trigger automation
-- Added flexible format examples showing variations that should work
-- Replaced rigid structure requirements with user-friendly guidance
-- Simple 10-line clarification approach vs complex specification
-
-Resolves #277
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+Reorganize desktop-project-instructions using micro-docs pattern"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T21:41:30+01:00
+- **Timestamp**: 2025-08-25T19:16:25+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `*   5596502` - Merge pull request #306 from tuvens/vibe-coder/feature/desktop-project-instructions-reorganization
+- **Date**: 2025-08-25 19:16
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 0d253f8
+- **Author**: 2025-08-25 17:22
+- **Refs**: debug: bypass pre-commit
+
+#### `* ` - GitHub Actions
+- **Date**:  3b378a0
+- **Author**: 2025-08-25 18:14
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
+
+#### `*   d42bda7` - Merge pull request #311 from tuvens/devops/feature/fix-pre-commit-hook-issue
+- **Date**: 2025-08-25 19:13
+- **Author**: tuvens
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 0906de8
+- **Author**: 2025-08-25 18:38
+- **Refs**: test: verify commit functionality works
+
+#### `* ` - GitHub Actions
+- **Date**:  c8d0636
+- **Author**: 2025-08-25 15:51
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  4feaafd
+- **Author**: 2025-08-25 16:50
+- **Refs**: feat: consolidate session scripts (#301)
+
+#### `* ` - tuvens
+- **Date**:  974a0b4
+- **Author**: 2025-08-25 16:50
+- **Refs**: feat: Add Scope Protection Pre-commit Hook (#302)
+
+#### `* ` - GitHub Actions
+- **Date**:  20c03c3
+- **Author**: 2025-08-25 13:45
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:    be620e9
+- **Author**: 2025-08-25 14:45
+- **Refs**: Merge pull request #297 from tuvens/vibe-coder/feature/tidy-desktop-readme
+
+#### `` - 
+- **Date**:    
+- **Author**: 
+
+#### `` - 2025-08-25 14:28
+- **Date**:  * 
+- **Author**:  2f22256
+- **Refs**: tuvens|[SAFETY-OVERRIDE: false positive - 'key' in documentation context] docs: tidy desktop-project-instructions README|
+
+#### `` - 
+- **Date**:  
+- **Author**: /  
+
+#### `* / 4c9b94b` - fix: correct argument passing in setup-agent-task-desktop.sh (#296)
+- **Date**: 2025-08-25 14:44
+- **Author**: tuvens
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
+
+#### `* 85fdabb` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-22 20:42
+- **Author**: GitHub Actions
+
 #### `* bbc3c21` - [SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
 - **Date**: 2025-08-22 21:41
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `* 8922810` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-22 20:24
@@ -80,100 +151,25 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**: 2025-08-22 17:40
 - **Author**: tuvens
 
-#### `* 6ef057e` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 16:17
-- **Author**: GitHub Actions
-
-#### `*   72c44a3` - Merge pull request #264 from tuvens/devops/feature/fix-duplicate-issue-creation-bug
-- **Date**: 2025-08-22 17:16
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 7a940d6
-- **Author**: 2025-08-22 17:10
-- **Refs**: fix: prevent duplicate GitHub issue creation in agent scripts
-
-#### `* ` - GitHub Actions
-- **Date**:  8519091
-- **Author**: 2025-08-22 13:53
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  7131b53
-- **Author**: 2025-08-22 14:52
-- **Refs**: feat: enhance iTerm window naming with issue numbers (#250)
-
-#### `* ` - GitHub Actions
-- **Date**:  4e7f6e5
-- **Author**: 2025-08-22 13:44
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  81aba00
-- **Author**: 2025-08-22 14:43
-- **Refs**: cleanup: remove obsolete test data from branch tracking (#249)
-
-#### `* ` - tuvens
-- **Date**:  863e7e6
-- **Author**: 2025-08-22 14:43
-- **Refs**: fix: consolidate Claude Desktop documentation for clarity and consistency (#248)
-
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
-#### `* 3a0aaea` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 10:06
-- **Author**: GitHub Actions
-
-#### `* b1cefc1` - Complete fix: Claude Desktop automation with shared library architecture (#242)
-- **Date**: 2025-08-22 11:06
-- **Author**: tuvens
-
-#### `* 80c2c42` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-21 20:48
-- **Author**: GitHub Actions
-
-#### `*   cf278ac` - Merge pull request #238 from tuvens/devops/feature/fix-claude-desktop-workflow-automation
-- **Date**: 2025-08-21 21:47
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 11e10e0
-- **Author**: 2025-08-21 21:46
-- **Refs**: fix: address all review feedback from Gemini and vibe coder
-
-#### `` - tuvens
-- **Date**:  * f5cb78d
-- **Author**: 2025-08-21 21:25
-- **Refs**: feat: implement Claude Desktop workflow automation
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 12 commits
 - `feat`: 4 commits
-- `fix`: 3 commits
+- `test`: 1 commits
 - `refactor`: 1 commits
-- `cleanup`: 1 commits
+- `fix`: 1 commits
+- `debug`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 10 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 10 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 10 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 6 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 5 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/branch-tracking/active-branches.json`: 4 changes
-- `CLAUDE-DESKTOP-AUTOMATION.md`: 3 changes
-- `agentic-development/scripts/vibe-coder-prompt.txt`: 2 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 2 changes
+- `start-session`: 1 changes
+- `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
+- `package.json`: 1 changes
 
