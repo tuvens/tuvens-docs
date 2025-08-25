@@ -147,6 +147,7 @@ Static safety validation hooks are available to prevent common violations:
 - **Protected branch checks** - Prevents direct commits to main/stage/test
 - **CLAUDE.md validation** - Verifies safety file completeness
 - **Safety rules check** - Scans for secrets and policy violations
+- **Scope protection check** - Validates agents only modify files within their declared scope, includes DRY principle validation
 
 Setup: `pip install pre-commit && pre-commit install`
 
