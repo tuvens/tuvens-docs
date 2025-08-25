@@ -10,21 +10,38 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `dac6c99f0ea5d511975c4258ae4ef1e58cbd5fd1`
-- **Commit Message**: "Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
+- **Latest Commit**: `16f2cc51fad8c83f67016d62525b424b53498348`
+- **Commit Message**: "EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
 
-feat: implement context enhancement pattern for start-session workflows"
+fix: remove incorrect local variable declaration in setup script
+
+- Remove 'local' keyword from has_context variable declaration in setup-agent-task.sh:113
+- Local keyword can only be used inside functions in bash
+- Both setup scripts now pass bash syntax validation
+- Setup script was failing due to syntax error, preventing infrastructure operations
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T19:24:41+01:00
+- **Timestamp**: 2025-08-25T20:10:26+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 16f2cc5` - EMERGENCY-SCOPE-OVERRIDE: Fix critical bash syntax error in setup script assigned via GitHub issue #315 (#317)
+- **Date**: 2025-08-25 20:10
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* 3f9665e` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-25 18:25
+- **Author**: GitHub Actions
+
 #### `*   dac6c99` - Merge pull request #308 from tuvens/vibe-coder/feature/improve-start-session-command-context-handling
 - **Date**: 2025-08-25 19:24
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -168,18 +185,10 @@ feat: implement context enhancement pattern for start-session workflows"
 - **Date**: 2025-08-22 20:54
 - **Author**: tuvens
 
-#### `* 596c440` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-22 18:05
-- **Author**: GitHub Actions
-
-#### `* e4e6454` - docs: add code quality tools documentation to wiki staging
-- **Date**: 2025-08-22 19:05
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 10 commits
+- `docs`: 9 commits
 - `feat`: 5 commits
 - `test`: 1 commits
 - `resolve`: 1 commits
@@ -190,9 +199,9 @@ feat: implement context enhancement pattern for start-session workflows"
 - `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
 - `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 9 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 4 changes
 - `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
 - `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
 - `agentic-development/scripts/shared-functions.sh`: 2 changes
 - `start-session`: 1 changes
 - `scripts/fix-legacy-pre-commit-hooks.sh`: 1 changes
