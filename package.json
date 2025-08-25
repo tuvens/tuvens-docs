@@ -20,6 +20,7 @@
     "setup": "npm install",
     "setup:hooks": "pip install pre-commit && pre-commit install",
     "setup:env": "./agentic-development/scripts/setup-environment.sh",
+    "fix-hooks": "./scripts/fix-legacy-pre-commit-hooks.sh",
     "validate-hooks": "pre-commit run --all-files",
     "validate": "./agentic-development/scripts/branch-check",
     "branch-check": "./agentic-development/scripts/branch-check",
@@ -36,7 +37,6 @@
   },
   "devDependencies": {
     "cross-spawn": "^7.0.6",
-    "pre-commit": "^1.0.10",
     "prettier": "^3.1.0"
   },
   "overrides": {
