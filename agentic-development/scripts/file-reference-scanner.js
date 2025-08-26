@@ -131,6 +131,111 @@ class FileReferenceScanner {
     return files;
   }
 
+  cleanReferencePath(referencePath) {
+    // Remove trailing quotes and other common malformations
+    let cleaned = referencePath
+      .replace(/["'`]+$/, '') // Remove trailing quotes
+      .replace(/^["'`]+/, '') // Remove leading quotes
+      .trim();
+    
+    // Remove markdown anchors for file validation (but keep them in original for display)
+    cleaned = cleaned.replace(/#[^/]*$/, '');
+    
+    return cleaned;
+  }
+
+  shouldSkipReference(referencePath, filePath) {
+    // Skip pre-commit hook language directives
+    const preCommitLanguages = ['script', 'system', 'python', 'node', 'fail'];
+    if (preCommitLanguages.includes(referencePath)) {
+      return true;
+    }
+    
+    // Skip single word patterns that are clearly not file paths
+    if (/^[a-z]+$/.test(referencePath) && !referencePath.includes('.') && !referencePath.includes('/')) {
+      return true;
+    }
+    
+    // Skip YAML/JSON syntax elements that are not file paths
+    if (this.isYamlSyntaxElement(referencePath)) {
+      return true;
+    }
+    
+    // Skip cross-repository references that don't exist in this worktree
+    if (this.isCrossRepoReference(referencePath)) {
+      return true;
+    }
+    
+    // Skip test mock patterns from BATS files
+    if (filePath.endsWith('.bats') && this.isTestMockPattern(referencePath)) {
+      return true;
+    }
+    
+    // Skip obviously invalid path patterns
+    if (this.isInvalidPathPattern(referencePath)) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  isYamlSyntaxElement(referencePath) {
+    // YAML syntax elements that are not file paths
+    const yamlElements = [
+      '|', // YAML pipe for literal block scalar
+      '>', // YAML folded block scalar
+      '-', // YAML array indicator
+      '*', // YAML alias
+      '&', // YAML anchor
+    ];
+    
+    return yamlElements.includes(referencePath.trim());
+  }
+
+  isCrossRepoReference(referencePath) {
+    // Cross-repository references that likely don't exist in this worktree
+    const crossRepoPatterns = [
+      /^tuvens-docs\/(?!worktrees\/devops)/, // References to other tuvens-docs branches/worktrees
+      /^hi-events-integration/, // References to hi-events repo
+      /^hi\.events\//, // References to hi.events repo
+      /^tuvens-api\//, // References to tuvens-api repo  
+      /^implementation-guides/, // References to implementation guides repo
+      /^shared-protocols/, // References to shared protocols repo
+    ];
+    
+    return crossRepoPatterns.some(pattern => pattern.test(referencePath));
+  }
+
+  isInvalidPathPattern(referencePath) {
+    // Obviously invalid path patterns
+    const invalidPatterns = [
+      /^\.\/path$/, // Placeholder "./path" pattern
+      /^\.$/, // Just a dot
+      /^\.\.$/, // Just double dots
+      /^path$/, // Just "path" without context
+      /^\/\s*$/, // Just a slash with optional whitespace
+      /^\[.*\]/, // Documentation placeholders in square brackets like [agent-name]
+      /\[repo\]/, // Repository placeholders like [repo]/Dockerfile
+      /^k8s\//, // Kubernetes directory references (examples)
+      /^\.github\/workflows\/$/, // GitHub workflows directory references (examples)
+    ];
+    
+    return invalidPatterns.some(pattern => pattern.test(referencePath));
+  }
+
+  isTestMockPattern(referencePath) {
+    // Common test mock patterns that should be ignored
+    const testPatterns = [
+      /^\$TEST_/, // Test environment variables
+      /^mock_/, // Mock functions
+      /^stub_/, // Stub functions
+      /^fake_/, // Fake data
+      /test-temp/, // Temporary test directories
+    ];
+    
+    return testPatterns.some(pattern => pattern.test(referencePath));
+  }
+
   isTemplateReference(referencePath) {
     // Check if the reference contains template variables
     for (const pattern of TEMPLATE_PATTERNS) {
@@ -194,8 +299,22 @@ class FileReferenceScanner {
           continue;
         }
         
-        // Check if this is a template reference
+        // Clean up common false positives and malformed paths
+        referencePath = this.cleanReferencePath(referencePath);
+        
+        // Skip if path became empty after cleaning
+        if (!referencePath.trim()) {
+          continue;
+        }
+        
+        // Check if this is a template reference FIRST (before filtering cross-repo refs)
         const isTemplate = this.isTemplateReference(referencePath);
+        
+        // Skip pre-commit hook language directives and other non-file patterns
+        // BUT don't skip template references
+        if (!isTemplate && this.shouldSkipReference(referencePath, filePath)) {
+          continue;
+        }
         
         // Resolve relative paths with security validation
         let resolvedPath;
@@ -610,6 +729,8 @@ class FileReferenceScanner {
       templateReferences: this.results.templateReferences.length,
       coveragePercentage: this.results.statistics.coveragePercentage,
       brokenReferenceCount: this.results.brokenReferences.length,
+      brokenReferences: this.results.brokenReferences, // Include actual broken references
+      templateReferencesList: this.results.templateReferences, // Include template references
       statistics: this.results.statistics,
       gitCommit: this.getGitCommit(),
       testCoverage: this.testCoverage,
