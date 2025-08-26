@@ -272,7 +272,7 @@ TASK_DESCRIPTION="Conduct comprehensive technical code review of PR #$PR_NUMBER 
 # Create temporary file for issue body
 TEMP_BODY_FILE=$(mktemp)
 
-cat > "$TEMP_BODY_FILE" << EOF
+cat > "$TEMP_BODY_FILE" << '__END_OF_ISSUE_BODY__'
 # $TASK_TITLE
 
 **Agent**: $AGENT_NAME  
@@ -293,7 +293,7 @@ $(if [[ "$PR_MERGEABLE" != "MERGEABLE" && "$PR_MERGEABLE" != "null" ]]; then ech
 #### PR Description:
 $PR_BODY
 
-EOF
+__END_OF_ISSUE_BODY__
 
 # Add existing comments if any
 if [[ -n "$PR_COMMENTS" ]]; then
@@ -437,7 +437,7 @@ echo "Step 6: Generating QA agent prompt..."
 
 PROMPT_FILE="$WORKTREE_PATH/qa-code-review-prompt.txt"
 
-cat > "$PROMPT_FILE" << EOF
+cat > "$PROMPT_FILE" << '__END_OF_QA_PROMPT__'
 Context Loading:
 - Load: .claude/agents/qa.md (if exists, fallback to devops.md)
 - Load: Implementation reports and workflow documentation
@@ -554,7 +554,7 @@ Success Criteria:
 IMPORTANT: Start by reading the GitHub issue (#$GITHUB_ISSUE) with \`gh issue view $GITHUB_ISSUE\` to understand the complete PR context, existing comments, and review requirements before proceeding with analysis.
 
 Your role is QA Agent - you are responsible for ALL aspects of technical quality assurance. Lead with evidence, not explanations.
-EOF
+__END_OF_QA_PROMPT__
 
 echo "   ✅ Generated QA agent prompt: qa-code-review-prompt.txt"
 echo ""

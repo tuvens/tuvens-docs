@@ -152,7 +152,24 @@ class FileReferenceScanner {
       // Reset regex state
       pattern.lastIndex = 0;
       
+      // DoS protection: Limit regex iterations and execution time
+      const maxIterations = 10000;
+      const startTime = Date.now();
+      const maxExecutionTime = 5000; // 5 seconds
+      let iterations = 0;
+      
       while ((match = pattern.exec(content)) !== null) {
+        // Prevent excessive iterations (ReDoS protection)
+        if (++iterations > maxIterations) {
+          console.warn(`[SECURITY] Regex iteration limit exceeded for file: ${filePath}`);
+          break;
+        }
+        
+        // Prevent excessive execution time (ReDoS protection)
+        if (Date.now() - startTime > maxExecutionTime) {
+          console.warn(`[SECURITY] Regex execution time limit exceeded for file: ${filePath}`);
+          break;
+        }
         let referencePath;
         
         // Handle different pattern types
@@ -180,16 +197,29 @@ class FileReferenceScanner {
         // Check if this is a template reference
         const isTemplate = this.isTemplateReference(referencePath);
         
-        // Resolve relative paths
+        // Resolve relative paths with security validation
         let resolvedPath;
-        if (referencePath.startsWith('./') || referencePath.startsWith('../')) {
-          resolvedPath = path.resolve(fileDir, referencePath);
-        } else if (referencePath.startsWith('/')) {
-          resolvedPath = path.resolve(this.rootPath, referencePath.substring(1));
-        } else if (referencePath.includes('agentic-development') || referencePath.includes('.claude')) {
-          resolvedPath = path.resolve(this.rootPath, referencePath);
+        
+        // Sanitize path - remove null bytes and excessive dot sequences
+        const sanitizedPath = referencePath.replace(/\0/g, '').replace(/\.{3,}/g, '..');
+        
+        if (sanitizedPath.startsWith('./') || sanitizedPath.startsWith('../')) {
+          resolvedPath = path.resolve(fileDir, sanitizedPath);
+        } else if (sanitizedPath.startsWith('/')) {
+          resolvedPath = path.resolve(this.rootPath, sanitizedPath.substring(1));
+        } else if (sanitizedPath.includes('agentic-development') || sanitizedPath.includes('.claude')) {
+          resolvedPath = path.resolve(this.rootPath, sanitizedPath);
         } else {
-          resolvedPath = path.resolve(fileDir, referencePath);
+          resolvedPath = path.resolve(fileDir, sanitizedPath);
+        }
+        
+        // Security check: Ensure resolved path is within allowed boundaries
+        const normalizedRoot = path.normalize(this.rootPath);
+        const normalizedResolved = path.normalize(resolvedPath);
+        
+        if (!normalizedResolved.startsWith(normalizedRoot)) {
+          console.warn(`[SECURITY] Path traversal attempt detected: ${referencePath} -> ${resolvedPath}`);
+          continue; // Skip this reference
         }
         
         references.add({
