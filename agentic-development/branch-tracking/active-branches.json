@@ -229,9 +229,24 @@
         "githubUrl": "https://github.com/tuvens/improve-start-session-command-context-handling/tree/test-agent/feature/test-task",
         "issues": "improve-start-session-command-context-handling#TBD"
       }
+    ],
+    "test-repo": [
+      {
+        "name": "vibe-coder/feature/test-task",
+        "author": "Test User",
+        "created": "2025-08-26T17:44:12.108Z",
+        "lastActivity": "2025-08-26T17:44:12.109Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/implement-comprehensive-tdd-testing-framework/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/test-repo/tree/vibe-coder/feature/test-task",
+        "issues": "test-repo#   Creating issue: Test Task\n123"
+      }
     ]
   },
-  "lastUpdated": "2025-08-26T14:30:00.000Z",
+  "lastUpdated": "2025-08-26T22:44:12.109Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }

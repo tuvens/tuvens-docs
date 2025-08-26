@@ -566,6 +566,9 @@ case "${1:-}" in
         exit 0
         ;;
     *)
-        main "$@"
+        # Only run main if not being sourced for testing
+        if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+            main "$@"
+        fi
         ;;
 esac
