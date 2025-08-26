@@ -18,6 +18,20 @@ For complete Claude Desktop automation instructions, see:
 /start-session [agent-name] "[task-title]" "[description]"
 ```
 
+### Check Comment Status
+```
+# Auto-detect from current branch
+/check
+
+# Check specific PR or Issue
+/check PR324
+/check I325
+/check 333
+
+# Check multiple
+/check PR324 I325
+```
+
 ### Requirements
 - iTerm2 MCP server installed (`npm install -g iterm_mcp_server`)
 - GitHub CLI authenticated (`gh auth login`)

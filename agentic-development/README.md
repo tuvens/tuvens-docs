@@ -61,6 +61,7 @@ agentic-development/
 │   ├── setup-agent-task.sh         # Creates sessions + branch tracking
 │   ├── cleanup-merged-branches.sh  # **NEW: Automated branch cleanup**
 │   ├── update-branch-tracking.js   # **NEW: Branch tracking updates**
+│   ├── file-reference-scanner.js   # **NEW: File reference validation system**
 │   ├── validate-environment.sh     # Environment checks
 │   └── maintenance-check.sh        # System health validation
 └── cross-repo-sync-automation/     # Repository synchronization
@@ -117,6 +118,97 @@ bash agentic-development/scripts/cleanup-merged-branches.sh
 # Validate environment setup
 bash agentic-development/scripts/validate-environment.sh
 ```
+
+### 🔗 File Reference Validation System
+
+**Automated file reference testing** ensures all documentation links and file paths remain valid across the entire repository ecosystem.
+
+**Key Features:**
+- **Comprehensive Scanning**: Detects markdown links, relative paths, agent files, documentation paths, and code imports
+- **Merge Protection**: Tests every file reference when merging to dev branch via GitHub Actions
+- **Coverage Tracking**: Maintains `.file-reference-coverage.json` baseline with 95%+ coverage requirement
+- **Broken Link Detection**: Identifies and reports broken internal links automatically
+- **Automated Issues**: Creates GitHub issues for broken references found in CI
+- **Integration**: Works with existing test infrastructure, pre-commit hooks, and multi-agent workflows
+
+**Usage Commands:**
+```bash
+# Validate all file references
+npm run validate-references
+
+# Run reference validation in CI mode (quiet)
+npm run validate-references:ci
+
+# Test file references as part of test suite
+npm run test:references
+
+# Check reference coverage
+npm run coverage:references
+
+# 🚀 NEW: Create GitHub issues for broken references automatically
+npm run create-issues
+
+# Combined: Validate references + test coverage + create issues
+npm run create-issues:all
+```
+
+**Integration Points:**
+- **GitHub Actions**: `.github/workflows/file-reference-validation.yml` runs on every push to dev/main
+- **Test Infrastructure**: Integrated into `agentic-development/scripts/test.sh` for integration tests
+- **Pre-commit Hooks**: Optional validation before commits in `.pre-commit-config.yaml`
+- **Infrastructure Workflow**: Part of existing infrastructure validation workflow
+- **Coverage Baseline**: Automatically maintained on successful merges to main branch
+
+**File Types Scanned:**
+- Markdown files (`.md`) - `[text](./path)` links and load statements
+- JavaScript/Node.js (`.js`) - import/require statements
+- Configuration files (`.json`, `.yml`, `.yaml`) - file path references
+- Shell scripts (`.sh`) - relative file paths
+- Agent files (`.claude/agents/*.md`) - agent references
+- Documentation paths (`agentic-development/`) - internal documentation links
+
+### 🔧 Automatic Issue Creation Feature
+
+**Transform detection into action** - The scanner now automatically creates GitHub issues for broken references, ensuring nothing gets ignored:
+
+#### **Smart Issue Management:**
+- **Automatic Detection**: Every broken reference becomes a tracked issue
+- **Batch Processing**: Groups multiple broken references per file into single issues
+- **Duplicate Prevention**: Updates existing issues instead of creating duplicates
+- **Auto-Resolution**: Automatically closes issues when references are fixed
+- **Rich Context**: Issues include file location, line numbers, and resolution options
+
+#### **Issue Template Structure:**
+```markdown
+# Broken File Reference in example.md
+
+**File**: `example.md`
+**Found**: 3 broken references
+
+## Broken References
+### ❌ `./missing-file.md`
+- **Line**: 42
+- **Type**: markdown-link
+- **Resolved Path**: `path/to/missing-file.md`
+
+## Resolution Options
+- [ ] Fix Path: Update reference to correct location  
+- [ ] Create Missing File: Create the referenced file
+- [ ] Remove Reference: Remove if no longer needed
+- [ ] Update Documentation: Replace with alternative
+
+## Verification
+1. Run `npm run validate-references` locally
+2. Commit changes and push to trigger validation
+3. Issue automatically closes when fixed
+```
+
+#### **Workflow Benefits:**
+- ✅ **Zero Ignored Issues**: Every broken reference gets tracked
+- ✅ **Team Visibility**: Immediate awareness of documentation problems  
+- ✅ **Progress Tracking**: Clear metrics on reference health
+- ✅ **Automated Workflow**: No manual issue creation required
+- ✅ **Resolution Guidance**: Clear instructions for fixing issues
 
 ### 🗂️ Archived Materials
 

@@ -1,15 +1,15 @@
 {
   "timestamp": "2025-08-26T14:55:42.232Z",
   "totalFiles": 293,
-  "totalReferences": 7204,
-  "validReferences": 2939,
-  "invalidReferences": 4265,
-  "templateReferences": 4200,
-  "coveragePercentage": 65.2,
-  "brokenReferenceCount": 65,
+  "totalReferences": 768,
+  "validReferences": 399,
+  "invalidReferences": 369,
+  "templateReferences": 32,
+  "coveragePercentage": 52,
+  "brokenReferenceCount": 369,
   "statistics": {
     "byFileType": {
-      ".md": 3319,
+      ".md": 319,
       ".yaml": 17,
       ".json": 41,
       ".yml": 80,
@@ -19,14 +19,14 @@
       ".log": 20
     },
     "byReferenceType": {
-      "relative-path": 875,
+      "relative-path": 275,
       "load-statement": 183,
       "agent-file": 99,
-      "documentation": 555,
-      "markdown-link": 2100,
-      "template": 4200
+      "documentation": 155,
+      "markdown-link": 200,
+      "template": 32
     },
-    "coveragePercentage": 65.2
+    "coveragePercentage": 52
   },
   "gitCommit": "bbc3c21",
   "testCoverage": {

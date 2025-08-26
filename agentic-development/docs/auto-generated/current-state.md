@@ -4,26 +4,61 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: bbc3c21464e6877ebb9bb59bdfa114be686b31ba
-- **Commit Message**: [SAFETY-OVERRIDE: false positive documentation] implement simple /start-session pattern recognition fix (#278)
+- **Commit SHA**: 6180694522260cb4ef5d6d119590de540846dc03
+- **Commit Message**: feat: implement /check slash command for comment status checking (#335)
 
-Replace rigid format matching with flexible pattern recognition in Claude Desktop instructions.
+* feat: implement /check slash command for comment status checking
 
-SAFETY JUSTIFICATION: The flagged content at line 28 contains 'format flexibility is key:' which is legitimate documentation text explaining the system's flexibility, not an actual secret or key.
-
-Changes made:
-- Updated README.md to clarify ANY mention of /start-session should trigger automation
-- Added flexible format examples showing variations that should work
-- Replaced rigid structure requirements with user-friendly guidance
-- Simple 10-line clarification approach vs complex specification
-
-Resolves #277
+- Add /check command script following /start-session pattern
+- Implement check-comments.sh with context inference logic
+- Support multiple argument formats: PR324, I325, plain numbers
+- Display comprehensive comment status with reviewer detection
+- Handle error cases gracefully with clear user feedback
+- Resolves GitHub Issue #333
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* test: add comprehensive test suite for /check command
+
+- Add test-check-command.sh with full test coverage
+- Test help functionality, argument parsing, context inference
+- Test script permissions and error handling
+- All 6 tests passing (100% coverage)
+- Addresses CI test coverage requirements
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: update branch tracking for check command implementation
+
+- Add vibe-coder/feature/implement-check-slash-command-for-comment-status-checking to active-branches.json
+- Include PR #335 reference and proper worktree path
+- Update lastUpdated timestamp to current date
+- Resolves update-branch-tracking CI failure
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* docs: add /check command documentation to README and automation guide
+
+- Add /check command section to main README.md with usage examples
+- Update CLAUDE-DESKTOP-AUTOMATION.md quick reference with /check examples
+- Document context inference and multiple argument format features
+- Resolves potential file reference validation issues
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
 Co-authored-by: Claude <noreply@anthropic.com>
 - **Author**: tuvens
-- **Timestamp**: 2025-08-22T21:41:30+01:00
+- **Timestamp**: 2025-08-26T15:05:28+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
@@ -40,6 +75,6 @@ Co-authored-by: Claude <noreply@anthropic.com>
 - ✅ `package.json`
 
 ## Documentation Status
-- **Markdown files**: 220
+- **Markdown files**: 225
 - ✅ README.md present
 - ✅ tuvens-docs/ directory present
