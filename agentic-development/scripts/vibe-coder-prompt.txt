@@ -3,7 +3,7 @@ VIBE CODER AGENT - ENHANCED TASK CONTEXT
 
 GitHub Issue: #   Creating issue: Test Task
 123
-Worktree: ~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/implement-comprehensive-tdd-testing-framework/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task
+Worktree: ~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/create-code-review-slash-command-and-qa-agent/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task
 Branch: vibe-coder/feature/test-task
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -31,7 +31,7 @@ GitHub Issue: #   Creating issue: Test Task
 123
 Task: Test Task
 
-Working Directory: ~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/implement-comprehensive-tdd-testing-framework/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task
+Working Directory: ~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/create-code-review-slash-command-and-qa-agent/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task
 Branch: vibe-coder/feature/test-task
 
 🔵 MANDATORY: GitHub Comment Standards Protocol

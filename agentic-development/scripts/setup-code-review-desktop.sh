@@ -7,6 +7,9 @@
 
 set -euo pipefail
 
+# Set up trap for cleanup
+trap 'rm -f "${TEMP_BODY_FILE:-}"' EXIT
+
 # Usage function
 usage() {
     echo "Usage: $0 <agent> <#PR> [#issue] [--context=file]"
@@ -267,7 +270,7 @@ TASK_DESCRIPTION="Conduct comprehensive technical code review of PR #$PR_NUMBER 
 - Actionable recommendations with specific file/line references"
 
 # Create temporary file for issue body
-TEMP_BODY_FILE="/tmp/code-review-issue-body-$$"
+TEMP_BODY_FILE=$(mktemp)
 
 cat > "$TEMP_BODY_FILE" << EOF
 # $TASK_TITLE
@@ -432,7 +435,7 @@ echo "   ✅ Worktree created: $(make_path_portable "$WORKTREE_PATH")"
 # Step 6: Generate comprehensive agent prompt
 echo "Step 6: Generating QA agent prompt..."
 
-PROMPT_FILE="$SCRIPT_DIR/qa-code-review-prompt.txt"
+PROMPT_FILE="$WORKTREE_PATH/qa-code-review-prompt.txt"
 
 cat > "$PROMPT_FILE" << EOF
 Context Loading:

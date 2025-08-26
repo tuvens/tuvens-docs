@@ -234,11 +234,11 @@
       {
         "name": "vibe-coder/feature/test-task",
         "author": "Test User",
-        "created": "2025-08-26T17:44:12.108Z",
-        "lastActivity": "2025-08-26T17:44:12.109Z",
+        "created": "2025-08-26T22:59:34.573Z",
+        "lastActivity": "2025-08-26T22:59:34.575Z",
         "taskGroup": null,
         "status": "active",
-        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/implement-comprehensive-tdd-testing-framework/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/create-code-review-slash-command-and-qa-agent/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
         "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/test-repo/tree/vibe-coder/feature/test-task",
@@ -246,7 +246,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-26T22:44:12.109Z",
+  "lastUpdated": "2025-08-26T22:59:34.575Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
