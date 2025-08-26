@@ -339,6 +339,20 @@ run_integration_tests() {
         integration_test_errors=$((integration_test_errors + 1))
     fi
     
+    # Code review system integration
+    print_info "Testing code review system..."
+    if [ -f "agentic-development/scripts/test-code-review-system.sh" ] && [ -x "agentic-development/scripts/test-code-review-system.sh" ]; then
+        if ! ./agentic-development/scripts/test-code-review-system.sh; then
+            print_error "Code review system tests failed"
+            integration_test_errors=$((integration_test_errors + 1))
+        else
+            print_success "Code review system tests passed"
+        fi
+    else
+        print_error "Code review system test not found or not executable"
+        integration_test_errors=$((integration_test_errors + 1))
+    fi
+    
     return $integration_test_errors
 }
 
