@@ -312,6 +312,31 @@ run_workflow_tests() {
     return $workflow_test_errors
 }
 
+# File reference validation test
+test_file_references() {
+    local result=0
+    
+    print_info "Testing file reference validation..."
+    if command -v node >/dev/null 2>&1; then
+        if [ -f "agentic-development/scripts/file-reference-scanner.js" ]; then
+            # Run file reference scanner
+            if npm run validate-references:ci >/dev/null 2>&1; then
+                print_success "File reference validation passed"
+            else
+                print_error "File reference validation failed"
+                result=1
+            fi
+        else
+            print_error "File reference scanner not found"
+            result=1
+        fi
+    else
+        print_warning "Node.js not available - skipping file reference validation"
+    fi
+    
+    return $result
+}
+
 # Function to run integration tests
 run_integration_tests() {
     print_status "Running integration tests..."
@@ -320,6 +345,9 @@ run_integration_tests() {
     
     # Branch tracking system integration
     run_test "Branch tracking JSON files validation" test_branch_tracking_json_files || integration_test_errors=$((integration_test_errors + 1))
+    
+    # File reference validation integration
+    run_test "File reference validation" test_file_references || integration_test_errors=$((integration_test_errors + 1))
     
     # Agent status scripts integration
     print_info "Testing agent status scripts..."
@@ -552,6 +580,9 @@ case "${1:-}" in
         exit 0
         ;;
     *)
-        main "$@"
+        # Only run main if not being sourced for testing
+        if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+            main "$@"
+        fi
         ;;
 esac

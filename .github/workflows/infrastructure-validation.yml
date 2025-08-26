@@ -76,12 +76,13 @@ jobs:
       - name: 🔨 Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y shellcheck
+          sudo apt-get install -y shellcheck bats
           # Install specific version of yamllint via pip for consistency
           pip install yamllint==1.32.0 pre-commit
           # Show versions for debugging
           echo "📋 Tool versions:"
           yamllint --version || echo "yamllint not found"
+          bats --version || echo "bats not found"
           python3 --version
           pip show PyYAML | grep Version || echo "PyYAML not found"
           
@@ -136,6 +137,13 @@ jobs:
           
           echo "🧪 Running $test_level tests..."
           
+          # Run TDD tests first if available
+          if [ -f tests/run-tests.sh ]; then
+            echo "🧪 Running TDD test suite..."
+            ./tests/run-tests.sh all
+          fi
+          
+          # Run existing infrastructure tests
           if [ -f agentic-development/scripts/test.sh ]; then
             ./agentic-development/scripts/test.sh --$test_level
           else
@@ -186,6 +194,22 @@ jobs:
             fi
           else
             echo "⚠️ Documentation generator not found"
+          fi
+          
+      - name: 🔗 Validate File References
+        if: matrix.test-type == 'integration'
+        run: |
+          if [ -f agentic-development/scripts/file-reference-scanner.js ]; then
+            echo "🔍 Running file reference validation..."
+            if npm run validate-references:ci; then
+              echo "✅ All file references are valid"
+            else
+              echo "❌ File reference validation failed"
+              echo "This indicates broken links or missing files in documentation"
+              exit 1
+            fi
+          else
+            echo "⚠️ File reference scanner not found"
           fi
           
       - name: 🔧 Validate npm Scripts

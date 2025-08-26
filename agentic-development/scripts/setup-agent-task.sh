@@ -100,137 +100,46 @@ if [[ "${SKIP_GITHUB_ISSUE_CREATION:-false}" == "true" ]]; then
     echo ""
 else
     echo "Step 2: Creating GitHub issue..."
+    # Use shared function for GitHub issue creation
+    GITHUB_ISSUE=$(create_github_issue "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION" "$CONTEXT_FILE" "$FILES_TO_EXAMINE" "$SUCCESS_CRITERIA")
+    echo ""
 
-# Function to validate and format file references
-validate_files() {
-    local files_input="$1"
-    local validated_files=""
-    local invalid_files=""
+    # Context enhancement reminder for complex tasks
+    echo "💡 CONTEXT ENHANCEMENT GUIDANCE"
+    echo "================================"
+    echo ""
     
-    if [[ -n "$files_input" ]]; then
-        IFS=',' read -ra file_array <<< "$files_input"
-        for file in "${file_array[@]}"; do
-            file=$(echo "$file" | xargs) # trim whitespace
-            if [[ -f "$file" ]]; then
-                validated_files="${validated_files}- \`$file\`\n"
-            else
-                invalid_files="${invalid_files}- \`$file\` (NOT FOUND)\n"
-            fi
-        done
+    # Check if enhanced context was provided by looking for context indicators
+    has_context=false
+    if [[ -n "$CONTEXT_FILE" && -f "$CONTEXT_FILE" ]] || [[ -n "$FILES_TO_EXAMINE" ]] || [[ -n "$SUCCESS_CRITERIA" ]]; then
+        has_context=true
     fi
     
-    echo -e "$validated_files"
-    if [[ -n "$invalid_files" ]]; then
-        echo "⚠️  Warning: Some files not found:"
-        echo -e "$invalid_files"
+    if [[ "$has_context" == "true" ]]; then
+        echo "✅ Task includes enhanced context (context file, files, or success criteria)"
+        echo "   The receiving agent will have comprehensive task information"
+    else
+        echo "📋 For complex tasks requiring detailed analysis or planning:"
+        echo ""
+        echo "   1. Add a GitHub comment with complete context using this format:"
+        echo "      👤 **Identity**: [your-agent-name] (coordinating agent)"  
+        echo "      🎯 **Addressing**: $AGENT_NAME"
+        echo ""
+        echo "      ## Complete Context Analysis"
+        echo "      [Include your detailed analysis, findings, and requirements]"
+        echo ""
+        echo "   2. Include specific implementation guidance, discovered patterns,"
+        echo "      file locations, and any complex requirements you've identified"
+        echo ""
+        echo "   3. Add timeline expectations and coordination notes if relevant"
+        echo ""
+        echo "   Command to add context comment:"
+        echo "   gh issue comment $GITHUB_ISSUE --body-file /path/to/context.md"
+        echo ""
+        echo "   This prevents the receiving agent from having to rediscover"
+        echo "   context that you already have, improving task handoff efficiency."
     fi
-}
-
-# Create enhanced issue body using temporary file
-TEMP_BODY_FILE="/tmp/github-issue-body-$$"
-
-# Load context from file if provided
-CONTEXT_CONTENT=""
-if [[ -n "$CONTEXT_FILE" && -f "$CONTEXT_FILE" ]]; then
-    echo "📄 Loading context from: $CONTEXT_FILE"
-    CONTEXT_CONTENT=$(cat "$CONTEXT_FILE")
-fi
-
-# Validate files if provided
-VALIDATED_FILES=""
-if [[ -n "$FILES_TO_EXAMINE" ]]; then
-    echo "📁 Validating file references..."
-    VALIDATED_FILES=$(validate_files "$FILES_TO_EXAMINE")
-fi
-
-# Create structured issue body
-cat > "$TEMP_BODY_FILE" << EOF
-# $TASK_TITLE
-
-**Agent**: $AGENT_NAME  
-**Generated**: $(date '+%Y-%m-%d %H:%M:%S')
-
-## Task Description
-$TASK_DESCRIPTION
-
-EOF
-
-# Add context section if context file provided
-if [[ -n "$CONTEXT_CONTENT" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
-## Context Analysis
-$CONTEXT_CONTENT
-
-EOF
-fi
-
-# Add files section if files provided
-if [[ -n "$VALIDATED_FILES" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
-## Files to Examine
-$VALIDATED_FILES
-
-EOF
-fi
-
-# Add success criteria if provided
-if [[ -n "$SUCCESS_CRITERIA" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
-## Success Criteria
-$SUCCESS_CRITERIA
-
-EOF
-fi
-
-# Add standard sections for comprehensive context
-cat >> "$TEMP_BODY_FILE" << EOF
-## Implementation Notes
-- Review the task requirements carefully
-- Follow the 6-step agent workflow pattern
-- Update this issue with progress and findings
-- Reference specific files and line numbers in comments
-
-## Validation Checklist
-- [ ] Task requirements understood
-- [ ] Relevant files identified and examined
-- [ ] Solution implemented according to requirements
-- [ ] Testing completed (if applicable)
-- [ ] Documentation updated (if applicable)
-- [ ] Issue updated with final results
-
----
-*Generated with Claude Code automation*
-EOF
-
-# Create GitHub issue
-echo "   Creating issue: $TASK_TITLE"
-ISSUE_URL=$(gh issue create \
-    --title "$TASK_TITLE" \
-    --body-file "$TEMP_BODY_FILE" \
-    --assignee "@me" \
-    --label "agent-task,$AGENT_NAME")
-
-GITHUB_ISSUE=$(echo "$ISSUE_URL" | grep -o '[0-9]\+$')
-
-# Security and robustness validation for GITHUB_ISSUE
-if [[ -z "$GITHUB_ISSUE" ]]; then
-    echo "❌ ERROR: Failed to extract GitHub issue number from URL: $ISSUE_URL"
-    rm -f "$TEMP_BODY_FILE"
-    exit 1
-fi
-
-# Additional security validation: ensure GITHUB_ISSUE contains only digits
-if ! [[ "$GITHUB_ISSUE" =~ ^[0-9]+$ ]]; then
-    echo "❌ ERROR: Invalid GitHub issue number format: $GITHUB_ISSUE"
-    echo "   Issue number must contain only digits for security"
-    rm -f "$TEMP_BODY_FILE"
-    exit 1
-fi
-
-rm -f "$TEMP_BODY_FILE"
-echo "✅ Created GitHub issue #$GITHUB_ISSUE"
-echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$GITHUB_ISSUE"
-echo ""
+    echo ""
 fi
 
 # Step 3: Setup worktree

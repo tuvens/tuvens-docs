@@ -58,10 +58,24 @@ If a branch becomes corrupted or needs recovery:
 
 #### Testing Protocol Requirements
 - **Practice Test-Driven Development (TDD) - write tests before implementation**
+- **MANDATORY: Every .sh and .js script MUST have corresponding test files**
 - **Ensure comprehensive test coverage with NO EXCEPTIONS**
 - **Run all existing tests before committing changes**
 - **Create new tests for any new functionality**
 - **Document test scenarios and edge cases**
+
+#### Test Coverage Enforcement
+- **Shell Scripts**: Must have corresponding BATS test files (`.bats`)
+  - Pattern: `script.sh` → `tests/unit/script.bats`
+  - Alternative: `agentic-development/scripts/script.sh` → `tests/unit/script.bats`
+- **JavaScript Files**: Must have corresponding Jest test files (`.test.js`)  
+  - Pattern: `script.js` → `tests/unit/script.test.js`
+  - Alternative: `script.js` → `__tests__/script.test.js`
+- **Automated Validation**: GitHub Actions will block PRs with untested scripts
+- **Coverage Commands**:
+  - `npm run test-coverage` - Check test coverage for all scripts
+  - `npm run test-coverage:ci` - CI-friendly coverage check
+  - `npm run validate-all` - File references + test coverage validation
 
 #### Code Quality Standards
 - **Prioritize simple, readable, and maintainable code**
@@ -147,6 +161,7 @@ Static safety validation hooks are available to prevent common violations:
 - **Protected branch checks** - Prevents direct commits to main/stage/test
 - **CLAUDE.md validation** - Verifies safety file completeness
 - **Safety rules check** - Scans for secrets and policy violations
+- **Scope protection check** - Validates agents only modify files within their declared scope, includes DRY principle validation
 
 Setup: `pip install pre-commit && pre-commit install`
 
