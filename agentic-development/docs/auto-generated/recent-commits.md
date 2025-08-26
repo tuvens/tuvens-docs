@@ -10,21 +10,82 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `0004c5a43df3662c218263ab1c2a4d8612aced6d`
-- **Commit Message**: "Merge pull request #326 from tuvens/devops/hotfix/fix-template-directory-structure
+- **Latest Commit**: `6180694522260cb4ef5d6d119590de540846dc03`
+- **Commit Message**: "feat: implement /check slash command for comment status checking (#335)
 
-fix: clean up misplaced template files - directory structure correction"
+* feat: implement /check slash command for comment status checking
+
+- Add /check command script following /start-session pattern
+- Implement check-comments.sh with context inference logic
+- Support multiple argument formats: PR324, I325, plain numbers
+- Display comprehensive comment status with reviewer detection
+- Handle error cases gracefully with clear user feedback
+- Resolves GitHub Issue #333
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* test: add comprehensive test suite for /check command
+
+- Add test-check-command.sh with full test coverage
+- Test help functionality, argument parsing, context inference
+- Test script permissions and error handling
+- All 6 tests passing (100% coverage)
+- Addresses CI test coverage requirements
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* fix: update branch tracking for check command implementation
+
+- Add vibe-coder/feature/implement-check-slash-command-for-comment-status-checking to active-branches.json
+- Include PR #335 reference and proper worktree path
+- Update lastUpdated timestamp to current date
+- Resolves update-branch-tracking CI failure
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+* docs: add /check command documentation to README and automation guide
+
+- Add /check command section to main README.md with usage examples
+- Update CLAUDE-DESKTOP-AUTOMATION.md quick reference with /check examples
+- Document context inference and multiple argument format features
+- Resolves potential file reference validation issues
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
+---------
+
+Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-26T00:17:10+01:00
+- **Timestamp**: 2025-08-26T15:05:28+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 6180694` - feat: implement /check slash command for comment status checking (#335)
+- **Date**: 2025-08-26 15:05
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* bcbdc02` - feat: implement /respond slash command for automated comment checking (#334)
+- **Date**: 2025-08-26 15:04
+- **Author**: tuvens
+
+#### `* 5e67997` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-25 23:18
+- **Author**: GitHub Actions
+
 #### `*   0004c5a` - Merge pull request #326 from tuvens/devops/hotfix/fix-template-directory-structure
 - **Date**: 2025-08-26 00:17
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -184,21 +245,6 @@ fix: clean up misplaced template files - directory structure correction"
 - **Author**:  0906de8
 - **Refs**: tuvens|test: verify commit functionality works|
 
-#### `* ` - 2025-08-25 15:51
-- **Date**:  
-- **Author**:  c8d0636
-- **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
-
-#### `* ` - 2025-08-25 16:50
-- **Date**:  
-- **Author**:  4feaafd
-- **Refs**: tuvens|feat: consolidate session scripts (#301)|
-
-#### `* ` - 2025-08-25 16:50
-- **Date**:  
-- **Author**:  974a0b4
-- **Refs**: tuvens|feat: Add Scope Protection Pre-commit Hook (#302)|
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
@@ -213,7 +259,7 @@ fix: clean up misplaced template files - directory structure correction"
 - `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 7 changes
 - `package.json`: 3 changes
-- `agentic-development/scripts/setup-agent-task.sh`: 3 changes
+- `agentic-development/branch-tracking/active-branches.json`: 3 changes
 - `.file-reference-coverage.json`: 3 changes
 - `templates/mobile-notification.md`: 2 changes
 - `templates/integration-notification.md`: 2 changes
