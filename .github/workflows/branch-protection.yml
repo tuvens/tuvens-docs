@@ -311,7 +311,7 @@ jobs:
           echo "Branch context: $GITHUB_HEAD_REF → $GITHUB_BASE_REF"
           
           # Make scripts executable
-          chmod +x scripts/check-before-merge.sh scripts/branch-check
+          chmod +x agentic-development/scripts/check-before-merge.sh agentic-development/scripts/branch-check
           
           # Run pre-merge safety validation
           if npm run pre-merge; then
