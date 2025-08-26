@@ -1,0 +1,45 @@
+name: TDD Testing Framework - Simple
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: false
+        default: 'unit'
+        type: choice
+        options:
+          - unit
+          - syntax
+          - all
+
+jobs:
+  tdd-tests:
+    name: TDD Test Suite
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔨 Install Testing Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck bats bc
+          echo "📋 Testing tool versions:"
+          bats --version
+          shellcheck --version
+          
+      - name: 🧪 Run TDD Unit Tests
+        run: |
+          echo "🧪 Running TDD unit tests to verify setup fix"
+          chmod +x tests/run-tests.sh
+          ./tests/run-tests.sh unit
+          
+      - name: 🎯 Success Report
+        run: |
+          echo "✅ TDD setup fix verified!"
+          echo "Unit tests are now loading and executing properly"
+          echo "The setup file rename from setup.sh to setup resolved the bats loading issue"
