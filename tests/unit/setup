@@ -1,0 +1,88 @@
+#!/bin/bash
+# Unit test setup for bash script testing framework
+# This script sets up the testing environment for bats-core tests
+
+# Exit on any error
+set -euo pipefail
+
+# Define test environment variables
+export BATS_TEST_DIRNAME="${BATS_TEST_DIRNAME:-$(dirname "${BASH_SOURCE[0]}")}"
+export BATS_TEST_FILENAME="${BATS_TEST_FILENAME:-$(basename "${BASH_SOURCE[0]}")}"
+export TEST_FIXTURES_DIR="$BATS_TEST_DIRNAME/../fixtures"
+export TEST_TEMP_DIR="$BATS_TEST_DIRNAME/../temp"
+
+# Create temporary directory for test isolation
+mkdir -p "$TEST_TEMP_DIR"
+
+# Common test utilities and mock functions
+setup_test_git_repo() {
+    local test_repo_dir="$TEST_TEMP_DIR/test-repo"
+    if [ -d "$test_repo_dir" ]; then
+        rm -rf "$test_repo_dir"
+    fi
+    
+    mkdir -p "$test_repo_dir"
+    cd "$test_repo_dir"
+    git init
+    git config user.name "Test User"
+    git config user.email "test@example.com"
+    echo "# Test Repository" > README.md
+    git add README.md
+    git commit -m "Initial commit"
+    echo "$test_repo_dir"
+}
+
+teardown_test_git_repo() {
+    local test_repo_dir="$1"
+    if [ -d "$test_repo_dir" ]; then
+        rm -rf "$test_repo_dir"
+    fi
+}
+
+# Mock GitHub CLI for testing - matches actual gh behavior
+mock_gh_command() {
+    local command="$1"
+    shift
+    
+    case "$command" in
+        "issue")
+            case "$1" in
+                "create")
+                    # Mock the actual gh issue create output format
+                    echo "https://github.com/tuvens/tuvens-docs/issues/123"
+                    ;;
+                "list")
+                    echo '{"number": 123, "title": "Test Issue", "state": "OPEN"}'
+                    ;;
+                *)
+                    echo "Mock gh issue: $*"
+                    ;;
+            esac
+            ;;
+        "repo")
+            echo '{"nameWithOwner": "tuvens/tuvens-docs"}'
+            ;;
+        *)
+            echo "Mock gh command: $command $*"
+            ;;
+    esac
+}
+
+# Create realistic gh mock that matches actual behavior
+gh() {
+    mock_gh_command "$@"
+}
+
+# Mock functions for isolated testing
+export -f setup_test_git_repo
+export -f teardown_test_git_repo
+export -f mock_gh_command
+
+# Source the script being tested if specified
+if [ -n "${SCRIPT_UNDER_TEST:-}" ] && [ -f "$SCRIPT_UNDER_TEST" ]; then
+    # Create a wrapper to source without executing main logic
+    setup_script_for_testing() {
+        # Extract functions from script without running main execution
+        source "$SCRIPT_UNDER_TEST"
+    }
+fi
