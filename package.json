@@ -29,9 +29,13 @@
     "check-before-merge": "./agentic-development/scripts/check-before-merge.sh",
     "generate-docs": "node agentic-development/scripts/generate-doc-tree.js",
     "generate-doc-tree": "node agentic-development/scripts/generate-doc-tree.js",
+    "validate-references": "node agentic-development/scripts/file-reference-scanner.js --verbose",
+    "validate-references:ci": "node agentic-development/scripts/file-reference-scanner.js",
+    "file-references": "node agentic-development/scripts/file-reference-scanner.js --verbose",
+    "file-coverage": "node agentic-development/scripts/file-reference-scanner.js --no-tests",
     "dev": "npm run setup && npm run validate",
     "start": "npm run setup:env && npm run dev",
-    "ci": "npm run setup && npm run test:full && npm run lint",
+    "ci": "npm run setup && npm run test:full && npm run lint && npm run validate-references:ci",
     "prepare": "npm run setup:hooks"
   },
   "devDependencies": {
