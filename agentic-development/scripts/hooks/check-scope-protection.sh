@@ -201,10 +201,11 @@ get_scope_expansion_guidance() {
     done
     echo
     echo "3. 🚨 Emergency Override (monitored):"
-    echo "   git commit [skip-hooks] -m 'EMERGENCY-SCOPE-OVERRIDE: [reason] your message'"
+    echo "   git commit -m 'emergency-scope-bypass: [reason] your message'"
     echo
-    echo "4. ✅ Manual Verification:"
+    echo "4. ✅ Manual Verification (case sensitive):"
     echo "   git commit -m 'scope-verified: confirmed file access justified - [description]'"
+    echo "   git commit -m 'SCOPE-VERIFIED: confirmed file access justified - [description]'"
     echo
 }
 
