@@ -1,0 +1,392 @@
+name: Test Coverage Enforcement
+
+on:
+  push:
+    branches: [ dev, test, stage, main ]
+    paths:
+      - '**/*.sh'
+      - '**/*.js'
+      - 'agentic-development/scripts/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, test, stage, main ]
+    paths:
+      - '**/*.sh'
+      - '**/*.js'
+      - 'agentic-development/scripts/**'
+      - 'tests/**'
+  workflow_dispatch:
+    inputs:
+      minimum_coverage:
+        description: 'Minimum test coverage percentage required'
+        required: false
+        default: '80'
+        type: string
+      strict_mode:
+        description: 'Strict mode - fail on any untested script'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  NODE_VERSION: '18'
+  MIN_COVERAGE: ${{ github.event.inputs.minimum_coverage || '80' }}
+  STRICT_MODE: ${{ github.event.inputs.strict_mode || 'false' }}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  detect-script-changes:
+    name: Detect Script Changes
+    runs-on: ubuntu-latest
+    outputs:
+      has-script-changes: ${{ steps.changes.outputs.has-script-changes }}
+      new-scripts: ${{ steps.changes.outputs.new-scripts }}
+      modified-scripts: ${{ steps.changes.outputs.modified-scripts }}
+    
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔍 Detect Script Changes
+        id: changes
+        run: |
+          echo "Detecting script file changes..."
+          
+          # Get list of changed files
+          if [ "${{ github.event_name }}" = "push" ]; then
+            # For push events, compare with previous commit
+            changed_files=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(sh|js)$' || echo "")
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            # For PRs, compare with target branch
+            git fetch origin ${{ github.base_ref }}
+            changed_files=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(sh|js)$' || echo "")
+          else
+            # For manual runs, assume all scripts changed
+            changed_files=$(find . -name "*.sh" -o -name "*.js" | grep -v node_modules | grep -v .git | head -20)
+          fi
+          
+          # Filter for scripts that require testing (exclude test files)
+          new_scripts=""
+          modified_scripts=""
+          
+          for file in $changed_files; do
+            # Skip test files and certain directories
+            if echo "$file" | grep -qE "(test|spec|node_modules|\.git)" || [ ! -f "$file" ]; then
+              continue
+            fi
+            
+            # Check if file is new or modified
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              if ! git cat-file -e "origin/${{ github.base_ref }}:$file" 2>/dev/null; then
+                new_scripts="$new_scripts$file,"
+              else
+                modified_scripts="$modified_scripts$file,"
+              fi
+            else
+              modified_scripts="$modified_scripts$file,"
+            fi
+          done
+          
+          # Set outputs
+          if [ -n "$new_scripts" ] || [ -n "$modified_scripts" ]; then
+            echo "has-script-changes=true" >> $GITHUB_OUTPUT
+            echo "new-scripts=${new_scripts%,}" >> $GITHUB_OUTPUT
+            echo "modified-scripts=${modified_scripts%,}" >> $GITHUB_OUTPUT
+            
+            echo "📊 Script changes detected:"
+            echo "  New scripts: ${new_scripts%,}"
+            echo "  Modified scripts: ${modified_scripts%,}"
+          else
+            echo "has-script-changes=false" >> $GITHUB_OUTPUT
+            echo "No script changes detected"
+          fi
+
+  test-coverage-validation:
+    name: Validate Test Coverage
+    runs-on: ubuntu-latest
+    needs: detect-script-changes
+    if: needs.detect-script-changes.outputs.has-script-changes == 'true'
+    
+    outputs:
+      coverage-percentage: ${{ steps.coverage.outputs.coverage-percentage }}
+      untested-count: ${{ steps.coverage.outputs.untested-count }}
+      should-block: ${{ steps.evaluate.outputs.should-block }}
+    
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm ci --ignore-scripts || npm install --ignore-scripts
+          fi
+          
+      - name: 🧪 Run Test Coverage Scan
+        id: coverage
+        run: |
+          echo "🧪 Running test coverage validation..."
+          
+          # Make scanner executable
+          chmod +x agentic-development/scripts/file-reference-scanner.js
+          
+          # Run test coverage scan with verbose output
+          if node agentic-development/scripts/file-reference-scanner.js --test-coverage-only --verbose > coverage-report.txt 2>&1; then
+            coverage_exit_code=0
+          else
+            coverage_exit_code=$?
+          fi
+          
+          # Parse results from output
+          coverage_percentage=$(grep "📈 Test coverage:" coverage-report.txt | sed -E 's/.*📈 Test coverage: ([0-9.]+)%.*/\1/' || echo "0")
+          untested_count=$(grep "❌ Untested scripts:" coverage-report.txt | sed -E 's/.*❌ Untested scripts: ([0-9]+).*/\1/' || echo "0")
+          total_scripts=$(grep "📝 Scripts requiring tests:" coverage-report.txt | sed -E 's/.*📝 Scripts requiring tests: ([0-9]+).*/\1/' || echo "0")
+          
+          echo "coverage-percentage=$coverage_percentage" >> $GITHUB_OUTPUT
+          echo "untested-count=$untested_count" >> $GITHUB_OUTPUT
+          echo "total-scripts=$total_scripts" >> $GITHUB_OUTPUT
+          echo "coverage-exit-code=$coverage_exit_code" >> $GITHUB_OUTPUT
+          
+          echo "📊 Test Coverage Results:"
+          echo "  Total Scripts: $total_scripts"
+          echo "  Coverage: $coverage_percentage%"
+          echo "  Untested: $untested_count"
+          
+          # Save full report for artifacts
+          cp coverage-report.txt test-coverage-report.txt
+          
+      - name: 📊 Evaluate Coverage Requirements
+        id: evaluate
+        run: |
+          coverage="${{ steps.coverage.outputs.coverage-percentage }}"
+          untested="${{ steps.coverage.outputs.untested-count }}"
+          min_coverage="${{ env.MIN_COVERAGE }}"
+          strict_mode="${{ env.STRICT_MODE }}"
+          
+          should_block="false"
+          
+          echo "🔍 Evaluating coverage requirements:"
+          echo "  Current Coverage: $coverage%"
+          echo "  Minimum Required: $min_coverage%"
+          echo "  Untested Scripts: $untested"
+          echo "  Strict Mode: $strict_mode"
+          
+          # Check strict mode (no untested scripts allowed)
+          if [ "$strict_mode" = "true" ] && [ "$untested" -gt "0" ]; then
+            echo "❌ STRICT MODE: Blocking due to $untested untested scripts"
+            should_block="true"
+          # Check minimum coverage threshold
+          elif [ "$coverage" != "0" ] && (( $(echo "$coverage < $min_coverage" | bc -l) )); then
+            echo "❌ COVERAGE: Blocking due to coverage $coverage% below minimum $min_coverage%"
+            should_block="true"
+          else
+            echo "✅ Coverage requirements met: $coverage% coverage, $untested untested scripts"
+          fi
+          
+          echo "should-block=$should_block" >> $GITHUB_OUTPUT
+          
+      - name: 📤 Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-coverage-report-${{ github.run_number }}
+          path: |
+            test-coverage-report.txt
+          retention-days: 30
+
+  create-coverage-issue:
+    name: Create Issue for Untested Scripts
+    runs-on: ubuntu-latest
+    needs: test-coverage-validation
+    if: |
+      always() && 
+      needs.test-coverage-validation.outputs.untested-count > 0 &&
+      (github.event_name == 'push' && contains(fromJson('["main", "dev"]'), github.ref_name))
+    
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download Coverage Report
+        uses: actions/download-artifact@v4
+        with:
+          name: test-coverage-report-${{ github.run_number }}
+          
+      - name: 🐛 Create GitHub Issue for Untested Scripts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Read the coverage report
+            let reportContent = 'Coverage report not available';
+            if (fs.existsSync('test-coverage-report.txt')) {
+              reportContent = fs.readFileSync('test-coverage-report.txt', 'utf8');
+            }
+            
+            // Extract untested scripts from report
+            const untestedScripts = [];
+            const lines = reportContent.split('\n');
+            let inUntestedSection = false;
+            
+            for (const line of lines) {
+              if (line.includes('❌ Found') && line.includes('untested scripts')) {
+                inUntestedSection = true;
+                continue;
+              }
+              if (inUntestedSection && line.startsWith('❌ ')) {
+                const script = line.replace('❌ ', '');
+                if (script.trim()) {
+                  untestedScripts.push(script.trim());
+                }
+              } else if (inUntestedSection && !line.startsWith('❌ ') && line.trim()) {
+                break; // End of untested scripts section
+              }
+            }
+            
+            const issueTitle = `🧪 Test Coverage Violation - Untested Scripts Detected`;
+            const issueBody = `# Test Coverage Violation Detected
+            
+            **Branch**: \`${context.ref}\`  
+            **Commit**: \`${context.sha.substring(0, 8)}\`  
+            **Workflow Run**: [#${context.runNumber}](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            
+            ## Summary
+            - **Coverage**: ${{ needs.test-coverage-validation.outputs.coverage-percentage }}%
+            - **Minimum Required**: ${{ env.MIN_COVERAGE }}%
+            - **Untested Scripts**: ${{ needs.test-coverage-validation.outputs.untested-count }}
+            
+            ## Untested Scripts
+            ${untestedScripts.length > 0 ? untestedScripts.map(script => \`- ❌ \${script}\`).join('\\n') : 'See workflow artifacts for details'}
+            
+            ## Required Actions
+            This issue was created because untested scripts were detected in the repository.
+            
+            ### For Each Untested Script:
+            1. **Create corresponding test files**:
+               - For \`.sh\` files: Create \`tests/unit/script-name.bats\` (BATS test)
+               - For \`.js\` files: Create \`tests/unit/script-name.test.js\` (Jest/Node test)
+            
+            2. **Implement comprehensive tests**:
+               - Test main functionality and edge cases
+               - Test error handling and validation
+               - Achieve meaningful test coverage
+            
+            3. **Verify test execution**:
+               - Run \`npm run test:coverage\` to validate
+               - Ensure tests pass in CI/CD pipeline
+            
+            ## Next Steps
+            1. Download coverage report from workflow artifacts
+            2. Create test files for each untested script
+            3. Run \`node agentic-development/scripts/file-reference-scanner.js --test-coverage-only\` locally
+            4. Push changes to re-validate coverage
+            
+            ## Test Coverage Standards
+            - **Minimum Coverage**: ${{ env.MIN_COVERAGE }}% for all scripts
+            - **Test Patterns**: Follow established patterns in existing test files
+            - **Test Framework**: Use BATS for shell scripts, Jest for JavaScript
+            - **TDD Approach**: Write tests before implementing new scripts
+            
+            ---
+            *Auto-generated by Test Coverage Enforcement workflow*  
+            *Repository: ${context.repo.owner}/${context.repo.repo}*`;
+            
+            // Check if similar issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'automated,test-coverage,untested-scripts'
+            });
+            
+            const existingIssue = existingIssues.data.find(issue => 
+              issue.title.includes('Test Coverage Violation')
+            );
+            
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: \`## Updated Coverage Violation
+                
+                **Branch**: \`${context.ref}\`  
+                **Commit**: \`${context.sha.substring(0, 8)}\`  
+                **Run**: [#${context.runNumber}](${context.payload.repository.html_url}/actions/runs/${context.runId})
+                
+                Still finding ${{ needs.test-coverage-validation.outputs.untested-count }} untested scripts.
+                Coverage: ${{ needs.test-coverage-validation.outputs.coverage-percentage }}%
+                
+                Please check the latest workflow run for updated details.\`
+              });
+              
+              console.log(\`Updated existing issue #\${existingIssue.number}\`);
+            } else {
+              // Create new issue
+              const newIssue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['automated', 'test-coverage', 'untested-scripts', 'devops']
+              });
+              
+              console.log(\`Created issue #\${newIssue.data.number}\`);
+            }
+
+  block-merge:
+    name: Block Merge for Coverage Violations
+    runs-on: ubuntu-latest
+    needs: [detect-script-changes, test-coverage-validation]
+    if: always() && needs.detect-script-changes.outputs.has-script-changes == 'true'
+    
+    steps:
+      - name: 🚫 Block Merge for Coverage Violations
+        if: needs.test-coverage-validation.outputs.should-block == 'true'
+        run: |
+          echo "❌ BLOCKING MERGE: Test coverage requirements not met"
+          echo ""
+          echo "📊 Results:"
+          echo "  Coverage: ${{ needs.test-coverage-validation.outputs.coverage-percentage }}%"
+          echo "  Untested Scripts: ${{ needs.test-coverage-validation.outputs.untested-count }}"
+          echo "  Required Coverage: ${{ env.MIN_COVERAGE }}%"
+          echo "  Strict Mode: ${{ env.STRICT_MODE }}"
+          echo ""
+          echo "🔧 To fix this:"
+          echo "  1. Run 'node agentic-development/scripts/file-reference-scanner.js --test-coverage-only --verbose' locally"
+          echo "  2. Create test files for all untested scripts"
+          echo "  3. For .sh files: Create tests/unit/script-name.bats (BATS tests)"
+          echo "  4. For .js files: Create tests/unit/script-name.test.js (Jest tests)"
+          echo "  5. Commit and push your test files"
+          echo "  6. Re-run this workflow"
+          echo ""
+          exit 1
+          
+      - name: ✅ Test Coverage Requirements Met
+        if: needs.test-coverage-validation.outputs.should-block == 'false'
+        run: |
+          echo "✅ Test coverage requirements satisfied!"
+          echo "📊 Coverage: ${{ needs.test-coverage-validation.outputs.coverage-percentage }}%"
+          echo "📝 Scripts: ${{ needs.test-coverage-validation.outputs.total-scripts }}"
+          echo "❌ Untested: ${{ needs.test-coverage-validation.outputs.untested-count }}"
+          
+      - name: ⏭️ No Script Changes Detected
+        if: needs.detect-script-changes.outputs.has-script-changes == 'false'
+        run: |
+          echo "ℹ️ No script changes detected - test coverage validation skipped"
+          echo "✅ Workflow completed successfully"

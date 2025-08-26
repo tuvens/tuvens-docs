@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 8e63d180aa4487fc9570d8e609e4d00694759dd4
-- **Commit Message**: Merge pull request #319 from tuvens/vibe-coder/feature/move-script-to-proper-location-and-clean-directory-structure
+- **Commit SHA**: 0004c5a43df3662c218263ab1c2a4d8612aced6d
+- **Commit Message**: Merge pull request #326 from tuvens/devops/hotfix/fix-template-directory-structure
 
-feat: move script to proper location and clean directory structure
+fix: clean up misplaced template files - directory structure correction
 - **Author**: tuvens
-- **Timestamp**: 2025-08-25T20:55:44+01:00
+- **Timestamp**: 2025-08-26T00:17:10+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

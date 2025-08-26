@@ -196,6 +196,22 @@ jobs:
             echo "⚠️ Documentation generator not found"
           fi
           
+      - name: 🔗 Validate File References
+        if: matrix.test-type == 'integration'
+        run: |
+          if [ -f agentic-development/scripts/file-reference-scanner.js ]; then
+            echo "🔍 Running file reference validation..."
+            if npm run validate-references:ci; then
+              echo "✅ All file references are valid"
+            else
+              echo "❌ File reference validation failed"
+              echo "This indicates broken links or missing files in documentation"
+              exit 1
+            fi
+          else
+            echo "⚠️ File reference scanner not found"
+          fi
+          
       - name: 🔧 Validate npm Scripts
         if: matrix.test-type == 'workflows'
         run: |

@@ -1,0 +1,12 @@
+🧪 Scanning test coverage for scripts...
+📝 Found 32 script files to check for tests
+📈 Test Coverage: 0% (0/32 scripts tested)
+
+🧪 TEST COVERAGE ONLY SCAN
+═══════════════════════════
+📝 Scripts requiring tests: 32
+✅ Scripts with tests: 0
+❌ Untested scripts: 32
+📈 Test coverage: 0%
+
+❌ Found 32 untested scripts
