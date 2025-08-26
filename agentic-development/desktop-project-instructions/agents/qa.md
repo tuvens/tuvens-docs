@@ -205,6 +205,14 @@ Address technical debt systematically:
 
 ### Test Execution and Evidence Capture
 ```bash
+# TDD Framework Testing (when available)
+npm run test:tdd                    # Complete TDD test suite
+npm run test:tdd:unit              # Unit tests only
+npm run test:tdd:integration       # Integration tests only
+npm run test:tdd:syntax            # Syntax validation
+npm run test:tdd:lint              # ShellCheck linting
+./tests/demonstrate-coverage.sh    # Coverage proof with evidence
+
 # Frontend Testing
 npm test -- --coverage --verbose
 npm run test:unit

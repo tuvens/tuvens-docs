@@ -509,7 +509,13 @@ Follow DRY, KISS, TDD, R/R, C/C principles:
 
 ## 5. Test Validation & Evidence
 \`\`\`bash
-# Run all tests and capture output
+# Use TDD framework when available (PR #324)
+npm run test:tdd                    # Complete TDD test suite
+npm run test:tdd:unit              # Unit tests only
+npm run test:tdd:integration       # Integration tests only
+./tests/demonstrate-coverage.sh    # Coverage proof with evidence
+
+# Fallback to standard testing
 npm test  # or appropriate test command
 pytest    # or appropriate test command
 
