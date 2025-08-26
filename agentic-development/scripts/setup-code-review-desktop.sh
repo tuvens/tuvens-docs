@@ -297,41 +297,41 @@ __END_OF_ISSUE_BODY__
 
 # Add existing comments if any
 if [[ -n "$PR_COMMENTS" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
+    cat >> "$TEMP_BODY_FILE" << '__END_COMMENTS_SECTION__'
 #### Existing Comments:
 $PR_COMMENTS
 
-EOF
+__END_COMMENTS_SECTION__
 fi
 
 # Add existing reviews if any
 if [[ -n "$PR_REVIEWS" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
+    cat >> "$TEMP_BODY_FILE" << '__END_REVIEWS_SECTION__'
 #### Existing Reviews:
 $PR_REVIEWS
 
-EOF
+__END_REVIEWS_SECTION__
 fi
 
 # Add issue context if provided
 if [[ -n "$ISSUE_CONTENT" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
+    cat >> "$TEMP_BODY_FILE" << '__END_ISSUE_CONTENT__'
 $ISSUE_CONTENT
 
-EOF
+__END_ISSUE_CONTENT__
 fi
 
 # Add additional context if provided
 if [[ -n "$ADDITIONAL_CONTEXT" ]]; then
-    cat >> "$TEMP_BODY_FILE" << EOF
+    cat >> "$TEMP_BODY_FILE" << '__END_ADDITIONAL_CONTEXT__'
 ## Additional Context
 $ADDITIONAL_CONTEXT
 
-EOF
+__END_ADDITIONAL_CONTEXT__
 fi
 
 # Add comprehensive task description and standards
-cat >> "$TEMP_BODY_FILE" << EOF
+cat >> "$TEMP_BODY_FILE" << '__END_TASK_DESCRIPTION__'
 ## Task Description
 $TASK_DESCRIPTION
 
@@ -396,7 +396,7 @@ $TASK_DESCRIPTION
 
 ---
 *Generated with Claude Code automation*
-EOF
+__END_TASK_DESCRIPTION__
 
 # Create GitHub issue
 echo "   Creating comprehensive review issue..."
