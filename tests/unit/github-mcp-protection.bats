@@ -8,7 +8,7 @@ load setup
 
 # Setup for each test
 setup() {
-    export SCRIPT_UNDER_TEST="$PWD/agentic-development/scripts/github-mcp-protection.sh"
+    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/agentic-development/scripts/github-mcp-protection.sh"
     export TEST_REPO_DIR
     TEST_REPO_DIR=$(setup_test_git_repo)
     cd "$TEST_REPO_DIR"

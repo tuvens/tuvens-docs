@@ -35,6 +35,12 @@ calculate_branch_name() {
     local task_title="$2"
     
     local sanitized_agent=$(sanitize_for_branch "$agent_name")
+    
+    # Handle empty or null task title
+    if [[ -z "$task_title" || "$task_title" == "null" ]]; then
+        task_title="untitled-task"
+    fi
+    
     local sanitized_task=$(sanitize_for_branch "$task_title")
     
     echo "$sanitized_agent/feature/$sanitized_task"
@@ -128,6 +134,43 @@ validate_git_repo() {
     if ! git rev-parse --git-dir > /dev/null 2>&1; then
         handle_script_error "Not in a git repository"
     fi
+}
+
+# Function to validate environment setup
+validate_environment_setup() {
+    local validation_errors=0
+    
+    # Check required tools
+    local required_tools=("git" "gh")
+    for tool in "${required_tools[@]}"; do
+        if ! command -v "$tool" &> /dev/null; then
+            echo "❌ Required tool missing: $tool" >&2
+            validation_errors=$((validation_errors + 1))
+        fi
+    done
+    
+    # Check git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "❌ Not in a git repository" >&2
+        validation_errors=$((validation_errors + 1))
+    fi
+    
+    # Check for CLAUDE.md file
+    if [[ ! -f "CLAUDE.md" ]]; then
+        echo "❌ CLAUDE.md file not found" >&2
+        validation_errors=$((validation_errors + 1))
+    fi
+    
+    # Check for required directories
+    local required_dirs=("agentic-development" ".github/workflows")
+    for dir in "${required_dirs[@]}"; do
+        if [[ ! -d "$dir" ]]; then
+            echo "❌ Required directory missing: $dir" >&2
+            validation_errors=$((validation_errors + 1))
+        fi
+    done
+    
+    return $validation_errors
 }
 
 # Function to get current repository name for branch tracking
@@ -344,6 +387,7 @@ export -f calculate_worktree_path
 export -f handle_script_error
 export -f validate_required_tools
 export -f validate_git_repo
+export -f validate_environment_setup
 export -f get_current_repo
 export -f check_pr_review_safeguards
 export -f validate_files
