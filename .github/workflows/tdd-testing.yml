@@ -366,10 +366,10 @@ jobs:
               ? `TDD Test Failure: PR #${prNumber} - ${agentName}`
               : `TDD Test Failure: ${branchName} - ${agentName}`;
             
-            const issueBody = `# 🚨 TDD Test Failure - Immediate Action Required
+            const issueBody = \`# 🚨 TDD Test Failure - Immediate Action Required
             
-**Agent**: @${agentName}  
-**Branch**: \`${branchName}\`  
+**Agent**: ${agentName}  
+**Branch**: \\\`${branchName}\\\`  
 **Failure Type**: ${failureType}
 **Timestamp**: ${new Date().toISOString()}
 
