@@ -8,6 +8,8 @@ argument-hint: PR<number>|I<number> [PR<number>|I<number>...]
 
 Automatically check for comments on specified PRs and issues, then respond appropriately based on agent role.
 
+This command eliminates the manual overhead of checking for comments across multiple PRs and issues.
+
 ## Arguments Provided
 `$ARGUMENTS`
 
