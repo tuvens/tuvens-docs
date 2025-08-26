@@ -104,6 +104,16 @@ This repository implements a multi-agent development system where:
 /start-session [agent-name]
 ```
 
+### Checking Comment Status
+```bash
+/check [PR|I]<number> [PR|I]<number>...
+```
+
+The `/check` command provides lightweight GitHub comment status checking without responding:
+- **Context Inference**: Run `/check` without arguments to auto-detect from current branch
+- **Multiple Formats**: Check PRs (`PR324`), Issues (`I325`), or plain numbers (default to issues)  
+- **Comment Summary**: Shows comment count, latest previews, and reviewer feedback warnings
+
 ## System Maintenance
 
 The system maintains itself through automated GitHub Actions:
