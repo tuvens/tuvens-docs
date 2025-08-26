@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 7fb1e062897c097ca9d9bf30a992da183c6a3cb3
-- **Commit Message**: Merge pull request #338 from tuvens/devops/feature/fix-file-reference-scanner-false-positives-blocking-pr-merges
+- **Commit SHA**: e8dd781f6dbbbd3f2e1cbfcfb0eb28edd229871e
+- **Commit Message**: Merge pull request #341 from tuvens/devops/feature/update-command-clean-implementation
 
-fix: resolve file reference scanner false positives blocking PR merges
+feat: implement /update slash command for PR and issue updates (#339)
 - **Author**: tuvens
-- **Timestamp**: 2025-08-26T18:23:23+01:00
+- **Timestamp**: 2025-08-26T20:32:23+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
