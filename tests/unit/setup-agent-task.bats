@@ -41,7 +41,29 @@ make_path_portable() {
 }
 
 create_github_issue() {
-    echo "123"  # Mock issue number
+    local agent_name="$1"
+    local task_title="$2" 
+    local task_description="$3"
+    local context_file="$4"
+    local files_to_examine="$5"
+    local success_criteria="$6"
+    
+    # Create temp file like real implementation
+    local temp_body_file="/tmp/github-issue-body-$$"
+    echo "# $task_title" > "$temp_body_file"
+    echo "**Agent**: $agent_name" >> "$temp_body_file"  
+    echo "" >> "$temp_body_file"
+    echo "$task_description" >> "$temp_body_file"
+    
+    # Mock gh issue create call that returns URL like real command
+    echo "https://github.com/tuvens/tuvens-docs/issues/123"
+    
+    # Extract issue number like real implementation
+    local github_issue=$(echo "https://github.com/tuvens/tuvens-docs/issues/123" | grep -o '[0-9]\+$')
+    rm -f "$temp_body_file"
+    
+    export GITHUB_ISSUE="$github_issue"
+    echo "$github_issue"
 }
 
 validate_environment_setup() {

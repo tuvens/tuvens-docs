@@ -144,8 +144,31 @@ Automatic comment posted with:
 ### When Tests Fail:
 1. **PR Status**: Marked as failing ❌
 2. **Merge Prevention**: Cannot merge until fixed
-3. **Detailed Logs**: Available in GitHub Actions
-4. **Local Debugging**: `npm run test-pr` reproduces issues
+3. **Automatic Issue Creation**: GitHub issue auto-created with failure details ⚡
+4. **Agent Notification**: Issue assigned to responsible agent
+5. **Detailed Logs**: Available in GitHub Actions
+6. **Local Debugging**: `npm run test-pr` reproduces issues
+
+### **🆕 Automatic Issue Creation System**
+
+**When tests fail, the system automatically:**
+- Creates GitHub issue with detailed failure information
+- Assigns to the responsible agent (extracted from branch name)
+- Includes reproduction steps and fix guidance
+- Prevents duplicate issues for the same branch/PR
+- Auto-closes issues when tests subsequently pass
+
+**Issue Title Examples:**
+- `TDD Test Failure: PR #123 - vibe-coder`
+- `TDD Test Failure: vibe-coder/feature/branch-name - vibe-coder`
+
+**Agent Workflow:**
+1. Tests fail → Issue auto-created
+2. Repository maintainer: "Check issues, fix test failures"
+3. Agent fixes problems → Commits to same branch
+4. Tests re-run → Issue auto-closes when passing
+
+See [Automatic Issue Creation Guide](./automatic-issue-creation.md) for detailed documentation.
 
 ### Common Failure Scenarios:
 - **Syntax Error**: Script has bash syntax error

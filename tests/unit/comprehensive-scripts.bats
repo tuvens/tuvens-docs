@@ -29,26 +29,34 @@ teardown() {
 # AGENT-STATUS.SH TESTS
 # =====================================================
 
-@test "agent-status.sh: executes without errors in valid environment" {
+@test "agent-status.sh: executes successfully in valid environment" {
     local script="$PWD/agentic-development/scripts/agent-status.sh"
     if [ ! -f "$script" ]; then
         skip "agent-status.sh not found"
     fi
     
     run "$script"
-    # Should complete without fatal errors
-    [ "$status" -ne 2 ]  # Not a syntax error
+    # Should complete successfully with proper exit code
+    [ "$status" -eq 0 ]
+    
+    # Should produce meaningful status output
+    [ -n "$output" ]
+    [[ ! "$output" =~ "ERROR" ]] || [[ "$output" =~ "but continuing" ]]
 }
 
-@test "agent-status.sh: produces formatted output" {
+@test "agent-status.sh: produces formatted status output" {
     local script="$PWD/agentic-development/scripts/agent-status.sh"
     if [ ! -f "$script" ]; then
         skip "agent-status.sh not found"
     fi
     
     run "$script"
-    # Should produce some output
+    [ "$status" -eq 0 ]
+    
+    # Should produce structured status output
     [ -n "$output" ]
+    # Should contain status information patterns
+    [[ "$output" =~ "Agent Status" ]] || [[ "$output" =~ "Status" ]] || [[ "$output" =~ "Repository" ]]
 }
 
 @test "agent-status.sh: handles missing branch tracking gracefully" {

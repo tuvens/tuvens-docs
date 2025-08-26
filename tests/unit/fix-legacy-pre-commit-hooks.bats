@@ -18,14 +18,19 @@ setup() {
     
     # Source the script functions for testing (without executing main logic)
     if [ -f "$SCRIPT_UNDER_TEST" ]; then
-        # Extract functions without running the main script
-        source <(sed -n '/^[[:space:]]*function\|^[[:space:]]*[a-zA-Z_][a-zA-Z0-9_]*[[:space:]]*()[[:space:]]*{/,/^}/p' "$SCRIPT_UNDER_TEST")
-        # Also extract functions defined with function keyword
-        source <(grep -A 50 "^log_info()" "$SCRIPT_UNDER_TEST" | head -20)
-        source <(grep -A 50 "^log_warn()" "$SCRIPT_UNDER_TEST" | head -20)
-        source <(grep -A 50 "^log_error()" "$SCRIPT_UNDER_TEST" | head -20)
-        source <(grep -A 50 "^find_git_root()" "$SCRIPT_UNDER_TEST" | head -20)
-        source <(grep -A 50 "^get_git_dir()" "$SCRIPT_UNDER_TEST" | head -30)
+        # Create a safe sourcing approach that avoids execution
+        # Copy only function definitions to a temp file, excluding the main execution
+        local temp_functions=$(mktemp)
+        
+        # Extract only function definitions safely
+        awk '/^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{flag=1} flag{print} /^\}$/{if(flag) {flag=0; print ""}}' "$SCRIPT_UNDER_TEST" > "$temp_functions"
+        
+        # Also extract variable definitions needed by functions
+        grep '^[A-Z_]*=' "$SCRIPT_UNDER_TEST" >> "$temp_functions" || true
+        
+        # Source the extracted functions
+        source "$temp_functions"
+        rm -f "$temp_functions"
     else
         skip "fix-legacy-pre-commit-hooks.sh not found"
     fi

@@ -266,10 +266,39 @@ cd bats-core && sudo ./install.sh /usr/local
 ```
 
 #### Test Failures in CI
+
+**🆕 Automatic Issue Creation System**
+
+When tests fail in CI/CD, the system automatically creates GitHub issues to ensure failures are addressed:
+
+1. **Issue Created** - Detailed failure information with reproduction steps
+2. **Agent Assigned** - Based on branch name (e.g., `vibe-coder/feature/xyz`)
+3. **Notification** - Repository maintainer directs agent to check issues
+4. **Resolution** - Issue auto-closes when tests pass
+
+**Manual Troubleshooting (if needed):**
 1. Check bats installation in workflow
 2. Verify test file permissions
 3. Review environment variable setup
 4. Check path resolution issues
+
+**Issue Response Process:**
+```bash
+# 1. Reproduce failure locally (from auto-created issue)
+git checkout your-branch-name
+npm run test-pr
+
+# 2. Fix identified issues
+# ... make your changes ...
+
+# 3. Verify fixes
+npm run test:tdd
+
+# 4. Commit - issue will auto-close when tests pass
+git add . && git commit -m "fix: resolve test failures"
+```
+
+See [Automatic Issue Creation Guide](./automatic-issue-creation.md) for complete documentation.
 
 #### Mock Function Issues
 ```bash

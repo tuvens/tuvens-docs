@@ -98,7 +98,10 @@ teardown() {
     export -f git
     
     run check_pr_review_safeguards "feature/test"
-    [ "$status" -eq 1 ]  # Should detect review
+    [ "$status" -eq 1 ]  # Should detect active review
+    
+    # Should provide specific warning about detected PR
+    [[ "$output" =~ "PR #456" ]] || [[ "$output" =~ "review" ]] || [[ "$output" =~ "detected" ]]
 }
 
 @test "check_pr_review_safeguards: allows when no reviews active" {

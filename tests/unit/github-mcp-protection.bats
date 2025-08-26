@@ -23,11 +23,21 @@ setup() {
     
     # Source script functions for testing (without executing main logic)
     if [ -f "$SCRIPT_UNDER_TEST" ]; then
-        # Extract key constants and functions for testing
-        source <(grep "^readonly" "$SCRIPT_UNDER_TEST")
-        source <(sed -n '/^log_header()/,/^}/p' "$SCRIPT_UNDER_TEST")
-        source <(sed -n '/^log_section()/,/^}/p' "$SCRIPT_UNDER_TEST")
-        source <(sed -n '/^check_claude_desktop_environment()/,/^}/p' "$SCRIPT_UNDER_TEST")
+        # Create a safe sourcing approach that avoids execution
+        local temp_functions=$(mktemp)
+        
+        # Extract constants and function definitions safely using awk
+        awk '
+        /^readonly / { print; next }
+        /^[A-Z_]*=/ { print; next }
+        /^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{flag=1} 
+        flag{print} 
+        /^\}$/{if(flag) {flag=0; print ""}}
+        ' "$SCRIPT_UNDER_TEST" > "$temp_functions"
+        
+        # Source the extracted functions
+        source "$temp_functions"
+        rm -f "$temp_functions"
     else
         skip "github-mcp-protection.sh not found"
     fi

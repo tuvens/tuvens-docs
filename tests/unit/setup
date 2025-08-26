@@ -22,13 +22,17 @@ setup_test_git_repo() {
     fi
     
     mkdir -p "$test_repo_dir"
-    cd "$test_repo_dir"
-    git init
+    
+    # Use pushd/popd to avoid affecting caller's directory
+    pushd "$test_repo_dir" > /dev/null
+    git init --quiet
     git config user.name "Test User"
     git config user.email "test@example.com"
     echo "# Test Repository" > README.md
     git add README.md
-    git commit -m "Initial commit"
+    git commit --quiet -m "Initial commit"
+    popd > /dev/null
+    
     echo "$test_repo_dir"
 }
 
