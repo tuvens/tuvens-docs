@@ -266,7 +266,8 @@ create_github_issue() {
     local success_criteria="$6"
     
     # Create enhanced issue body using temporary file
-    local temp_body_file="/tmp/github-issue-body-$$"
+    local temp_body_file=$(mktemp)
+    trap 'rm -f "$temp_body_file"' EXIT
     
     # Load context from file if provided
     local context_content=""
