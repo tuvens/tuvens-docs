@@ -76,12 +76,12 @@
 - [`tuvens-docs/shared-protocols/mobile-development/README.md`](./tuvens-docs/shared-protocols/mobile-development/README.md) (Modified: 2025-08-19, 270 lines, 8426 bytes)
 
 ### Root Level Documentation
-- [`CLAUDE-DESKTOP-AUTOMATION.md`](./CLAUDE-DESKTOP-AUTOMATION.md) (Modified: 2025-08-22, 30 lines)
+- [`CLAUDE-DESKTOP-AUTOMATION.md`](./CLAUDE-DESKTOP-AUTOMATION.md) (Modified: 2025-08-26, 44 lines)
 - [`CLAUDE.md`](./CLAUDE.md) (Modified: 2025-08-25, 189 lines)
 - [`IDEA-PIPELINE-WORKFLOW.md`](./IDEA-PIPELINE-WORKFLOW.md) (Modified: 2025-08-19, 198 lines)
 - [`ORCHESTRATOR-VALIDATION.md`](./ORCHESTRATOR-VALIDATION.md) (Modified: 2025-08-19, 204 lines)
-- [`README.md`](./README.md) (Modified: 2025-08-21, 140 lines)
+- [`README.md`](./README.md) (Modified: 2025-08-26, 150 lines)
 
 ## Documentation Statistics
-- **Total documentation files**: 224
-- **Total lines**: 32352
+- **Total documentation files**: 225
+- **Total lines**: 32588

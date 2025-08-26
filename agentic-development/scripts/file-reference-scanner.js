@@ -5,32 +5,23 @@ import path from 'path';
 import { execSync } from 'child_process';
 
 const REFERENCE_PATTERNS = [
-  // Markdown links: [text](./path/to/file.md)
+  // Markdown links: [text](./path/to/file.md) - most reliable
   /\[([^\]]*)\]\(([^)]+)\)/g,
   
-  // Load statements: Load: path/to/file.md
+  // Load statements: Load: path/to/file.md - capture full path
   /Load:\s*([^\s\n,]+)/gi,
   
-  // Agent file references: .claude/agents/name.md
-  /\.claude\/agents\/[^\s\n,)]+\.md/g,
-  
-  // Documentation paths: agentic-development/path/to/file
-  /agentic-development\/[^\s\n,)]+/g,
-  
-  // Relative script paths: ./scripts/file.sh
-  /\.\/[^\s\n,)'"]+\.(sh|js|md|json|yml|yaml)/g,
-  
-  // Import statements: import './file.js'
+  // Import statements: import './file.js' 
   /import\s+[^'"]*['"]([^'"]+)['"]/g,
   
   // Require statements: require('./file.js')
   /require\(['"]([^'"]+)['"]\)/g,
   
   // GitHub Actions workflow references
-  /uses:\s*['".]([^'"]+)['"]/g,
+  /uses:\s*['"]([^'"]+)['"]/g,
   
   // Pre-commit hook file references
-  /entry:\s*([^\s\n]+)/g
+  /entry:\s*([^\s\n]+\.(sh|py|js))/g
 ];
 
 const EXCLUDED_EXTENSIONS = [
@@ -50,6 +41,24 @@ const EXCLUDED_DIRECTORIES = [
   '.cache'
 ];
 
+// Template variable patterns that should be ignored
+const TEMPLATE_PATTERNS = [
+  // Template variables like {agent-name}, {variable-name}
+  /\{[^}]+\}/g,
+  
+  // Bash variables like $REPO, $VAR, ${VAR}
+  /\$\{?[A-Za-z_][A-Za-z0-9_]*\}?/g,
+  
+  // Environment variables in documentation
+  /\$\([A-Za-z_][A-Za-z0-9_]*\)/g,
+  
+  // Generic placeholders
+  /\b(NAME|REPO|PATH|FILE|DIR|VAR)\b/g,
+  
+  // Workflow variables
+  /\$\{\{\s*[^}]+\s*\}\}/g
+];
+
 class FileReferenceScanner {
   constructor(rootPath = process.cwd()) {
     this.rootPath = path.resolve(rootPath);
@@ -59,6 +68,7 @@ class FileReferenceScanner {
       invalidReferences: 0,
       files: {},
       brokenReferences: [],
+      templateReferences: [],
       statistics: {
         byFileType: {},
         byReferenceType: {},
@@ -121,6 +131,17 @@ class FileReferenceScanner {
     return files;
   }
 
+  isTemplateReference(referencePath) {
+    // Check if the reference contains template variables
+    for (const pattern of TEMPLATE_PATTERNS) {
+      pattern.lastIndex = 0; // Reset regex state
+      if (pattern.test(referencePath)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   extractReferences(content, filePath) {
     const references = new Set();
     const fileDir = path.dirname(filePath);
@@ -151,6 +172,14 @@ class FileReferenceScanner {
           continue;
         }
         
+        // Skip empty or whitespace-only references
+        if (!referencePath.trim()) {
+          continue;
+        }
+        
+        // Check if this is a template reference
+        const isTemplate = this.isTemplateReference(referencePath);
+        
         // Resolve relative paths
         let resolvedPath;
         if (referencePath.startsWith('./') || referencePath.startsWith('../')) {
@@ -167,7 +196,8 @@ class FileReferenceScanner {
           original: referencePath,
           resolved: resolvedPath,
           type: this.getReferenceType(referencePath, pattern),
-          line: this.getLineNumber(content, match.index)
+          line: this.getLineNumber(content, match.index),
+          isTemplate: isTemplate
         });
       }
     }
@@ -178,13 +208,16 @@ class FileReferenceScanner {
   getReferenceType(referencePath, pattern) {
     if (pattern.source.includes('\\[.*\\]\\(')) return 'markdown-link';
     if (pattern.source.includes('Load:')) return 'load-statement';
-    if (pattern.source.includes('\\.claude\\/agents')) return 'agent-file';
-    if (pattern.source.includes('agentic-development')) return 'documentation';
-    if (pattern.source.includes('\\.\\/')); return 'relative-path';
     if (pattern.source.includes('import')) return 'import-statement';
     if (pattern.source.includes('require')) return 'require-statement';
     if (pattern.source.includes('uses:')) return 'github-action';
     if (pattern.source.includes('entry:')) return 'pre-commit-hook';
+    
+    // Determine type based on path content
+    if (referencePath.includes('.claude/agents/')) return 'agent-file';
+    if (referencePath.includes('agentic-development')) return 'documentation';
+    if (referencePath.startsWith('./') || referencePath.startsWith('../')) return 'relative-path';
+    
     return 'other';
   }
 
@@ -194,83 +227,357 @@ class FileReferenceScanner {
 
   validateReference(reference) {
     try {
+      // Template references are considered valid by default
+      if (reference.isTemplate) {
+        return true;
+      }
+      
       // Check if file exists
       if (fs.existsSync(reference.resolved)) {
         return true;
       }
       
-      // Check for common extensions if none provided
-      if (!path.extname(reference.resolved)) {
-        const commonExtensions = ['.md', '.js', '.json', '.sh', '.yml', '.yaml'];
-        for (const ext of commonExtensions) {
-          if (fs.existsSync(reference.resolved + ext)) {
-            return true;
-          }
+      // Check for common variations
+      const alternatives = [
+        reference.resolved + '.md',
+        reference.resolved + '/README.md',
+        reference.resolved.replace(/\.(md|js|sh)$/, ''),
+        reference.resolved.replace(/\/index\.(md|js)$/, '')
+      ];
+      
+      for (const alt of alternatives) {
+        if (fs.existsSync(alt)) {
+          return true;
         }
       }
       
       return false;
     } catch (error) {
+      console.error(`Error validating reference: ${reference.resolved}`, error);
       return false;
     }
   }
 
   scanFile(filePath) {
     try {
-      const content = fs.readFileSync(filePath, 'utf8');
+      const content = fs.readFileSync(filePath, 'utf-8');
       const references = this.extractReferences(content, filePath);
-      const relativePath = path.relative(this.rootPath, filePath);
+      const fileExt = path.extname(filePath);
       
-      const fileResult = {
-        path: relativePath,
-        totalReferences: references.length,
-        validReferences: 0,
-        invalidReferences: 0,
-        references: []
+      // Update statistics
+      this.results.statistics.byFileType[fileExt] = (this.results.statistics.byFileType[fileExt] || 0) + references.length;
+      
+      const fileResults = {
+        references: references.length,
+        valid: 0,
+        invalid: 0,
+        template: 0,
+        details: []
       };
       
       for (const reference of references) {
-        const isValid = this.validateReference(reference);
-        
-        const referenceResult = {
-          ...reference,
-          valid: isValid,
-          relativeTo: relativePath
-        };
-        
-        fileResult.references.push(referenceResult);
-        
-        if (isValid) {
-          fileResult.validReferences++;
-          this.results.validReferences++;
-        } else {
-          fileResult.invalidReferences++;
-          this.results.invalidReferences++;
-          this.results.brokenReferences.push(referenceResult);
-        }
-        
         this.results.totalReferences++;
         
-        // Update statistics
-        const ext = path.extname(relativePath) || 'no-extension';
-        this.results.statistics.byFileType[ext] = (this.results.statistics.byFileType[ext] || 0) + 1;
-        this.results.statistics.byReferenceType[reference.type] = (this.results.statistics.byReferenceType[reference.type] || 0) + 1;
+        // Update reference type statistics
+        this.results.statistics.byReferenceType[reference.type] = 
+          (this.results.statistics.byReferenceType[reference.type] || 0) + 1;
+        
+        if (reference.isTemplate) {
+          this.results.templateReferences.push({
+            file: path.relative(this.rootPath, filePath),
+            reference: reference.original,
+            line: reference.line,
+            type: reference.type
+          });
+          fileResults.template++;
+          // Count templates as valid for coverage calculation
+          this.results.validReferences++;
+          fileResults.valid++;
+        } else if (this.validateReference(reference)) {
+          this.results.validReferences++;
+          fileResults.valid++;
+        } else {
+          this.results.invalidReferences++;
+          fileResults.invalid++;
+          
+          this.results.brokenReferences.push({
+            file: path.relative(this.rootPath, filePath),
+            reference: reference.original,
+            resolved: reference.resolved,
+            line: reference.line,
+            type: reference.type
+          });
+        }
+        
+        fileResults.details.push({
+          original: reference.original,
+          resolved: reference.resolved,
+          type: reference.type,
+          line: reference.line,
+          valid: reference.isTemplate || this.validateReference(reference),
+          isTemplate: reference.isTemplate
+        });
       }
       
-      this.results.files[relativePath] = fileResult;
+      this.results.files[path.relative(this.rootPath, filePath)] = fileResults;
       
     } catch (error) {
-      console.warn(`Warning: Could not scan file ${filePath}: ${error.message}`);
+      console.error(`Error scanning file ${filePath}:`, error.message);
     }
   }
 
-  generateCoverageBaseline() {
-    const baseline = {
+  scanTestCoverage() {
+    console.log('🧪 Scanning test coverage...');
+    
+    const scriptFiles = this.getAllFiles().filter(file => {
+      const ext = path.extname(file);
+      return ext === '.sh' || ext === '.js';
+    });
+    
+    this.testCoverage.scriptsRequiringTests = scriptFiles.map(file => 
+      path.relative(this.rootPath, file)
+    );
+    
+    for (const scriptFile of scriptFiles) {
+      const relativePath = path.relative(this.rootPath, scriptFile);
+      const hasTest = this.hasTestFile(scriptFile);
+      
+      if (hasTest) {
+        this.testCoverage.scriptsWithTests.push(relativePath);
+      } else {
+        this.testCoverage.untestedScripts.push(relativePath);
+      }
+    }
+    
+    const totalScripts = this.testCoverage.scriptsRequiringTests.length;
+    const testedScripts = this.testCoverage.scriptsWithTests.length;
+    
+    this.testCoverage.testCoveragePercentage = totalScripts > 0 
+      ? Math.round((testedScripts / totalScripts) * 100) 
+      : 100;
+    
+    console.log(`📊 Test Coverage: ${this.testCoverage.testCoveragePercentage}% (${testedScripts}/${totalScripts})`);
+  }
+
+  hasTestFile(scriptFile) {
+    const ext = path.extname(scriptFile);
+    const baseName = path.basename(scriptFile, ext);
+    const dirName = path.dirname(scriptFile);
+    
+    const testPatterns = [];
+    
+    if (ext === '.sh') {
+      // BATS test patterns
+      testPatterns.push(
+        path.join(this.rootPath, 'tests', 'unit', `${baseName}.bats`),
+        path.join(dirName, 'tests', `${baseName}.bats`),
+        path.join(dirName, `${baseName}.bats`)
+      );
+    } else if (ext === '.js') {
+      // Jest test patterns
+      testPatterns.push(
+        path.join(this.rootPath, 'tests', 'unit', `${baseName}.test.js`),
+        path.join(dirName, '__tests__', `${baseName}.test.js`),
+        path.join(dirName, `${baseName}.test.js`)
+      );
+    }
+    
+    return testPatterns.some(pattern => fs.existsSync(pattern));
+  }
+
+  async createGitHubIssues() {
+    if (!this.issueTracking.enabled) return;
+    
+    console.log('📝 Creating GitHub issues for broken references...');
+    
+    try {
+      // Group broken references by file
+      const brokenByFile = {};
+      for (const broken of this.results.brokenReferences) {
+        if (!brokenByFile[broken.file]) {
+          brokenByFile[broken.file] = [];
+        }
+        brokenByFile[broken.file].push(broken);
+      }
+      
+      for (const [file, brokenRefs] of Object.entries(brokenByFile)) {
+        const issueTitle = `Fix broken file references in ${file}`;
+        
+        // Check if issue already exists
+        const existingIssue = await this.findExistingIssue(issueTitle);
+        if (existingIssue) {
+          console.log(`📄 Issue already exists for ${file}: #${existingIssue.number}`);
+          this.issueTracking.existingIssues.set(file, existingIssue);
+          continue;
+        }
+        
+        const issueBody = this.createIssueBody(file, brokenRefs);
+        
+        try {
+          const result = execSync(`gh issue create --title "${issueTitle}" --body "${issueBody}" --label "documentation,broken-reference" --assignee @me`, {
+            encoding: 'utf-8',
+            cwd: this.rootPath
+          });
+          
+          const issueUrl = result.trim();
+          const issueNumber = issueUrl.split('/').pop();
+          
+          console.log(`✅ Created issue #${issueNumber} for ${file}`);
+          this.issueTracking.createdIssues.push({
+            file,
+            issueNumber,
+            issueUrl,
+            brokenCount: brokenRefs.length
+          });
+          
+        } catch (error) {
+          console.error(`❌ Failed to create issue for ${file}:`, error.message);
+        }
+      }
+      
+    } catch (error) {
+      console.error('❌ Error creating GitHub issues:', error.message);
+    }
+  }
+
+  async findExistingIssue(title) {
+    try {
+      const result = execSync(`gh issue list --state open --search "${title}" --json number,title`, {
+        encoding: 'utf-8',
+        cwd: this.rootPath
+      });
+      
+      const issues = JSON.parse(result);
+      return issues.find(issue => issue.title === title) || null;
+      
+    } catch (error) {
+      console.error('Error searching for existing issues:', error.message);
+      return null;
+    }
+  }
+
+  createIssueBody(file, brokenRefs) {
+    const lines = [
+      `## Broken File References in \`${file}\``,
+      '',
+      `Found ${brokenRefs.length} broken file reference(s) that need to be fixed.`,
+      '',
+      '### Broken References:',
+      ''
+    ];
+    
+    for (const ref of brokenRefs) {
+      lines.push(`- Line ${ref.line}: \`${ref.reference}\``);
+      lines.push(`  - Type: ${ref.type}`);
+      lines.push(`  - Resolved to: \`${ref.resolved}\``);
+      lines.push('');
+    }
+    
+    lines.push('### Resolution Options:');
+    lines.push('1. **Fix the path**: Update the reference to point to the correct file location');
+    lines.push('2. **Create missing file**: If the referenced file should exist, create it');
+    lines.push('3. **Remove reference**: If the reference is no longer needed, remove it');
+    lines.push('');
+    lines.push('---');
+    lines.push('*This issue was automatically generated by the file reference scanner.*');
+    
+    return lines.join('\\n').replace(/"/g, '\\"');
+  }
+
+  scan(options = {}) {
+    const {
+      verbose = false,
+      createIssues = false,
+      scanTests = true
+    } = options;
+    
+    if (verbose) {
+      console.log(`🔍 Starting file reference scan in: ${this.rootPath}`);
+    }
+    
+    this.issueTracking.enabled = createIssues;
+    
+    const files = this.getAllFiles();
+    if (verbose) {
+      console.log(`📁 Found ${files.length} files to scan`);
+    }
+    
+    for (const file of files) {
+      this.scanFile(file);
+    }
+    
+    // Calculate coverage percentage
+    this.results.statistics.coveragePercentage = this.results.totalReferences > 0
+      ? Math.round((this.results.validReferences / this.results.totalReferences) * 100)
+      : 100;
+    
+    // Scan test coverage if enabled
+    if (scanTests) {
+      this.scanTestCoverage();
+    }
+    
+    if (verbose) {
+      this.printResults();
+    }
+    
+    return this.results;
+  }
+
+  printResults() {
+    console.log('\n📊 Scan Results Summary:');
+    console.log('========================');
+    console.log(`Total References: ${this.results.totalReferences}`);
+    console.log(`Valid References: ${this.results.validReferences}`);
+    console.log(`Template References: ${this.results.templateReferences.length}`);
+    console.log(`Invalid References: ${this.results.invalidReferences}`);
+    console.log(`Coverage Percentage: ${this.results.statistics.coveragePercentage}%`);
+    
+    if (this.results.brokenReferences.length > 0) {
+      console.log(`\n❌ Broken References (${this.results.brokenReferences.length}):`);
+      for (const broken of this.results.brokenReferences.slice(0, 10)) {
+        console.log(`  ${broken.file}:${broken.line} → ${broken.reference}`);
+      }
+      if (this.results.brokenReferences.length > 10) {
+        console.log(`  ... and ${this.results.brokenReferences.length - 10} more`);
+      }
+    }
+    
+    if (this.results.templateReferences.length > 0) {
+      console.log(`\n📝 Template References (${this.results.templateReferences.length}):`);
+      for (const template of this.results.templateReferences.slice(0, 5)) {
+        console.log(`  ${template.file}:${template.line} → ${template.reference} (${template.type})`);
+      }
+      if (this.results.templateReferences.length > 5) {
+        console.log(`  ... and ${this.results.templateReferences.length - 5} more`);
+      }
+    }
+    
+    console.log('\n🧪 Test Coverage:');
+    console.log(`Scripts Requiring Tests: ${this.testCoverage.scriptsRequiringTests.length}`);
+    console.log(`Scripts With Tests: ${this.testCoverage.scriptsWithTests.length}`);
+    console.log(`Untested Scripts: ${this.testCoverage.untestedScripts.length}`);
+    console.log(`Test Coverage: ${this.testCoverage.testCoveragePercentage}%`);
+  }
+
+  getGitCommit() {
+    try {
+      return execSync('git rev-parse HEAD', { 
+        encoding: 'utf-8', 
+        cwd: this.rootPath 
+      }).trim();
+    } catch (error) {
+      return 'unknown';
+    }
+  }
+
+  generateReport(outputFile = null) {
+    const report = {
       timestamp: new Date().toISOString(),
       totalFiles: Object.keys(this.results.files).length,
       totalReferences: this.results.totalReferences,
       validReferences: this.results.validReferences,
       invalidReferences: this.results.invalidReferences,
+      templateReferences: this.results.templateReferences.length,
       coveragePercentage: this.results.statistics.coveragePercentage,
       brokenReferenceCount: this.results.brokenReferences.length,
       statistics: this.results.statistics,
@@ -285,641 +592,85 @@ class FileReferenceScanner {
       }
     };
     
-    return baseline;
-  }
-
-  getGitCommit() {
-    try {
-      return execSync('git rev-parse HEAD', { encoding: 'utf8', cwd: this.rootPath }).trim();
-    } catch (error) {
-      return 'unknown';
+    if (outputFile) {
+      fs.writeFileSync(outputFile, JSON.stringify(report, null, 2));
+      console.log(`📄 Report saved to: ${outputFile}`);
     }
-  }
-
-  // Test Coverage Detection Methods
-  isScriptFile(filePath) {
-    const ext = path.extname(filePath).toLowerCase();
-    const relativePath = path.relative(this.rootPath, filePath);
-    
-    // Skip test files themselves and exclude certain directories
-    if (relativePath.includes('test') || relativePath.includes('spec')) {
-      return false;
-    }
-    
-    if (relativePath.includes('node_modules') || relativePath.includes('.git')) {
-      return false;
-    }
-    
-    return ext === '.js' || ext === '.sh';
-  }
-
-  getExpectedTestPath(scriptPath) {
-    const relativePath = path.relative(this.rootPath, scriptPath);
-    const ext = path.extname(scriptPath);
-    const basename = path.basename(scriptPath, ext);
-    
-    // Different test patterns for different file types
-    const testPatterns = [];
-    
-    if (ext === '.sh') {
-      // BATS test patterns for shell scripts
-      testPatterns.push(`tests/unit/${basename}.bats`);
-      testPatterns.push(`tests/${basename}.bats`);
-      testPatterns.push(`test/${basename}.bats`);
-      testPatterns.push(`${path.dirname(relativePath)}/tests/${basename}.bats`);
-    } else if (ext === '.js') {
-      // Jest/Node test patterns for JavaScript files
-      testPatterns.push(`tests/unit/${basename}.test.js`);
-      testPatterns.push(`tests/${basename}.test.js`);
-      testPatterns.push(`test/${basename}.test.js`);
-      testPatterns.push(`${path.dirname(relativePath)}/tests/${basename}.test.js`);
-      testPatterns.push(`${path.dirname(relativePath)}/__tests__/${basename}.test.js`);
-    }
-    
-    return testPatterns;
-  }
-
-  hasTestFile(scriptPath) {
-    const testPatterns = this.getExpectedTestPath(scriptPath);
-    
-    for (const testPattern of testPatterns) {
-      const testPath = path.resolve(this.rootPath, testPattern);
-      if (fs.existsSync(testPath)) {
-        return { hasTest: true, testPath: testPattern };
-      }
-    }
-    
-    return { hasTest: false, expectedPaths: testPatterns };
-  }
-
-  scanTestCoverage() {
-    console.log('🧪 Scanning test coverage for scripts...');
-    
-    const allFiles = this.getAllFiles();
-    const scriptFiles = allFiles.filter(file => this.isScriptFile(file));
-    
-    console.log(`📝 Found ${scriptFiles.length} script files to check for tests`);
-    
-    for (const scriptFile of scriptFiles) {
-      const relativePath = path.relative(this.rootPath, scriptFile);
-      const testResult = this.hasTestFile(scriptFile);
-      
-      if (testResult.hasTest) {
-        this.testCoverage.scriptsWithTests.push({
-          script: relativePath,
-          testFile: testResult.testPath
-        });
-      } else {
-        this.testCoverage.untestedScripts.push({
-          script: relativePath,
-          expectedTestPaths: testResult.expectedPaths
-        });
-      }
-      
-      this.testCoverage.scriptsRequiringTests.push(relativePath);
-    }
-    
-    // Calculate test coverage percentage
-    const totalScripts = this.testCoverage.scriptsRequiringTests.length;
-    const testedScripts = this.testCoverage.scriptsWithTests.length;
-    
-    this.testCoverage.testCoveragePercentage = totalScripts > 0 
-      ? Math.round((testedScripts / totalScripts) * 100 * 100) / 100
-      : 100;
-    
-    console.log(`📈 Test Coverage: ${this.testCoverage.testCoveragePercentage}% (${testedScripts}/${totalScripts} scripts tested)`);
-  }
-
-  // GitHub Issue Management Methods
-  async enableIssueTracking() {
-    this.issueTracking.enabled = true;
-    await this.loadExistingIssues();
-  }
-
-  async loadExistingIssues() {
-    try {
-      // Load existing issues from GitHub with broken-reference label
-      const result = execSync('gh issue list --label "broken-reference" --state all --json number,title,state,body --limit 100', 
-        { encoding: 'utf8', cwd: this.rootPath });
-      
-      const issues = JSON.parse(result);
-      
-      for (const issue of issues) {
-        // Extract reference path from issue title or body
-        const referenceMatch = issue.title.match(/Fix broken reference: (.+)/) || 
-                             issue.body.match(/Reference: `([^`]+)`/);
-        
-        if (referenceMatch) {
-          const reference = referenceMatch[1];
-          this.issueTracking.existingIssues.set(reference, {
-            number: issue.number,
-            title: issue.title,
-            state: issue.state,
-            reference: reference
-          });
-        }
-      }
-      
-      console.log(`📋 Loaded ${this.issueTracking.existingIssues.size} existing broken reference issues`);
-    } catch (error) {
-      console.warn(`⚠️ Could not load existing issues: ${error.message}`);
-    }
-  }
-
-  generateIssueTitle(brokenRef) {
-    const reference = brokenRef.original;
-    const file = brokenRef.relativeTo;
-    
-    // Truncate long references for readable titles
-    const shortRef = reference.length > 50 ? reference.substring(0, 47) + '...' : reference;
-    return `Fix broken reference: ${shortRef} in ${file}`;
-  }
-
-  generateIssueBody(brokenRefs, groupedByFile = false) {
-    if (groupedByFile && brokenRefs.length > 1) {
-      // Multiple broken references in same file
-      const file = brokenRefs[0].relativeTo;
-      const references = brokenRefs.map(ref => ref.original);
-      
-      return `# Broken File References in ${file}
-
-**File**: \`${file}\`
-**Found**: ${brokenRefs.length} broken references
-
-## Broken References
-
-${brokenRefs.map(ref => `
-### ❌ \`${ref.original}\`
-- **Line**: ${ref.line}
-- **Type**: ${ref.type}
-- **Resolved Path**: \`${path.relative(this.rootPath, ref.resolved)}\`
-`).join('\n')}
-
-## Resolution Options
-
-For each broken reference, choose one of the following actions:
-
-- [ ] **Fix Path**: Update the reference to point to the correct file location
-- [ ] **Create Missing File**: Create the referenced file if it should exist
-- [ ] **Remove Reference**: Remove the reference if it's no longer needed
-- [ ] **Update Documentation**: Replace with correct reference or alternative
-
-## Verification
-
-After fixing the references:
-1. Run \`npm run validate-references\` locally to verify fixes
-2. Commit changes and push to trigger validation workflow
-3. This issue will be automatically updated when references are fixed
-
----
-*Auto-generated by File Reference Scanner*  
-*Run ID: ${process.env.GITHUB_RUN_ID || 'local'}*`;
-    } else {
-      // Single broken reference
-      const ref = brokenRefs[0];
-      
-      return `# Broken File Reference
-
-**File**: \`${ref.relativeTo}\`  
-**Line**: ${ref.line}  
-**Reference**: \`${ref.original}\`  
-**Type**: ${ref.type}  
-**Resolved Path**: \`${path.relative(this.rootPath, ref.resolved)}\`
-
-## Problem
-
-The file reference \`${ref.original}\` on line ${ref.line} of \`${ref.relativeTo}\` points to a file that does not exist.
-
-## Resolution Options
-
-Choose one of the following actions:
-
-- [ ] **Fix Path**: Update the reference to point to the correct file location
-- [ ] **Create Missing File**: Create the file \`${path.relative(this.rootPath, ref.resolved)}\` if it should exist
-- [ ] **Remove Reference**: Remove the reference if it's no longer needed
-- [ ] **Update Documentation**: Replace with correct reference or alternative
-
-## Context
-
-\`\`\`
-File: ${ref.relativeTo}
-Line: ${ref.line}
-Reference: ${ref.original}
-Type: ${ref.type}
-\`\`\`
-
-## Verification
-
-After fixing the reference:
-1. Run \`npm run validate-references\` locally to verify the fix
-2. Commit changes and push to trigger validation workflow
-3. This issue will be automatically closed when the reference is fixed
-
----
-*Auto-generated by File Reference Scanner*  
-*Run ID: ${process.env.GITHUB_RUN_ID || 'local'}*`;
-    }
-  }
-
-  async createIssue(brokenRefs, groupedByFile = false) {
-    if (!this.issueTracking.enabled) return null;
-
-    try {
-      const title = groupedByFile ? 
-        `Fix ${brokenRefs.length} broken references in ${brokenRefs[0].relativeTo}` :
-        this.generateIssueTitle(brokenRefs[0]);
-      
-      const body = this.generateIssueBody(brokenRefs, groupedByFile);
-      
-      // Create issue using GitHub CLI with proper escaping
-      const escapedTitle = title.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
-      const escapedBody = body.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
-      
-      // Use file-based approach for complex content
-      const tempBodyFile = path.join(this.rootPath, '.temp-issue-body.txt');
-      fs.writeFileSync(tempBodyFile, body);
-      
-      const command = `gh issue create --title "${escapedTitle}" --body-file "${tempBodyFile}" --label "broken-reference,documentation,automated"`;
-      
-      const result = execSync(command, { encoding: 'utf8', cwd: this.rootPath });
-      
-      // Clean up temp file
-      try {
-        fs.unlinkSync(tempBodyFile);
-      } catch (error) {
-        console.warn(`Warning: Could not remove temp file: ${error.message}`);
-      }
-      
-      const issueUrl = result.trim();
-      const issueNumber = issueUrl.split('/').pop();
-      
-      console.log(`🔧 Created issue #${issueNumber}: ${title}`);
-      
-      this.issueTracking.createdIssues.push({
-        number: issueNumber,
-        title: title,
-        url: issueUrl,
-        references: brokenRefs.map(ref => ref.original)
-      });
-      
-      return issueNumber;
-    } catch (error) {
-      console.error(`❌ Failed to create issue: ${error.message}`);
-      return null;
-    }
-  }
-
-  async updateIssue(issueNumber, brokenRefs) {
-    if (!this.issueTracking.enabled) return false;
-
-    try {
-      const comment = `## Updated Broken References
-
-**Scan Date**: ${new Date().toISOString()}  
-**Run ID**: ${process.env.GITHUB_RUN_ID || 'local'}
-
-Still finding ${brokenRefs.length} broken reference${brokenRefs.length > 1 ? 's' : ''} in this file:
-
-${brokenRefs.map(ref => `- ❌ \`${ref.original}\` (line ${ref.line})`).join('\n')}
-
-Please fix the remaining broken references listed above.`;
-
-      // Use file-based approach for complex content
-      const tempCommentFile = path.join(this.rootPath, '.temp-comment-body.txt');
-      fs.writeFileSync(tempCommentFile, comment);
-      
-      const command = `gh issue comment ${issueNumber} --body-file "${tempCommentFile}"`;
-      execSync(command, { encoding: 'utf8', cwd: this.rootPath });
-      
-      // Clean up temp file
-      try {
-        fs.unlinkSync(tempCommentFile);
-      } catch (error) {
-        console.warn(`Warning: Could not remove temp file: ${error.message}`);
-      }
-      
-      console.log(`📝 Updated issue #${issueNumber} with current broken references`);
-      
-      this.issueTracking.updatedIssues.push(issueNumber);
-      return true;
-    } catch (error) {
-      console.error(`❌ Failed to update issue #${issueNumber}: ${error.message}`);
-      return false;
-    }
-  }
-
-  async closeFixedIssues(fixedReferences) {
-    if (!this.issueTracking.enabled || fixedReferences.length === 0) return;
-
-    for (const [reference, issueInfo] of this.issueTracking.existingIssues.entries()) {
-      if (fixedReferences.includes(reference) && issueInfo.state === 'open') {
-        try {
-          const comment = `## ✅ Reference Fixed
-
-The broken reference \`${reference}\` has been fixed and is now valid.
-
-**Verification**: File reference scanner confirms this reference is working correctly.
-
-Automatically closing this issue.`;
-
-          // Use file-based approach for complex content
-          const tempCloseFile = path.join(this.rootPath, '.temp-close-comment.txt');
-          fs.writeFileSync(tempCloseFile, comment);
-          
-          const closeCommand = `gh issue close ${issueInfo.number} --comment-file "${tempCloseFile}"`;
-          execSync(closeCommand, { encoding: 'utf8', cwd: this.rootPath });
-          
-          // Clean up temp file
-          try {
-            fs.unlinkSync(tempCloseFile);
-          } catch (error) {
-            console.warn(`Warning: Could not remove temp file: ${error.message}`);
-          }
-          
-          console.log(`✅ Closed issue #${issueInfo.number} - reference fixed: ${reference}`);
-          
-          this.issueTracking.closedIssues.push(issueInfo.number);
-        } catch (error) {
-          console.error(`❌ Failed to close issue #${issueInfo.number}: ${error.message}`);
-        }
-      }
-    }
-  }
-
-  async processIssueCreation() {
-    if (!this.issueTracking.enabled || this.results.brokenReferences.length === 0) {
-      return;
-    }
-
-    console.log('🔧 Processing automatic issue creation for broken references...');
-
-    // Group broken references by file for batch processing
-    const brokenByFile = new Map();
-    
-    for (const brokenRef of this.results.brokenReferences) {
-      const file = brokenRef.relativeTo;
-      if (!brokenByFile.has(file)) {
-        brokenByFile.set(file, []);
-      }
-      brokenByFile.get(file).push(brokenRef);
-    }
-
-    // Process each file's broken references
-    for (const [file, refs] of brokenByFile.entries()) {
-      // Check if we already have an issue for this file
-      const existingIssue = Array.from(this.issueTracking.existingIssues.entries())
-        .find(([ref, issue]) => issue.title.includes(file) && issue.state === 'open');
-
-      if (existingIssue) {
-        // Update existing issue
-        await this.updateIssue(existingIssue[1].number, refs);
-      } else {
-        // Create new issue (grouped if multiple references in same file)
-        const groupedIssue = refs.length > 1;
-        await this.createIssue(refs, groupedIssue);
-      }
-    }
-
-    console.log(`🎯 Issue processing complete: ${this.issueTracking.createdIssues.length} created, ${this.issueTracking.updatedIssues.length} updated`);
-  }
-
-  async scan(includeTestCoverage = false) {
-    console.log('🔍 Starting file reference scan...');
-    
-    const files = this.getAllFiles();
-    console.log(`📁 Found ${files.length} files to scan`);
-    
-    let scannedCount = 0;
-    for (const file of files) {
-      this.scanFile(file);
-      scannedCount++;
-      
-      if (scannedCount % 50 === 0) {
-        console.log(`📊 Progress: ${scannedCount}/${files.length} files scanned`);
-      }
-    }
-    
-    // Calculate coverage percentage
-    this.results.statistics.coveragePercentage = this.results.totalReferences > 0 
-      ? Math.round((this.results.validReferences / this.results.totalReferences) * 100 * 100) / 100
-      : 100;
-    
-    console.log(`✅ Scan complete: ${this.results.totalReferences} references found`);
-    console.log(`📈 Coverage: ${this.results.statistics.coveragePercentage}%`);
-    
-    // Run test coverage scan if requested
-    if (includeTestCoverage) {
-      this.scanTestCoverage();
-    }
-
-    // Process automatic issue creation if enabled
-    if (this.issueTracking.enabled) {
-      await this.processIssueCreation();
-    }
-    
-    return this.results;
-  }
-
-  saveResults(outputPath = '.file-reference-coverage.json') {
-    const baseline = this.generateCoverageBaseline();
-    fs.writeFileSync(outputPath, JSON.stringify(baseline, null, 2));
-    console.log(`💾 Results saved to ${outputPath}`);
-    return baseline;
-  }
-
-  generateReport() {
-    const report = {
-      summary: {
-        totalFiles: Object.keys(this.results.files).length,
-        totalReferences: this.results.totalReferences,
-        validReferences: this.results.validReferences,
-        invalidReferences: this.results.invalidReferences,
-        coveragePercentage: this.results.statistics.coveragePercentage
-      },
-      brokenReferences: this.results.brokenReferences.map(ref => ({
-        file: ref.relativeTo,
-        line: ref.line,
-        reference: ref.original,
-        resolved: path.relative(this.rootPath, ref.resolved),
-        type: ref.type
-      })),
-      statistics: this.results.statistics,
-      testCoverage: this.testCoverage
-    };
     
     return report;
   }
+}
 
-  printReport() {
-    const report = this.generateReport();
+// CLI Interface
+async function main() {
+  const args = process.argv.slice(2);
+  const options = {};
+  let outputFile = null;
+  
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
     
-    console.log('\n📊 FILE REFERENCE SCAN REPORT');
-    console.log('═══════════════════════════════');
-    console.log(`📁 Files scanned: ${report.summary.totalFiles}`);
-    console.log(`🔗 Total references: ${report.summary.totalReferences}`);
-    console.log(`✅ Valid references: ${report.summary.validReferences}`);
-    console.log(`❌ Invalid references: ${report.summary.invalidReferences}`);
-    console.log(`📈 Coverage: ${report.summary.coveragePercentage}%`);
+    if (arg === '--verbose' || arg === '-v') {
+      options.verbose = true;
+    } else if (arg === '--create-issues') {
+      options.createIssues = true;
+    } else if (arg === '--no-tests') {
+      options.scanTests = false;
+    } else if (arg.startsWith('--output=')) {
+      outputFile = arg.split('=')[1];
+    } else if (arg === '--help' || arg === '-h') {
+      console.log(`
+File Reference Scanner
+=====================
+
+Usage: node file-reference-scanner.js [options]
+
+Options:
+  --verbose, -v      Show detailed output during scanning
+  --create-issues    Create GitHub issues for broken references
+  --no-tests        Skip test coverage scanning
+  --output=FILE     Save results to JSON file
+  --help, -h        Show this help message
+
+Examples:
+  node file-reference-scanner.js --verbose
+  node file-reference-scanner.js --create-issues --output=results.json
+  node file-reference-scanner.js --verbose --no-tests
+      `);
+      process.exit(0);
+    }
+  }
+  
+  const scanner = new FileReferenceScanner();
+  
+  try {
+    const results = scanner.scan(options);
+    const report = scanner.generateReport(outputFile);
     
-    if (report.brokenReferences.length > 0) {
-      console.log('\n🚨 BROKEN REFERENCES:');
-      console.log('─────────────────────');
-      report.brokenReferences.forEach(ref => {
-        console.log(`❌ ${ref.file}:${ref.line} -> ${ref.reference} (${ref.type})`);
-      });
+    // Create GitHub issues if requested
+    if (options.createIssues) {
+      await scanner.createGitHubIssues();
     }
     
-    // Test coverage reporting
-    if (report.testCoverage.scriptsRequiringTests.length > 0) {
-      console.log('\n🧪 TEST COVERAGE REPORT');
-      console.log('═══════════════════════');
-      console.log(`📝 Scripts requiring tests: ${report.testCoverage.scriptsRequiringTests.length}`);
-      console.log(`✅ Scripts with tests: ${report.testCoverage.scriptsWithTests.length}`);
-      console.log(`❌ Untested scripts: ${report.testCoverage.untestedScripts.length}`);
-      console.log(`📈 Test coverage: ${report.testCoverage.testCoveragePercentage}%`);
-      
-      if (report.testCoverage.untestedScripts.length > 0) {
-        console.log('\n🚨 UNTESTED SCRIPTS:');
-        console.log('────────────────────');
-        report.testCoverage.untestedScripts.forEach(script => {
-          console.log(`❌ ${script.script}`);
-          console.log(`   Expected test files: ${script.expectedTestPaths.slice(0, 2).join(', ')}`);
-        });
-      }
-      
-      if (report.testCoverage.scriptsWithTests.length > 0) {
-        console.log('\n✅ TESTED SCRIPTS:');
-        console.log('──────────────────');
-        report.testCoverage.scriptsWithTests.forEach(script => {
-          console.log(`✅ ${script.script} → ${script.testFile}`);
-        });
-      }
+    // Exit with appropriate code
+    if (results.invalidReferences > 0) {
+      console.log(`\n❌ Scan completed with ${results.invalidReferences} broken references`);
+      process.exit(1);
+    } else {
+      console.log(`\n✅ Scan completed successfully - all references valid`);
+      process.exit(0);
     }
     
-    console.log('\n📊 STATISTICS:');
-    console.log('─────────────');
-    console.log('By file type:');
-    Object.entries(report.statistics.byFileType).forEach(([ext, count]) => {
-      console.log(`  ${ext}: ${count}`);
-    });
-    
-    console.log('By reference type:');
-    Object.entries(report.statistics.byReferenceType).forEach(([type, count]) => {
-      console.log(`  ${type}: ${count}`);
-    });
+  } catch (error) {
+    console.error('❌ Scanner failed:', error.message);
+    if (options.verbose) {
+      console.error(error.stack);
+    }
+    process.exit(1);
   }
 }
 
-// CLI interface
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const args = process.argv.slice(2);
-  const isVerbose = args.includes('--verbose');
-  const includeTestCoverage = args.includes('--test-coverage') || args.includes('--tests');
-  const testCoverageOnly = args.includes('--test-coverage-only');
-  const createIssues = args.includes('--create-issues');
-  const outputPath = args.find(arg => arg.startsWith('--output='))?.split('=')[1] || '.file-reference-coverage.json';
-  
-  async function main() {
-    try {
-      const scanner = new FileReferenceScanner();
-      
-      // Enable issue tracking if requested
-      if (createIssues) {
-        await scanner.enableIssueTracking();
-      }
-      
-      if (testCoverageOnly) {
-        // Run only test coverage scan
-        scanner.scanTestCoverage();
-        const report = scanner.generateReport();
-        
-        console.log('\n🧪 TEST COVERAGE ONLY SCAN');
-        console.log('═══════════════════════════');
-        console.log(`📝 Scripts requiring tests: ${report.testCoverage.scriptsRequiringTests.length}`);
-        console.log(`✅ Scripts with tests: ${report.testCoverage.scriptsWithTests.length}`);
-        console.log(`❌ Untested scripts: ${report.testCoverage.untestedScripts.length}`);
-        console.log(`📈 Test coverage: ${report.testCoverage.testCoveragePercentage}%`);
-        
-        // Exit with error if untested scripts found
-        if (report.testCoverage.untestedScripts.length > 0) {
-          console.log(`\n❌ Found ${report.testCoverage.untestedScripts.length} untested scripts`);
-          if (isVerbose) {
-            report.testCoverage.untestedScripts.forEach(script => {
-              console.log(`❌ ${script.script}`);
-            });
-          }
-          process.exit(1);
-        } else {
-          console.log(`\n✅ All ${report.testCoverage.scriptsRequiringTests.length} scripts have tests`);
-          process.exit(0);
-        }
-      } else {
-        // Run file reference scan (with optional test coverage)
-        const results = await scanner.scan(includeTestCoverage);
-        
-        if (isVerbose) {
-          scanner.printReport();
-        }
-        
-        // Show issue tracking results if enabled
-        if (createIssues && (scanner.issueTracking.createdIssues.length > 0 || scanner.issueTracking.updatedIssues.length > 0)) {
-          console.log('\n🔧 ISSUE TRACKING RESULTS');
-          console.log('═════════════════════════');
-          
-          if (scanner.issueTracking.createdIssues.length > 0) {
-            console.log(`✅ Created ${scanner.issueTracking.createdIssues.length} new issues:`);
-            scanner.issueTracking.createdIssues.forEach(issue => {
-              console.log(`   🔧 Issue #${issue.number}: ${issue.title}`);
-            });
-          }
-          
-          if (scanner.issueTracking.updatedIssues.length > 0) {
-            console.log(`📝 Updated ${scanner.issueTracking.updatedIssues.length} existing issues`);
-          }
-          
-          if (scanner.issueTracking.closedIssues.length > 0) {
-            console.log(`✅ Closed ${scanner.issueTracking.closedIssues.length} fixed issues`);
-          }
-        }
-        
-        const baseline = scanner.saveResults(outputPath);
-        
-        // Check for failures
-        let hasFailures = false;
-        let failureMessage = '';
-        
-        if (results.invalidReferences > 0) {
-          hasFailures = true;
-          failureMessage += `${results.invalidReferences} broken references`;
-        }
-        
-        if (includeTestCoverage && scanner.testCoverage.untestedScripts.length > 0) {
-          hasFailures = true;
-          if (failureMessage) failureMessage += ' and ';
-          failureMessage += `${scanner.testCoverage.untestedScripts.length} untested scripts`;
-        }
-        
-        if (hasFailures) {
-          console.log(`\n❌ Found ${failureMessage}`);
-          if (createIssues) {
-            console.log(`🔧 Issues created/updated to track these problems`);
-          }
-          process.exit(1);
-        } else {
-          console.log(`\n✅ All ${results.totalReferences} references are valid`);
-          if (includeTestCoverage) {
-            console.log(`✅ All ${scanner.testCoverage.scriptsRequiringTests.length} scripts have tests`);
-          }
-          process.exit(0);
-        }
-      }
-      
-    } catch (error) {
-      console.error('❌ Scanner failed:', error.message);
-      process.exit(1);
-    }
-  }
-  
   main();
 }
 

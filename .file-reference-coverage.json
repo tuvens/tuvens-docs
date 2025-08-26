@@ -1,15 +1,16 @@
 {
-  "timestamp": "2025-08-26T17:13:02.249Z",
+  "timestamp": "2025-08-26T22:44:19.329Z",
   "totalFiles": 302,
-  "totalReferences": 1948,
-  "validReferences": 768,
+  "totalReferences": 1950,
+  "validReferences": 770,
   "invalidReferences": 1180,
-  "coveragePercentage": 39.43,
+  "templateReferences": 32,
+  "coveragePercentage": 39.49,
   "brokenReferenceCount": 1180,
   "statistics": {
     "byFileType": {
       ".md": 1479,
-      ".json": 50,
+      ".json": 52,
       ".yaml": 17,
       ".yml": 80,
       ".sh": 126,
@@ -22,11 +23,13 @@
       "relative-path": 1056,
       "load-statement": 183,
       "agent-file": 96,
-      "documentation": 613
+      "documentation": 613,
+      "markdown-link": 200,
+      "template": 32
     },
-    "coveragePercentage": 39.43
+    "coveragePercentage": 39.49
   },
-  "gitCommit": "dfdd9dbd6965b54f126e8b91fcbe79537aa86b6b",
+  "gitCommit": "6201fae",
   "testCoverage": {
     "scriptsRequiringTests": [],
     "scriptsWithTests": [],
