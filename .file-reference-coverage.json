@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-26T13:31:09.472Z",
+  "timestamp": "2025-08-26T17:13:02.249Z",
   "totalFiles": 302,
   "totalReferences": 1948,
-  "validReferences": 770,
-  "invalidReferences": 1178,
-  "coveragePercentage": 39.53,
-  "brokenReferenceCount": 1178,
+  "validReferences": 768,
+  "invalidReferences": 1180,
+  "coveragePercentage": 39.43,
+  "brokenReferenceCount": 1180,
   "statistics": {
     "byFileType": {
       ".md": 1479,
@@ -24,9 +24,9 @@
       "agent-file": 96,
       "documentation": 613
     },
-    "coveragePercentage": 39.53
+    "coveragePercentage": 39.43
   },
-  "gitCommit": "bf500c29e94e53eb77e3919bebc6d98a90da0a5b",
+  "gitCommit": "dfdd9dbd6965b54f126e8b91fcbe79537aa86b6b",
   "testCoverage": {
     "scriptsRequiringTests": [],
     "scriptsWithTests": [],

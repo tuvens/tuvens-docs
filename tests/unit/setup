@@ -11,6 +11,9 @@ export BATS_TEST_FILENAME="${BATS_TEST_FILENAME:-$(basename "${BASH_SOURCE[0]}")
 export TEST_FIXTURES_DIR="$BATS_TEST_DIRNAME/../fixtures"
 export TEST_TEMP_DIR="$BATS_TEST_DIRNAME/../temp"
 
+# Set project root for tests
+export TEST_PROJECT_ROOT="$(cd "$BATS_TEST_DIRNAME/../.." && pwd)"
+
 # Create temporary directory for test isolation
 mkdir -p "$TEST_TEMP_DIR"
 
