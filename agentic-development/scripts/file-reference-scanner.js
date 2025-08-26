@@ -8,8 +8,8 @@ const REFERENCE_PATTERNS = [
   // Markdown links: [text](./path/to/file.md) - most reliable
   /\[([^\]]*)\]\(([^)]+)\)/g,
   
-  // Load statements: Load: path/to/file.md - only these patterns
-  /Load:\s*([^\s\n,]+\.(md|js|sh|json|yml|yaml))/gi,
+  // Load statements: Load: path/to/file.md - capture full path
+  /Load:\s*([^\s\n,]+)/gi,
   
   // Import statements: import './file.js' 
   /import\s+[^'"]*['"]([^'"]+)['"]/g,
