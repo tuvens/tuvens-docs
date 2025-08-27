@@ -25,6 +25,7 @@ For power users:
 ```bash
 /start-session [agent-name] "[task-title]" "[description]"
 ```
+**Note**: In Claude Desktop, this pattern triggers the desktop setup script via iTerm2 MCP, not Claude Code's built-in command.
 
 **Examples:**
 ```bash
@@ -32,7 +33,7 @@ For power users:
 /start-session devops "Deploy Pipeline" "Set up CI/CD for staging"
 ```
 
-**Full Implementation Details**: See [start-session integration guide](../workflows/start-session-integration.md)
+**Full Implementation Details**: See [Desktop setup workflow](../scripts/setup-agent-task-desktop.sh)
 **Branching Strategy**: See [Tuvens branching strategy](../workflows/tuvens-branching-strategy.md)
 **Central Tracking**: See [central branch tracking system](../workflows/central-branch-tracking.md)
 

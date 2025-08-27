@@ -25,13 +25,19 @@ Claude Desktop will automatically:
 4. Create GitHub issue, setup worktree, and launch Claude Code
 
 ### Method 2: Direct Command
-**ANY mention of `/start-session` should trigger automation - format flexibility is important:**
+**Important Distinction:**
+- **Claude Code**: Uses the `/start-session` slash command directly
+- **Claude Desktop**: Executes the setup script via iTerm2 MCP
+
+**For Claude Desktop automation, the following patterns trigger the setup script:**
 
 ```
+# Claude Desktop recognizes these patterns and runs:
+# ./agentic-development/scripts/setup-agent-task-desktop.sh
 /start-session [agent-name] "[task-title]" "[task-description]"
 ```
 
-**Examples that ALL should work:**
+**Examples that trigger Claude Desktop automation:**
 ```
 /start-session vibe-coder "Fix Documentation" "Update API reference docs"
 /start-session react-dev UI Bug Fix
@@ -39,7 +45,7 @@ Claude Desktop will automatically:
 /start-session agent-name task description
 ```
 
-**Important**: Don't worry about perfect formatting - the system should recognize and trigger on ANY `/start-session` mention.
+**Important**: In Claude Desktop, these patterns trigger the `setup-agent-task-desktop.sh` script via iTerm2 MCP. This is different from Claude Code's built-in `/start-session` command.
 
 ## ⚡ How The Automation Works
 
@@ -49,8 +55,8 @@ When Claude Desktop sees `/start-session` or natural language patterns, it execu
 # Opens iTerm2 with descriptive name
 open_terminal name="[agent-name]-session"
 
-# Runs automation in the terminal 
-execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent-name] \"[task-title]\" \"[task-description]\""
+# Runs the desktop setup automation script 
+execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh [agent-name] \"[task-title]\" \"[task-description]\""
 ```
 
 ### What Happens Step-by-Step
@@ -59,32 +65,33 @@ execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens
 3. **Agent Prompt Generated** - Full context prompt appears in terminal
 4. **Claude Code Launches** - Ready for you to paste the prompt and begin work
 
-### 🚀 NEW: Automated /start-session Workflow
+### 🚀 Automated Session Workflow
 
-**Claude Desktop should trigger automation for ANY mention of `/start-session`**, including:
-- `/start-session [agent-name] [task-title] [task-description]` (exact format)
-- Partial formats like `/start-session agent-name task`
-- Natural language containing `/start-session` (e.g., "use /start-session to get devops working")
-- Any variation or typo in spacing/formatting
+**Claude Desktop vs Claude Code:**
+- **Claude Code**: Has a built-in `/start-session` slash command
+- **Claude Desktop**: Uses iTerm2 MCP to run `setup-agent-task-desktop.sh`
 
-**Important**: The automation is flexible - don't worry about perfect format matching. ANY mention of `/start-session` should trigger the MCP automation workflow.
+**Claude Desktop triggers automation for patterns like:**
+- `/start-session [agent-name] [task-title] [task-description]` 
+- Natural language requests mentioning specific agents
+- Any request to "use Claude Code" with an agent
 
-**Claude Desktop should automatically execute this MCP automation:**
+**Important**: Claude Desktop executes the desktop setup script, NOT Claude Code's slash command.
 
 ### 📋 Manual Fallback (If Automation Fails)
 
-If the automated `/start-session` doesn't work, use manual MCP commands:
+If the automation doesn't work, use manual MCP commands:
 
 **For any agent:**
 ```
 open_terminal name="[agent-name]-session"
-execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent-name] \"[task-title]\" \"[task-description]\""
+execute_command terminal="[agent-name]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh [agent-name] \"[task-title]\" \"[task-description]\""
 ```
 
 **Example:**
 ```
 open_terminal name="vibe-coder-session"
-execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session vibe-coder \"Documentation Fix\" \"Update API reference\""
+execute_command terminal="vibe-coder-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh vibe-coder \"Documentation Fix\" \"Update API reference\""
 ```
 
 ## Available Agents
@@ -97,6 +104,7 @@ Choose the right agent for your task:
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ## Cross-Agent Commands
 ```bash
@@ -113,14 +121,18 @@ Choose the right agent for your task:
 ## ✅ Success Indicators
 
 **You'll know the automation is working when:**
-1. Typing `/start-session [agent] "[task]" "[description]"` opens iTerm2
+1. Your request triggers iTerm2 to open automatically
 2. The terminal shows GitHub issue creation and worktree setup
 3. Claude Code launches automatically with the agent context
 4. The agent prompt appears ready to copy into Claude Code
+
+**Note**: In Claude Desktop, this happens via the `setup-agent-task-desktop.sh` script, not Claude Code's `/start-session` command
 
 **If any step fails, check the [Setup Guide](./setup-guide.md) and [Troubleshooting](./troubleshooting.md) sections.**
 
 ---
 
-*For questions about agent responsibilities or system architecture, use:*  
-`/start-session vibe-coder "System Help" "Explain [your question]"`
+*For questions about agent responsibilities or system architecture, ask:*  
+`"Get vibe-coder to help with system architecture questions in Claude Code"`
+
+*Or use the manual fallback with the desktop script if needed.*

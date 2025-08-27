@@ -5,13 +5,14 @@
 ## System Overview
 You are orchestrating a multi-agent development system where each agent has specialized responsibilities and operates in isolated Claude Code sessions.
 
-## Available Agents
+## Available Agents: `./agents/`
 - **vibe-coder** - System architecture, documentation, agent improvement
 - **react-dev** - React frontend (hi.events) 
 - **laravel-dev** - Laravel backend (hi.events)
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ## Quick Actions
 
@@ -21,10 +22,11 @@ You are orchestrating a multi-agent development system where each agent has spec
 - "Have devops handle this deployment issue"
 - "Ask react-dev to fix this UI bug"
 
-**Direct Command:**
+**Direct Command Pattern:**
 ```
 /start-session [agent-name] "[task-title]" "[description]"
 ```
+**Note**: This triggers the desktop setup script, not Claude Code's built-in command
 
 ### What Happens Automatically
 1. GitHub issue created with task details
@@ -42,13 +44,13 @@ You are orchestrating a multi-agent development system where each agent has spec
 - Repository structure: `~/Code/Tuvens/` with all repos as siblings
 - iTerm2 MCP integration active
 - GitHub CLI authenticated
-- start-session script executable
+- Desktop setup script: `./agentic-development/scripts/setup-agent-task-desktop.sh` (executable)
 
 ## Emergency Fallback
 If automation fails, use manual MCP commands:
 ```
 open_terminal name="[agent]-session"
-execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent] \"[title]\" \"[description]\""
+execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh [agent] \"[title]\" \"[description]\""
 ```
 
 ---
