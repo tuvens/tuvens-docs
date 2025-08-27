@@ -1,0 +1,252 @@
+{
+  "branches": {
+    "tuvens-docs": [
+      {
+        "name": "feature/sub-session-system-implementation",
+        "author": "tuvens",
+        "created": "2025-08-12T18:21:20.102Z",
+        "lastActivity": "2025-08-12T18:21:20.103Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/sub-session-system-implementation",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/sub-session-system-implementation",
+        "issues": "tuvens-docs#99"
+      },
+      {
+        "name": "feature/critical-directory-structure-cleanup",
+        "author": "tuvens",
+        "created": "2025-08-12T13:48:27.919Z",
+        "lastActivity": "2025-08-12T13:48:27.920Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/critical-directory-structure-cleanup",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/critical-directory-structure-cleanup",
+        "issues": "tuvens-docs#92"
+      },
+      {
+        "name": "vibe-coder/refactor/critical-directory-structure-cleanup",
+        "author": "validation-system",
+        "created": "2025-08-12T14:56:48.707Z",
+        "lastActivity": "2025-08-12T15:56:05.869Z",
+        "taskGroup": null,
+        "status": "validated",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/refactor/critical-directory-structure-cleanup",
+        "issues": [
+          "tuvens-docs#92"
+        ],
+        "validationStatus": "pre-merge-passed",
+        "prNumber": null
+      },
+      {
+        "name": "feature/directory-structure-analysis-and-reference-mapping",
+        "author": "tuvens",
+        "created": "2025-08-13T09:34:17.813Z",
+        "lastActivity": "2025-08-13T09:34:17.816Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/directory-structure-analysis-and-reference-mapping",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/directory-structure-analysis-and-reference-mapping",
+        "issues": "tuvens-docs#102"
+      },
+      {
+        "name": "feature/phase-2a---create-new-directory-structure",
+        "author": "tuvens",
+        "created": "2025-08-13T10:05:30.655Z",
+        "lastActivity": "2025-08-13T10:05:30.656Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/phase-2a---create-new-directory-structure",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2a---create-new-directory-structure",
+        "issues": "tuvens-docs#103"
+      },
+      {
+        "name": "feature/phase-2b---coordinate-reference-updates",
+        "author": "tuvens",
+        "created": "2025-08-13T10:26:56.171Z",
+        "lastActivity": "2025-08-13T10:26:56.175Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/phase-2b---coordinate-reference-updates",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2b---coordinate-reference-updates",
+        "issues": "tuvens-docs#104"
+      },
+      {
+        "name": "feature/phase-2c---execute-file-moves",
+        "author": "tuvens",
+        "created": "2025-08-13T12:54:13.968Z",
+        "lastActivity": "2025-08-13T12:54:13.971Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/phase-2c---execute-file-moves",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/phase-2c---execute-file-moves",
+        "issues": "tuvens-docs#105"
+      },
+      {
+        "name": "feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
+        "author": "tuvens",
+        "created": "2025-08-15T09:04:52.163Z",
+        "lastActivity": "2025-08-15T09:04:52.164Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-agent-prompt-generation-to-include-claudemd-loading-instruction",
+        "issues": "tuvens-docs#143"
+      },
+      {
+        "name": "feature/deploy-wiki-workflow-as-described",
+        "author": "tuvens",
+        "created": "2025-08-15T09:40:35.578Z",
+        "lastActivity": "2025-08-15T09:40:35.579Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/deploy-wiki-workflow-as-described",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/deploy-wiki-workflow-as-described",
+        "issues": "tuvens-docs#145"
+      },
+      {
+        "name": "feature/fix-critical-wiki-document-issues-from-pr-152",
+        "author": "tuvens",
+        "created": "2025-08-15T15:20:11.404Z",
+        "lastActivity": "2025-08-15T15:20:11.405Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/fix-critical-wiki-document-issues-from-pr-152",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-critical-wiki-document-issues-from-pr-152",
+        "issues": "tuvens-docs#153"
+      },
+      {
+        "name": "feature/update-phases-documentation-to-reflect-completed-status",
+        "author": "tuvens",
+        "created": "2025-08-18T13:24:36.293Z",
+        "lastActivity": "2025-08-18T13:24:36.294Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/update-phases-documentation-to-reflect-completed-status",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/update-phases-documentation-to-reflect-completed-status",
+        "issues": "tuvens-docs#154"
+      },
+      {
+        "name": "feature/fix-agent-branch-naming-in-setup-agent-tasksh-script",
+        "author": "tuvens",
+        "created": "2025-08-18T14:07:40.876Z",
+        "lastActivity": "2025-08-18T14:07:40.883Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/fix-agent-branch-naming-in-setup-agent-tasksh-script",
+        "issues": "tuvens-docs#157"
+      },
+      {
+        "name": "feature/enforce-github-comment-standards-protocol-in-agent-workflows",
+        "author": "tuvens",
+        "created": "2025-08-18T14:20:35.352Z",
+        "lastActivity": "2025-08-18T14:20:35.356Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/devops/feature/enforce-github-comment-standards-protocol-in-agent-workflows",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/enforce-github-comment-standards-protocol-in-agent-workflows",
+        "issues": "tuvens-docs#158"
+      },
+      {
+        "name": "feature/document-future-worktree-cleanup-in-wiki",
+        "author": "tuvens",
+        "created": "2025-08-18T14:50:39.571Z",
+        "lastActivity": "2025-08-18T14:50:39.577Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/document-future-worktree-cleanup-in-wiki",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/document-future-worktree-cleanup-in-wiki",
+        "issues": "tuvens-docs#161"
+      },
+      {
+        "name": "feature/address-geminis-comments-on-pr-163",
+        "author": "tuvens",
+        "created": "2025-08-18T15:10:47.558Z",
+        "lastActivity": "2025-08-18T15:10:47.561Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/feature/address-geminis-comments-on-pr-163",
+        "agent": "feature",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/feature/address-geminis-comments-on-pr-163",
+        "issues": "tuvens-docs#164"
+      },
+      {
+        "name": "vibe-coder/feature/implement-check-slash-command-for-comment-status-checking",
+        "author": "tuvens",
+        "created": "2025-08-26T13:34:25.000Z",
+        "lastActivity": "2025-08-26T14:30:00.000Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "worktrees/vibe-coder/vibe-coder/feature/implement-check-slash-command-for-comment-status-checking",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/implement-check-slash-command-for-comment-status-checking",
+        "issues": "tuvens-docs#333",
+        "prNumber": 335
+      }
+    ],
+    "improve-start-session-command-context-handling": [
+      {
+        "name": "test-agent/feature/test-task",
+        "author": "tuvens",
+        "created": "2025-08-25T16:13:38.129Z",
+        "lastActivity": "2025-08-25T16:13:38.134Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/improve-start-session-command-context-handling/worktrees/test-agent/test-agent/feature/test-task",
+        "agent": "test-agent",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/improve-start-session-command-context-handling/tree/test-agent/feature/test-task",
+        "issues": "improve-start-session-command-context-handling#TBD"
+      }
+    ],
+    "test-repo": [
+      {
+        "name": "vibe-coder/feature/test-task",
+        "author": "Test User",
+        "created": "2025-08-26T22:59:34.573Z",
+        "lastActivity": "2025-08-26T22:59:34.575Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/create-code-review-slash-command-and-qa-agent/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/test-repo/tree/vibe-coder/feature/test-task",
+        "issues": "test-repo#   Creating issue: Test Task\n123"
+      }
+    ]
+  },
+  "lastUpdated": "2025-08-26T22:59:34.575Z",
+  "generatedBy": "GitHub Actions",
+  "tuvensStrategy": "5-branch-flow"
+}

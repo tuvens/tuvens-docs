@@ -1,0 +1,115 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-08-12T18:20:20.010Z",
+  "activeSessions": {},
+  "fileLocks": {},
+  "permissionRegistry": {},
+  "lockHistory": [
+    {
+      "timestamp": "2025-08-12T18:20:20.010Z",
+      "action": "session-ended",
+      "sessionId": "vibe-coder-sub-task-1755022813976-e53f1ae8",
+      "filePath": "",
+      "details": "Dry run test completed"
+    },
+    {
+      "timestamp": "2025-08-12T18:20:13.976Z",
+      "action": "session-created",
+      "sessionId": "vibe-coder-sub-task-1755022813976-e53f1ae8",
+      "filePath": "",
+      "details": "Sub-session created for vibe-coder by --dry-run"
+    },
+    {
+      "timestamp": "2025-08-12T17:51:03.568Z",
+      "action": "session-ended",
+      "sessionId": "test-runner-sub-task-1755021054367-c9e59c68",
+      "filePath": "",
+      "details": "Test completed successfully"
+    },
+    {
+      "timestamp": "2025-08-12T17:50:54.367Z",
+      "action": "session-created",
+      "sessionId": "test-runner-sub-task-1755021054367-c9e59c68",
+      "filePath": "",
+      "details": "Sub-session created for test-runner by vibe-coder"
+    }
+  ],
+  "schema": {
+    "activeSessions": {
+      "description": "Active sub-sessions and their access permissions",
+      "structure": {
+        "sessionId": {
+          "mainAgent": "string - parent agent that started the sub-session",
+          "subAgent": "string - sub-agent identity/role",
+          "startTime": "ISO timestamp",
+          "lastActivity": "ISO timestamp",
+          "accessMode": "restricted|expanded|custom",
+          "allowedPaths": [
+            "array of file/directory paths"
+          ],
+          "deniedPaths": [
+            "array of explicitly forbidden paths"
+          ],
+          "lockAcquisitions": [
+            "array of file locks this session holds"
+          ],
+          "permissionRequests": [
+            "array of pending permission request IDs"
+          ],
+          "coordinationData": {
+            "relatedMainSession": "main agent session ID if applicable",
+            "taskScope": "description of sub-task",
+            "parentBranch": "git branch of main agent",
+            "subBranch": "git branch of sub-agent if different"
+          }
+        }
+      }
+    },
+    "fileLocks": {
+      "description": "File-level locks to prevent conflicts",
+      "structure": {
+        "filePath": {
+          "lockedBy": "sessionId that holds the lock",
+          "lockType": "read|write|exclusive",
+          "acquiredAt": "ISO timestamp",
+          "expiresAt": "ISO timestamp (optional auto-expiry)",
+          "reason": "description of why lock is needed",
+          "relatedFiles": [
+            "array of related files that should be considered"
+          ]
+        }
+      }
+    },
+    "permissionRegistry": {
+      "description": "Permission request tracking and approvals",
+      "structure": {
+        "requestId": {
+          "sessionId": "requesting sub-session",
+          "requestType": "file-access|directory-access|tool-permission",
+          "requestedResource": "path or tool name",
+          "justification": "reason for needing access",
+          "status": "pending|approved|denied|expired",
+          "requestedAt": "ISO timestamp",
+          "respondedAt": "ISO timestamp",
+          "respondedBy": "main agent or system",
+          "autoApprovalRules": [
+            "array of rules that might auto-approve"
+          ],
+          "restrictions": [
+            "array of conditions if approved"
+          ]
+        }
+      }
+    },
+    "lockHistory": {
+      "description": "Historical record of lock acquisitions and releases",
+      "structure": {
+        "timestamp": "ISO timestamp",
+        "action": "acquire|release|conflict|expire",
+        "sessionId": "session involved",
+        "filePath": "affected file",
+        "details": "additional context"
+      }
+    }
+  }
+}

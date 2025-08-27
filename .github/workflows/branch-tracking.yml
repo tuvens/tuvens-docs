@@ -1,0 +1,36 @@
+name: Central Branch Tracking
+on:
+  repository_dispatch:
+    types: [branch-created, branch-merged, branch-deleted]
+  workflow_dispatch:
+
+jobs:
+  update-tracking:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update branch tracking
+        run: |
+          node agentic-development/scripts/update-branch-tracking.js \
+            --event-type="${{ github.event.action }}" \
+            --payload='${{ toJson(github.event.client_payload) }}'
+
+      - name: Commit tracking updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add agentic-development/branch-tracking/
+          if git diff --staged --quiet; then
+            echo "No tracking changes to commit"
+          else
+            git commit -m "docs: update branch tracking - ${{ github.event.action }} from ${{ github.event.client_payload.repository }}"
+            git push
+          fi

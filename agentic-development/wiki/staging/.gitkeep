@@ -1,0 +1,5 @@
+# Keep staging directory in git
+
+This file ensures the staging directory structure is tracked in git while being empty of actual content.
+
+Staging content is temporary and cleaned up after wiki publication.

@@ -1,0 +1,48 @@
+repos:
+  - repo: local
+    hooks:
+      - id: branch-naming-check
+        name: Branch Naming Convention Check
+        entry: ./agentic-development/scripts/hooks/check-branch-naming.sh
+        language: script
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true
+
+      - id: protected-branch-check
+        name: Protected Branch Check
+        entry: ./agentic-development/scripts/hooks/check-protected-branches.sh
+        language: script
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true
+
+      - id: claude-md-validation
+        name: CLAUDE.md Validation
+        entry: ./agentic-development/scripts/hooks/validate-claude-md.sh
+        language: script
+        files: '^CLAUDE\.md$'
+        stages: [pre-commit]
+
+      - id: safety-rules-check
+        name: Safety Rules Check
+        entry: ./agentic-development/scripts/hooks/check-safety-rules.sh
+        language: script
+        stages: [pre-commit]
+        pass_filenames: true
+
+      - id: scope-protection-check
+        name: Agent Scope Protection Check
+        entry: ./agentic-development/scripts/hooks/check-scope-protection.sh
+        language: script
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+      - id: file-reference-validation
+        name: File Reference Validation
+        entry: node agentic-development/scripts/file-reference-scanner.js
+        language: system
+        files: '\.(md|js|json|yml|yaml|sh)$'
+        stages: [pre-commit]
+        pass_filenames: false

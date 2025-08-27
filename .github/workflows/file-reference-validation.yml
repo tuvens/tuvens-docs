@@ -1,0 +1,338 @@
+name: File Reference Validation
+
+on:
+  push:
+    branches: [ dev, test, stage, main ]
+    paths:
+      - '**/*.md'
+      - '**/*.js'
+      - '**/*.json'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.sh'
+      - '.claude/**'
+      - 'agentic-development/**'
+  pull_request:
+    branches: [ dev, test, stage, main ]
+    paths:
+      - '**/*.md'
+      - '**/*.js'
+      - '**/*.json'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.sh'
+      - '.claude/**'
+      - 'agentic-development/**'
+  workflow_dispatch:
+    inputs:
+      create_issue:
+        description: 'Create GitHub issue for broken references'
+        required: false
+        default: 'true'
+        type: boolean
+      coverage_threshold:
+        description: 'Minimum coverage percentage required'
+        required: false
+        default: '40'
+        type: string
+
+env:
+  NODE_VERSION: '18'
+  COVERAGE_THRESHOLD: ${{ github.event.inputs.coverage_threshold || '40' }}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  file-reference-validation:
+    name: Validate File References
+    runs-on: ubuntu-latest
+    
+    outputs:
+      coverage-percentage: ${{ steps.scan.outputs.coverage-percentage }}
+      broken-references-count: ${{ steps.scan.outputs.broken-references-count }}
+      total-references: ${{ steps.scan.outputs.total-references }}
+      should-block: ${{ steps.evaluate.outputs.should-block }}
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: |
+          npm ci --silent
+          
+      - name: 🔍 Run File Reference Scan
+        id: scan
+        run: |
+          echo "🔍 Running file reference scanner..."
+          echo "Coverage Threshold: ${{ env.COVERAGE_THRESHOLD }}%"
+          
+          # Make scanner executable
+          chmod +x agentic-development/scripts/file-reference-scanner.js
+          
+          # Run scanner with verbose output and capture results
+          if node agentic-development/scripts/file-reference-scanner.js --verbose --output=file-reference-results.json; then
+            scan_exit_code=0
+          else
+            scan_exit_code=$?
+          fi
+          
+          # Parse results from JSON file
+          if [ -f file-reference-results.json ]; then
+            coverage_percentage=$(node -e "
+              const data = require('./file-reference-results.json');
+              console.log(data.coveragePercentage || 0);
+            ")
+            
+            broken_count=$(node -e "
+              const data = require('./file-reference-results.json');
+              console.log(data.brokenReferenceCount || 0);
+            ")
+            
+            total_references=$(node -e "
+              const data = require('./file-reference-results.json');
+              console.log(data.totalReferences || 0);
+            ")
+            
+            template_count=$(node -e "
+              const data = require('./file-reference-results.json');
+              console.log(data.templateReferences || 0);
+            ")
+            
+            echo "coverage-percentage=$coverage_percentage" >> $GITHUB_OUTPUT
+            echo "broken-references-count=$broken_count" >> $GITHUB_OUTPUT
+            echo "total-references=$total_references" >> $GITHUB_OUTPUT
+            echo "template-references-count=$template_count" >> $GITHUB_OUTPUT
+            echo "scan-exit-code=$scan_exit_code" >> $GITHUB_OUTPUT
+            
+            echo "📊 Scan Results:"
+            echo "  Total References: $total_references"
+            echo "  Template References: $template_count"
+            echo "  Coverage: $coverage_percentage%"
+            echo "  Broken References: $broken_count"
+            
+          else
+            echo "❌ Scanner results file not found"
+            echo "coverage-percentage=0" >> $GITHUB_OUTPUT
+            echo "broken-references-count=999" >> $GITHUB_OUTPUT
+            echo "total-references=0" >> $GITHUB_OUTPUT
+            echo "template-references-count=0" >> $GITHUB_OUTPUT
+            echo "scan-exit-code=1" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 📊 Evaluate Results
+        id: evaluate
+        run: |
+          coverage="${{ steps.scan.outputs.coverage-percentage }}"
+          broken="${{ steps.scan.outputs.broken-references-count }}"
+          threshold="${{ env.COVERAGE_THRESHOLD }}"
+          templates="${{ steps.scan.outputs.template-references-count }}"
+          
+          should_block="false"
+          
+          echo "🔍 Evaluation:"
+          echo "  Coverage: $coverage% (threshold: $threshold%)"
+          echo "  Broken References: $broken"
+          echo "  Template References: $templates"
+          
+          # Check if we should block the merge
+          if (( broken > 0 )); then
+            echo "❌ Blocking: Found $broken broken references"
+            should_block="true"
+          elif (( $(echo "$coverage < $threshold" | bc -l) )); then
+            echo "❌ Blocking: Coverage $coverage% below threshold $threshold%"
+            should_block="true"
+          else
+            echo "✅ Validation passed: Coverage $coverage%, No broken references"
+          fi
+          
+          echo "should-block=$should_block" >> $GITHUB_OUTPUT
+          
+      - name: 📤 Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: file-reference-coverage-report-${{ github.run_number }}
+          path: |
+            file-reference-results.json
+          retention-days: 30
+          
+      - name: 💾 Update Coverage Baseline
+        if: github.ref == 'refs/heads/main' && steps.evaluate.outputs.should-block == 'false'
+        run: |
+          echo "💾 Updating coverage baseline for main branch..."
+          
+          # Copy results to baseline file
+          cp file-reference-results.json .file-reference-coverage.json
+          
+          # Commit baseline update if there are changes
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if git diff --quiet .file-reference-coverage.json; then
+            echo "📊 No changes to coverage baseline"
+          else
+            git add .file-reference-coverage.json
+            git commit -m "docs: update file reference coverage baseline [skip ci]
+            
+            Coverage: ${{ steps.scan.outputs.coverage-percentage }}%
+            References: ${{ steps.scan.outputs.total-references }}
+            Template References: ${{ steps.scan.outputs.template-references-count }}
+            
+            🤖 Generated with [Claude Code](https://claude.ai/code)
+            
+            Co-Authored-By: Claude <noreply@anthropic.com>"
+            
+            git push
+            echo "✅ Coverage baseline updated"
+          fi
+
+  create-issue:
+    name: Create Issue for Broken References
+    runs-on: ubuntu-latest
+    needs: file-reference-validation
+    if: |
+      always() && 
+      needs.file-reference-validation.outputs.broken-references-count > 0 && 
+      (github.event.inputs.create_issue == 'true' || github.event.inputs.create_issue == '')
+    
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 📥 Download Coverage Report
+        uses: actions/download-artifact@v4
+        with:
+          name: file-reference-coverage-report-${{ github.run_number }}
+          
+      - name: 🐛 Create GitHub Issue for Broken References
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Read the results file
+            const results = JSON.parse(fs.readFileSync('file-reference-results.json', 'utf8'));
+            
+            // Parse broken references from results
+            let brokenRefs = [];
+            if (fs.existsSync('file-reference-results.json')) {
+              const fullResults = JSON.parse(fs.readFileSync('file-reference-results.json', 'utf8'));
+              
+              // The scanner saves detailed results, we need to extract broken references
+              // This is a simplified extraction - in practice, we'd need the full results structure
+              brokenRefs = [`Found ${results.brokenReferenceCount || 0} broken references`];
+            }
+            
+            const issueTitle = `🔗 Broken File References Detected - ${context.ref}`;
+            const issueBody = `# Broken File References Detected
+            
+            **Branch**: \`${context.ref}\`  
+            **Commit**: \`${context.sha.substring(0, 8)}\`  
+            **Workflow Run**: [#${context.runNumber}](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            
+            ## Summary
+            - **Total References**: ${results.totalReferences || 0}
+            - **Coverage**: ${results.coveragePercentage || 0}%
+            - **Broken References**: ${results.brokenReferenceCount || 0}
+            
+            ## Broken References
+            ${brokenRefs.length > 0 ? brokenRefs.map(ref => `- ❌ ${ref}`).join('\n') : 'Details available in workflow artifacts'}
+            
+            ## Resolution Required
+            This issue was automatically created because broken file references were detected.
+            Please fix the broken references before merging to ensure documentation integrity.
+            
+            ## Next Steps
+            1. Download the coverage report artifact from the workflow run
+            2. Fix each broken reference listed above
+            3. Run \`npm run validate-references\` locally to verify fixes
+            4. Re-run the workflow or push new commits to validate
+            
+            ---
+            *Auto-generated by File Reference Validation workflow*  
+            *Repository: ${context.repo.owner}/${context.repo.repo}*`;
+            
+            // Check if similar issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'automated,file-references,broken-links'
+            });
+            
+            const existingIssue = existingIssues.data.find(issue => 
+              issue.title.includes('Broken File References Detected')
+            );
+            
+            if (existingIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `## New Broken References Detected
+                
+                **Branch**: \`${context.ref}\`  
+                **Commit**: \`${context.sha.substring(0, 8)}\`  
+                **Run**: [#${context.runNumber}](${context.payload.repository.html_url}/actions/runs/${context.runId})
+                
+                Still finding ${results.brokenReferenceCount || 0} broken references.
+                Please check the latest workflow run for updated details.`
+              });
+              
+              console.log(\`Updated existing issue #\${existingIssue.number}\`);
+            } else {
+              // Create new issue
+              const newIssue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: issueBody,
+                labels: ['automated', 'file-references', 'broken-links', 'devops']
+              });
+              
+              console.log(\`Created issue #\${newIssue.data.number}\`);
+            }
+
+  block-merge:
+    name: Block Merge if References Broken
+    runs-on: ubuntu-latest
+    needs: file-reference-validation
+    if: always()
+    
+    steps:
+      - name: 🚫 Block Merge for Broken References
+        if: needs.file-reference-validation.outputs.should-block == 'true'
+        run: |
+          echo "❌ BLOCKING MERGE: File reference validation failed"
+          echo ""
+          echo "📊 Results:"
+          echo "  Coverage: ${{ needs.file-reference-validation.outputs.coverage-percentage }}%"
+          echo "  Broken References: ${{ needs.file-reference-validation.outputs.broken-references-count }}"
+          echo "  Required Coverage: ${{ env.COVERAGE_THRESHOLD }}%"
+          echo ""
+          echo "🔧 To fix this:"
+          echo "  1. Run 'npm run validate-references' locally"
+          echo "  2. Fix all broken file references"
+          echo "  3. Commit and push your changes"
+          echo "  4. Re-run this workflow"
+          echo ""
+          exit 1
+          
+      - name: ✅ File Reference Validation Passed
+        if: needs.file-reference-validation.outputs.should-block == 'false'
+        run: |
+          echo "✅ All file references are valid!"
+          echo "📊 Coverage: ${{ needs.file-reference-validation.outputs.coverage-percentage }}%"
+          echo "🔗 References: ${{ needs.file-reference-validation.outputs.total-references }}"

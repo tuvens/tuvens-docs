@@ -1,0 +1,400 @@
+name: Branch Protection Validation
+
+on:
+  pull_request:
+    branches: [dev, test, stage, main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Branch to validate'
+        required: false
+        default: 'current'
+
+jobs:
+  validate-safety-infrastructure:
+    runs-on: ubuntu-latest
+    outputs:
+      claude-md-valid: ${{ steps.claude-validation.outputs.valid }}
+      branch-naming-valid: ${{ steps.branch-validation.outputs.valid }}
+      documentation-valid: ${{ steps.docs-validation.outputs.valid }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Validate CLAUDE.md exists and is comprehensive
+        id: claude-validation
+        run: |
+          echo "🔍 Validating CLAUDE.md safety infrastructure..."
+          
+          if [ ! -f "CLAUDE.md" ]; then
+            echo "❌ CLAUDE.md file not found"
+            echo ""
+            echo "🛡️  The CLAUDE.md file is required for repository safety."
+            echo ""
+            echo "This file should contain agent guidelines and safety rules including:"
+            echo "  • Critical Claude Code Safety Rules"
+            echo "  • Mandatory Branch Naming Conventions"
+            echo "  • Pull Request Target Branch Rules"
+            echo "  • Emergency Branch Recovery Procedures"
+            echo "  • Testing Protocol Requirements"
+            echo ""
+            echo "📖 To create CLAUDE.md, see existing examples in other repositories"
+            echo "   or refer to the branch protection documentation."
+            echo ""
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "error=CLAUDE.md file is required for repository safety" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Check for required safety sections
+          required_sections=(
+            "Critical Claude Code Safety Rules"
+            "Mandatory Branch Naming Conventions" 
+            "Pull Request Target Branch Rules"
+            "Emergency Branch Recovery Procedures"
+            "Testing Protocol Requirements"
+            "Repository-Specific Safety Rules"
+          )
+          
+          missing_sections=()
+          for section in "${required_sections[@]}"; do
+            if ! grep -q "$section" CLAUDE.md; then
+              missing_sections+=("$section")
+            fi
+          done
+          
+          if [ ${#missing_sections[@]} -gt 0 ]; then
+            echo "❌ CLAUDE.md is missing required safety sections:"
+            echo ""
+            for missing in "${missing_sections[@]}"; do
+              echo "  • $missing"
+            done
+            echo ""
+            echo "🛡️  These sections are critical for agent safety and coordination."
+            echo ""
+            echo "✅ To fix this:"
+            echo "  1. Add the missing sections to your CLAUDE.md file"
+            echo "  2. Include comprehensive safety rules for each section"
+            echo "  3. Ensure agent-specific guidelines are documented"
+            echo "  4. Test your changes with the branch-check command"
+            echo ""
+            echo "📖 See existing CLAUDE.md files for section examples and format"
+            echo ""
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "error=CLAUDE.md missing required safety sections" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          # Validate 5-branch strategy documentation
+          if ! grep -q "main ← stage ← test ← dev ← feature" CLAUDE.md; then
+            echo "❌ CLAUDE.md missing 5-branch strategy documentation"
+            echo ""
+            echo "🛡️  CLAUDE.md must document the 5-branch strategy:"
+            echo "   main ← stage ← test ← dev ← feature/*"
+            echo ""
+            echo "✅ To fix this:"
+            echo "  1. Add a section documenting the branch flow"
+            echo "  2. Specify target branches for different change types"
+            echo "  3. Include examples of proper branch targeting"
+            echo ""
+            echo "Example documentation:"
+            echo '  **MUST follow the 5-branch strategy: main ← stage ← test ← dev ← feature/***'
+            echo ""
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "error=CLAUDE.md must document the 5-branch strategy" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "✅ CLAUDE.md validation passed"
+          echo "valid=true" >> $GITHUB_OUTPUT
+
+      - name: Validate branch naming compliance
+        id: branch-validation
+        run: |
+          echo "🔍 Validating branch naming conventions..."
+          
+          # Get branch name (from PR or current)
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            branch_name="${{ github.head_ref }}"
+          else
+            branch_name="${{ github.ref_name }}"
+          fi
+          
+          echo "Branch being validated: $branch_name"
+          
+          # Check if branch follows agent naming pattern: {agent-name}/{task-type}/{descriptive-name}
+          if [[ "$branch_name" =~ ^(vibe-coder|docs-orchestrator|devops|laravel-dev|react-dev|node-dev|svelte-dev)/(feature|bugfix|docs|workflow|hotfix|refactor)/[a-z0-9-]+$ ]]; then
+            echo "✅ Branch naming validation passed: $branch_name"
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Branch name does not follow required pattern"
+            echo ""
+            echo "Current branch: $branch_name"
+            echo ""
+            echo "Required format: {agent-name}/{task-type}/{descriptive-name}"
+            echo ""
+            echo "✅ Valid agents:"
+            echo "  • vibe-coder      - System building and experimentation"
+            echo "  • docs-orchestrator - Documentation coordination"  
+            echo "  • devops          - Infrastructure and workflows"
+            echo "  • laravel-dev     - Laravel/PHP development"
+            echo "  • react-dev       - React frontend development"
+            echo "  • node-dev        - Node.js development"
+            echo "  • svelte-dev      - Svelte frontend development"
+            echo ""
+            echo "✅ Valid task types:"
+            echo "  • feature    - New functionality"
+            echo "  • bugfix     - Bug fixes"
+            echo "  • docs       - Documentation updates"
+            echo "  • workflow   - Process/workflow changes"
+            echo "  • hotfix     - Emergency fixes (targets 'stage')"
+            echo "  • refactor   - Code refactoring"
+            echo ""
+            echo "✅ Examples of correct branch names:"
+            echo "  • vibe-coder/feature/enhance-safety-system"
+            echo "  • docs-orchestrator/docs/api-reference-update"
+            echo "  • devops/workflow/branch-protection-setup"
+            echo ""
+            echo "🔧 To fix your branch name:"
+            echo "  git branch -m $branch_name {agent}/{type}/{description}"
+            echo ""
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "error=Branch name must follow pattern: {agent-name}/{task-type}/{descriptive-name}" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Validate pull request target branch
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "🔍 Validating pull request target branch..."
+          
+          source_branch="${{ github.head_ref }}"
+          target_branch="${{ github.base_ref }}"
+          
+          echo "Source: $source_branch → Target: $target_branch"
+          
+          # Check target branch rules
+          case "$source_branch" in
+            */hotfix/*)
+              if [ "$target_branch" != "stage" ]; then
+                echo "❌ Hotfix branch targeting wrong branch"
+                echo ""
+                echo "Source: $source_branch → Target: $target_branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Hotfix branches MUST target 'stage' branch only"
+                echo ""
+                echo "✅ To fix this pull request:"
+                echo "  1. Close this PR"
+                echo "  2. Create new PR targeting 'stage' branch"
+                echo "  3. Or change target branch to 'stage' if possible"
+                echo ""
+                echo "📖 See: CLAUDE.md > Pull Request Target Branch Rules"
+                exit 1
+              fi
+              ;;
+            */feature/*|*/bugfix/*|*/docs/*|*/workflow/*|*/refactor/*)
+              if [ "$target_branch" != "dev" ]; then
+                echo "❌ Branch targeting wrong destination"
+                echo ""
+                echo "Source: $source_branch → Target: $target_branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Feature/bugfix/docs/workflow/refactor branches MUST target 'dev' branch"
+                echo ""
+                echo "✅ Correct workflow:"
+                echo "  1. feature/* → dev (for review and testing)"
+                echo "  2. dev → test (for integration testing)"
+                echo "  3. test → stage (for staging validation)"
+                echo "  4. stage → main (for production deployment)"
+                echo ""
+                echo "✅ To fix this pull request:"
+                echo "  1. Change target branch to 'dev'"
+                echo "  2. Or close and create new PR targeting 'dev'"
+                echo ""
+                echo "📖 See: CLAUDE.md > Pull Request Target Branch Rules"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "⚠️ Unknown branch type, validating against general rules"
+              echo ""
+              echo "Source: $source_branch → Target: $target_branch"
+              echo ""
+              if [[ "$target_branch" == "main" || "$target_branch" == "stage" ]]; then
+                echo "❌ Direct targeting of protected branch"
+                echo ""
+                echo "🛡️  Branch Protection Rule:"
+                echo "  Direct targeting of '$target_branch' is not allowed from feature branches"
+                echo ""
+                echo "✅ Allowed targets:"
+                echo "  • feature/* → dev"
+                echo "  • hotfix/* → stage"
+                echo ""
+                echo "📖 See: CLAUDE.md > 5-Branch Strategy"
+                exit 1
+              fi
+              ;;
+          esac
+          
+          echo "✅ Pull request target validation passed"
+
+      - name: Validate documentation consistency
+        id: docs-validation
+        run: |
+          echo "🔍 Validating documentation consistency..."
+          
+          validation_errors=()
+          
+          # Check for README.md in main directories
+          main_dirs=("agentic-development" "tuvens-docs" "docs-orchestrator")
+          for dir in "${main_dirs[@]}"; do
+            if [ -d "$dir" ] && [ ! -f "$dir/README.md" ]; then
+              validation_errors+=("Missing README.md in $dir/")
+            fi
+          done
+          
+          # Validate agent configuration files exist
+          agent_configs=(".claude/agents/vibe-coder.md" ".claude/agents/docs-orchestrator.md" ".claude/agents/devops.md")
+          for config in "${agent_configs[@]}"; do
+            if [ ! -f "$config" ]; then
+              validation_errors+=("Missing agent configuration: $config")
+            fi
+          done
+          
+          # Check branch tracking system files
+          tracking_files=(
+            "agentic-development/branch-tracking/active-branches.json"
+            "agentic-development/branch-tracking/task-groups.json"
+            "agentic-development/branch-tracking/merge-log.json"
+            "agentic-development/branch-tracking/cleanup-queue.json"
+          )
+          for file in "${tracking_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              validation_errors+=("Missing branch tracking file: $file")
+            fi
+          done
+          
+          if [ ${#validation_errors[@]} -gt 0 ]; then
+            echo "❌ Documentation validation failed:"
+            printf '%s\n' "${validation_errors[@]}"
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "error=Missing required documentation files" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "✅ Documentation validation passed"
+          echo "valid=true" >> $GITHUB_OUTPUT
+
+  update-branch-tracking:
+    needs: validate-safety-infrastructure
+    if: success() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TUVENS_DOCS_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run pre-merge safety integration
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+        run: |
+          echo "🛡️ Running comprehensive pre-merge safety checks..."
+          echo "Branch context: $GITHUB_HEAD_REF → $GITHUB_BASE_REF"
+          
+          # Make scripts executable
+          chmod +x agentic-development/scripts/check-before-merge.sh agentic-development/scripts/branch-check
+          
+          # Run pre-merge safety validation
+          if npm run pre-merge; then
+            echo "✅ Pre-merge safety validation passed"
+          else
+            echo "❌ Pre-merge safety validation failed"
+            echo "This indicates critical safety issues that must be resolved"
+            exit 1
+          fi
+
+      - name: Update branch tracking for validated branch
+        run: |
+          echo "🔄 Updating branch tracking system..."
+          
+          # Extract agent name from branch
+          branch_name="${{ github.head_ref }}"
+          agent_name=$(echo "$branch_name" | cut -d'/' -f1)
+          
+          # Check if update script exists
+          if [ -f "agentic-development/scripts/update-branch-tracking.js" ]; then
+            node agentic-development/scripts/update-branch-tracking.js \
+              --event-type=validate \
+              --payload="{\"repository\":\"tuvens-docs\",\"branch\":\"$branch_name\",\"agent\":\"$agent_name\",\"pr-number\":\"${{ github.event.number }}\",\"validation-status\":\"passed\"}"
+          else
+            echo "⚠️ Branch tracking script not found, skipping update"
+          fi
+
+  report-validation-results:
+    needs: [validate-safety-infrastructure, update-branch-tracking]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report validation summary
+        run: |
+          echo "## 🛡️ Branch Protection Validation Summary"
+          echo ""
+          echo "| Component | Status |"
+          echo "|-----------|--------|"
+          echo "| CLAUDE.md Safety Rules | ${{ needs.validate-safety-infrastructure.outputs.claude-md-valid == 'true' && '✅ Pass' || '❌ Fail' }} |"
+          echo "| Branch Naming Convention | ${{ needs.validate-safety-infrastructure.outputs.branch-naming-valid == 'true' && '✅ Pass' || '❌ Fail' }} |"
+          echo "| Documentation Consistency | ${{ needs.validate-safety-infrastructure.outputs.documentation-valid == 'true' && '✅ Pass' || '❌ Fail' }} |"
+          echo ""
+          
+          if [ "${{ needs.validate-safety-infrastructure.result }}" != "success" ]; then
+            echo "❌ **Validation Failed**: This branch does not meet safety requirements."
+            echo ""
+            echo "**Required Actions:**"
+            echo "1. Review and fix the failing validation checks above"
+            echo "2. Ensure CLAUDE.md contains all required safety sections"
+            echo "3. Follow proper branch naming conventions"
+            echo "4. Maintain documentation consistency"
+            echo ""
+            echo "**Branch Protection Rules:**"
+            echo "- All branches must follow: \`{agent-name}/{task-type}/{descriptive-name}\`"
+            echo "- Feature branches must target 'dev' branch"
+            echo "- Hotfix branches must target 'stage' branch"
+            echo "- CLAUDE.md must contain comprehensive safety rules"
+            exit 1
+          else
+            echo "✅ **All Validations Passed**: Branch meets safety requirements"
+          fi
+
+  # Integration test with existing workflows
+  compatibility-check:
+    needs: validate-safety-infrastructure
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Test workflow compatibility
+        run: |
+          echo "🔍 Testing compatibility with existing workflows..."
+          
+          # Check that this workflow doesn't interfere with existing ones
+          workflow_files=(".github/workflows/notify-repositories.yml" ".github/workflows/vibe-coder-maintenance.yml" ".github/workflows/branch-tracking.yml")
+          
+          for workflow in "${workflow_files[@]}"; do
+            if [ -f "$workflow" ]; then
+              echo "✅ Compatible with: $(basename "$workflow")"
+            else
+              echo "⚠️ Workflow not found: $workflow"
+            fi
+          done
+          
+          echo "✅ Compatibility check completed"

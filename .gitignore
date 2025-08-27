@@ -1,0 +1,47 @@
+# Temporary files and directories
+*.temp
+*.tmp
+.temp/
+**/.temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Log files and directories
+logs/
+
+# Agent worktrees (isolated development environments)
+worktrees/
+
+# Sub-session workspaces (temporary agent work environments)
+sub-sessions/
+
+# Wiki repository (nested git repo for wiki content)
+agentic-development/wiki/
+
+# Node.js dependencies
+node_modules/
+
+# Agent prompt files (generated during testing)
+agentic-development/scripts/*-prompt.txt
+
+# Temporary validation logs
+validation-*.log
