@@ -5,13 +5,14 @@
 ## System Overview
 You are orchestrating a multi-agent development system where each agent has specialized responsibilities and operates in isolated Claude Code sessions.
 
-## Available Agents
+## Available Agents: `./agents/`
 - **vibe-coder** - System architecture, documentation, agent improvement
 - **react-dev** - React frontend (hi.events) 
 - **laravel-dev** - Laravel backend (hi.events)
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ## Quick Actions
 

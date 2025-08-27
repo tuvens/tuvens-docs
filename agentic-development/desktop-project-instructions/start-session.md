@@ -104,6 +104,7 @@ Choose the right agent for your task:
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ## Cross-Agent Commands
 ```bash

@@ -63,6 +63,7 @@ You coordinate these agents by:
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ### Desktop Setup Script Verification
 

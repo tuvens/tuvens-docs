@@ -60,6 +60,10 @@ Look for these patterns in user messages:
 - "devops", "dev ops", "infrastructure"
 - "deployment", "CI/CD", "ops"
 
+**qa:**
+- "qa", "QA", "quality assurance"
+- "code review", "testing", "quality control"
+
 ## 🔍 Context Extraction
 
 ### Reference Resolution
