@@ -32,6 +32,7 @@ VALID_AGENTS=(
     "vibe-coder"
     "docs-orchestrator"
     "devops"
+    "qa"
     "laravel-dev"
     "react-dev"
     "python-dev"
