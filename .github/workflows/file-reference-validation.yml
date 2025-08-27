@@ -336,4 +336,3 @@ jobs:
           echo "✅ All file references are valid!"
           echo "📊 Coverage: ${{ needs.file-reference-validation.outputs.coverage-percentage }}%"
           echo "🔗 References: ${{ needs.file-reference-validation.outputs.total-references }}"
->>>>>>> origin/dev
