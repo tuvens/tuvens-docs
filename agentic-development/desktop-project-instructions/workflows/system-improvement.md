@@ -45,13 +45,8 @@ Changes needed:
 ### 3. Implementation Phase (Claude Code)
 
 Start improvement session:
-```
-Ask: "Get vibe-coder to implement system improvements in Claude Code"
-```
-
-Or use the command pattern to trigger desktop automation:
 ```bash
-/start-session vibe-coder "System Improvement" "Implement fix for [issue]"
+/start-session vibe-coder
 ```
 
 Or manually:

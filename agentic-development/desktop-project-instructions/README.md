@@ -6,14 +6,13 @@
 
 You are orchestrating a multi-agent development system. Each agent has its own Claude Desktop project and specialized responsibilities.
 
-### Available Agents: `./agents/`
+### Available Agents
 - **vibe-coder** - System architecture, documentation, agent improvement
 - **react-dev** - React frontend (hi.events)
 - **laravel-dev** - Laravel backend (hi.events)
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
-- **qa** - Technical Quality Assurance and Code Review Leadership
 
 ### Your Role
 
@@ -28,7 +27,7 @@ You coordinate these agents by:
 ### 📋 [Project Instructions Summary](./project-instructions-summary.md)
 **[DESKTOP CONSUMPTION]** - Concise overview specifically designed for Claude Desktop orchestration
 
-### 🚀 [Session Initiation](./start-session.md)
+### 🚀 [Session Initiation](./session-initiation.md)
 Start agent sessions with natural language or `/start-session` commands. Includes automation patterns and fallback methods.
 
 ### 🔧 [Setup Guide](./setup-guide.md) 

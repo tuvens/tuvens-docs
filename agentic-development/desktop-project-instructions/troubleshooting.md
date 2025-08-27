@@ -4,14 +4,9 @@
 
 ## 🐛 Common Issues and Solutions
 
-### Important Context
-**Claude Desktop vs Claude Code:**
-- **Claude Code**: Uses the built-in `/start-session` slash command
-- **Claude Desktop**: Executes `./agentic-development/scripts/setup-agent-task-desktop.sh` via iTerm2 MCP
-
 ### If automation fails to trigger:
 1. Check repository structure: `ls ~/Code/Tuvens/` should show all repos
-2. Verify desktop setup script: `ls ~/Code/Tuvens/tuvens-docs/agentic-development/scripts/setup-agent-task-desktop.sh`
+2. Verify start-session script: `ls ~/Code/Tuvens/tuvens-docs/start-session`
 3. Test GitHub CLI: `gh repo view` should work
 4. Check iTerm MCP: Look for `iterm_mcp_server` in running processes
 
@@ -19,8 +14,7 @@
 
 **"Script not found"**: 
 - Ensure you're in `~/Code/Tuvens/tuvens-docs`
-- Verify the desktop setup script exists: `./agentic-development/scripts/setup-agent-task-desktop.sh`
-- Check execute permissions: `chmod +x ./agentic-development/scripts/setup-agent-task-desktop.sh`
+- Verify the start-session script exists and has execute permissions
 
 **"GitHub authentication failed"**: 
 - Run `gh auth login` to authenticate
@@ -43,9 +37,9 @@ ls ~/Code/Tuvens/
 # eventsdigest-ai/
 ```
 
-#### 2. Desktop Setup Script
+#### 2. Start Session Script
 ```bash
-ls ~/Code/Tuvens/tuvens-docs/agentic-development/scripts/setup-agent-task-desktop.sh
+ls ~/Code/Tuvens/tuvens-docs/start-session
 # Should exist and be executable
 ```
 
@@ -67,12 +61,6 @@ ps aux | grep iterm_mcp_server
 
 If automated workflows fail, you can manually create sessions:
 
-### Using iTerm2 MCP (Claude Desktop):
-```bash
-open_terminal name="[agent]-session"
-execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh [agent] \"[task-title]\" \"[task-description]\""
-```
-
 ### 1. Create GitHub Issue
 ```bash
 cd ~/Code/Tuvens/tuvens-docs
@@ -90,7 +78,6 @@ git checkout -b agent-name/feature/task-name
 ```bash
 claude code
 # Then manually load agent context and begin work
-# Note: In Claude Code, you can use the built-in /start-session command
 ```
 
 ## System Health Checks
@@ -107,8 +94,8 @@ gh auth status
 # Check iTerm MCP server
 ps aux | grep iterm_mcp_server
 
-# Test desktop setup script
-ls -la ~/Code/Tuvens/tuvens-docs/agentic-development/scripts/setup-agent-task-desktop.sh
+# Test start-session script
+ls -la ~/Code/Tuvens/tuvens-docs/start-session
 
 # Verify git configuration
 git config --list | grep user
@@ -118,10 +105,10 @@ git config --list | grep user
 
 If troubleshooting steps don't resolve the issue:
 
-1. **System Questions**: Ask "Get vibe-coder to help with system questions in Claude Code"
+1. **System Questions**: Use `/start-session vibe-coder "System Help" "Explain [your question]"`
 2. **Agent Issues**: Check [Agent Management](./agent-management.md) documentation
 3. **Setup Problems**: Review [Setup Guide](./setup-guide.md) for prerequisites
-4. **Session Issues**: Consult [Session Initiation Guide](./start-session.md) for alternatives
+4. **Session Issues**: Consult [Session Initiation Guide](./session-initiation.md) for alternatives
 
 ## Emergency Recovery
 

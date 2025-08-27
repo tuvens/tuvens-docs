@@ -46,10 +46,9 @@ Load: agentic-development/desktop-project-instructions/workflows/system-improvem
 
 ### DO
 - ✅ Use natural language requests for intuitive handoffs
-- ✅ Use `/start-session` pattern to trigger desktop automation
+- ✅ Use `/start-session` command for direct automation
 - ✅ Create GitHub issues for task tracking (automatic)
 - ✅ Respect agent domain authority
-- ✅ Understand Claude Desktop uses setup script, not Claude Code command
 - ✅ Load only necessary instruction files
 - ✅ Keep handoffs focused and specific
 
