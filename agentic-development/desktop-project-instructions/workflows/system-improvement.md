@@ -44,19 +44,20 @@ Changes needed:
 
 ### 3. Implementation Phase (Claude Code)
 
-Start improvement session:
-```bash
-/start-session vibe-coder
-```
+Start improvement session with natural language:
+**Pattern**: "Get vibe-coder to implement system improvement for [specific issue]"
 
-Or manually:
-```markdown
-Load: .claude/agents/vibe-coder.md
-Load: [relevant agent files to improve]
-
-Task: Implement system improvement for [specific issue]
-Plan: [improvement plan from design phase]
-```
+This triggers MCP automation that:
+1. Creates GitHub issue with improvement details
+2. Sets up git worktree for vibe-coder
+3. Launches Claude Code with context:
+   ```markdown
+   Load: .claude/agents/vibe-coder.md
+   Load: [relevant agent files to improve]
+   
+   Task: Implement system improvement for [specific issue]
+   Plan: [improvement plan from design phase]
+   ```
 
 ### 4. Testing Phase
 

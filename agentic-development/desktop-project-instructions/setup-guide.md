@@ -72,4 +72,4 @@ You coordinate these agents by:
 
 When Claude Desktop sees `/start-session` or natural language patterns, it executes iTerm2 MCP commands to trigger automation and launch Claude Code sessions.
 
-For detailed session initiation instructions, see: [Session Initiation Guide](./session-initiation.md)
+For detailed session initiation instructions, see: [Session Initiation Guide](./start-session.md)

@@ -46,7 +46,7 @@ Load: agentic-development/desktop-project-instructions/workflows/system-improvem
 
 ### DO
 - ✅ Use natural language requests for intuitive handoffs
-- ✅ Use `/start-session` command for direct automation
+- ✅ Use MCP script automation for agent sessions
 - ✅ Create GitHub issues for task tracking (automatic)
 - ✅ Respect agent domain authority
 - ✅ Load only necessary instruction files

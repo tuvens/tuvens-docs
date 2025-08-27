@@ -7,11 +7,10 @@ Agents communicate through GitHub issues using structured templates. This ensure
 ## Communication Flow
 
 ### 1. Task Assignment
-Creating agent creates GitHub issue using `/create-issue` command:
+Coordinating agent creates GitHub issue through natural language request:
 
-```bash
-/create-issue [creating-agent] [assigned-agent] [task-title] [repository]
-```
+**Example**: "Get node-dev to implement OAuth2 endpoints in tuvens-api"
+**Result**: MCP script creates GitHub issue with proper task details and agent assignment
 
 ### 2. Issue Template Structure
 
@@ -65,35 +64,33 @@ Creating agent:
 
 ## Cross-Repository Communication
 
-Use these commands for inter-repository work:
+Use natural language patterns for inter-repository work:
 
 ### Asking Questions
-```bash
-/ask-question [repository] [question]
-```
+**Pattern**: "Ask [agent] about [question] in [repository]"
+**Example**: "Ask laravel-dev how OAuth implementation handles refresh tokens in hi.events"
 
 ### Reporting Bugs
-```bash
-/report-bug [repository] [bug_description]
-```
+**Pattern**: "Get [agent] to fix [bug_description] in [repository]"
+**Example**: "Get node-dev to fix user profile endpoint returning 500 on missing avatar in tuvens-api"
 
 ### Requesting Features
-```bash
-/send-rqts [repository] [requirements_description]
-```
+**Pattern**: "Have [agent] implement [requirements_description] in [repository]"
+**Example**: "Have svelte-dev add user dashboard analytics in tuvens-client"
 
 ## Example Communication
 
-```markdown
-# CTO assigns task to node-dev
-/create-issue cto node-dev "Implement OAuth2 endpoints" tuvens-api
+**Task Assignment**:
+"Get node-dev to implement OAuth2 endpoints in tuvens-api"
+→ Creates GitHub issue, sets up worktree, launches Claude Code for node-dev
 
-# Node-dev needs clarification from laravel-dev
-/ask-question hi.events "How does your OAuth implementation handle refresh tokens?"
+**Cross-Agent Question**:
+"Ask laravel-dev how OAuth implementation handles refresh tokens in hi.events"
+→ Creates GitHub issue for laravel-dev with question context
 
-# Svelte-dev reports API bug to node-dev
-/report-bug tuvens-api "User profile endpoint returns 500 on missing avatar"
-```
+**Bug Report**:
+"Get node-dev to fix user profile endpoint returning 500 on missing avatar in tuvens-api"
+→ Creates GitHub issue with bug details and debugging context
 
 ## Best Practices
 
