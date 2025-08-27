@@ -10,21 +10,27 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `2505bf4217522f28b7974e081a5fb6a1e0892274`
-- **Commit Message**: "Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
-
-Fix: Handoff templates and wiki workflow documentation"
+- **Latest Commit**: `394d5687b15e2a7335eb3ee8a9a869225a38e011`
+- **Commit Message**: "feat: iTerm2 workflow improvements for agent visibility and status tracking"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T20:27:04+01:00
+- **Timestamp**: 2025-08-27T21:46:56+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
+#### `* 394d568` - feat: iTerm2 workflow improvements for agent visibility and status tracking
+- **Date**: 2025-08-27 21:46
+- **Author**: tuvens
+- **Refs**: HEAD -> dev, origin/dev
+
+#### `* e2af918` - docs: auto-update documentation [skip ci]
+- **Date**: 2025-08-27 19:27
+- **Author**: GitHub Actions
+
 #### `*   2505bf4` - Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 - **Date**: 2025-08-27 20:27
 - **Author**: tuvens
-- **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
@@ -149,18 +155,6 @@ Fix: Handoff templates and wiki workflow documentation"
 - **Date**: 2025-08-27 12:59
 - **Author**: GitHub Actions
 
-#### `* bab9874` - Fix Claude Desktop Instructions Workflow References (#354)
-- **Date**: 2025-08-27 13:59
-- **Author**: tuvens
-
-#### `* 7e9a154` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-27 11:29
-- **Author**: GitHub Actions
-
-#### `*   c6df44f` - Merge pull request #353 from tuvens/vibe-coder/fix/abc-command-workflow-alignment
-- **Date**: 2025-08-27 12:28
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
@@ -168,6 +162,7 @@ Fix: Handoff templates and wiki workflow documentation"
 - `docs`: 8 commits
 - `rollback`: 1 commits
 - `refactor`: 1 commits
+- `feat`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
