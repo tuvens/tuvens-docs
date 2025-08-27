@@ -108,7 +108,7 @@ If troubleshooting steps don't resolve the issue:
 1. **System Questions**: Use `/start-session vibe-coder "System Help" "Explain [your question]"`
 2. **Agent Issues**: Check [Agent Management](./agent-management.md) documentation
 3. **Setup Problems**: Review [Setup Guide](./setup-guide.md) for prerequisites
-4. **Session Issues**: Consult [Session Initiation Guide](./session-initiation.md) for alternatives
+4. **Session Issues**: Consult [Session Initiation Guide](./start-session.md) for alternatives
 
 ## Emergency Recovery
 

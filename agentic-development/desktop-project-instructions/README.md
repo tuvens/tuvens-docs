@@ -24,7 +24,7 @@ You coordinate these agents by:
 
 ## Quick Reference
 
-### 🚀 [Session Initiation](./session-initiation.md)
+### 🚀 [Session Initiation](./start-session.md)
 Start agent sessions with natural language or `/start-session` commands. Includes automation patterns and fallback methods.
 
 ### 🔧 [Setup Guide](./setup-guide.md) 
