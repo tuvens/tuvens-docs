@@ -226,6 +226,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/enhanced-iterm-window-management",
         "issues": []
+      },
+      {
+        "name": "vibe-coder/fix/iterm2-workflow-improvements",
+        "author": "tuvens",
+        "created": "2025-08-27T20:36:35Z",
+        "lastActivity": "2025-08-27T20:49:20.199Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/fix/iterm2-workflow-improvements",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -259,7 +272,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-27T20:15:08.624Z",
+  "lastUpdated": "2025-08-27T20:49:20.200Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
