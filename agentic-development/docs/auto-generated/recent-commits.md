@@ -10,30 +10,44 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `f9853d716f48ecbdec11f149360a27c39d299e08`
-- **Commit Message**: "fix: correct JavaScript template literal syntax in GitHub Actions workflow (#367)
+- **Latest Commit**: `622781c60813b707f2ec5bbfbfa2a7640e5078f8`
+- **Commit Message**: "Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Fixed SyntaxError in file-reference-validation.yml by removing unnecessary
-backslash escaping from template literals in console.log statements at
-lines 294 and 305. This resolves the 'Invalid or unexpected token' error
-in the github-script action during issue creation.
-
-Fixes #366
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+Fix: Correct project-instructions-summary.md with accurate Claude Desktop workflow"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T19:01:50+01:00
+- **Timestamp**: 2025-08-27T19:30:06+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* f9853d7` - fix: correct JavaScript template literal syntax in GitHub Actions workflow (#367)
-- **Date**: 2025-08-27 19:01
+#### `*   622781c` - Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Date**: 2025-08-27 19:30
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * cd222ec
+- **Author**: 2025-08-27 19:29
+- **Refs**: fix: correct project-instructions-summary.md with accurate Claude Desktop workflow
+
+#### `* ` - GitHub Actions
+- **Date**:  f0a5a08
+- **Author**: 2025-08-27 18:02
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  f9853d7
+- **Author**: 2025-08-27 19:01
+- **Refs**: fix: correct JavaScript template literal syntax in GitHub Actions workflow (#367)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
 
 #### `* fabc657` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-27 15:17
@@ -162,28 +176,12 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Date**: /  
 - **Author**: 
 
-#### `* 8245e15` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-26 23:41
-- **Author**: GitHub Actions
-
-#### `* 78256d8` - feat: implement comprehensive /code-review slash command and QA agent system (#336)
-- **Date**: 2025-08-27 00:40
-- **Author**: tuvens
-
-#### `* 38d88e0` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-26 23:22
-- **Author**: GitHub Actions
-
-#### `*   68eae53` - Merge pull request #346 from tuvens/devops/feature/fix-file-reference-scanner-false-positives
-- **Date**: 2025-08-27 00:21
-- **Author**: tuvens
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `docs`: 9 commits
-- `feat`: 5 commits
-- `fix`: 4 commits
+- `fix`: 5 commits
+- `feat`: 4 commits
 - `rollback`: 1 commits
 - `resolve`: 1 commits
 
@@ -192,10 +190,10 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 9 changes
 - `package-lock.json`: 3 changes
-- `agentic-development/branch-tracking/active-branches.json`: 3 changes
+- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 3 changes
 - `.claude/commands/abc.md`: 3 changes
 - `agentic-development/desktop-project-instructions/workflows/system-improvement.md`: 2 changes
 - `agentic-development/desktop-project-instructions/troubleshooting.md`: 2 changes
 - `agentic-development/desktop-project-instructions/setup-guide.md`: 2 changes
-- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 2 changes
+- `agentic-development/desktop-project-instructions/natural-language-patterns.md`: 2 changes
 

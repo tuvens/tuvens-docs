@@ -4,21 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: f9853d716f48ecbdec11f149360a27c39d299e08
-- **Commit Message**: fix: correct JavaScript template literal syntax in GitHub Actions workflow (#367)
+- **Commit SHA**: 622781c60813b707f2ec5bbfbfa2a7640e5078f8
+- **Commit Message**: Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Fixed SyntaxError in file-reference-validation.yml by removing unnecessary
-backslash escaping from template literals in console.log statements at
-lines 294 and 305. This resolves the 'Invalid or unexpected token' error
-in the github-script action during issue creation.
-
-Fixes #366
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>
+Fix: Correct project-instructions-summary.md with accurate Claude Desktop workflow
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T19:01:50+01:00
+- **Timestamp**: 2025-08-27T19:30:06+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
