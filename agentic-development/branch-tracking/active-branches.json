@@ -213,6 +213,19 @@
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/implement-check-slash-command-for-comment-status-checking",
         "issues": "tuvens-docs#333",
         "prNumber": 335
+      },
+      {
+        "name": "vibe-coder/feature/enhanced-iterm-window-management",
+        "author": "tuvens",
+        "created": "2025-08-27T19:50:06Z",
+        "lastActivity": "2025-08-27T20:15:08.624Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/enhanced-iterm-window-management",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -246,7 +259,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-26T22:59:34.575Z",
+  "lastUpdated": "2025-08-27T20:15:08.624Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
