@@ -50,7 +50,7 @@ echo "1️⃣ Branch Protection Validation"
 echo "--------------------------------"
 
 # Run our existing branch-check tool with environment variables
-if GITHUB_HEAD_REF="$GITHUB_HEAD_REF" GITHUB_BASE_REF="$GITHUB_BASE_REF" ./scripts/branch-check > /tmp/branch-check-output 2>&1; then
+if GITHUB_HEAD_REF="$GITHUB_HEAD_REF" GITHUB_BASE_REF="$GITHUB_BASE_REF" ./agentic-development/scripts/branch-check > /tmp/branch-check-output 2>&1; then
     echo -e "${GREEN}✅ Branch protection checks passed${NC}"
     VALIDATION_RESULTS+=("branch-protection:passed")
 else

@@ -213,6 +213,21 @@
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/implement-check-slash-command-for-comment-status-checking",
         "issues": "tuvens-docs#333",
         "prNumber": 335
+      },
+      {
+        "name": "devops/feature/fix-claude-desktop-instructions-workflow-references",
+        "author": "validation-system",
+        "created": "2025-08-27T11:26:39.115Z",
+        "lastActivity": "2025-08-27T11:26:39.116Z",
+        "taskGroup": null,
+        "status": "validating",
+        "worktree": null,
+        "agent": "pre-merge-check",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/fix-claude-desktop-instructions-workflow-references",
+        "issues": [],
+        "validationStatus": "pre-merge-passed",
+        "prNumber": null
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -246,7 +261,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-26T22:59:34.575Z",
-  "generatedBy": "GitHub Actions",
+  "lastUpdated": "2025-08-27T11:26:39.116Z",
+  "generatedBy": "Branch Protection Workflow",
   "tuvensStrategy": "5-branch-flow"
 }
