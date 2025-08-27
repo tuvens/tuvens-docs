@@ -291,7 +291,7 @@ jobs:
                 Please check the latest workflow run for updated details.`
               });
               
-              console.log(\`Updated existing issue #\${existingIssue.number}\`);
+              console.log(`Updated existing issue #${existingIssue.number}`);
             } else {
               // Create new issue
               const newIssue = await github.rest.issues.create({
@@ -302,7 +302,7 @@ jobs:
                 labels: ['automated', 'file-references', 'broken-links', 'devops']
               });
               
-              console.log(\`Created issue #\${newIssue.data.number}\`);
+              console.log(`Created issue #${newIssue.data.number}`);
             }
 
   block-merge:
