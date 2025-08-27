@@ -38,14 +38,15 @@ Actual: [what happens instead]
 ## Handoff Methods
 
 ### For Active Issues
-```bash
-/resolve-issue [issue-number]
-```
+Use natural language to request debugging:
 
-This will:
-- Load issue details
-- Determine complexity
-- Route to appropriate agent/workflow
+**Pattern**: "Get [appropriate-agent] to debug [issue description]"
+**Example**: "Get node-dev to debug the 500 error on user profile updates"
+
+**Result**: 
+- Creates GitHub issue with debugging context
+- Sets up agent session with issue details
+- Routes to appropriate specialist agent
 
 ### Manual Debug Session
 ```markdown

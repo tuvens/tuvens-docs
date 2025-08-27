@@ -44,16 +44,18 @@ Determine primary agent based on core work:
 - Cross-cutting → `vibe-coder` coordinates
 
 ### 3. Create Structured Task
-```bash
-/create-issue [your-agent] [assigned-agent] "[Feature Name]" [repository]
-```
+Use natural language to request agent session:
+
+**Pattern**: "Get [assigned-agent] to implement [Feature Name] in [repository]"
+**Example**: "Get node-dev to implement user authentication API in tuvens-api"
 
 ## Claude Code Session Template
 
 ### Automated Start
-```bash
-/start-session [agent-name]
-```
+Use natural language pattern to trigger MCP automation:
+
+**Pattern**: "Get [agent-name] to handle this feature implementation"
+**Result**: MCP script creates GitHub issue, sets up worktree, launches Claude Code
 
 ### Manual Start Template
 ```markdown
@@ -102,15 +104,13 @@ Begin by checking the branch tracking context, then create the worktree and revi
 For features spanning multiple services:
 
 ### 1. Create Parent Issue
-```bash
-/create-issue cto cto "Feature: [Name]" tuvens-docs
-```
+**Natural Language**: "Create a coordination issue for [Feature Name] implementation"
+**Result**: Creates tracking issue in tuvens-docs for coordination
 
 ### 2. Create Sub-tasks
-```bash
-/create-issue cto node-dev "API: [Feature] endpoints" tuvens-api
-/create-issue cto svelte-dev "UI: [Feature] components" tuvens-client
-```
+**API Implementation**: "Get node-dev to implement [Feature] API endpoints in tuvens-api"
+**UI Implementation**: "Get svelte-dev to build [Feature] UI components in tuvens-client"
+**Result**: Each request creates separate GitHub issues and agent sessions
 
 ### 3. Coordination Template
 ```markdown
