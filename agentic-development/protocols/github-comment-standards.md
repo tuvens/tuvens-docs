@@ -79,6 +79,7 @@ The following agent names are registered and valid for use:
 - **vibe-coder** - System Orchestrator and coordination authority
 - **docs-orchestrator** - Documentation management and organization
 - **devops** - Infrastructure, deployment, and CI/CD workflows
+- **qa** - Technical Quality Assurance and Code Review Leadership
 
 #### Development Agents
 - **laravel-dev** - Laravel/PHP backend development
