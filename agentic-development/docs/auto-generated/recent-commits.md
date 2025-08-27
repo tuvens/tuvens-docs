@@ -10,24 +10,58 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `622781c60813b707f2ec5bbfbfa2a7640e5078f8`
-- **Commit Message**: "Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Latest Commit**: `f1facdc1481336640938d6d03b6f22b7be5f3536`
+- **Commit Message**: "Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Fix: Correct project-instructions-summary.md with accurate Claude Desktop workflow"
+Fix: Systematic cleanup of desktop-project-instructions folder inaccuracies"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T19:30:06+01:00
+- **Timestamp**: 2025-08-27T20:01:40+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `*   622781c` - Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
-- **Date**: 2025-08-27 19:30
+#### `*   f1facdc` - Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Date**: 2025-08-27 20:01
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * e4d2280
+- **Author**: 2025-08-27 19:59
+- **Refs**: fix: correct workflow files and handoff templates - remove fake command references
+
+#### `` - tuvens
+- **Date**:  * e718bd1
+- **Author**: 2025-08-27 19:52
+- **Refs**: fix: correct README.md inaccuracies and missing agents
+
+#### `` - tuvens
+- **Date**:  * b37cf73
+- **Author**: 2025-08-27 19:48
+- **Refs**: refactor: rename session-initiation.md to start-session.md and update all references
+
+#### `` - tuvens
+- **Date**:  * 4c73ca4
+- **Author**: 2025-08-27 19:45
+- **Refs**: cleanup: remove redundant project-instructions-summary.md and references
+
+#### `* ` - GitHub Actions
+- **Date**:  0d4992d
+- **Author**: 2025-08-27 18:30
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  622781c
+- **Author**: 2025-08-27 19:30
+- **Refs**: Merge pull request #370 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+
+#### `` - 
+- **Date**: | 
 - **Author**: 
 
 #### `` - tuvens
@@ -134,66 +168,26 @@ Fix: Correct project-instructions-summary.md with accurate Claude Desktop workfl
 - **Author**: 2025-08-27 10:24
 - **Refs**: feat: implement /ABC slash command for task completion pressure (#351)
 
-#### `* ` - GitHub Actions
-- **Date**:  7754476
-- **Author**: 2025-08-27 09:23
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:    181d87b
-- **Author**: 2025-08-27 10:22
-- **Refs**: Merge pull request #350 from tuvens/devops/feature/create-qa-agent-file-in-claude-code-agents-directory
-
-#### `` - 
-- **Date**:    
-- **Author**: 
-
-#### `` - 2025-08-27 10:17
-- **Date**:  * 
-- **Author**:  c6255fd
-- **Refs**: tuvens|feat: register QA agent in validation system|
-
-#### `` - 2025-08-27 10:09
-- **Date**:  * 
-- **Author**:  192347e
-- **Refs**: tuvens|feat: add QA agent file to Claude Code agents directory|
-
-#### `` - 
-- **Date**: / /  
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * b813379
-- **Author**: 2025-08-27 10:30
-- **Refs**: fix: align ABC command with multi-agent worktree workflow
-
-#### `` - tuvens
-- **Date**:  * 44378bf
-- **Author**: 2025-08-27 10:21
-- **Refs**: feat: implement /ABC slash command for task completion pressure
-
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 9 commits
-- `fix`: 5 commits
-- `feat`: 4 commits
+- `docs`: 8 commits
+- `fix`: 7 commits
 - `rollback`: 1 commits
 - `resolve`: 1 commits
+- `refactor`: 1 commits
+- `feat`: 1 commits
+- `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 9 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 9 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 9 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 8 changes
+- `agentic-development/desktop-project-instructions/README.md`: 5 changes
+- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 4 changes
 - `package-lock.json`: 3 changes
-- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 3 changes
-- `.claude/commands/abc.md`: 3 changes
-- `agentic-development/desktop-project-instructions/workflows/system-improvement.md`: 2 changes
-- `agentic-development/desktop-project-instructions/troubleshooting.md`: 2 changes
-- `agentic-development/desktop-project-instructions/setup-guide.md`: 2 changes
-- `agentic-development/desktop-project-instructions/natural-language-patterns.md`: 2 changes
+- `agentic-development/desktop-project-instructions/workflows/system-improvement.md`: 3 changes
+- `agentic-development/desktop-project-instructions/troubleshooting.md`: 3 changes
+- `agentic-development/desktop-project-instructions/setup-guide.md`: 3 changes
+- `agentic-development/desktop-project-instructions/handoff-templates.md`: 3 changes
 
