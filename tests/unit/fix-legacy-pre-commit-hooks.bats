@@ -23,7 +23,20 @@ setup() {
         local temp_functions=$(mktemp)
         
         # Extract only function definitions safely
-        awk '/^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{flag=1} flag{print} /^\}$/{if(flag) {flag=0; print ""}}' "$SCRIPT_UNDER_TEST" > "$temp_functions"
+        awk '
+        /^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{
+            flag=1; braces=1; print; next
+        } 
+        flag {
+            print
+            # Count braces to track nesting
+            gsub(/[^{]/, "", $0); braces += length($0)
+            gsub(/[^}]/, "", $0); braces -= length($0)
+            if (braces <= 0) {
+                flag=0; braces=0; print ""
+            }
+        }
+        ' "$SCRIPT_UNDER_TEST" > "$temp_functions"
         
         # Also extract variable definitions needed by functions
         grep '^[A-Z_]*=' "$SCRIPT_UNDER_TEST" >> "$temp_functions" || true
