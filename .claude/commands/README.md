@@ -1,11 +1,12 @@
 # Claude Code Commands Directory
 
-This directory contains 9 slash commands that extend Claude Code functionality for the Tuvens ecosystem. These commands provide specialized workflows for cross-repository coordination, development tasks, and project management.
+This directory contains 10 slash commands that extend Claude Code functionality for the Tuvens ecosystem. These commands provide specialized workflows for cross-repository coordination, development tasks, and project management.
 
 ## Quick Reference
 
 | Command | Purpose | Usage |
 |---------|---------|--------|
+| [`/abc`](abc.md) | ABC task completion pressure system | `/abc [optional-task-context]` |
 | [`/ask-question`](ask-question.md) | Ask questions about another repository | `/ask-question <repository> <question>` |
 | [`/create-issue`](create-issue.md) | Create GitHub issues with agent workflows | `/create-issue <agent> <assigned-agent> <title> <repo>` |
 | [`/push`](push.md) | Push changes following branching strategy | `/push <commit-message>` |
@@ -111,6 +112,22 @@ Analyze and resolve GitHub issues with proper closure, documentation, and workfl
 ### 📋 Task Management
 
 Commands for managing development tasks, issues, and agent coordination:
+
+#### [`/abc`](abc.md)
+ABC (Always Be Closing) task completion pressure system that provides structured checklists and applies appropriate pressure to close out tasks and merge PRs.
+
+**When to use:**
+- Tasks are sitting idle without clear next steps
+- Need structured guidance on what to do to complete work
+- Applying pressure to move work toward completion
+- Ensuring quality standards while maintaining momentum
+
+**Features:**
+- Three-phase completion checklist (Code Quality, Integration, Delivery)
+- Pressure level assessment (High/Medium/Low)
+- Next step identification with specific actions
+- Quality gate enforcement (TDD, DRY, KISS principles)
+- Safety rule compliance validation
 
 #### [`/create-issue`](create-issue.md)
 Create GitHub issues with proper agent workflow templates and lifecycle management for coordinated development.
