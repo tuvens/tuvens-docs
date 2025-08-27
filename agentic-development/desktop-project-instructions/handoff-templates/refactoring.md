@@ -41,16 +41,16 @@ Refactoring goals:
 
 ## Handoff Methods
 
-### Automated (Recommended)
-```bash
-/refactor-code [target-path]
-```
+### Natural Language (Recommended)
+Use natural language to request refactoring:
 
-This will:
-- Analyze the code structure
-- Identify improvement opportunities
-- Determine if agent workflow needed
-- Create appropriate session
+**Pattern**: "Get [appropriate-agent] to refactor [target-path/description]"
+**Example**: "Get node-dev to refactor the user authentication logic in tuvens-api"
+
+**Result**:
+- Creates GitHub issue with refactoring context
+- Sets up agent session with current code analysis
+- Routes to appropriate domain specialist
 
 ### Manual Refactoring Session
 ```markdown
