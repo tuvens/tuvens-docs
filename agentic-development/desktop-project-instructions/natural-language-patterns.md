@@ -2,6 +2,14 @@
 
 **Pattern Recognition Guide for Claude Desktop**
 
+## 📋 Important Context
+
+**Claude Desktop vs Claude Code Workflows:**
+- **Claude Code**: Has a built-in `/start-session` slash command
+- **Claude Desktop**: Uses iTerm2 MCP to execute `./agentic-development/scripts/setup-agent-task-desktop.sh`
+
+This guide helps Claude Desktop recognize when users want to trigger agent automation via natural language.
+
 ## 🎯 Intent Recognition Patterns
 
 ### Primary Trigger Phrases
@@ -130,8 +138,10 @@ Could you clarify what specific task or issue they should focus on?
 Once intent is confirmed, trigger the automation:
 ```bash
 open_terminal name="[agent]-session"
-execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./start-session [agent] \"[task-title]\" \"[context-description]\""
+execute_command terminal="[agent]-session" command="cd ~/Code/Tuvens/tuvens-docs && ./agentic-development/scripts/setup-agent-task-desktop.sh [agent] \"[task-title]\" \"[context-description]\""
 ```
+
+**Note**: This uses the Claude Desktop setup script, not Claude Code's built-in `/start-session` command.
 
 ## 🔄 Fallback Behavior
 

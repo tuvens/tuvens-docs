@@ -27,7 +27,7 @@ You coordinate these agents by:
 ### 📋 [Project Instructions Summary](./project-instructions-summary.md)
 **[DESKTOP CONSUMPTION]** - Concise overview specifically designed for Claude Desktop orchestration
 
-### 🚀 [Session Initiation](./session-initiation.md)
+### 🚀 [Session Initiation](./start-session.md)
 Start agent sessions with natural language or `/start-session` commands. Includes automation patterns and fallback methods.
 
 ### 🔧 [Setup Guide](./setup-guide.md) 
