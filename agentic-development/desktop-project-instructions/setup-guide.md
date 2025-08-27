@@ -63,25 +63,13 @@ You coordinate these agents by:
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
-- **qa** - Technical Quality Assurance and Code Review Leadership
-
-### Desktop Setup Script Verification
-
-Ensure the desktop setup script is available and executable:
-```bash
-ls -la ~/Code/Tuvens/tuvens-docs/agentic-development/scripts/setup-agent-task-desktop.sh
-# Should show: -rwxr-xr-x (executable)
-```
 
 ## Claude Desktop Automated Handoff
 
 **[DESKTOP] - This file is loaded by Claude Desktop projects for orchestration**
 
-### Important Distinction: Claude Desktop vs Claude Code
+**Claude Desktop should automatically execute this MCP automation:**
 
-**Claude Code**: Has a built-in `/start-session` slash command
-**Claude Desktop**: Executes `./agentic-development/scripts/setup-agent-task-desktop.sh` via iTerm2 MCP
+When Claude Desktop sees `/start-session` or natural language patterns, it executes iTerm2 MCP commands to trigger automation and launch Claude Code sessions.
 
-When Claude Desktop recognizes handoff patterns (natural language or command-style requests), it executes iTerm2 MCP commands to trigger the desktop setup script and launch Claude Code sessions.
-
-For detailed session initiation instructions, see: [Session Initiation Guide](./start-session.md)
+For detailed session initiation instructions, see: [Session Initiation Guide](./session-initiation.md)
