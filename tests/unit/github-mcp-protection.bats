@@ -30,18 +30,9 @@ setup() {
         awk '
         /^readonly / { print; next }
         /^[A-Z_]*=/ { print; next }
-        /^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{
-            flag=1; braces=1; print; next
-        } 
-        flag {
-            print
-            # Count braces to track nesting
-            gsub(/[^{]/, "", $0); braces += length($0)
-            gsub(/[^}]/, "", $0); braces -= length($0)
-            if (braces <= 0) {
-                flag=0; braces=0; print ""
-            }
-        }
+        /^[a-zA-Z_][a-zA-Z0-9_]*\(\) \{/{flag=1} 
+        flag{print} 
+        /^\}$/{if(flag) {flag=0; print ""}}
         ' "$SCRIPT_UNDER_TEST" > "$temp_functions"
         
         # Source the extracted functions
