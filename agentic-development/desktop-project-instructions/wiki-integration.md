@@ -11,6 +11,54 @@ The Tuvens system includes comprehensive wiki integration for publishing documen
 **Wiki Access**: https://github.com/tuvens/tuvens-docs/wiki  
 **Workflow Documentation**: `agentic-development/wiki/`
 
+## Special Wiki Workflow
+
+⚠️ **Important**: The GitHub MCP cannot directly access wiki repositories because the GitHub API doesn't have endpoints for wiki-type repos. Therefore, wiki documentation requires a special 3-step workflow:
+
+### Step 1: Standard Agent Session Setup
+Use natural language to start a wiki documentation session:
+
+**Natural Language Examples:**
+```
+"Create wiki documentation for API endpoints"  
+"Have vibe-coder document the branching strategy"
+"Create comprehensive wiki guide for new developers"
+"Document the authentication system in the wiki"
+```
+
+**What Happens:**
+1. Claude Desktop uses MCP to run `setup-agent-task-desktop.sh`
+2. Creates GitHub issue with wiki task details
+3. Sets up git worktree with proper branch naming: `vibe-coder/wiki/[descriptive-name]`
+4. Launches Claude Code in new iTerm2 window with wiki task prompt
+
+### Step 2: Content Delivery via GitHub MCP
+**Claude Desktop's Role:**
+1. **Identify the branch** created by the setup script
+2. **Use GitHub MCP** to add wiki content files to the branch
+3. **Place files** in the `agentic-development/wiki/staging/` directory
+4. **Commit files** to the branch so Claude Code can access them
+
+**File Structure:**
+```
+agentic-development/wiki/staging/
+├── [topic]-content.md          # Main wiki content
+├── [topic]-metadata.json       # Wiki metadata (category, title, etc.)
+└── assets/                     # Any images or files
+    └── [topic]-*.png
+```
+
+### Step 3: Claude Code Wiki Publication
+**Claude Code's Role:**
+1. **Check for files** in the staging directory (may need to wait 1-2 minutes)
+2. **Read content** from the staging files
+3. **Access GitHub wiki** directly (Claude Code can access wikis)
+4. **Publish content** to appropriate wiki location
+5. **Clean up** staging files from the branch
+6. **Update issue** with completion status
+
+**Important**: The Claude Code prompt includes instructions to wait and check again if files aren't immediately present.
+
 ## When to Create Wiki Content
 
 ✅ **System Architecture**: Design patterns, technical specifications, system overviews  
@@ -19,39 +67,6 @@ The Tuvens system includes comprehensive wiki integration for publishing documen
 ✅ **User Guides**: Getting started documentation, tutorials, how-to guides  
 ✅ **Reference Documentation**: API references, configuration guides, technical specs  
 ✅ **Protocol Standards**: Safety rules, quality standards, compliance procedures  
-
-## Direct Wiki Creation Process
-
-### Using Claude Desktop Natural Language
-Simply tell Claude Desktop what wiki content you need:
-
-**Natural Language Examples:**
-```
-"Create wiki documentation for API endpoints"
-"Have vibe-coder document the branching strategy"
-"Create comprehensive wiki guide for new developers"
-"Document the authentication system in the wiki"
-```
-
-**Claude Desktop Response:**
-```
-I understand you want wiki documentation for [topic]. 
-Should I set up a Claude Code session with:
-- Agent: vibe-coder
-- Task: Create Wiki Documentation for [topic]
-- Context: [details]
-
-Would you like me to proceed? [Yes/No]
-```
-
-### Automated Claude Code Workflow
-When you confirm, Claude Desktop automatically:
-
-1. **Creates GitHub Issue** - Documents the wiki task with proper labels
-2. **Sets Up Git Worktree** - Isolated branch with proper naming: `vibe-coder/wiki/[descriptive-name]`
-3. **Launches Claude Code** - Pre-loaded with context and ready to create content
-4. **Direct Wiki Publication** - Content is created directly in GitHub wiki format
-5. **Pull Request Creation** - Minimal changes to main repository, wiki content published directly
 
 ## Wiki Content Categories
 
@@ -88,7 +103,7 @@ When using Claude app on phone:
 1. **Draft content** using natural language conversation
 2. **Use desktop Claude Desktop** to convert drafts to wiki format
 3. **Say**: *"Convert this mobile draft to wiki documentation for [topic]"*
-4. **Automatic processing** through the standard Claude Code workflow
+4. **Automatic processing** through the standard 3-step workflow above
 
 ## Quality Standards
 
@@ -100,10 +115,22 @@ When using Claude app on phone:
 - **Maintenance Info**: Clear ownership and update procedures
 
 ### Review Process
-- **Automated Quality Check**: Built-in validation during Claude Code session
-- **Direct Publication**: Content published immediately to GitHub wiki
+- **Staging Validation**: Content reviewed in staging before publication
+- **Claude Code Publication**: Content published to GitHub wiki
 - **Category Organization**: Automatic wiki navigation structure updates
 - **Link Validation**: Working references and cross-wiki navigation
+
+## Workflow Summary
+
+```
+Natural Language Request (Claude Desktop)
+    ↓
+Agent Session Setup (MCP Script)
+    ↓  
+Content Delivery (GitHub MCP → Branch)
+    ↓
+Wiki Publication (Claude Code → GitHub Wiki)
+```
 
 ## Quick Access
 
@@ -112,11 +139,10 @@ When using Claude app on phone:
 - **Start Wiki Work**: Use natural language in Claude Desktop
 - **Agent for Wiki Tasks**: vibe-coder (specialized in documentation)
 
-### Example Requests
+### Example Complete Workflow
 ```
-Natural Language → Claude Desktop → Claude Code → Published Wiki
-
-"Document the API authentication system" → Automatic wiki creation
-"Create troubleshooting guide for deployment" → Direct wiki publication  
-"Explain the agent coordination patterns" → Comprehensive wiki documentation
+1. "Document the API authentication system" → Claude Desktop
+2. Claude Desktop: Sets up vibe-coder session + adds content to branch
+3. Claude Code: Finds content in staging, publishes to wiki
+4. Result: Published wiki documentation
 ```
