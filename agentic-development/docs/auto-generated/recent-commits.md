@@ -10,24 +10,48 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `f1facdc1481336640938d6d03b6f22b7be5f3536`
-- **Commit Message**: "Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Latest Commit**: `2505bf4217522f28b7974e081a5fb6a1e0892274`
+- **Commit Message**: "Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Fix: Systematic cleanup of desktop-project-instructions folder inaccuracies"
+Fix: Handoff templates and wiki workflow documentation"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T20:01:40+01:00
+- **Timestamp**: 2025-08-27T20:27:04+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `*   f1facdc` - Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
-- **Date**: 2025-08-27 20:01
+#### `*   2505bf4` - Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Date**: 2025-08-27 20:27
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
 #### `` - 
 - **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 7b3e617
+- **Author**: 2025-08-27 20:22
+- **Refs**: fix: update wiki workflow with correct 3-step process
+
+#### `` - tuvens
+- **Date**:  * 81ca4e9
+- **Author**: 2025-08-27 20:08
+- **Refs**: fix: remove fake command references from handoff templates
+
+#### `* ` - GitHub Actions
+- **Date**:  8dbdb1c
+- **Author**: 2025-08-27 19:02
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  f1facdc
+- **Author**: 2025-08-27 20:01
+- **Refs**: Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+
+#### `` - 
+- **Date**: | 
 - **Author**: 
 
 #### `` - tuvens
@@ -137,46 +161,13 @@ Fix: Systematic cleanup of desktop-project-instructions folder inaccuracies"
 - **Date**: 2025-08-27 12:28
 - **Author**: tuvens
 
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  *   ffeb586
-- **Author**: 2025-08-27 12:26
-- **Refs**: resolve: merge conflicts - preserve improved ABC workflow alignment
-
-#### `` - 
-- **Date**:  
-- **Author**:   
-
-#### `` - 
-- **Date**:  
-- **Author**: /  
-
-#### `` - 
-- **Date**: /
-- **Author**:    
-
-#### `* ` - GitHub Actions
-- **Date**:  c12caf5
-- **Author**: 2025-08-27 09:25
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  37e3de4
-- **Author**: 2025-08-27 10:24
-- **Refs**: feat: implement /ABC slash command for task completion pressure (#351)
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
+- `fix`: 8 commits
 - `docs`: 8 commits
-- `fix`: 7 commits
 - `rollback`: 1 commits
-- `resolve`: 1 commits
 - `refactor`: 1 commits
-- `feat`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)

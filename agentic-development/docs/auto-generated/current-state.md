@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: f1facdc1481336640938d6d03b6f22b7be5f3536
-- **Commit Message**: Merge pull request #371 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Commit SHA**: 2505bf4217522f28b7974e081a5fb6a1e0892274
+- **Commit Message**: Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Fix: Systematic cleanup of desktop-project-instructions folder inaccuracies
+Fix: Handoff templates and wiki workflow documentation
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T20:01:40+01:00
+- **Timestamp**: 2025-08-27T20:27:04+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
