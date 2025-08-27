@@ -13,19 +13,21 @@ You are orchestrating a multi-agent development system. Each agent has its own C
 - **svelte-dev** - Svelte frontend (tuvens-client)
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
+- **qa** - Quality assurance, technical QA, tester
+- **codehooks-dev** - CodeHooks development agent
 
 ### Your Role
 
 You coordinate these agents by:
 1. Analyzing tasks to determine the appropriate agent
-2. Creating structured handoffs to Claude Code
+2. Using MCP to run setup scripts for Claude Code handoffs
 3. Managing inter-agent communication via GitHub issues
-4. Recognizing Claude Desktop to Claude Code handoff patterns
+4. Using natural language to trigger automated agent session creation
 
 ## Quick Reference
 
 ### 🚀 [Session Initiation](./start-session.md)
-Start agent sessions with natural language or `/start-session` commands. Includes automation patterns and fallback methods.
+Start agent sessions with natural language patterns. Claude uses MCP to run setup scripts that handle GitHub issue creation, worktree setup, and Claude Code launch.
 
 ### 🔧 [Setup Guide](./setup-guide.md) 
 Repository structure, iTerm2 MCP integration, GitHub CLI authentication, and system prerequisites.
@@ -41,7 +43,7 @@ For complex tasks that require extensive analysis, planning, or have specific im
 
 ### Context Comment Pattern
 
-After creating an issue with `/start-session`, add comprehensive context using this standardized format:
+After creating an agent session, add comprehensive context using this standardized format:
 
 ```markdown
 👤 **Identity**: [your-agent-name] (coordinating agent)
@@ -107,7 +109,7 @@ gh issue comment [issue-number] --body "👤 **Identity**: vibe-coder (coordinat
 ## Detailed Documentation
 
 ### 📋 [Agent Management](./agent-management.md)
-- Starting agent sessions with `/start-session`
+- Starting agent sessions with MCP script automation
 - Task routing by technology, repository, and type
 - Automated worktree creation and branch mapping
 - Manual session creation methods
@@ -133,19 +135,7 @@ gh issue comment [issue-number] --body "👤 **Identity**: vibe-coder (coordinat
 ### 🔍 [Natural Language Patterns](./natural-language-patterns.md)
 Intent recognition guide for natural language agent triggers.
 
-## Cross-Agent Commands
-```bash
-# Create task for another agent
-/create-issue [from-agent] [to-agent] "[Title]" [repository]
-
-# Resolve GitHub issues
-/resolve-issue [issue-number]
-
-# Ask questions across repositories  
-/ask-question [repository] "[Question]"
-```
-
 ---
 
-*For questions about agent responsibilities or system architecture, use:*  
-`/start-session vibe-coder "System Help" "Explain [your question]"`
+*For questions about agent responsibilities or system architecture, request:*  
+"Get vibe-coder to explain [your question]"
