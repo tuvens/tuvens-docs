@@ -251,8 +251,8 @@ validate_files() {
     
     echo -e "$validated_files"
     if [[ -n "$invalid_files" ]]; then
-        echo "⚠️  Warning: Some files not found:"
-        echo -e "$invalid_files"
+        echo "⚠️  Warning: Some files not found:" >&2
+        echo -e "$invalid_files" >&2
     fi
 }
 
@@ -266,20 +266,20 @@ create_github_issue() {
     local success_criteria="$6"
     
     # Create enhanced issue body using temporary file
-    local temp_body_file=$(mktemp)
-    trap 'rm -f "$temp_body_file"' EXIT
+    local temp_body_file
+    temp_body_file=$(mktemp)
     
     # Load context from file if provided
     local context_content=""
     if [[ -n "$context_file" && -f "$context_file" ]]; then
-        echo "📄 Loading context from: $context_file"
+        echo "📄 Loading context from: $context_file" >&2
         context_content=$(cat "$context_file")
     fi
     
     # Validate files if provided
     local validated_files=""
     if [[ -n "$files_to_examine" ]]; then
-        echo "📁 Validating file references..."
+        echo "📁 Validating file references..." >&2
         validated_files=$(validate_files "$files_to_examine")
     fi
     
@@ -342,8 +342,8 @@ EOF
 *Generated with Claude Code automation*
 EOF
     
-    # Create GitHub issue
-    echo "   Creating issue: $task_title"
+    # Create GitHub issue (send status to stderr to avoid interfering with return value)
+    echo "   Creating issue: $task_title" >&2
     local issue_url
     issue_url=$(gh issue create \
         --title "$task_title" \
@@ -356,20 +356,21 @@ EOF
     
     # Security and robustness validation for github_issue
     if [[ -z "$github_issue" ]]; then
-        echo "❌ ERROR: Failed to extract GitHub issue number from URL: $issue_url"
-        rm -f "$temp_body_file"
+        echo "❌ ERROR: Failed to extract GitHub issue number from URL: $issue_url" >&2
+        [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
         return 1
     fi
     
     # Additional security validation: ensure github_issue contains only digits
     if ! [[ "$github_issue" =~ ^[0-9]+$ ]]; then
-        echo "❌ ERROR: Invalid GitHub issue number format: $github_issue"
-        echo "   Issue number must contain only digits for security"
-        rm -f "$temp_body_file"
+        echo "❌ ERROR: Invalid GitHub issue number format: $github_issue" >&2
+        echo "   Issue number must contain only digits for security" >&2
+        [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
         return 1
     fi
     
-    rm -f "$temp_body_file"
+    # Clean up temp file
+    [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
     echo "✅ Created GitHub issue #$github_issue" >&2
     echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$github_issue" >&2
     
