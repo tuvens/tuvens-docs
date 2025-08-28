@@ -19,6 +19,7 @@
 **Load Before:**
 - [github-comment-standards.md](./github-comment-standards.md) - Universal communication format
 - [agent-checkin-validation.md](./agent-checkin-validation.md) - Session start procedures
+- [vt-principle-enforcement.md](./vt-principle-enforcement.md) - Claim verification requirements
 - [file-scope-management.md](./file-scope-management.md) - Resource conflict prevention
 
 **Load With:**
@@ -66,7 +67,17 @@ This directory contains the comprehensive implementation of agent coordination p
 - Common conflict patterns and solutions
 - Timeline coordination and resource management
 
-#### 4. Emergency Response Procedures
+#### 4. V/T Principle Enforcement
+**File**: [`vt-principle-enforcement.md`](vt-principle-enforcement.md)  
+**Purpose**: Verify, don't Trust - Agent claim verification system  
+**Key Features**:
+- Independent verification requirements for all agent claims
+- Evidence-based communication standards
+- Cross-agent validation protocols
+- QA agent V/T integration procedures
+- Verification challenge and response templates
+
+#### 5. Emergency Response Procedures
 **File**: [`emergency-response-procedures.md`](emergency-response-procedures.md)  
 **Purpose**: Crisis management and violation response system  
 **Key Features**:
@@ -131,14 +142,16 @@ flowchart TD
 ### For Agents
 1. **Always start with check-in**: Use the agent-checkin-validation protocol
 2. **Use proper comment format**: Follow github-comment-standards for all interactions
-3. **Declare file scope clearly**: Prevent conflicts with file-scope-management
-4. **Follow emergency procedures**: Respond appropriately to violation alerts
+3. **Apply V/T principle**: Verify all claims with evidence, never trust without proof
+4. **Declare file scope clearly**: Prevent conflicts with file-scope-management
+5. **Follow emergency procedures**: Respond appropriately to violation alerts
 
 ### For Vibe-coder (System Orchestrator)
 1. **Validate all check-ins**: Use response templates from protocols
 2. **Monitor comment compliance**: Enforce identity standards consistently
-3. **Detect and resolve conflicts**: Use file-scope-management procedures
-4. **Respond to emergencies**: Follow emergency-response-procedures by level
+3. **Enforce V/T principle**: Monitor agent claim verification compliance
+4. **Detect and resolve conflicts**: Use file-scope-management procedures
+5. **Respond to emergencies**: Follow emergency-response-procedures by level
 
 ### For System Integration
 1. **Operational Flow**: Agents should typically follow the sequence: Check-in → Comment standards → File scope → Emergency response
