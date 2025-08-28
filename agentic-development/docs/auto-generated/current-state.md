@@ -4,10 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: f8a2ca867970a850552119b1c0cd87998c289fe8
-- **Commit Message**: feat: immediate fix script for iTerm2 window titles with status tracking
+- **Commit SHA**: e191a4fa722ac314f125447e0b6f515794412093
+- **Commit Message**: Merge pull request #396 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+
+fix: systematic cleanup of desktop-project-instructions folder
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T21:47:49+01:00
+- **Timestamp**: 2025-08-28T11:38:27+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive

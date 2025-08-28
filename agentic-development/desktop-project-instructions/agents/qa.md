@@ -139,9 +139,14 @@ pytest-cov --cov-report=html --cov-report=term-missing
 ## Starting QA Agent Sessions
 
 ### For Code Reviews
-```bash
-/code-review qa <#PR> [#issue] [--context=file]
+Use natural language to request GitHub PR reviews:
 ```
+"Review PR #[number] for code quality and test coverage"
+"Get qa agent to review this pull request for technical standards"
+"Conduct comprehensive code review on PR #[number]"
+```
+
+Claude Desktop uses GitHub MCP commands to access PRs, files, and comments directly.
 
 ### Manual Session Start
 ```markdown

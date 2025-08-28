@@ -10,38 +10,78 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `f8a2ca867970a850552119b1c0cd87998c289fe8`
-- **Commit Message**: "feat: immediate fix script for iTerm2 window titles with status tracking"
+- **Latest Commit**: `e191a4fa722ac314f125447e0b6f515794412093`
+- **Commit Message**: "Merge pull request #396 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+
+fix: systematic cleanup of desktop-project-instructions folder"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-27T21:47:49+01:00
+- **Timestamp**: 2025-08-28T11:38:27+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* f8a2ca8` - feat: immediate fix script for iTerm2 window titles with status tracking
-- **Date**: 2025-08-27 21:47
+#### `*   e191a4f` - Merge pull request #396 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+- **Date**: 2025-08-28 11:38
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
 
-#### `* d1f1e2a` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-27 20:47
-- **Author**: GitHub Actions
-
-#### `* 394d568` - feat: iTerm2 workflow improvements for agent visibility and status tracking
-- **Date**: 2025-08-27 21:46
-- **Author**: tuvens
-
-#### `* e2af918` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-27 19:27
-- **Author**: GitHub Actions
-
-#### `*   2505bf4` - Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
-- **Date**: 2025-08-27 20:27
-- **Author**: tuvens
-
 #### `` - 
 - **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * 8f6023f
+- **Author**: 2025-08-27 21:35
+- **Refs**: fix: resolve unbound variable errors in setup-agent-task-desktop.sh
+
+#### `` - tuvens
+- **Date**:  * 87c5cdf
+- **Author**: 2025-08-27 20:48
+- **Refs**: fix: reframe GitHub MCP commands and remove fake slash commands
+
+#### `* ` - GitHub Actions
+- **Date**:  727faea
+- **Author**: 2025-08-28 09:37
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  0850495
+- **Author**: 2025-08-28 10:37
+- **Refs**: Fix unbound variables in setup-agent-task-desktop-temp.sh
+
+#### `* ` - GitHub Actions
+- **Date**:  e32525b
+- **Author**: 2025-08-27 20:48
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  f8a2ca8
+- **Author**: 2025-08-27 21:47
+- **Refs**: feat: immediate fix script for iTerm2 window titles with status tracking
+
+#### `* ` - GitHub Actions
+- **Date**:  d1f1e2a
+- **Author**: 2025-08-27 20:47
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  394d568
+- **Author**: 2025-08-27 21:46
+- **Refs**: feat: iTerm2 workflow improvements for agent visibility and status tracking
+
+#### `* ` - GitHub Actions
+- **Date**:  e2af918
+- **Author**: 2025-08-27 19:27
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  2505bf4
+- **Author**: 2025-08-27 20:27
+- **Refs**: Merge pull request #372 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
+
+#### `` - 
+- **Date**: | 
 - **Author**: 
 
 #### `` - tuvens
@@ -121,59 +161,24 @@
 - **Date**: /  
 - **Author**: 
 
-#### `* fabc657` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-27 15:17
-- **Author**: GitHub Actions
-
-#### `* 4df9ef0` - fix: remove merge conflict marker from GitHub Actions workflow (#365)
-- **Date**: 2025-08-27 16:16
-- **Author**: tuvens
-
-#### `* 067cbac` - docs: auto-update documentation [skip ci]
-- **Date**: 2025-08-27 15:01
-- **Author**: GitHub Actions
-
-#### `*   ba04e8b` - Merge pull request #363 from tuvens/devops/feature/fix-critical-cicd-npm-dependency-sync-failures
-- **Date**: 2025-08-27 16:00
-- **Author**: tuvens
-
-#### `` - 
-- **Date**:   
-- **Author**: 
-
-#### `` - tuvens
-- **Date**:  * 5bebd2e
-- **Author**: 2025-08-27 15:43
-- **Refs**: fix: resync package-lock.json to resolve CI/CD npm dependency issues
-
-#### `* ` - GitHub Actions
-- **Date**:  b4ac4e7
-- **Author**: 2025-08-27 14:39
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `` - 
-- **Date**: /  
-- **Author**: 
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
 - `fix`: 8 commits
 - `docs`: 8 commits
 - `feat`: 2 commits
-- `rollback`: 1 commits
 - `refactor`: 1 commits
 - `cleanup`: 1 commits
 
 ### Most Active Files (Last 25 commits)
 - `agentic-development/docs/auto-generated/recent-commits.md`: 8 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 8 changes
 - `agentic-development/docs/auto-generated/current-state.md`: 8 changes
-- `agentic-development/desktop-project-instructions/README.md`: 4 changes
-- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 3 changes
-- `package-lock.json`: 2 changes
-- `agentic-development/desktop-project-instructions/workflows/system-improvement.md`: 2 changes
-- `agentic-development/desktop-project-instructions/troubleshooting.md`: 2 changes
-- `agentic-development/desktop-project-instructions/setup-guide.md`: 2 changes
-- `agentic-development/desktop-project-instructions/handoff-templates.md`: 2 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 7 changes
+- `agentic-development/desktop-project-instructions/README.md`: 3 changes
+- `agentic-development/desktop-project-instructions/start-session.md`: 2 changes
+- `agentic-development/desktop-project-instructions/project-instructions-summary.md`: 2 changes
+- `agentic-development/wiki/claude-desktop-project-instructions.md`: 1 changes
+- `agentic-development/solutions/iterm2-workflow-improvements.md`: 1 changes
+- `agentic-development/scripts/shared-functions.sh`: 1 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 1 changes
 

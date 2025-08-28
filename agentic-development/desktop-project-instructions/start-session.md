@@ -98,17 +98,19 @@ Choose the right agent for your task:
 - **node-dev** - Node.js backend (tuvens-api)
 - **devops** - Infrastructure and deployment
 
-## Cross-Agent Commands
-```bash
-# Create task for another agent
-/create-issue [from-agent] [to-agent] "[Title]" [repository]
+## GitHub Integration via MCP
 
-# Resolve GitHub issues
-/resolve-issue [issue-number]
+Claude Desktop can directly interact with GitHub repositories using MCP commands:
 
-# Ask questions across repositories  
-/ask-question [repository] "[Question]"
+### Creating Issues
+Use natural language to create GitHub issues:
 ```
+"Create a GitHub issue for [task description] in [repository]"
+"Log this bug as a GitHub issue in tuvens-api"
+"Create an issue to track this feature request"
+```
+
+Claude Desktop uses GitHub MCP commands to create, assign, and manage issues directly.
 
 ## ✅ Success Indicators
 
