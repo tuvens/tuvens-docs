@@ -4,12 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 08504951e117eba61e991a348bb1d75d7192d3ff
-- **Commit Message**: Fix unbound variables in setup-agent-task-desktop-temp.sh
+- **Commit SHA**: e191a4fa722ac314f125447e0b6f515794412093
+- **Commit Message**: Merge pull request #396 from tuvens/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder
 
-Resolves unbound variable errors CONTEXT_CONTENT and VALIDATED_FILES that were preventing agent session creation
+fix: systematic cleanup of desktop-project-instructions folder
 - **Author**: tuvens
-- **Timestamp**: 2025-08-28T10:37:05+01:00
+- **Timestamp**: 2025-08-28T11:38:27+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
