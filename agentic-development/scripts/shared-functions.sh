@@ -378,6 +378,136 @@ EOF
     echo "$github_issue"
 }
 
+# Function to create GitHub issue WITH STATUS LABELS (enhanced version)
+create_github_issue_with_labels() {
+    local agent_name="$1"
+    local task_title="$2" 
+    local task_description="$3"
+    local context_file="$4"
+    local files_to_examine="$5"
+    local success_criteria="$6"
+    
+    # Create enhanced issue body using temporary file
+    local temp_body_file
+    temp_body_file=$(mktemp)
+    
+    # Load context from file if provided
+    local context_content=""
+    if [[ -n "$context_file" && -f "$context_file" ]]; then
+        echo "📄 Loading context from: $context_file" >&2
+        context_content=$(cat "$context_file")
+    fi
+    
+    # Validate files if provided
+    local validated_files=""
+    if [[ -n "$files_to_examine" ]]; then
+        echo "📁 Validating file references..." >&2
+        validated_files=$(validate_files "$files_to_examine")
+    fi
+    
+    # Create structured issue body
+    cat > "$temp_body_file" << EOF
+# $task_title
+
+**Agent**: $agent_name  
+**Generated**: $(date '+%Y-%m-%d %H:%M:%S')
+**Status**: 🟢 Active
+
+## Task Description
+$task_description
+
+EOF
+    
+    # Add context section if context file provided
+    if [[ -n "$context_content" ]]; then
+        cat >> "$temp_body_file" << EOF
+## Context Analysis
+$context_content
+
+EOF
+    fi
+    
+    # Add files section if files provided
+    if [[ -n "$validated_files" ]]; then
+        cat >> "$temp_body_file" << EOF
+## Files to Examine
+$validated_files
+
+EOF
+    fi
+    
+    # Add success criteria if provided
+    if [[ -n "$success_criteria" ]]; then
+        cat >> "$temp_body_file" << EOF
+## Success Criteria
+$success_criteria
+
+EOF
+    fi
+    
+    # Add standard sections for comprehensive context
+    cat >> "$temp_body_file" << EOF
+## Implementation Notes
+- Review the task requirements carefully
+- Follow the 6-step agent workflow pattern
+- Update this issue with progress and findings
+- Reference specific files and line numbers in comments
+- Update status labels as work progresses
+
+## Status Updates
+- Use \`gh issue edit [number] --add-label 'status/waiting'\` when blocked
+- Use \`gh issue edit [number] --add-label 'status/reviewing'\` when PR created
+- Use \`gh issue edit [number] --add-label 'status/complete'\` when done
+
+## Validation Checklist
+- [ ] Task requirements understood
+- [ ] Relevant files identified and examined
+- [ ] Solution implemented according to requirements
+- [ ] Testing completed (if applicable)
+- [ ] Documentation updated (if applicable)
+- [ ] Issue updated with final results
+
+---
+*Generated with Claude Code automation*
+EOF
+    
+    # Create GitHub issue WITH STATUS LABELS (send status to stderr to avoid interfering with return value)
+    echo "   Creating issue with labels: $task_title" >&2
+    local issue_url
+    issue_url=$(gh issue create \
+        --title "$task_title" \
+        --body-file "$temp_body_file" \
+        --assignee "@me" \
+        --label "agent-task,agent/$agent_name,status/active,priority/medium")
+    
+    local github_issue
+    github_issue=$(echo "$issue_url" | grep -o '[0-9]\+$')
+    
+    # Security and robustness validation for github_issue
+    if [[ -z "$github_issue" ]]; then
+        echo "❌ ERROR: Failed to extract GitHub issue number from URL: $issue_url" >&2
+        [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
+        return 1
+    fi
+    
+    # Additional security validation: ensure github_issue contains only digits
+    if ! [[ "$github_issue" =~ ^[0-9]+$ ]]; then
+        echo "❌ ERROR: Invalid GitHub issue number format: $github_issue" >&2
+        echo "   Issue number must contain only digits for security" >&2
+        [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
+        return 1
+    fi
+    
+    # Clean up temp file
+    [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
+    echo "✅ Created GitHub issue #$github_issue with status labels" >&2
+    echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$github_issue" >&2
+    echo "   Labels: agent-task, agent/$agent_name, status/active, priority/medium" >&2
+    
+    # Return the issue number via echo for caller to capture
+    echo "$github_issue"
+}
+
 # Export functions so they can be used by sourcing scripts
 export -f make_path_portable
 export -f expand_portable_path
@@ -394,6 +524,7 @@ export -f get_current_repo
 export -f check_pr_review_safeguards
 export -f validate_files
 export -f create_github_issue
+export -f create_github_issue_with_labels
 
 # Prevent running this script directly
 if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then
