@@ -46,13 +46,16 @@ Each session creates a dedicated worktree matching the branch name:
 
 This enables parallel work and easy cleanup when branches are merged.
 
-### Manual Method
-For specific control over the task:
-```bash
-/create-issue [your-agent] [target-agent] "[Task Title]" [repository]
+### GitHub Issue Creation
+Claude Desktop can create GitHub issues directly using MCP commands:
+
+```
+"Create a GitHub issue for [task description] in [repository]"
+"Log this as an issue and assign it to [agent-name]"
+"Create issue: [title] - [description]"
 ```
 
-Then start Claude Code in the appropriate repository.
+Then use natural language to start the appropriate agent session.
 
 ## Task Routing Guide
 
