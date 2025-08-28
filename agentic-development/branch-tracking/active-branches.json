@@ -291,6 +291,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/fix/desktop-script-unbound-variables",
         "issues": []
+      },
+      {
+        "name": "vibe-coder/feature/fix-desktop-agent-setup-issues",
+        "author": "tuvens",
+        "created": "2025-08-28T10:38:08Z",
+        "lastActivity": "2025-08-28T10:42:18.795Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "vibe-coder",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/feature/fix-desktop-agent-setup-issues",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -324,7 +337,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-28T10:38:05.111Z",
+  "lastUpdated": "2025-08-28T10:42:18.796Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
