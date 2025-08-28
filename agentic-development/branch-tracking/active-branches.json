@@ -239,6 +239,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/fix/iterm2-workflow-improvements",
         "issues": []
+      },
+      {
+        "name": "fix/setup-desktop-script-unbound-vars",
+        "author": "tuvens",
+        "created": "2025-08-27T20:49:23Z",
+        "lastActivity": "2025-08-28T09:36:14.075Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "fix",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/fix/setup-desktop-script-unbound-vars",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -272,7 +285,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-27T20:49:20.200Z",
+  "lastUpdated": "2025-08-28T09:36:14.076Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
