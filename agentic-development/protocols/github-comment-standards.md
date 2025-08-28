@@ -34,7 +34,7 @@ This protocol is mandatory for ALL agents. Every GitHub comment by any agent mus
 
 ## Overview
 
-The GitHub Comment Standards Protocol establishes the universal comment identity system that ensures clear communication and accountability in all agent interactions. This protocol transforms the theoretical framework from Phase 1 into practical, testable procedures with validation scenarios and success metrics.
+The GitHub Comment Standards Protocol establishes the universal comment identity system that ensures clear communication and accountability in all agent interactions. This protocol integrates the V/T (Verify, don't Trust) principle to prevent agents from accepting other agents' claims without verification against actual code/documentation. This transforms the theoretical framework from Phase 1 into practical, testable procedures with validation scenarios and success metrics.
 
 ## Core Requirements
 
@@ -145,6 +145,8 @@ The following agent names are registered and valid for use:
 - **Structure**: Use H3 headings for major sections
 - **Clarity**: One topic per section
 - **Actionability**: Clear next steps and requirements
+- **V/T Principle**: All claims must be backed by verifiable evidence
+- **Verification Requirements**: Challenge unsubstantiated assertions from other agents
 
 #### Status Declaration
 - **Format**: `**Status**: [status-value]`
@@ -291,11 +293,20 @@ The JWT authentication system has been successfully implemented and tested.
 - Password reset functionality
 - Role-based access control middleware
 
-### Testing Results
-- Unit tests: 47/47 passing ✅
-- Integration tests: 12/12 passing ✅
-- Security tests: 8/8 passing ✅
-- Performance tests: All endpoints <200ms response time ✅
+### Testing Results (V/T Principle - Independently Verified)
+- Unit tests: 47/47 passing ✅ (verified by running `npm test`)
+- Integration tests: 12/12 passing ✅ (verified by running `npm run test:integration`)
+- Security tests: 8/8 passing ✅ (verified by running `npm run test:security`)
+- Performance tests: All endpoints <200ms response time ✅ (verified by running `npm run test:performance`)
+
+### Verification Evidence
+```bash
+# All claims above verified by independent execution:
+$ npm test
+[actual test output showing 47/47 passing]
+$ npm run test:integration  
+[actual integration test output showing 12/12 passing]
+```
 
 ### Files Modified
 - `app/Http/Controllers/AuthController.php`

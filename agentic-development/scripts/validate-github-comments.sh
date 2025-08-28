@@ -92,6 +92,7 @@ validate_comment() {
     local has_status=false
     local has_next_action=false
     local has_timeline=false
+    local has_vt_compliance=false
     
     echo "🔍 Validating comment format..."
     
@@ -145,6 +146,15 @@ validate_comment() {
         violations+=("Missing comment subject/title (## [Subject])")
     fi
     
+    # Check for V/T principle compliance (for QA agents)
+    if echo "$identity_line" | grep -q "qa"; then
+        if echo "$comment" | grep -q -E "(V/T|Verify|independently verified|verified by running|evidence|verification)"; then
+            has_vt_compliance=true
+        else
+            violations+=("QA agent comment missing V/T principle compliance evidence")
+        fi
+    fi
+    
     # Report results
     if [[ ${#violations[@]} -eq 0 ]]; then
         echo "✅ Comment format is COMPLIANT with GitHub Comment Standards Protocol"
@@ -167,6 +177,7 @@ validate_comment() {
         echo "**Next Action**: [next-action]"
         echo "**Timeline**: [timeline]"
         echo ""
+        echo "📋 V/T Principle: QA agents must provide verification evidence"
         echo "📖 Reference: $PROTOCOL_FILE"
         return 1
     fi

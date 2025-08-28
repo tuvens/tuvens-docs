@@ -247,19 +247,23 @@ TASK_DESCRIPTION="Conduct comprehensive technical code review of PR #$PR_NUMBER 
 **Review Focus Areas:**
 1. **Requirements Alignment**: Verify implementation matches original requirements
 2. **Technical Quality**: Enforce DRY, KISS, TDD, R/R, C/C principles
-3. **D/E Principle**: Demonstrate claims with evidence, not explanations
+3. **V/T Principle**: Verify all claims with evidence - never trust without proof
 4. **Test Coverage**: Validate comprehensive test coverage
 5. **File/Folder Structure**: R/R validation of organization and structure
 6. **Pattern Consistency**: C/C validation of project and framework conventions
 7. **Code Standards**: Review for style, security, and best practices
 8. **Automated Comments**: Address all existing review comments systematically
+9. **Agent Claim Verification**: Challenge and verify any claims made by other agents
 
 **QA Agent Responsibilities:**
 - Lead technical quality assurance process
 - Enforce DRY, KISS, TDD, R/R, C/C principle adherence with evidence
+- Apply V/T principle: verify all claims independently, never trust without proof
 - Validate file/folder structure organization (R/R)
 - Ensure pattern consistency and convention compliance (C/C)
 - Validate test coverage and functionality
+- Challenge unsubstantiated claims from any agent
+- Cross-verify all assertions against actual code/documentation
 - Provide comprehensive review addressing all participants
 - Break long reviews into manageable comment segments
 
@@ -337,8 +341,8 @@ $TASK_DESCRIPTION
 
 ## Quality Assurance Standards
 
-### D/E Principle (Demonstration-over-Explanation)
-**Definition**: Agents must PROVE their claims with evidence, not just explain them.
+### V/T Principle (Verify, don't Trust)
+**Definition**: Agents must VERIFY all claims with independent evidence, never trust without proof. This security principle prevents agents from accepting other agents' assertions without verification against actual systems.
 
 **Requirements**:
 - Show actual proof of completeness (test results, coverage reports, working demos)
@@ -494,13 +498,17 @@ gh pr view $PR_NUMBER --json files
 gh pr diff $PR_NUMBER --name-only
 \`\`\`
 
-## 3. D/E Principle Enforcement (CRITICAL)
-**You MUST demonstrate every claim with evidence:**
-- Run tests and show output
-- Generate coverage reports
-- Execute code and capture results
+## 3. V/T Principle Enforcement (CRITICAL)
+**You MUST verify every claim with evidence - never trust without verification:**
+- Independently verify all claims made by other agents
+- Run tests yourself and show actual output
+- Generate coverage reports and validate metrics
+- Execute code independently and capture results
 - Take screenshots of working features
-- NEVER make claims without proof
+- Cross-reference claims against actual code/documentation
+- Challenge unsubstantiated assertions
+- NEVER accept claims without independent verification
+- Always provide verifiable evidence that others can independently validate
 
 ## 4. Technical Quality Review
 Follow DRY, KISS, TDD, R/R, C/C principles:
