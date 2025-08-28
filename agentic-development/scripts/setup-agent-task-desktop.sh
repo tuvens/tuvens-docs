@@ -9,6 +9,7 @@ set -euo pipefail
 
 # Usage function
 usage() {
+    local exit_code="${1:-1}"
     echo "Usage: $0 <agent_name> <task_title> <task_description> [context_file] [--files=file1,file2] [--success-criteria='criteria']"
     echo ""
     echo "Claude Desktop adapter for /start-session automation"
@@ -19,8 +20,13 @@ usage() {
     echo "  $0 vibe-coder 'Fix Docs' 'Update branching docs' /tmp/task-context.md"
     echo "  $0 vibe-coder 'Fix Issue' 'Description' --files='file1.md,file2.md'"
     echo ""
-    exit 1
+    exit "$exit_code"
 }
+
+# Check for help flag first
+if [[ $# -eq 1 && ( "$1" == "--help" || "$1" == "-h" ) ]]; then
+    usage 0
+fi
 
 # Check minimum arguments
 if [[ $# -lt 3 ]]; then
