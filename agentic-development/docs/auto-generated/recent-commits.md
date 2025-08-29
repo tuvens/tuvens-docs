@@ -10,67 +10,88 @@
 ## Current Branch Status
 
 - **Branch**: `dev`
-- **Latest Commit**: `d1c039520ca603e283ee5438e5776d86894e8256`
-- **Commit Message**: "feat: implement V/T principle integration across agent communication (#402)
+- **Latest Commit**: `44070a987842517ea0c90749e1b16e89be40f6e4`
+- **Commit Message**: "Merge pull request #408 from tuvens/devops/feature/test-iterm-workflow-improvements
 
-[SAFETY-OVERRIDE: Token references are JWT documentation examples only]
-[EMERGENCY-SCOPE-BYPASS: V/T principle is critical security infrastructure requiring cross-cutting implementation]
-
-Implement V/T (Verify, don't Trust) principle across QA agent, code review
-scripts, and agent communication protocols to prevent agents from accepting
-other agents' claims without verification against actual code/documentation.
-
-Security Justification:
-- V/T principle prevents trust-based security vulnerabilities
-- Cross-cutting concern requiring integration across multiple domains
-- Critical for preventing cascading errors from false agent claims
-
-Integration Points:
-- QA Agent: Replace D/E with V/T principle enforcement (qa.md:19)
-- Code Review: Add V/T verification to review workflow (3 integration points)
-- GitHub Comments: Enhance standards with verification requirements
-- Comment Validation: Add V/T compliance checks for QA agents
-- Protocol Documentation: Complete V/T enforcement framework (15,402 bytes)
-
-Key Features:
-- Independent verification mandate for all agent claims
-- Evidence-based communication requirements
-- Cross-agent validation protocols
-- Challenge framework for unsubstantiated assertions
-- Verification scripts for test/coverage/functionality claims
-
-Testing:
-- Created comprehensive test suite (27 test cases)
-- Verified all integration points working correctly
-- Validated D/E to V/T principle migration complete
-
-Files Modified:
-- agentic-development/desktop-project-instructions/agents/qa.md
-- agentic-development/scripts/setup-code-review-desktop.sh
-- agentic-development/protocols/github-comment-standards.md
-- agentic-development/scripts/validate-github-comments.sh
-- agentic-development/protocols/README.md
-
-Files Created:
-- agentic-development/protocols/vt-principle-enforcement.md
-- tests/unit/vt-principle-enforcement.bats
-
-Resolves #400
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>"
+feat: complete iTerm2 workflow improvements and Phase 2 automation"
 - **Author**: tuvens
-- **Timestamp**: 2025-08-28T21:16:42+01:00
+- **Timestamp**: 2025-08-29T17:40:16+01:00
 
 ## Recent Commits (Last 25)
 
 ### Detailed Commit History
 
-#### `* d1c0395` - feat: implement V/T principle integration across agent communication (#402)
-- **Date**: 2025-08-28 21:16
+#### `*   44070a9` - Merge pull request #408 from tuvens/devops/feature/test-iterm-workflow-improvements
+- **Date**: 2025-08-29 17:40
 - **Author**: tuvens
 - **Refs**: HEAD -> dev, origin/dev
+
+#### `` - 
+- **Date**:   
+- **Author**: 
+
+#### `` - tuvens
+- **Date**:  * a5e5f82
+- **Author**: 2025-08-29 14:47
+- **Refs**: fix: critical PR #408 code quality and security issues
+
+#### `` - tuvens
+- **Date**:  * 8abe276
+- **Author**: 2025-08-29 12:28
+- **Refs**: feat: implement Phase 2 iTerm2 status automation system
+
+#### `` - tuvens
+- **Date**:  * 5ab7589
+- **Author**: 2025-08-29 11:10
+- **Refs**: refactor: fix DRY violation in GitHub issue creation functions
+
+#### `` - tuvens
+- **Date**:  * dfaf8b1
+- **Author**: 2025-08-28 21:37
+- **Refs**: Merge remote-tracking branch 'origin/vibe-coder/iterm-workflow-improvements' into devops/feature/test-iterm-workflow-improvements
+
+#### `` - 
+- **Date**: /
+- **Author**:  
+
+#### `` - tuvens
+- **Date**:  * 7e35de6
+- **Author**: 2025-08-28 21:25
+- **Refs**: Enhanced iTerm2 status updater v2 with meaningful information
+
+#### `` - tuvens
+- **Date**:  * 0a7bd8c
+- **Author**: 2025-08-28 21:08
+- **Refs**: Fix setup-status-labels.sh to use simple bash syntax
+
+#### `` - tuvens
+- **Date**:  * 8a6f2c8
+- **Author**: 2025-08-28 21:06
+- **Refs**: Add create_github_issue_with_labels function for status tracking
+
+#### `` - tuvens
+- **Date**:  * 94693f1
+- **Author**: 2025-08-28 20:59
+- **Refs**: Enhance setup-agent-task.sh with iTerm2 status bar integration
+
+#### `` - tuvens
+- **Date**:  * 7b65a60
+- **Author**: 2025-08-28 20:54
+- **Refs**: Add iTerm2 status updater script and setup improvements
+
+#### `* ` - GitHub Actions
+- **Date**:  105fa19
+- **Author**: 2025-08-28 20:17
+- **Refs**: docs: auto-update documentation [skip ci]
+
+#### `* ` - tuvens
+- **Date**:  d1c0395
+- **Author**: 2025-08-28 21:16
+- **Refs**: feat: implement V/T principle integration across agent communication (#402)
+
+#### `` - 
+- **Date**: /  
+- **Author**: 
 
 #### `* 4397edf` - docs: auto-update documentation [skip ci]
 - **Date**: 2025-08-28 16:57
@@ -154,87 +175,24 @@ Co-authored-by: Claude <noreply@anthropic.com>"
 - **Author**:  727faea
 - **Refs**: GitHub Actions|docs: auto-update documentation [skip ci]|
 
-#### `` - 2025-08-28 16:01
-- **Date**:  
-- **Author**:  * c1f0974
-- **Refs**: tuvens|fix: complete file reorganization - add moved documentation files|
-
-#### `` - 2025-08-28 15:45
-- **Date**:  
-- **Author**:  * d7a6077
-- **Refs**: tuvens|refactor: reorganize files to follow established repository patterns|
-
-#### `` - 2025-08-28 14:43
-- **Date**:  
-- **Author**:  * 7cb2bfd
-- **Refs**: tuvens|fix: improve usage function to handle help flags properly|
-
-#### `` - 2025-08-28 14:42
-- **Date**:  
-- **Author**:  * 4285101
-- **Refs**: tuvens|fix: complete desktop agent setup script with proper ending|
-
-#### `` - 2025-08-28 11:43
-- **Date**:  
-- **Author**:  * 0d6f702
-- **Refs**: tuvens|Add task README with comprehensive overview|
-
-#### `` - 2025-08-28 11:43
-- **Date**:  
-- **Author**:  * 283daeb
-- **Refs**: tuvens|Add basic test framework for TDD approach|
-
-#### `` - 2025-08-28 11:42
-- **Date**:  
-- **Author**:  * 120f1ea
-- **Refs**: tuvens|Add debugging context with terminal output examples and root cause analysis|
-
-#### `` - 2025-08-28 10:52
-- **Date**:  
-- **Author**:  * f191ecd
-- **Refs**: tuvens|Fix desktop agent setup script with cleaner output and proper issue formatting|
-
-#### `` - 
-- **Date**:  
-- **Author**: /  
-
-#### `` - 
-- **Date**: /
-- **Author**:    
-
-#### `* ` - tuvens
-- **Date**:  0850495
-- **Author**: 2025-08-28 10:37
-- **Refs**: Fix unbound variables in setup-agent-task-desktop-temp.sh
-
-#### `* ` - GitHub Actions
-- **Date**:  e32525b
-- **Author**: 2025-08-27 20:48
-- **Refs**: docs: auto-update documentation [skip ci]
-
-#### `* ` - tuvens
-- **Date**:  f8a2ca8
-- **Author**: 2025-08-27 21:47
-- **Refs**: feat: immediate fix script for iTerm2 window titles with status tracking
-
 ## Branch Analysis
 
 ### Commit Types (Last 25 commits)
-- `docs`: 6 commits
 - `fix`: 5 commits
-- `feat`: 4 commits
+- `feat`: 3 commits
+- `docs`: 3 commits
+- `refactor`: 2 commits
 - `resolve`: 1 commits
-- `refactor`: 1 commits
 
 ### Most Active Files (Last 25 commits)
-- `agentic-development/docs/auto-generated/recent-commits.md`: 6 changes
-- `agentic-development/docs/auto-generated/current-state.md`: 6 changes
-- `agentic-development/docs/auto-generated/doc-tree.md`: 5 changes
-- `agentic-development/scripts/setup-agent-task-desktop.sh`: 4 changes
+- `agentic-development/scripts/iterm-status-updater.sh`: 4 changes
+- `agentic-development/scripts/shared-functions.sh`: 3 changes
+- `agentic-development/scripts/setup-status-labels.sh`: 3 changes
+- `agentic-development/docs/auto-generated/recent-commits.md`: 3 changes
+- `agentic-development/docs/auto-generated/doc-tree.md`: 3 changes
+- `agentic-development/docs/auto-generated/current-state.md`: 3 changes
 - `tests/test-desktop-setup.sh`: 2 changes
-- `.claude/commands/start-session.md`: 2 changes
-- `tests/unit/vt-principle-enforcement.bats`: 1 changes
-- `tests/unit/start-session-command.bats`: 1 changes
-- `debug/terminal-output-examples.md`: 1 changes
-- `agentic-development/solutions/iterm2-workflow-improvements.md`: 1 changes
+- `agentic-development/scripts/setup-agent-task.sh`: 2 changes
+- `agentic-development/scripts/setup-agent-task-desktop.sh`: 2 changes
+- `agentic-development/scripts/github-webhook-handler.sh`: 2 changes
 
