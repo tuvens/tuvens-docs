@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
-# iTerm2 Status Bar Updater for Agent Sessions - Enhanced Version
+# iTerm2 Status Bar Updater for Agent Sessions - Enhanced Version with Automation
 # Updates iTerm2 status bar with meaningful GitHub issue information
+# Part of Phase 2 iTerm2 Status Automation
 
 set -euo pipefail
+
+# Source automation components if available
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "$SCRIPT_DIR/status-determination-engine.sh" ]]; then
+    source "$SCRIPT_DIR/status-determination-engine.sh"
+fi
 
 # Function to set iTerm2 user variables
 set_iterm_var() {
@@ -258,6 +265,165 @@ save_issue_number() {
     fi
 }
 
+# Function to update status with manual override
+update_status_with_override() {
+    local issue="$1"
+    local status_override="$2"
+    local agent_override="${3:-}"
+    
+    # Get issue data from GitHub
+    local issue_data
+    if ! issue_data=$(gh issue view "$issue" --json number,title,state,labels,updatedAt,comments 2>/dev/null); then
+        echo "❌ Could not fetch issue #$issue from GitHub"
+        return 1
+    fi
+    
+    # Override status emoji based on provided status
+    local status_emoji
+    case "$status_override" in
+        "active")     status_emoji="🟢" ;;
+        "waiting")    status_emoji="🟡" ;;  
+        "blocked")    status_emoji="🔴" ;;
+        "reviewing")  status_emoji="⚫" ;;
+        "complete")   status_emoji="✅" ;;
+        "failed")     status_emoji="⚠️" ;;
+        *)            status_emoji="⚪" ;;
+    esac
+    
+    # Get file changes (if in git repo)
+    local file_changes="—"
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+        local changed_count
+        changed_count=$(git diff --name-only 2>/dev/null | wc -l | xargs)
+        local new_count  
+        new_count=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | xargs)
+        
+        if [[ "$changed_count" -gt 0 ]] || [[ "$new_count" -gt 0 ]]; then
+            if [[ "$new_count" -gt 0 ]]; then
+                file_changes="$changed_count changed, $new_count new"
+            else
+                file_changes="$changed_count changed"
+            fi
+        else
+            file_changes="0 files"
+        fi
+    fi
+    
+    # Get time info
+    local updated_at
+    updated_at=$(echo "$issue_data" | jq -r '.updatedAt')
+    local time_since
+    time_since=$(time_ago "$updated_at")
+    
+    # Get comment count
+    local comment_count
+    comment_count=$(echo "$issue_data" | jq -r '.comments | length')
+    
+    # Build status display
+    local status_capitalized="$(tr '[:lower:]' '[:upper:]' <<< ${status_override:0:1})${status_override:1}"
+    local status_display="${status_emoji} ${status_capitalized}"
+    if [[ "$comment_count" -gt 0 ]]; then
+        status_display="${status_display} 💬${comment_count}"
+    fi
+    
+    # Check for PR
+    local pr_info=""
+    if git rev-parse --git-dir >/dev/null 2>&1; then
+        local current_branch
+        current_branch=$(git branch --show-current 2>/dev/null || echo "")
+        if [[ -n "$current_branch" ]]; then
+            local pr_number
+            pr_number=$(gh pr list --head "$current_branch" --json number --jq '.[0].number' 2>/dev/null || echo "")
+            if [[ -n "$pr_number" ]]; then
+                pr_info="PR #$pr_number $status_emoji"
+            fi
+        fi
+    fi
+    
+    # Set all iTerm2 variables
+    set_iterm_var "issue_number" "#$issue"
+    set_iterm_var "issue_status" "$status_display"
+    set_iterm_var "file_changes" "$file_changes"
+    set_iterm_var "issue_updated" "$time_since"
+    set_iterm_var "pr_info" "$pr_info"
+    
+    # Create full status summary
+    local full_status="#$issue $status_emoji"
+    if [[ "$file_changes" != "—" ]]; then
+        full_status="$full_status • $file_changes"
+    fi
+    if [[ -n "$pr_info" ]]; then
+        full_status="$full_status • $pr_info"
+    fi
+    full_status="$full_status • $time_since"
+    
+    set_iterm_var "full_status" "$full_status"
+    
+    # Display confirmation
+    local display_agent="${agent_override:-$(whoami)}"
+    echo "✅ Status updated for issue #$issue"
+    echo "   Status: $status_display"
+    echo "   Files: $file_changes"  
+    echo "   Updated: $time_since"
+    if [[ -n "$agent_override" ]]; then
+        echo "   Agent: $agent_override"
+    fi
+}
+
+# Function to debug issue detection
+debug_issue_detection() {
+    local issue="$1"
+    
+    echo "🔍 Debug: Issue Detection Methods for #$issue"
+    echo "================================================"
+    
+    # Method 1: Current directory detection
+    local current_issue
+    current_issue=$(get_current_issue)
+    echo "1. Current directory detection: ${current_issue:-none}"
+    
+    # Method 2: .github-issue file
+    if [[ -f ".github-issue" ]]; then
+        local file_issue
+        file_issue=$(cat ".github-issue")
+        echo "2. .github-issue file: $file_issue"
+    else
+        echo "2. .github-issue file: not found"
+    fi
+    
+    # Method 3: Branch name
+    local branch_name
+    branch_name=$(git branch --show-current 2>/dev/null || echo "")
+    echo "3. Branch name: $branch_name"
+    if [[ "$branch_name" =~ -([0-9]+)$ ]]; then
+        echo "   Extracted issue: ${BASH_REMATCH[1]}"
+    fi
+    
+    # Method 4: GitHub API check
+    echo "4. GitHub API check:"
+    if gh issue view "$issue" --json number,title >/dev/null 2>&1; then
+        local title
+        title=$(gh issue view "$issue" --json title --jq '.title')
+        echo "   ✅ Issue exists: $title"
+    else
+        echo "   ❌ Issue not found or no access"
+    fi
+    
+    # Method 5: Current worktree info
+    local worktree_path
+    worktree_path=$(git worktree list | grep -F "$(pwd)" | head -1 || echo "")
+    echo "5. Worktree info: ${worktree_path:-not in worktree}"
+    
+    # Method 6: Status determination (if engine available)
+    if command -v determine_final_status >/dev/null 2>&1; then
+        local determined_status
+        determined_status=$(determine_final_status "$issue" "" "" "$branch_name")
+        echo "6. Status engine: $determined_status"
+    else
+        echo "6. Status engine: not available"
+    fi
+}
+
 # Main execution
 main() {
     case "${1:-auto}" in
@@ -310,17 +476,60 @@ main() {
             set_iterm_var "full_status" "#123 🟢 • 5 changed • PR #456 • 2h ago"
             echo "✅ Test values set - check your status bar!"
             ;;
+        "auto-status")
+            # Automation mode: auto-detect with status override
+            issue=$(get_current_issue)
+            if [[ -n "$issue" ]] && [[ -n "${2:-}" ]]; then
+                update_status_with_override "$issue" "$2"
+                save_issue_number "$issue"
+            else
+                echo "Usage: $0 auto-status [status]"
+                echo "  status: active|waiting|blocked|reviewing|complete|failed"
+            fi
+            ;;
+        "webhook")
+            # Webhook automation mode: issue + status + agent
+            if [[ $# -ge 4 ]]; then
+                local issue="$2"
+                local status="$3"
+                local agent="$4"
+                update_status_with_override "$issue" "$status" "$agent"
+                save_issue_number "$issue"
+            else
+                echo "Usage: $0 webhook [issue_number] [status] [agent_name]"
+            fi
+            ;;
+        "debug")
+            # Debug mode: show all detection methods
+            if [[ -n "${2:-}" ]]; then
+                debug_issue_detection "$2"
+            else
+                echo "Usage: $0 debug [issue_number]"
+            fi
+            ;;
         [0-9]*)
-            # Manual issue number provided
-            update_status "$1"
+            # Manual issue number provided (with optional status)
+            if [[ -n "${2:-}" ]]; then
+                update_status_with_override "$1" "$2"
+            else
+                update_status "$1"
+            fi
             save_issue_number "$1"
             ;;
         *)
-            echo "Usage: $0 [auto|monitor|test|issue_number]"
-            echo "  auto         - Auto-detect issue from current directory (default)"
-            echo "  monitor      - Continuous monitoring mode (updates every 30s)"
-            echo "  test         - Set test values to verify status bar"
-            echo "  issue_number - Update specific issue number"
+            echo "Usage: $0 [auto|monitor|test|auto-status|webhook|debug|issue_number] [status] [agent]"
+            echo ""
+            echo "Modes:"
+            echo "  auto             - Auto-detect issue from current directory (default)"
+            echo "  monitor          - Continuous monitoring mode (updates every 30s)"
+            echo "  test             - Set test values to verify status bar"
+            echo "  auto-status [status] - Auto-detect issue with status override"
+            echo "  webhook [issue] [status] [agent] - Update from webhook automation"
+            echo "  debug [issue]    - Show detection methods for issue"
+            echo "  [issue_number]   - Update specific issue number"
+            echo "  [issue] [status] - Update issue with specific status"
+            echo ""
+            echo "Status values: active, waiting, blocked, reviewing, complete, failed"
             ;;
     esac
 }

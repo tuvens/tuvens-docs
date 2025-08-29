@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Git Hook: post-merge
+# Purpose: Set status to COMPLETE when PR is merged
+# Part of Phase 2 iTerm2 Status Automation
+
+# Source the automation scripts
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPTS_DIR="$REPO_ROOT/agentic-development/scripts"
+
+# Only proceed if we have the automation scripts
+if [[ ! -f "$SCRIPTS_DIR/status-determination-engine.sh" ]]; then
+    exit 0
+fi
+
+source "$SCRIPTS_DIR/status-determination-engine.sh"
+
+# Get current branch
+CURRENT_BRANCH="$(git branch --show-current)"
+
+# This hook runs after merging, so we need to check if this was a PR merge
+# Check recent merge commit for PR reference
+MERGE_COMMIT="$(git log -1 --pretty=format:'%s')"
+
+# Look for PR merge pattern in commit message
+if [[ "$MERGE_COMMIT" =~ Merge\ pull\ request\ #([0-9]+) ]]; then
+    PR_NUMBER="${BASH_REMATCH[1]}"
+    
+    # Get the PR data to find the linked issue
+    PR_BODY="$(gh pr view "$PR_NUMBER" --json body --jq '.body' 2>/dev/null || echo "")"
+    
+    # Extract issue number from PR body
+    if [[ "$PR_BODY" =~ (Fixes|Closes|Resolves)\ #([0-9]+) ]]; then
+        ISSUE_NUMBER="${BASH_REMATCH[2]}"
+        
+        # Get agent name from PR author or branch
+        AGENT_NAME="$(gh pr view "$PR_NUMBER" --json author --jq '.author.login' 2>/dev/null || echo "")"
+        
+        # If we can't get from PR author, try from branch name
+        if [[ -z "$AGENT_NAME" ]] || [[ "$AGENT_NAME" == "null" ]]; then
+            PR_BRANCH="$(gh pr view "$PR_NUMBER" --json headRefName --jq '.headRefName' 2>/dev/null || echo "")"
+            if [[ "$PR_BRANCH" =~ ^([a-z-]+)/ ]]; then
+                AGENT_NAME="${BASH_REMATCH[1]}"
+            fi
+        fi
+        
+        # Set status to complete
+        NEW_STATUS="complete"
+        
+        # Update GitHub labels
+        STATUS_LABELS=("status/active" "status/waiting" "status/blocked" "status/reviewing" "status/complete" "status/failed")
+        for label in "${STATUS_LABELS[@]}"; do
+            gh issue edit "$ISSUE_NUMBER" --remove-label "$label" 2>/dev/null || true
+        done
+        gh issue edit "$ISSUE_NUMBER" --add-label "status/$NEW_STATUS" 2>/dev/null || true
+        
+        # Close the issue if it's not already closed
+        gh issue close "$ISSUE_NUMBER" 2>/dev/null || true
+        
+        # Update iTerm2 status
+        if [[ -n "$AGENT_NAME" ]] && command -v "$SCRIPTS_DIR/iterm-status-updater.sh" >/dev/null 2>&1; then
+            "$SCRIPTS_DIR/iterm-status-updater.sh" "$ISSUE_NUMBER" &
+        fi
+        
+        # Log the status change
+        echo "$(date): PR merge triggered status change - Issue #$ISSUE_NUMBER -> $NEW_STATUS (PR #$PR_NUMBER)" >> "$REPO_ROOT/.git/status-automation.log"
+    fi
+fi
