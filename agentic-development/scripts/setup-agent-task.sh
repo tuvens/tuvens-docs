@@ -100,7 +100,7 @@ if [[ "${SKIP_GITHUB_ISSUE_CREATION:-false}" == "true" ]]; then
     echo ""
 else
     echo "Step 2: Creating GitHub issue..."
-    # Use shared function for GitHub issue creation
+    # Use shared function for GitHub issue creation with status labels
     GITHUB_ISSUE=$(create_github_issue "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION" "$CONTEXT_FILE" "$FILES_TO_EXAMINE" "$SUCCESS_CRITERIA")
     echo ""
 
@@ -477,7 +477,7 @@ if [[ "${SKIP_ITERM_AUTOMATION:-false}" == "true" ]]; then
     echo "   iTerm automation will be handled by Claude Desktop MCP integration"
     echo ""
 elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
-    echo "Step 5: Creating iTerm2 window..."
+    echo "Step 5: Creating iTerm2 window with enhanced status..."
     
     # Check for review safeguards before enabling dangerous mode
     CLAUDE_COMMAND="claude"
@@ -488,22 +488,38 @@ elif [[ "$OSTYPE" == "darwin"* ]] && command -v osascript &>/dev/null; then
         echo "🔒 Reviews detected, using standard Claude mode for safety"
     fi
     
-    # Create AppleScript for iTerm2 window
+    # Enhanced AppleScript for iTerm2 window with status tracking
     # Security note: GITHUB_ISSUE is validated above to contain only digits (^[0-9]+$)
     # This prevents command injection in the AppleScript context
     APPLESCRIPT_CONTENT="
 tell application \"iTerm\"
     create window with default profile
     tell current session of current window
-        set name to \"$AGENT_NAME #$GITHUB_ISSUE\"
+        # Set window title with agent name and issue number
+        set name to \"$AGENT_NAME #$GITHUB_ISSUE - 🟢 ACTIVE\"
+        
+        # Initialize iTerm2 status bar variables
+        write text \"printf '\\\\033]1337;SetUserVar=%s=%s\\\\007' 'issue_number' '$(echo -n \"#$GITHUB_ISSUE\" | base64)'\"
+        write text \"printf '\\\\033]1337;SetUserVar=%s=%s\\\\007' 'issue_status' '$(echo -n \"🟢 active\" | base64)'\"
+        write text \"printf '\\\\033]1337;SetUserVar=%s=%s\\\\007' 'file_changes' '$(echo -n \"0 files\" | base64)'\"
+        write text \"printf '\\\\033]1337;SetUserVar=%s=%s\\\\007' 'issue_updated' '$(echo -n \"$(date +%H:%M)\" | base64)'\"
+        
+        # Navigate to worktree
         write text \"cd \\\"$WORKTREE_PATH\\\"\"
+        
+        # Run status updater if available
+        write text \"[[ -x \\\"$SCRIPT_DIR/iterm-status-updater.sh\\\" ]] && \\\"$SCRIPT_DIR/iterm-status-updater.sh\\\" $GITHUB_ISSUE || echo 'Status updater not found'\"
+        
+        # Display prompt
         write text \"cat \\\"$PROMPT_FILE\\\"\"
+        
+        # Start Claude Code
         write text \"$CLAUDE_COMMAND\"
     end tell
 end tell"
     
     echo "$APPLESCRIPT_CONTENT" | osascript
-    echo "✅ Created iTerm2 window with agent prompt"
+    echo "✅ Created iTerm2 window with agent prompt and status tracking"
     echo ""
 else
     echo "Step 5: iTerm2 window creation skipped (not macOS or osascript unavailable)"

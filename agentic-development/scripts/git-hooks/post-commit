@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Git Hook: post-commit
+# Purpose: Automatically set status to ACTIVE after commits
+# Part of Phase 2 iTerm2 Status Automation
+
+# Source the automation scripts
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+SCRIPTS_DIR="$REPO_ROOT/agentic-development/scripts"
+
+# Only proceed if we have the automation scripts
+if [[ ! -f "$SCRIPTS_DIR/status-determination-engine.sh" ]]; then
+    exit 0
+fi
+
+# Source shared functions and status determination engine
+if ! source "$SCRIPTS_DIR/shared-functions.sh" 2>/dev/null; then
+    echo "Warning: Shared functions unavailable" >&2
+    exit 0
+fi
+
+if ! source "$SCRIPTS_DIR/status-determination-engine.sh" 2>/dev/null; then
+    echo "Warning: Status automation unavailable" >&2
+    exit 0
+fi
+
+# Get current branch and try to determine issue number
+CURRENT_BRANCH="$(git branch --show-current)"
+ISSUE_NUMBER=""
+
+# Try to get issue number from .github-issue file
+if [[ -f "$REPO_ROOT/.github-issue" ]]; then
+    ISSUE_NUMBER="$(cat "$REPO_ROOT/.github-issue")"
+elif [[ "$CURRENT_BRANCH" =~ [/#]([0-9]+) ]]; then
+    # Try to extract from branch name
+    ISSUE_NUMBER="${BASH_REMATCH[1]}"
+fi
+
+# Only proceed if we have an issue number
+if [[ -z "$ISSUE_NUMBER" ]]; then
+    exit 0
+fi
+
+# Get agent name from branch (agent/type/task format)
+AGENT_NAME=""
+if [[ "$CURRENT_BRANCH" =~ ^([a-z-]+)/ ]]; then
+    AGENT_NAME="${BASH_REMATCH[1]}"
+fi
+
+# Check if there's an open PR for this branch
+PR_NUMBER="$(gh pr list --head "$CURRENT_BRANCH" --json number --jq '.[0].number' 2>/dev/null || echo "")"
+
+# Determine status based on context
+if [[ -n "$PR_NUMBER" ]]; then
+    # Commits on branch with PR = active work (addressing feedback or continued development)
+    NEW_STATUS="active"
+else
+    # Regular commits = active development
+    NEW_STATUS="active"
+fi
+
+# Update GitHub labels using shared function
+update_github_issue_status "$ISSUE_NUMBER" "$NEW_STATUS"
+
+# Update iTerm2 status
+if [[ -n "$AGENT_NAME" ]] && command -v "$SCRIPTS_DIR/iterm-status-updater.sh" >/dev/null 2>&1; then
+    "$SCRIPTS_DIR/iterm-status-updater.sh" "$ISSUE_NUMBER" &
+fi
+
+# Log the status change
+printf '%s: Commit triggered status change - Issue #%s -> %s\n' "$(date)" "$ISSUE_NUMBER" "$NEW_STATUS" >> "$REPO_ROOT/.git/status-automation.log"

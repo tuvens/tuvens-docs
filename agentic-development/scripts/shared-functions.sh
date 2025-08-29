@@ -256,7 +256,7 @@ validate_files() {
     fi
 }
 
-# Function to create GitHub issue with standardized format (shared between both setup scripts)
+# Function to create GitHub issue with standardized format and status labels
 create_github_issue() {
     local agent_name="$1"
     local task_title="$2" 
@@ -289,6 +289,7 @@ create_github_issue() {
 
 **Agent**: $agent_name  
 **Generated**: $(date '+%Y-%m-%d %H:%M:%S')
+**Status**: 🟢 Active
 
 ## Task Description
 $task_description
@@ -329,6 +330,12 @@ EOF
 - Follow the 6-step agent workflow pattern
 - Update this issue with progress and findings
 - Reference specific files and line numbers in comments
+- Update status labels as work progresses
+
+## Status Updates
+- Use \`gh issue edit [number] --add-label 'status/waiting'\` when blocked
+- Use \`gh issue edit [number] --add-label 'status/reviewing'\` when PR created
+- Use \`gh issue edit [number] --add-label 'status/complete'\` when done
 
 ## Validation Checklist
 - [ ] Task requirements understood
@@ -342,14 +349,14 @@ EOF
 *Generated with Claude Code automation*
 EOF
     
-    # Create GitHub issue (send status to stderr to avoid interfering with return value)
-    echo "   Creating issue: $task_title" >&2
+    # Create GitHub issue with status labels (send status to stderr to avoid interfering with return value)
+    echo "   Creating issue with labels: $task_title" >&2
     local issue_url
     issue_url=$(gh issue create \
         --title "$task_title" \
         --body-file "$temp_body_file" \
         --assignee "@me" \
-        --label "agent-task,$agent_name")
+        --label "agent-task,agent/$agent_name,status/active,priority/medium")
     
     local github_issue
     github_issue=$(echo "$issue_url" | grep -o '[0-9]\+$')
@@ -371,12 +378,80 @@ EOF
     
     # Clean up temp file
     [[ -f "$temp_body_file" ]] && rm -f "$temp_body_file"
-    echo "✅ Created GitHub issue #$github_issue" >&2
+    echo "✅ Created GitHub issue #$github_issue with status labels" >&2
     echo "   URL: https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/issues/$github_issue" >&2
+    echo "   Labels: agent-task, agent/$agent_name, status/active, priority/medium" >&2
     
     # Return the issue number via echo for caller to capture
     echo "$github_issue"
 }
+
+# Function to update GitHub issue status labels (DRY principle)
+update_github_issue_status() {
+    local issue_number="$1"
+    local new_status="$2"
+    
+    # Validate inputs
+    if [[ ! "$issue_number" =~ ^[0-9]+$ ]]; then
+        echo "ERROR: Invalid issue number: $issue_number" >&2
+        return 1
+    fi
+    
+    if [[ ! "$new_status" =~ ^(active|waiting|blocked|reviewing|complete|failed)$ ]]; then
+        echo "ERROR: Invalid status: $new_status" >&2
+        return 1
+    fi
+    
+    # Define all possible status labels
+    local status_labels=("status/active" "status/waiting" "status/blocked" "status/reviewing" "status/complete" "status/failed")
+    
+    # Remove all existing status labels
+    for label in "${status_labels[@]}"; do
+        gh issue edit "$issue_number" --remove-label "$label" 2>/dev/null || true
+    done
+    
+    # Add the new status label
+    if ! gh issue edit "$issue_number" --add-label "status/$new_status" 2>/dev/null; then
+        echo "WARNING: Failed to add status label to issue #$issue_number" >&2
+        return 1
+    fi
+    
+    return 0
+}
+
+# Function to get issue number from various sources (DRY principle)
+get_issue_number_from_context() {
+    local repo_root="${1:-$(git rev-parse --show-toplevel 2>/dev/null || echo ".")}"
+    local branch_name="${2:-$(git branch --show-current 2>/dev/null || echo "")}"
+    
+    # Method 1: Check .github-issue file
+    if [[ -f "$repo_root/.github-issue" ]]; then
+        local issue_from_file
+        issue_from_file=$(cat "$repo_root/.github-issue")
+        if [[ "$issue_from_file" =~ ^[0-9]+$ ]]; then
+            echo "$issue_from_file"
+            return 0
+        fi
+    fi
+    
+    # Method 2: Extract from branch name
+    if [[ "$branch_name" =~ [/#]([0-9]+) ]]; then
+        echo "${BASH_REMATCH[1]}"
+        return 0
+    fi
+    
+    # Method 3: Try from worktree path
+    local current_path="$PWD"
+    if [[ "$current_path" =~ -([0-9]+)(/|$) ]]; then
+        echo "${BASH_REMATCH[1]}"
+        return 0
+    fi
+    
+    # No issue number found
+    echo ""
+    return 1
+}
+
 
 # Export functions so they can be used by sourcing scripts
 export -f make_path_portable
@@ -394,6 +469,8 @@ export -f get_current_repo
 export -f check_pr_review_safeguards
 export -f validate_files
 export -f create_github_issue
+export -f update_github_issue_status
+export -f get_issue_number_from_context
 
 # Prevent running this script directly
 if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then
