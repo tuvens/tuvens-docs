@@ -13,37 +13,18 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Check for bypass keywords in commit message or environment variables
+# Check for bypass keywords in commit message  
+# Try different potential locations for commit message
 COMMIT_MSG=""
-BYPASS_DETECTED=false
-
-# Method 1: Check environment variable directly (for manual bypass)
-if [ -n "${SCOPE_BYPASS:-}" ]; then
-    echo -e "${GREEN}✅ Scope check bypassed: SCOPE_BYPASS environment variable set${NC}"
-    exit 0
-fi
-
-# Method 2: Check COMMIT_EDITMSG (for interactive commits and prepared messages)
-CURRENT_COMMIT_MSG=""
-if [ -f "$(git rev-parse --git-dir)/COMMIT_EDITMSG" ]; then
-    CURRENT_COMMIT_MSG=$(cat "$(git rev-parse --git-dir)/COMMIT_EDITMSG")
-fi
-
-# Method 3: Check for commit message in environment variable (for scripts)
-if [ -z "$CURRENT_COMMIT_MSG" ] && [ -n "${GIT_COMMIT_MESSAGE:-}" ]; then
-    CURRENT_COMMIT_MSG="$GIT_COMMIT_MESSAGE"
-fi
-
-COMMIT_MSG="$CURRENT_COMMIT_MSG"
-
-# Debug output to help troubleshooting (only if enabled)
-if [ "${SCOPE_DEBUG:-}" = "1" ]; then
-    echo -e "${BLUE}🔍 DEBUG: Commit message detected: '$COMMIT_MSG'${NC}"
+if [ -f "${COMMIT_MSG_FILE:-}" ]; then
+    COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+elif [ -f "$(git rev-parse --git-dir)/COMMIT_EDITMSG" ]; then
+    COMMIT_MSG=$(cat "$(git rev-parse --git-dir)/COMMIT_EDITMSG")
 fi
 
 if [ -n "$COMMIT_MSG" ]; then
     # Check for scope validation bypass
-    if echo "$COMMIT_MSG" | grep -q -E "(scope-verified:|SCOPE-VERIFIED:|emergency-scope-bypass:)"; then
+    if echo "$COMMIT_MSG" | grep -q -E "^(scope-verified:|SCOPE-VERIFIED:|emergency-scope-bypass:)"; then
         echo -e "${GREEN}✅ Scope check bypassed: Manual scope verification detected${NC}"
         exit 0
     fi
@@ -52,14 +33,6 @@ if [ -n "$COMMIT_MSG" ]; then
         echo -e "${GREEN}✅ DRY check bypassed: Manual DRY verification detected${NC}"
         exit 0
     fi
-    # Check for documentation bypass
-    if echo "$COMMIT_MSG" | grep -q -E "(DOCS-VERIFIED:|docs: verified examples only)"; then
-        echo -e "${GREEN}✅ Scope check bypassed: Documentation verification detected${NC}"
-        exit 0
-    fi
-else
-    echo -e "${YELLOW}⚠️  No commit message detected for bypass checking${NC}"
-    echo -e "${BLUE}💡 Alternative: Use 'SCOPE_BYPASS=1 git commit -m \"your message\"' to bypass scope protection${NC}"
 fi
 
 # Helper functions

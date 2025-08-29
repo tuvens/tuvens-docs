@@ -244,9 +244,24 @@
         "githubUrl": "https://github.com/tuvens/test-repo/tree/vibe-coder/feature/test-task",
         "issues": "test-repo#   Creating issue: Test Task\n123"
       }
+    ],
+    "scope-protection-test--tdd-compliance": [
+      {
+        "name": "/feature/untitled-task",
+        "author": "tuvens",
+        "created": "2025-08-29T19:14:15.123Z",
+        "lastActivity": "2025-08-29T19:14:15.125Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/scope-protection-test--tdd-compliance/worktrees///feature/untitled-task",
+        "agent": "unknown",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/scope-protection-test--tdd-compliance/tree//feature/untitled-task",
+        "issues": "scope-protection-test--tdd-compliance#411"
+      }
     ]
   },
-  "lastUpdated": "2025-08-26T22:59:34.575Z",
+  "lastUpdated": "2025-08-29T19:14:15.125Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
