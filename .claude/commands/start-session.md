@@ -4,6 +4,10 @@ description: Create fully automated Claude Code session using setup-agent-task.s
 argument-hint: [agent-name] [task-title] [task-description]
 ---
 
+<!-- Note: This file contains executable bash blocks mixed with markdown.
+     It's designed to be run as a Claude Code slash command, not as a standalone bash script.
+     Running 'bash -n' on this file will report syntax errors due to the mixed content format. -->
+
 # Start New Claude Code Session
 
 I'll create a fully automated Claude Code session using the existing `setup-agent-task.sh` script with complete validation and workflow integration.
@@ -12,7 +16,7 @@ I'll create a fully automated Claude Code session using the existing `setup-agen
 `$ARGUMENTS`
 
 ## Current Context
-- Repository: !`git remote get-url origin | sed 's/.*\///' | sed 's/\.git//'`
+- Repository: !`git remote get-url origin | sed 's|.*/||' | sed 's|\.git||'`
 - Current branch: !`git branch --show-current`
 - Working directory: !`pwd`
 
@@ -51,7 +55,7 @@ if [[ -z "$AGENT_NAME" ]]; then
     echo "Usage: /start-session [agent-name] [task-title] [task-description]"
     echo ""
     echo "Available agents:"
-    find .claude/agents -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  - /' || echo "  - vibe-coder, devops, react-dev, laravel-dev, svelte-dev, node-dev"
+    find .claude/agents -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's|^|  - |' || echo "  - vibe-coder, devops, react-dev, laravel-dev, svelte-dev, node-dev"
     echo ""
     echo "Example: /start-session devops \"Deploy Pipeline\" \"Set up staging deployment\""
     exit 1
@@ -61,7 +65,7 @@ fi
 if [[ ! -f ".claude/agents/${AGENT_NAME}.md" ]]; then
     echo "⚠️  WARNING: Agent configuration file not found: .claude/agents/${AGENT_NAME}.md"
     echo "Available agents:"
-    find .claude/agents -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  - /' || echo "  - vibe-coder, devops, react-dev, laravel-dev, svelte-dev, node-dev"
+    find .claude/agents -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's|^|  - |' || echo "  - vibe-coder, devops, react-dev, laravel-dev, svelte-dev, node-dev"
     echo ""
 fi
 
