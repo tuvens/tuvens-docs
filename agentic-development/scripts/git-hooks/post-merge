@@ -12,7 +12,16 @@ if [[ ! -f "$SCRIPTS_DIR/status-determination-engine.sh" ]]; then
     exit 0
 fi
 
-source "$SCRIPTS_DIR/status-determination-engine.sh"
+# Source shared functions and status determination engine
+if ! source "$SCRIPTS_DIR/shared-functions.sh" 2>/dev/null; then
+    echo "Warning: Shared functions unavailable" >&2
+    exit 0
+fi
+
+if ! source "$SCRIPTS_DIR/status-determination-engine.sh" 2>/dev/null; then
+    echo "Warning: Status automation unavailable" >&2
+    exit 0
+fi
 
 # Get current branch
 CURRENT_BRANCH="$(git branch --show-current)"
@@ -46,12 +55,8 @@ if [[ "$MERGE_COMMIT" =~ Merge\ pull\ request\ #([0-9]+) ]]; then
         # Set status to complete
         NEW_STATUS="complete"
         
-        # Update GitHub labels
-        STATUS_LABELS=("status/active" "status/waiting" "status/blocked" "status/reviewing" "status/complete" "status/failed")
-        for label in "${STATUS_LABELS[@]}"; do
-            gh issue edit "$ISSUE_NUMBER" --remove-label "$label" 2>/dev/null || true
-        done
-        gh issue edit "$ISSUE_NUMBER" --add-label "status/$NEW_STATUS" 2>/dev/null || true
+        # Update GitHub labels using shared function
+        update_github_issue_status "$ISSUE_NUMBER" "$NEW_STATUS"
         
         # Close the issue if it's not already closed
         gh issue close "$ISSUE_NUMBER" 2>/dev/null || true
@@ -62,6 +67,6 @@ if [[ "$MERGE_COMMIT" =~ Merge\ pull\ request\ #([0-9]+) ]]; then
         fi
         
         # Log the status change
-        echo "$(date): PR merge triggered status change - Issue #$ISSUE_NUMBER -> $NEW_STATUS (PR #$PR_NUMBER)" >> "$REPO_ROOT/.git/status-automation.log"
+        printf '%s: PR merge triggered status change - Issue #%s -> %s (PR #%s)\n' "$(date)" "$ISSUE_NUMBER" "$NEW_STATUS" "$PR_NUMBER" >> "$REPO_ROOT/.git/status-automation.log"
     fi
 fi

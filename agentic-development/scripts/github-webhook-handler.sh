@@ -7,7 +7,18 @@ set -euo pipefail
 
 # Source shared functions and patterns
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/status-determination-engine.sh"
+
+# Source shared functions first
+if ! source "$SCRIPT_DIR/shared-functions.sh" 2>/dev/null; then
+    echo "ERROR: Unable to load shared functions" >&2
+    exit 1
+fi
+
+# Then source status determination engine
+if ! source "$SCRIPT_DIR/status-determination-engine.sh" 2>/dev/null; then
+    echo "ERROR: Unable to load status determination engine" >&2
+    exit 1
+fi
 
 # Function to process issue comment events
 process_issue_comment() {
@@ -17,10 +28,18 @@ process_issue_comment() {
     local comment_author
     local agent_name
     
-    # Extract relevant fields from JSON payload
-    issue_number=$(echo "$payload" | jq -r '.issue.number')
-    comment_body=$(echo "$payload" | jq -r '.comment.body')
-    comment_author=$(echo "$payload" | jq -r '.comment.user.login')
+    # Extract relevant fields from JSON payload with validation
+    if ! issue_number=$(echo "$payload" | jq -r '.issue.number' 2>/dev/null) || [[ "$issue_number" == "null" || ! "$issue_number" =~ ^[0-9]+$ ]]; then
+        echo "ERROR: Invalid payload format - missing or invalid issue number" >&2
+        return 1
+    fi
+    
+    if ! comment_body=$(echo "$payload" | jq -r '.comment.body' 2>/dev/null) || [[ "$comment_body" == "null" ]]; then
+        echo "ERROR: Invalid payload format - missing comment body" >&2
+        return 1
+    fi
+    
+    comment_author=$(echo "$payload" | jq -r '.comment.user.login' 2>/dev/null || echo "unknown")
     
     # Check if this is an agent comment (follows protocol)
     if echo "$comment_body" | grep -q "^👤 \*\*Identity\*\*:"; then
@@ -32,7 +51,7 @@ process_issue_comment() {
         new_status=$(determine_status_from_comment "$comment_body" "$issue_number")
         
         # Update GitHub labels
-        update_github_labels "$issue_number" "$new_status"
+        update_github_issue_status "$issue_number" "$new_status"
         
         # Update iTerm2 status
         "$SCRIPT_DIR/iterm-status-updater.sh" "$issue_number" "$new_status" "$agent_name"
@@ -51,15 +70,23 @@ process_pull_request() {
     local state
     local merged
     
-    # Extract PR details
-    action=$(echo "$payload" | jq -r '.action')
-    pr_number=$(echo "$payload" | jq -r '.pull_request.number')
-    is_draft=$(echo "$payload" | jq -r '.pull_request.draft')
-    state=$(echo "$payload" | jq -r '.pull_request.state')
-    merged=$(echo "$payload" | jq -r '.pull_request.merged')
+    # Extract PR details with validation
+    if ! action=$(echo "$payload" | jq -r '.action' 2>/dev/null) || [[ "$action" == "null" || -z "$action" ]]; then
+        echo "ERROR: Invalid payload format - missing action" >&2
+        return 1
+    fi
+    
+    if ! pr_number=$(echo "$payload" | jq -r '.pull_request.number' 2>/dev/null) || [[ "$pr_number" == "null" || ! "$pr_number" =~ ^[0-9]+$ ]]; then
+        echo "ERROR: Invalid payload format - missing or invalid PR number" >&2
+        return 1
+    fi
+    
+    is_draft=$(echo "$payload" | jq -r '.pull_request.draft' 2>/dev/null || echo "false")
+    state=$(echo "$payload" | jq -r '.pull_request.state' 2>/dev/null || echo "unknown")
+    merged=$(echo "$payload" | jq -r '.pull_request.merged' 2>/dev/null || echo "false")
     
     # Try to find linked issue from PR body
-    issue_number=$(echo "$payload" | jq -r '.pull_request.body' | grep -oE "(Fixes|Closes|Resolves) #[0-9]+" | grep -oE "[0-splits+" | head -1 || echo "")
+    issue_number=$(echo "$payload" | jq -r '.pull_request.body' | grep -oE "(Fixes|Closes|Resolves) #[0-9]+" | grep -oE "[0-9]+" | head -1 || echo "")
     
     if [[ -z "$issue_number" ]]; then
         echo "⚠️  No linked issue found for PR #$pr_number"
@@ -93,7 +120,7 @@ process_pull_request() {
     
     if [[ -n "$new_status" ]]; then
         # Update status
-        update_github_labels "$issue_number" "$new_status"
+        update_github_issue_status "$issue_number" "$new_status"
         
         # Find agent from issue assignee or branch name
         local agent_name
@@ -138,7 +165,7 @@ process_push_event() {
             fi
             
             # Update status
-            update_github_labels "$issue_number" "$new_status"
+            update_github_issue_status "$issue_number" "$new_status"
             "$SCRIPT_DIR/iterm-status-updater.sh" "$issue_number" "$new_status" "$agent_name"
             
             echo "✅ Processed push to $branch_name for issue #$issue_number - Status: $new_status"
@@ -181,7 +208,7 @@ process_pr_review() {
     
     if [[ -n "$new_status" ]]; then
         # Update status
-        update_github_labels "$issue_number" "$new_status"
+        update_github_issue_status "$issue_number" "$new_status"
         
         # Find agent
         local agent_name
@@ -194,20 +221,7 @@ process_pr_review() {
     fi
 }
 
-# Helper function to update GitHub labels
-update_github_labels() {
-    local issue_number="$1"
-    local new_status="$2"
-    
-    # Remove all existing status labels
-    local status_labels=("status/active" "status/waiting" "status/blocked" "status/reviewing" "status/complete" "status/failed")
-    for label in "${status_labels[@]}"; do
-        gh issue edit "$issue_number" --remove-label "$label" 2>/dev/null || true
-    done
-    
-    # Add new status label
-    gh issue edit "$issue_number" --add-label "status/$new_status" 2>/dev/null || true
-}
+# Note: GitHub label updates now handled by shared function update_github_issue_status()
 
 # Helper function to get agent name from issue
 get_agent_from_issue() {

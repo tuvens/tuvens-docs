@@ -122,3 +122,82 @@ teardown() {
     run check_pr_review_safeguards "feature/test"
     [ "$status" -eq 0 ]  # Should allow
 }
+
+# New tests for Phase 2 automation functions
+
+@test "update_github_issue_status: validates issue number format" {
+    # Mock gh command for testing
+    gh() {
+        if [[ "$1" == "issue" && "$2" == "edit" ]]; then
+            echo "Label updated successfully"
+            return 0
+        fi
+        return 1
+    }
+    export -f gh
+    
+    # Test with valid issue number
+    run update_github_issue_status "123" "active"
+    [ "$status" -eq 0 ]
+    
+    # Test with invalid issue number
+    run update_github_issue_status "abc" "active"
+    [ "$status" -eq 1 ]
+    [[ "$output" =~ "ERROR: Invalid issue number" ]]
+}
+
+@test "update_github_issue_status: validates status values" {
+    # Mock gh command
+    gh() {
+        echo "Success"
+        return 0
+    }
+    export -f gh
+    
+    # Test valid statuses
+    for status in "active" "waiting" "blocked" "reviewing" "complete" "failed"; do
+        run update_github_issue_status "123" "$status"
+        [ "$status" -eq 0 ]
+    done
+    
+    # Test invalid status
+    run update_github_issue_status "123" "invalid-status"
+    [ "$status" -eq 1 ]
+    [[ "$output" =~ "ERROR: Invalid status" ]]
+}
+
+@test "get_issue_number_from_context: detects from .github-issue file" {
+    # Create test environment
+    mkdir -p "$TEST_TEMP_DIR/test-repo"
+    cd "$TEST_TEMP_DIR/test-repo"
+    echo "456" > .github-issue
+    
+    run get_issue_number_from_context "$PWD" ""
+    [ "$status" -eq 0 ]
+    [ "$output" = "456" ]
+}
+
+@test "get_issue_number_from_context: detects from branch name patterns" {
+    # Test various branch name patterns
+    run get_issue_number_from_context "" "feature/task-789"
+    [ "$status" -eq 0 ]
+    [ "$output" = "789" ]
+    
+    run get_issue_number_from_context "" "agent/feature/issue-123"
+    [ "$status" -eq 0 ]
+    [ "$output" = "123" ]
+    
+    run get_issue_number_from_context "" "devops/bugfix/fix-456"
+    [ "$status" -eq 0 ]
+    [ "$output" = "456" ]
+}
+
+@test "get_issue_number_from_context: returns empty when no issue found" {
+    run get_issue_number_from_context "/nonexistent" "main"
+    [ "$status" -eq 1 ]
+    [ "$output" = "" ]
+    
+    run get_issue_number_from_context "" "feature/no-issue-number"
+    [ "$status" -eq 1 ]
+    [ "$output" = "" ]
+}

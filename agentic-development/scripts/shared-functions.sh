@@ -386,6 +386,72 @@ EOF
     echo "$github_issue"
 }
 
+# Function to update GitHub issue status labels (DRY principle)
+update_github_issue_status() {
+    local issue_number="$1"
+    local new_status="$2"
+    
+    # Validate inputs
+    if [[ ! "$issue_number" =~ ^[0-9]+$ ]]; then
+        echo "ERROR: Invalid issue number: $issue_number" >&2
+        return 1
+    fi
+    
+    if [[ ! "$new_status" =~ ^(active|waiting|blocked|reviewing|complete|failed)$ ]]; then
+        echo "ERROR: Invalid status: $new_status" >&2
+        return 1
+    fi
+    
+    # Define all possible status labels
+    local status_labels=("status/active" "status/waiting" "status/blocked" "status/reviewing" "status/complete" "status/failed")
+    
+    # Remove all existing status labels
+    for label in "${status_labels[@]}"; do
+        gh issue edit "$issue_number" --remove-label "$label" 2>/dev/null || true
+    done
+    
+    # Add the new status label
+    if ! gh issue edit "$issue_number" --add-label "status/$new_status" 2>/dev/null; then
+        echo "WARNING: Failed to add status label to issue #$issue_number" >&2
+        return 1
+    fi
+    
+    return 0
+}
+
+# Function to get issue number from various sources (DRY principle)
+get_issue_number_from_context() {
+    local repo_root="${1:-$(git rev-parse --show-toplevel 2>/dev/null || echo ".")}"
+    local branch_name="${2:-$(git branch --show-current 2>/dev/null || echo "")}"
+    
+    # Method 1: Check .github-issue file
+    if [[ -f "$repo_root/.github-issue" ]]; then
+        local issue_from_file
+        issue_from_file=$(cat "$repo_root/.github-issue")
+        if [[ "$issue_from_file" =~ ^[0-9]+$ ]]; then
+            echo "$issue_from_file"
+            return 0
+        fi
+    fi
+    
+    # Method 2: Extract from branch name
+    if [[ "$branch_name" =~ [/#]([0-9]+) ]]; then
+        echo "${BASH_REMATCH[1]}"
+        return 0
+    fi
+    
+    # Method 3: Try from worktree path
+    local current_path="$PWD"
+    if [[ "$current_path" =~ -([0-9]+)(/|$) ]]; then
+        echo "${BASH_REMATCH[1]}"
+        return 0
+    fi
+    
+    # No issue number found
+    echo ""
+    return 1
+}
+
 
 # Export functions so they can be used by sourcing scripts
 export -f make_path_portable
@@ -403,6 +469,8 @@ export -f get_current_repo
 export -f check_pr_review_safeguards
 export -f validate_files
 export -f create_github_issue
+export -f update_github_issue_status
+export -f get_issue_number_from_context
 
 # Prevent running this script directly
 if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then

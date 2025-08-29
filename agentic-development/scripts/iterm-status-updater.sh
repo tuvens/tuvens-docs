@@ -64,12 +64,200 @@ time_ago() {
     fi
 }
 
+# Helper function to fetch issue data from GitHub
+fetch_issue_data() {
+    local issue_number="$1"
+    
+    if [[ -z "$issue_number" ]]; then
+        echo "{}"
+        return 1
+    fi
+    
+    local issue_data
+    issue_data=$(gh issue view "$issue_number" --json number,title,state,labels,updatedAt,url,comments 2>/dev/null || echo "{}")
+    
+    if [[ "$issue_data" == "{}" ]] || [[ -z "$issue_data" ]]; then
+        echo "{}"
+        return 1
+    fi
+    
+    echo "$issue_data"
+    return 0
+}
+
+# Helper function to calculate file changes summary
+calculate_file_changes() {
+    local changes_summary=""
+    
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "no changes"
+        return 0
+    fi
+    
+    # Get current branch
+    local current_branch
+    current_branch=$(git branch --show-current 2>/dev/null || echo "")
+    
+    if [[ -z "$current_branch" ]]; then
+        echo "no changes"
+        return 0
+    fi
+    
+    # Get file statistics
+    local modified
+    modified=$(git diff --name-only dev...HEAD 2>/dev/null | wc -l | tr -d ' ')
+    
+    local staged
+    staged=$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
+    
+    local untracked
+    untracked=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
+    
+    # Build descriptive summary
+    if [[ $modified -gt 0 ]]; then
+        changes_summary="${modified} changed"
+    fi
+    
+    if [[ $staged -gt 0 ]]; then
+        if [[ -n "$changes_summary" ]]; then
+            changes_summary="$changes_summary, ${staged} staged"
+        else
+            changes_summary="${staged} staged"
+        fi
+    fi
+    
+    if [[ $untracked -gt 0 ]]; then
+        if [[ -n "$changes_summary" ]]; then
+            changes_summary="$changes_summary, ${untracked} new"
+        else
+            changes_summary="${untracked} new"
+        fi
+    fi
+    
+    if [[ -z "$changes_summary" ]]; then
+        changes_summary="no changes"
+    fi
+    
+    echo "$changes_summary"
+}
+
+# Helper function to get PR information
+get_pr_info() {
+    local current_branch
+    current_branch=$(git branch --show-current 2>/dev/null || echo "")
+    
+    if [[ -z "$current_branch" ]]; then
+        echo ""
+        return 0
+    fi
+    
+    local pr_number
+    pr_number=$(gh pr list --head "$current_branch" --json number,state --jq '.[0] | "\(.number):\(.state)"' 2>/dev/null || echo "")
+    
+    if [[ -z "$pr_number" || "$pr_number" == "null:null" ]]; then
+        echo ""
+        return 0
+    fi
+    
+    local pr_num="${pr_number%%:*}"
+    local pr_state="${pr_number##*:}"
+    
+    case "$pr_state" in
+        "OPEN")
+            echo "PR #$pr_num 🟢"
+            ;;
+        "CLOSED")
+            echo "PR #$pr_num ⚫"
+            ;;
+        "MERGED")
+            echo "PR #$pr_num 🟣"
+            ;;
+        *)
+            echo "PR #$pr_num"
+            ;;
+    esac
+}
+
+# Helper function to format status display
+format_status_display() {
+    local status="$1"
+    local comment_count="$2"
+    
+    # Status emoji and text
+    local status_emoji
+    local status_display
+    
+    case "$status" in
+        "active")     
+            status_emoji="🟢"
+            status_display="Active"
+            ;;
+        "waiting")    
+            status_emoji="🟡"
+            status_display="Waiting"
+            ;;
+        "blocked")    
+            status_emoji="🔴"
+            status_display="Blocked"
+            ;;
+        "reviewing")  
+            status_emoji="⚫"
+            status_display="Review"
+            ;;
+        "complete")   
+            status_emoji="✅"
+            status_display="Done"
+            ;;
+        *)            
+            status_emoji="⚪"
+            status_display="Unknown"
+            ;;
+    esac
+    
+    # Add activity indicator if there are recent comments
+    if [[ $comment_count -gt 0 ]]; then
+        status_display="$status_display 💬$comment_count"
+    fi
+    
+    echo "$status_emoji $status_display"
+}
+
+# Helper function to set all iTerm variables
+set_iterm_status_variables() {
+    local issue_number="$1"
+    local status_display="$2"
+    local changes_summary="$3"
+    local time_display="$4"
+    local pr_info="$5"
+    
+    # Set all variables for status bar
+    set_iterm_var "issue_number" "#$issue_number"
+    set_iterm_var "issue_status" "$status_display"
+    set_iterm_var "file_changes" "$changes_summary"
+    set_iterm_var "issue_updated" "$time_display"
+    set_iterm_var "pr_info" "$pr_info"
+    
+    # Also set a combined status for simpler display
+    local full_status="#$issue_number ${status_display%% *}"
+    if [[ -n "$changes_summary" && "$changes_summary" != "no changes" ]]; then
+        full_status="$full_status • $changes_summary"
+    fi
+    if [[ -n "$pr_info" ]]; then
+        full_status="$full_status • $pr_info"
+    fi
+    if [[ -n "$time_display" ]]; then
+        full_status="$full_status • $time_display"
+    fi
+    set_iterm_var "full_status" "$full_status"
+}
+
 # Function to update status from GitHub
 update_status() {
     local issue_number="$1"
     
+    # Handle case where no issue is provided
     if [[ -z "$issue_number" ]]; then
-        # No issue detected
         set_iterm_var "issue_number" "No Issue"
         set_iterm_var "issue_status" "⚪ none"
         set_iterm_var "file_changes" "—"
@@ -79,11 +267,9 @@ update_status() {
         return
     fi
     
-    # Get issue data from GitHub
+    # Fetch issue data from GitHub using helper function
     local issue_data
-    issue_data=$(gh issue view "$issue_number" --json number,title,state,labels,updatedAt,url,comments 2>/dev/null || echo "{}")
-    
-    if [[ "$issue_data" == "{}" ]] || [[ -z "$issue_data" ]]; then
+    if ! issue_data=$(fetch_issue_data "$issue_number"); then
         set_iterm_var "issue_number" "#$issue_number"
         set_iterm_var "issue_status" "❌ not found"
         set_iterm_var "file_changes" "—"
