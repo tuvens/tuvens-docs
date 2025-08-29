@@ -330,6 +330,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/test-iterm-workflow-improvements",
         "issues": []
+      },
+      {
+        "name": "devops/feature/scope-protection-test--tdd-compliance",
+        "author": "tuvens",
+        "created": "2025-08-29T07:27:13Z",
+        "lastActivity": "2025-08-29T18:54:52.236Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/scope-protection-test--tdd-compliance",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -363,7 +376,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-29T07:27:09.571Z",
+  "lastUpdated": "2025-08-29T18:54:52.236Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
