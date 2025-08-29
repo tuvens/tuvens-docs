@@ -23,25 +23,23 @@ if [ -n "${SCOPE_BYPASS:-}" ]; then
     exit 0
 fi
 
-# Method 2: Check for bypass in command line arguments passed to git
-# Extract the actual current commit message from the running git process
+# Method 2: Check COMMIT_EDITMSG (for interactive commits and prepared messages)
 CURRENT_COMMIT_MSG=""
-# Look for git commit process with -m flag
-GIT_PROCESS=$(ps aux | grep -E "git commit.*-m" | grep -v grep | head -1)
-if [ -n "$GIT_PROCESS" ]; then
-    # Extract message between quotes, handling both single and double quotes
-    CURRENT_COMMIT_MSG=$(echo "$GIT_PROCESS" | sed -n 's/.*-m[[:space:]]*[\"'\'']\([^\"'\'']*\)[\"'\''].*/\1/p')
+if [ -f "$(git rev-parse --git-dir)/COMMIT_EDITMSG" ]; then
+    CURRENT_COMMIT_MSG=$(cat "$(git rev-parse --git-dir)/COMMIT_EDITMSG")
 fi
 
-# Method 3: Fallback to checking COMMIT_EDITMSG (for interactive commits)
-if [ -z "$CURRENT_COMMIT_MSG" ] && [ -f "$(git rev-parse --git-dir)/COMMIT_EDITMSG" ]; then
-    CURRENT_COMMIT_MSG=$(cat "$(git rev-parse --git-dir)/COMMIT_EDITMSG")
+# Method 3: Check for commit message in environment variable (for scripts)
+if [ -z "$CURRENT_COMMIT_MSG" ] && [ -n "${GIT_COMMIT_MESSAGE:-}" ]; then
+    CURRENT_COMMIT_MSG="$GIT_COMMIT_MESSAGE"
 fi
 
 COMMIT_MSG="$CURRENT_COMMIT_MSG"
 
-# Debug output to help troubleshooting
-echo -e "${BLUE}🔍 DEBUG: Commit message detected: '$COMMIT_MSG'${NC}"
+# Debug output to help troubleshooting (only if enabled)
+if [ "${SCOPE_DEBUG:-}" = "1" ]; then
+    echo -e "${BLUE}🔍 DEBUG: Commit message detected: '$COMMIT_MSG'${NC}"
+fi
 
 if [ -n "$COMMIT_MSG" ]; then
     # Check for scope validation bypass
