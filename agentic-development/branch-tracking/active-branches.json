@@ -343,6 +343,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/scope-protection-test--tdd-compliance",
         "issues": []
+      },
+      {
+        "name": "devops/feature/fix-start-session-command",
+        "author": "tuvens",
+        "created": "2025-08-29T19:12:55Z",
+        "lastActivity": "2025-08-29T19:43:54.170Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/fix-start-session-command",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -376,7 +389,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-29T19:12:51.963Z",
+  "lastUpdated": "2025-08-29T19:43:54.170Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
