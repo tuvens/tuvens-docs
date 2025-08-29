@@ -16,9 +16,11 @@ if [ -n "${GIT_COMMIT_MSG:-}" ]; then
 # Method 2: Check COMMIT_EDITMSG
 elif [ -f "$(git rev-parse --git-dir)/COMMIT_EDITMSG" ]; then
     COMMIT_MSG=$(cat "$(git rev-parse --git-dir)/COMMIT_EDITMSG")
-# Method 3: Try to get from process list
+# Method 3: Check environment variable fallback
 else
-    COMMIT_MSG=$(ps aux | grep "git commit" | grep -v grep | sed -n 's/.*-m[[:space:]]*["'\'']\([^"'\'']*\)["'\''].*/\1/p' | head -1)
+    if [ -n "${GIT_COMMIT_MESSAGE:-}" ]; then
+        COMMIT_MSG="$GIT_COMMIT_MESSAGE"
+    fi
 fi
 
 if [ -n "$COMMIT_MSG" ]; then

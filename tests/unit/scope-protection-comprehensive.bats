@@ -24,7 +24,8 @@ setup() {
     mkdir -p "$HOOKS_DIR"
     
     # Copy the actual hook files if they exist
-    local source_hooks_dir="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/scope-protection-test--tdd-compliance/agentic-development/scripts/hooks"
+    local repo_root="$(git rev-parse --show-toplevel 2>/dev/null || echo ".")"
+    local source_hooks_dir="$repo_root/agentic-development/scripts/hooks"
     if [ -d "$source_hooks_dir" ]; then
         cp "$source_hooks_dir"/*.sh "$HOOKS_DIR/" 2>/dev/null || true
         chmod +x "$HOOKS_DIR"/*.sh 2>/dev/null || true
