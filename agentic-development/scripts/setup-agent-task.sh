@@ -101,7 +101,7 @@ if [[ "${SKIP_GITHUB_ISSUE_CREATION:-false}" == "true" ]]; then
 else
     echo "Step 2: Creating GitHub issue..."
     # Use shared function for GitHub issue creation with status labels
-    GITHUB_ISSUE=$(create_github_issue_with_labels "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION" "$CONTEXT_FILE" "$FILES_TO_EXAMINE" "$SUCCESS_CRITERIA")
+    GITHUB_ISSUE=$(create_github_issue "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION" "$CONTEXT_FILE" "$FILES_TO_EXAMINE" "$SUCCESS_CRITERIA")
     echo ""
 
     # Context enhancement reminder for complex tasks
