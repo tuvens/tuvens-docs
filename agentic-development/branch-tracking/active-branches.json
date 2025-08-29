@@ -317,6 +317,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/vibe-coder/iterm-workflow-improvements",
         "issues": []
+      },
+      {
+        "name": "devops/feature/test-iterm-workflow-improvements",
+        "author": "tuvens",
+        "created": "2025-08-28T20:17:05Z",
+        "lastActivity": "2025-08-29T07:27:09.571Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/test-iterm-workflow-improvements",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -350,7 +363,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-28T20:17:01.477Z",
+  "lastUpdated": "2025-08-29T07:27:09.571Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
