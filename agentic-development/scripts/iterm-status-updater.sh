@@ -106,7 +106,12 @@ calculate_file_changes() {
     
     # Get file statistics
     local modified
-    modified=$(git diff --name-only dev...HEAD 2>/dev/null | wc -l | tr -d ' ')
+    if git show-ref --verify --quiet refs/heads/dev || git show-ref --verify --quiet refs/remotes/origin/dev; then
+        modified=$(git diff --name-only dev...HEAD 2>/dev/null | wc -l | tr -d ' ')
+    else
+        # Fallback to working directory changes if dev doesn't exist
+        modified=$(git diff --name-only 2>/dev/null | wc -l | tr -d ' ')
+    fi
     
     local staged
     staged=$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
@@ -279,15 +284,15 @@ update_status() {
         return
     fi
     
-    # Extract status label
+    # Extract status label with proper error handling
     local status_label
-    status_label=$(echo "$issue_data" | jq -r '.labels[] | select(.name | startswith("status/")) | .name' 2>/dev/null | head -1)
+    status_label=$(echo "$issue_data" | jq -r '.labels[]? | select(.name | startswith("status/")) | .name' 2>/dev/null | head -1 || echo "")
     local status="${status_label#status/}"
     status="${status:-active}"
     
     # Get comment count for activity indicator
     local comment_count
-    comment_count=$(echo "$issue_data" | jq '.comments | length' 2>/dev/null || echo "0")
+    comment_count=$(echo "$issue_data" | jq -r '.comments // [] | length' 2>/dev/null || echo "0")
     
     # Get file changes count - more accurate method
     local file_count=0
@@ -301,9 +306,14 @@ update_status() {
         
         # Get file statistics
         if [[ -n "$current_branch" ]]; then
-            # Count modified files
+            # Count modified files (check if dev branch exists first)
             local modified
-            modified=$(git diff --name-only dev...HEAD 2>/dev/null | wc -l | tr -d ' ')
+            if git show-ref --verify --quiet refs/heads/dev || git show-ref --verify --quiet refs/remotes/origin/dev; then
+                modified=$(git diff --name-only dev...HEAD 2>/dev/null | wc -l | tr -d ' ')
+            else
+                # Fallback to working directory changes if dev doesn't exist
+                modified=$(git diff --name-only 2>/dev/null | wc -l | tr -d ' ')
+            fi
             
             # Count staged files
             local staged
@@ -369,7 +379,7 @@ update_status() {
     
     # Get last update time
     local updated_at
-    updated_at=$(echo "$issue_data" | jq -r '.updatedAt' 2>/dev/null)
+    updated_at=$(echo "$issue_data" | jq -r '.updatedAt // empty' 2>/dev/null || echo "")
     local time_display=""
     if [[ "$updated_at" != "null" && -n "$updated_at" ]]; then
         time_display=$(time_ago "$updated_at")
@@ -497,13 +507,13 @@ update_status_with_override() {
     
     # Get time info
     local updated_at
-    updated_at=$(echo "$issue_data" | jq -r '.updatedAt')
+    updated_at=$(echo "$issue_data" | jq -r '.updatedAt // empty' 2>/dev/null || echo "")
     local time_since
     time_since=$(time_ago "$updated_at")
     
     # Get comment count
     local comment_count
-    comment_count=$(echo "$issue_data" | jq -r '.comments | length')
+    comment_count=$(echo "$issue_data" | jq -r '.comments // [] | length' 2>/dev/null || echo "0")
     
     # Build status display
     local status_capitalized="$(tr '[:lower:]' '[:upper:]' <<< ${status_override:0:1})${status_override:1}"
@@ -720,4 +730,7 @@ main() {
     esac
 }
 
-main "$@"
+# Only run main if not being sourced for testing
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

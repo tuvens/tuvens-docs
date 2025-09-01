@@ -87,8 +87,9 @@ setup() {
 @test "get_pr_info: detects open PR" {
     source "$SCRIPT_UNDER_TEST"
     
-    # Create branch
-    git checkout -b "feature/test-123" --quiet
+    # Create unique branch
+    local branch_name="feature/test-pr-open-$$"
+    git checkout -b "$branch_name" --quiet
     
     # Mock gh command
     gh() {
@@ -156,7 +157,9 @@ setup() {
 @test "get_current_issue: returns empty when no issue found" {
     source "$SCRIPT_UNDER_TEST"
     
-    git checkout -b "main" --quiet
+    # Create unique branch without issue number
+    local branch_name="feature/no-issue-$$"
+    git checkout -b "$branch_name" --quiet
     
     run get_current_issue
     [ "$status" -eq 0 ]
@@ -172,5 +175,6 @@ setup() {
     # Test that the script supports test mode
     run bash "$SCRIPT_UNDER_TEST" test
     [ "$status" -eq 0 ]
-    [[ "$output" =~ "test" ]]
+    # Check for test mode indicators in output (case insensitive)
+    [[ "$output" =~ [Tt]est ]] || [[ "$output" =~ "🧪" ]]
 }

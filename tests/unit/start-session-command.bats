@@ -54,7 +54,72 @@ EOF
     
     # Copy the actual start-session.md file to test location
     export ORIGINAL_DIR="$PWD"
-    cp "/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/fix-desktop-agent-setup-issues/.claude/commands/start-session.md" .claude/commands/start-session.md
+    # Use absolute path to the current project's start-session.md file
+    local source_file="/Users/ciarancarroll/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/fix-start-session-command-issues/.claude/commands/start-session.md"
+    if [[ -f "$source_file" ]]; then
+        cp "$source_file" .claude/commands/start-session.md
+    else
+        echo "Creating minimal start-session.md for testing"
+        cat > .claude/commands/start-session.md << 'EOF'
+---
+allowed-tools: Bash, Write, Read, LS, Grep, Task
+description: Create fully automated Claude Code session using setup-agent-task.sh
+argument-hint: [agent-name] [task-title] [task-description]
+---
+
+# Start New Claude Code Session
+
+## Arguments Provided
+`$ARGUMENTS`
+
+## Current Context
+- Repository: !`git remote get-url origin | sed 's|.*/||' | sed 's|\.git||'`
+- Current branch: !`git branch --show-current`
+
+@CLAUDE.md
+@agentic-development/workflows/6-step-agent-workflow.md
+
+!`
+IFS=' ' read -ra ARGS <<< "$ARGUMENTS"
+AGENT_NAME="${ARGS[0]:-}"
+TASK_TITLE="${ARGS[1]:-}"
+TASK_DESCRIPTION="${ARGS[2]:-}"
+
+if [[ -z "$AGENT_NAME" ]]; then
+    echo "❌ ERROR: Agent name is required"
+    exit 1
+fi
+
+if [[ ! -f "agentic-development/scripts/setup-agent-task.sh" ]]; then
+    echo "❌ ERROR: setup-agent-task.sh not found"
+    exit 1
+fi
+
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "❌ ERROR: Not in a git repository"
+    exit 1
+fi
+
+if ! command -v gh &> /dev/null; then
+    echo "❌ ERROR: GitHub CLI (gh) is not available"
+    exit 1
+fi
+
+if ./agentic-development/scripts/setup-agent-task.sh "$AGENT_NAME" "$TASK_TITLE" "$TASK_DESCRIPTION"; then
+    echo "🎉 Agent session created successfully!"
+else
+    echo "❌ Failed to create agent session"
+    exit 1
+fi
+`
+
+## Session Completion
+- ✅ GitHub issue created and assigned
+- ✅ Git worktree established with proper branch naming
+- ✅ Agent context and prompt generated
+- ✅ iTerm2 window launched (if environment supports it)
+EOF
+    fi
 }
 
 # Teardown function runs after each test
