@@ -369,6 +369,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/fix-start-session-command-issues",
         "issues": []
+      },
+      {
+        "name": "devops/feature/complete-scope-protection-bypass-system-fix",
+        "author": "tuvens",
+        "created": "2025-09-01T10:14:48Z",
+        "lastActivity": "2025-09-01T17:30:05.452Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/complete-scope-protection-bypass-system-fix",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -402,7 +415,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-01T10:14:45.120Z",
+  "lastUpdated": "2025-09-01T17:30:05.452Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
