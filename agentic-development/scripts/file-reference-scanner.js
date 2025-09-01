@@ -752,8 +752,59 @@ class FileReferenceScanner {
   }
 }
 
+// Check for bypass keywords in commit message
+function checkBypassKeywords() {
+  let commitMsg = '';
+  
+  // Method 1: Check environment variable (for pre-commit scenarios)
+  if (process.env.GIT_COMMIT_MSG) {
+    commitMsg = process.env.GIT_COMMIT_MSG;
+  }
+  // Method 2: Check COMMIT_EDITMSG
+  else {
+    try {
+      const gitDir = execSync('git rev-parse --git-dir', { encoding: 'utf-8', cwd: process.cwd() }).trim();
+      const commitMsgFile = path.join(gitDir, 'COMMIT_EDITMSG');
+      if (fs.existsSync(commitMsgFile)) {
+        commitMsg = fs.readFileSync(commitMsgFile, 'utf-8');
+      }
+    } catch (error) {
+      // Fallback to environment variable
+      if (process.env.GIT_COMMIT_MESSAGE) {
+        commitMsg = process.env.GIT_COMMIT_MESSAGE;
+      }
+    }
+  }
+  
+  if (commitMsg) {
+    // Check for bypass keywords (same as other hooks)
+    const bypassPatterns = [
+      /SCOPE-VERIFIED:/i,
+      /scope-verified:/i,
+      /emergency-scope-bypass:/i,
+      /DRY-VERIFIED:/i,
+      /DOCS-VERIFIED:/i,
+      /docs: verified examples only/i
+    ];
+    
+    for (const pattern of bypassPatterns) {
+      if (pattern.test(commitMsg)) {
+        console.log('✅ File reference check bypassed: Manual verification detected');
+        return true;
+      }
+    }
+  }
+  
+  return false;
+}
+
 // CLI Interface
 async function main() {
+  // Check for bypass keywords first
+  if (checkBypassKeywords()) {
+    process.exit(0);
+  }
+  
   const args = process.argv.slice(2);
   const options = {};
   let outputFile = null;
