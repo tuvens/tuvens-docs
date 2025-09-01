@@ -123,7 +123,7 @@ EOF
         console.log('Broken references:', broken);
         console.log('Coverage:', data.coveragePercentage || 0);
         
-        // Key assertion: template variables should not be in broken references
+        // Main assertion: template variables should not be in broken references
         if (templates > 0 && data.coveragePercentage > 40) {
           console.log('SUCCESS: Templates recognized, coverage above threshold');
           process.exit(0);
