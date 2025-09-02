@@ -3,7 +3,7 @@
 # Tests for file-reference-scanner.js integration
 
 setup() {
-    export SCANNER_PATH="agentic-development/scripts/file-reference-scanner.js"
+    export SCANNER_PATH="scripts/file-reference-scanner.js"
     export TEST_DIR="tests/temp"
     mkdir -p "$TEST_DIR"
 }

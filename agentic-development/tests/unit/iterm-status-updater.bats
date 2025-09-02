@@ -7,11 +7,11 @@ load setup
 
 # Setup for each test
 setup() {
-    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/agentic-development/scripts/iterm-status-updater.sh"
+    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/scripts/iterm-status-updater.sh"
     if [ -f "$SCRIPT_UNDER_TEST" ]; then
         # Source dependencies first
-        source "$TEST_PROJECT_ROOT/agentic-development/scripts/shared-functions.sh"
-        source "$TEST_PROJECT_ROOT/agentic-development/scripts/status-determination-engine.sh"
+        source "$TEST_PROJECT_ROOT/scripts/shared-functions.sh"
+        source "$TEST_PROJECT_ROOT/scripts/status-determination-engine.sh"
     else
         skip "iterm-status-updater.sh not found"
     fi

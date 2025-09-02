@@ -234,15 +234,15 @@
       {
         "name": "vibe-coder/feature/test-task",
         "author": "Test User",
-        "created": "2025-08-26T22:59:34.573Z",
-        "lastActivity": "2025-08-26T22:59:34.575Z",
+        "created": "2025-09-01T10:11:23.909Z",
+        "lastActivity": "2025-09-01T10:11:23.910Z",
         "taskGroup": null,
         "status": "active",
-        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/devops/devops/feature/create-code-review-slash-command-and-qa-agent/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
+        "worktree": "~/Code/Tuvens/tuvens-docs/worktrees/vibe-coder/vibe-coder/feature/systematic-repository-cleanup---desktop-instructions-folder/agentic-development/tests/temp/test-repo/worktrees/vibe-coder/vibe-coder/feature/test-task",
         "agent": "vibe-coder",
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/test-repo/tree/vibe-coder/feature/test-task",
-        "issues": "test-repo#   Creating issue: Test Task\n123"
+        "issues": "test-repo#123"
       }
     ],
     "scope-protection-test--tdd-compliance": [
@@ -261,7 +261,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-08-29T19:14:15.125Z",
+  "lastUpdated": "2025-09-01T10:11:23.910Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }

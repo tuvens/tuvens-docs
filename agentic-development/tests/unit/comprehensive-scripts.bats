@@ -405,7 +405,7 @@ EOF
 # =====================================================
 
 @test "DEMONSTRATION: shared-functions calculate_branch_name catches invalid characters" {
-    source "$TEST_PROJECT_ROOT/agentic-development/scripts/shared-functions.sh"
+    source "$TEST_PROJECT_ROOT/scripts/shared-functions.sh"
     
     # This should clean invalid characters from branch names
     result=$(calculate_branch_name "vibe-coder" "Test & Special! Characters?")
@@ -420,7 +420,7 @@ EOF
 }
 
 @test "DEMONSTRATION: test runner validate_environment catches missing files" {
-    source "$TEST_PROJECT_ROOT/agentic-development/scripts/test.sh"
+    source "$TEST_PROJECT_ROOT/scripts/test.sh"
     
     # Remove critical file
     mv CLAUDE.md CLAUDE.md.backup

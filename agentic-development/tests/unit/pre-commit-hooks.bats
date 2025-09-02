@@ -18,7 +18,7 @@ setup() {
     echo "## Mandatory Branch Naming Conventions" >> CLAUDE.md
     
     # Set up environment for pre-commit hook testing
-    export HOOKS_DIR="$PWD/agentic-development/scripts/hooks"
+    export HOOKS_DIR="$PWD/scripts/hooks"
 }
 
 # Teardown after each test

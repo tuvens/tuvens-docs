@@ -4,8 +4,8 @@
 # Dependencies: BATS testing framework, agentic-development/protocols/vt-principle-enforcement.md
 
 setup() {
-    export SCRIPT_DIR="$BATS_TEST_DIRNAME/../../agentic-development/scripts"
-    export PROTOCOL_DIR="$BATS_TEST_DIRNAME/../../agentic-development/protocols"
+    export SCRIPT_DIR="$BATS_TEST_DIRNAME/../scripts"
+    export PROTOCOL_DIR="$BATS_TEST_DIRNAME/../protocols"
 }
 
 # V/T Principle Protocol File Tests
@@ -41,13 +41,13 @@ setup() {
 
 # QA Agent Integration Tests
 @test "QA agent file includes V/T principle enforcement" {
-    run grep -q "V/T Principle.*Verify, don't Trust.*Enforcement" "$BATS_TEST_DIRNAME/../../agentic-development/desktop-project-instructions/agents/qa.md"
+    run grep -q "V/T Principle.*Verify, don't Trust.*Enforcement" "$BATS_TEST_DIRNAME/../desktop-project-instructions/agents/qa.md"
     assert_success
 }
 
 @test "QA agent file replaces D/E with V/T principle" {
     # Should not contain old D/E references
-    run grep -q "D/E Principle.*Demonstration-over-Explanation" "$BATS_TEST_DIRNAME/../../agentic-development/desktop-project-instructions/agents/qa.md"
+    run grep -q "D/E Principle.*Demonstration-over-Explanation" "$BATS_TEST_DIRNAME/../desktop-project-instructions/agents/qa.md"
     assert_failure
     
     # Should contain new V/T references
@@ -204,7 +204,7 @@ setup() {
 
 @test "no remaining D/E references in updated files" {
     # QA agent should not have D/E references
-    run grep -q "D/E Principle.*Demonstration-over-Explanation" "$BATS_TEST_DIRNAME/../../agentic-development/desktop-project-instructions/agents/qa.md"
+    run grep -q "D/E Principle.*Demonstration-over-Explanation" "$BATS_TEST_DIRNAME/../desktop-project-instructions/agents/qa.md"
     assert_failure
     
     # Code review script should not have D/E references  

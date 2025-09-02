@@ -7,7 +7,7 @@ load setup
 
 # Setup for each test
 setup() {
-    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/agentic-development/scripts/setup-code-review-desktop.sh"
+    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/scripts/setup-code-review-desktop.sh"
     export TEST_REPO_DIR
     TEST_REPO_DIR=$(setup_test_git_repo)
     
