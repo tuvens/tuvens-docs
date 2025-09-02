@@ -270,10 +270,25 @@ if [ -f "$SCRIPT_DIR/update-branch-tracking.js" ]; then
     echo "✅ Updated local branch tracking"
 fi
 
-# Ensure we're not on the target branch
+# Ensure we're not on the target branch and enforce dev branch requirement
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [[ "$CURRENT_BRANCH" == "$BRANCH_NAME" ]]; then
-    git checkout dev 2>/dev/null || git checkout develop 2>/dev/null || git checkout main
+    # Check if dev branch exists first
+    if git show-ref --verify --quiet "refs/heads/dev"; then
+        git checkout dev
+    elif git show-ref --verify --quiet "refs/heads/develop"; then
+        git checkout develop
+    else
+        echo "❌ ERROR: Neither 'dev' nor 'develop' branch exists."
+        echo "   This violates the 5-branch strategy: main ← stage ← test ← dev ← feature/***"
+        echo "   Feature branches MUST be created from the 'dev' branch."
+        echo ""
+        echo "   To fix this issue:"
+        echo "   1. Create the 'dev' branch from the appropriate source branch"
+        echo "   2. Ensure the 5-branch strategy is properly implemented"
+        echo "   3. Re-run this script"
+        exit 1
+    fi
 fi
 
 # Check if worktree already exists - if so, use it instead of creating new one
@@ -299,12 +314,31 @@ else
         git branch -D "$BRANCH_NAME" 2>/dev/null || true
     fi
     
-    if git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME"; then
+    # Verify dev branch exists before creating worktree
+    DEV_BRANCH=""
+    if git show-ref --verify --quiet "refs/heads/dev"; then
+        DEV_BRANCH="dev"
+    elif git show-ref --verify --quiet "refs/heads/develop"; then
+        DEV_BRANCH="develop"
+    else
+        echo "❌ ERROR: Neither 'dev' nor 'develop' branch exists."
+        echo "   This violates the 5-branch strategy: main ← stage ← test ← dev ← feature/***"
+        echo "   Feature branches MUST be created from the 'dev' branch."
+        echo ""
+        echo "   To fix this issue:"
+        echo "   1. Create the 'dev' branch from the appropriate source branch"
+        echo "   2. Ensure the 5-branch strategy is properly implemented"
+        echo "   3. Re-run this script"
+        exit 1
+    fi
+    
+    # Create worktree branching explicitly from dev branch
+    if git worktree add "$WORKTREE_PATH" -b "$BRANCH_NAME" "$DEV_BRANCH"; then
         echo "✅ Created worktree: $WORKTREE_PATH"
-        echo "✅ Created branch: $BRANCH_NAME"
+        echo "✅ Created branch: $BRANCH_NAME (from $DEV_BRANCH)"
     else
         echo "❌ ERROR: Failed to create worktree: $WORKTREE_PATH"
-        echo "   This may indicate a Git configuration issue"
+        echo "   This may indicate a Git configuration issue or missing $DEV_BRANCH branch"
         exit 1
     fi
 fi

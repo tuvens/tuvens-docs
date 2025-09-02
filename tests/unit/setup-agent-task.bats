@@ -231,3 +231,57 @@ EOF
     grep -q "GitHub Issue: #123" "agentic-development/scripts/vibe-coder-prompt.txt"
     grep -q "VIBE CODER AGENT" "agentic-development/scripts/vibe-coder-prompt.txt"
 }
+
+@test "setup-agent-task: fails cleanly when dev branch doesn't exist" {
+    if [ ! -f "$SCRIPT_UNDER_TEST" ]; then
+        skip "setup-agent-task.sh not found"
+    fi
+    
+    # Remove any dev/develop branches to test failure case
+    git branch -D dev 2>/dev/null || true
+    git branch -D develop 2>/dev/null || true
+    
+    export PATH="$TEST_TEMP_DIR:$PATH"
+    cat > "$TEST_TEMP_DIR/gh" << 'EOF'
+#!/bin/bash
+echo "123"
+EOF
+    chmod +x "$TEST_TEMP_DIR/gh"
+    
+    export SKIP_GITHUB_ISSUE_CREATION=false  
+    export SKIP_ITERM_AUTOMATION=true
+    
+    run "$SCRIPT_UNDER_TEST" "test-agent" "Test Task" "Description"
+    [ "$status" -ne 0 ]
+    
+    # Check that error message mentions dev branch requirement
+    [[ "$output" =~ "Neither 'dev' nor 'develop' branch exists" ]]
+    [[ "$output" =~ "5-branch strategy" ]]
+    [[ "$output" =~ "Feature branches MUST be created from the 'dev' branch" ]]
+}
+
+@test "setup-agent-task: creates branch from dev when dev branch exists" {
+    if [ ! -f "$SCRIPT_UNDER_TEST" ]; then
+        skip "setup-agent-task.sh not found"
+    fi
+    
+    # Create a dev branch to test success case
+    git checkout -b dev 2>/dev/null || git checkout dev
+    git checkout main  # Switch away from dev for the test
+    
+    export PATH="$TEST_TEMP_DIR:$PATH"
+    cat > "$TEST_TEMP_DIR/gh" << 'EOF'
+#!/bin/bash
+echo "123"
+EOF
+    chmod +x "$TEST_TEMP_DIR/gh"
+    
+    export SKIP_GITHUB_ISSUE_CREATION=false
+    export SKIP_ITERM_AUTOMATION=true
+    
+    run "$SCRIPT_UNDER_TEST" "test-agent" "Test Task" "Description"
+    [ "$status" -eq 0 ]
+    
+    # Check that success message mentions branching from dev
+    [[ "$output" =~ "Created branch.*from dev" ]]
+}
