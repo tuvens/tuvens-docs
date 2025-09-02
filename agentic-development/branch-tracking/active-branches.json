@@ -382,6 +382,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/complete-scope-protection-bypass-system-fix",
         "issues": []
+      },
+      {
+        "name": "devops/feature/scope-protection-bypass-proper-dev-target",
+        "author": "tuvens",
+        "created": "2025-09-01T17:30:08Z",
+        "lastActivity": "2025-09-02T09:16:53.240Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/scope-protection-bypass-proper-dev-target",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -415,7 +428,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-01T17:30:05.452Z",
+  "lastUpdated": "2025-09-02T09:16:53.240Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
