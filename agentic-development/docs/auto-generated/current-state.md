@@ -4,22 +4,12 @@
 
 ## Branch Information
 - **Current Branch**: dev
-- **Commit SHA**: 4cd9be0e99aa4c97fccfb845611506e033465bc5
-- **Commit Message**: docs: add branch strategy requirements to QA agent instructions (#427)
+- **Commit SHA**: 161416953b6f72ded72ea508e0c5e4416300662c
+- **Commit Message**: Merge pull request #430 from tuvens/devops/feature/fix-start-session-workflow-dev-branch-enforcement
 
-- Add new "Branch Strategy and PR Requirements" section
-- Include direct link to CLAUDE.md for complete branch strategy
-- Specify PR targeting rules (dev branch for features/bugs/docs)
-- Add validation requirements for QA reviews
-- Enforce 5-branch strategy compliance
-
-Resolves #425 - devops agent task to update QA instructions
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-authored-by: Claude <noreply@anthropic.com>
+fix: enforce deterministic dev branch targeting in setup-agent-task
 - **Author**: tuvens
-- **Timestamp**: 2025-09-02T10:57:23+01:00
+- **Timestamp**: 2025-09-02T11:12:03+01:00
 
 ## Environment Status
 - **Production** (main): ⏸️ Inactive
