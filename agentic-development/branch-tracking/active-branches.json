@@ -408,6 +408,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/add-branch-strategy-to-qa-agent-instructions",
         "issues": []
+      },
+      {
+        "name": "devops/feature/fix-start-session-workflow-dev-branch-enforcement",
+        "author": "tuvens",
+        "created": "2025-09-02T09:22:42Z",
+        "lastActivity": "2025-09-02T09:57:27.034Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/fix-start-session-workflow-dev-branch-enforcement",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -441,7 +454,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-02T09:22:38.383Z",
+  "lastUpdated": "2025-09-02T09:57:27.035Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
