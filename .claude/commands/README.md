@@ -1,6 +1,6 @@
 # Claude Code Commands Directory
 
-This directory contains 10 slash commands that extend Claude Code functionality for the Tuvens ecosystem. These commands provide specialized workflows for cross-repository coordination, development tasks, and project management.
+This directory contains 11 slash commands that extend Claude Code functionality for the Tuvens ecosystem. These commands provide specialized workflows for cross-repository coordination, development tasks, and project management.
 
 ## Quick Reference
 
@@ -9,6 +9,7 @@ This directory contains 10 slash commands that extend Claude Code functionality 
 | [`/abc`](abc.md) | ABC task completion pressure system | `/abc [optional-task-context]` |
 | [`/ask-question`](ask-question.md) | Ask questions about another repository | `/ask-question <repository> <question>` |
 | [`/create-issue`](create-issue.md) | Create GitHub issues with agent workflows | `/create-issue <agent> <assigned-agent> <title> <repo>` |
+| [`/create-pr`](create-pr.md) | Create pull requests with branch strategy compliance | `/create-pr [pr-title] [target-branch]` |
 | [`/push`](push.md) | Push changes following branching strategy | `/push <commit-message>` |
 | [`/refactor-code`](refactor-code.md) | Comprehensive code refactoring | `/refactor-code <target-path> [--dry-run]` |
 | [`/report-bug`](report-bug.md) | Report bugs in another repository | `/report-bug <repository> <bug_description>` |
@@ -64,6 +65,22 @@ Request features, changes, or capabilities from another repository that are need
 ### 🔧 Development Workflow
 
 Core development commands that handle code changes, quality, and git operations:
+
+#### [`/create-pr`](create-pr.md)
+Create pull requests with proper branch targeting following the Tuvens 5-branch strategy and safety rules.
+
+**When to use:**
+- Creating pull requests with enforced branch targeting
+- Ensuring compliance with 5-branch strategy rules
+- Auto-generating PR content and labels
+- Preventing violations of protected branch policies
+
+**Safety features:**
+- Automatic branch naming validation
+- 5-branch strategy enforcement (targets dev by default)
+- Working directory cleanliness checks
+- PR template with compliance checklists
+- Emergency hotfix workflow for stage targeting
 
 #### [`/push`](push.md)
 Push changes following the Tuvens branching strategy with explicit branch protection and safety checks.

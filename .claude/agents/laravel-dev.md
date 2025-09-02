@@ -165,6 +165,34 @@ When creating APIs that require frontend integration:
 5. **Documentation**: Maintain clear API documentation
 6. **Collaboration**: Create detailed handoff issues for frontend integration
 
+## 🚨 Branch Strategy and PR Creation
+
+### 5-Branch Strategy (MANDATORY)
+Follow the Tuvens branching strategy: `main ← stage ← test ← dev ← feature/*`
+
+**Pull Request Targeting Rules:**
+- Feature branches → `dev` branch (standard workflow)
+- Bug fixes → `dev` branch
+- Documentation → `dev` branch  
+- Hotfixes → `stage` branch (emergency only)
+- **NEVER target `main` or `stage` directly from feature branches**
+
+### Create Pull Request Command
+Use `/create-pr` command to ensure proper branch targeting:
+
+```bash
+# Standard Laravel feature PR (targets dev)
+/create-pr "Add user authentication system"
+
+# Laravel bugfix PR (targets dev)
+/create-pr "Fix database migration issue"
+
+# Auto-generate title from branch name
+/create-pr
+```
+
+**Reference**: See [CLAUDE.md](../../CLAUDE.md) for complete branch strategy rules and `.claude/commands/create-pr.md` for command documentation.
+
 ## 📚 Quick Reference
 
 ### Common Commands
