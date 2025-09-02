@@ -4,7 +4,7 @@
 
 For complete Claude Desktop automation instructions, see:
 
-**→ [Desktop Project Instructions](./agentic-development/desktop-project-instructions/README.md)**
+**→ [Desktop Project Instructions](./README.md)**
 
 ## Quick Reference
 
@@ -38,7 +38,7 @@ For complete Claude Desktop automation instructions, see:
 - Repository structure: `~/Code/Tuvens/tuvens-docs`
 
 ### Troubleshooting
-If automation fails, check the [detailed troubleshooting guide](./agentic-development/desktop-project-instructions/README.md#-troubleshooting).
+If automation fails, check the [detailed troubleshooting guide](./README.md#-troubleshooting).
 
 ---
 

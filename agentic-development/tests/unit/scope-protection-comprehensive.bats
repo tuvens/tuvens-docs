@@ -18,14 +18,14 @@ setup() {
     echo "## Mandatory Branch Naming Conventions" >> CLAUDE.md
     
     # Set up environment for scope protection testing
-    export HOOKS_DIR="$PWD/agentic-development/scripts/hooks"
+    export HOOKS_DIR="$PWD/scripts/hooks"
     
     # Create hooks directory structure and copy hooks
     mkdir -p "$HOOKS_DIR"
     
     # Copy the actual hook files if they exist
     local repo_root="$(git rev-parse --show-toplevel 2>/dev/null || echo ".")"
-    local source_hooks_dir="$repo_root/agentic-development/scripts/hooks"
+    local source_hooks_dir="$repo_root/scripts/hooks"
     if [ -d "$source_hooks_dir" ]; then
         cp "$source_hooks_dir"/*.sh "$HOOKS_DIR/" 2>/dev/null || true
         chmod +x "$HOOKS_DIR"/*.sh 2>/dev/null || true

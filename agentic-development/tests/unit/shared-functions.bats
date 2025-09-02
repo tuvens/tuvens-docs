@@ -8,7 +8,7 @@ load setup
 # Setup for each test
 setup() {
     # Source the shared functions for testing
-    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/agentic-development/scripts/shared-functions.sh"
+    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/scripts/shared-functions.sh"
     if [ -f "$SCRIPT_UNDER_TEST" ]; then
         source "$SCRIPT_UNDER_TEST"
     else

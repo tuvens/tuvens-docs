@@ -8,7 +8,7 @@ setup() {
     export TEST_PAYLOAD_ISSUE_COMMENT='{"action":"created","issue":{"number":123},"comment":{"body":"👤 **Identity**: test-agent","user":{"login":"test-user"}}}'
     export TEST_PAYLOAD_PR='{"action":"opened","pull_request":{"number":456,"body":"Fixes #123","draft":false,"state":"open","merged":false}}'
     export TEST_PAYLOAD_INVALID='{"invalid":true}'
-    export SCRIPTS_DIR="$BATS_TEST_DIRNAME/../../agentic-development/scripts"
+    export SCRIPTS_DIR="$BATS_TEST_DIRNAME/../../scripts"
 }
 
 @test "processes issue comment webhook with valid agent format" {

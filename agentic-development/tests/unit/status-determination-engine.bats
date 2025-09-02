@@ -7,10 +7,10 @@ load setup
 
 # Setup for each test
 setup() {
-    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/agentic-development/scripts/status-determination-engine.sh"
+    export SCRIPT_UNDER_TEST="$TEST_PROJECT_ROOT/scripts/status-determination-engine.sh"
     if [ -f "$SCRIPT_UNDER_TEST" ]; then
         # Source shared functions first
-        source "$TEST_PROJECT_ROOT/agentic-development/scripts/shared-functions.sh"
+        source "$TEST_PROJECT_ROOT/scripts/shared-functions.sh"
         source "$SCRIPT_UNDER_TEST"
     else
         skip "status-determination-engine.sh not found"
@@ -99,7 +99,7 @@ setup() {
 }
 
 @test "can source status determination engine" {
-    run bash -c "source '$TEST_PROJECT_ROOT/agentic-development/scripts/shared-functions.sh'; source '$SCRIPT_UNDER_TEST'; echo 'Loaded successfully'"
+    run bash -c "source '$TEST_PROJECT_ROOT/scripts/shared-functions.sh'; source '$SCRIPT_UNDER_TEST'; echo 'Loaded successfully'"
     [ "$status" -eq 0 ]
     [[ "$output" =~ "Loaded successfully" ]]
 }
