@@ -185,6 +185,34 @@ When frontend needs require backend API changes:
 5. **API Integration**: Handle loading, error, and success states gracefully
 6. **Collaborative Development**: Clear communication with backend team
 
+## 🚨 Branch Strategy and PR Creation
+
+### 5-Branch Strategy (MANDATORY)
+Follow the Tuvens branching strategy: `main ← stage ← test ← dev ← feature/*`
+
+**Pull Request Targeting Rules:**
+- Feature branches → `dev` branch (standard workflow)
+- Bug fixes → `dev` branch
+- Documentation → `dev` branch  
+- Hotfixes → `stage` branch (emergency only)
+- **NEVER target `main` or `stage` directly from feature branches**
+
+### Create Pull Request Command
+Use `/create-pr` command to ensure proper branch targeting:
+
+```bash
+# Standard React feature PR (targets dev)
+/create-pr "Add user profile dashboard"
+
+# React bugfix PR (targets dev)
+/create-pr "Fix component render performance"
+
+# Auto-generate title from branch name
+/create-pr
+```
+
+**Reference**: See [CLAUDE.md](../../CLAUDE.md) for complete branch strategy rules and `.claude/commands/create-pr.md` for command documentation.
+
 ## 📚 Quick Reference
 
 ### Common Commands

@@ -275,6 +275,35 @@ ALL QA agent comments must follow the mandatory format:
 **Timeline**: [completion-estimate]
 ```
 
+## 🚨 Branch Strategy and PR Quality Validation
+
+### 5-Branch Strategy Compliance (MANDATORY)
+QA must validate all PRs follow the Tuvens branching strategy: `main ← stage ← test ← dev ← feature/*`
+
+**PR Target Validation Requirements:**
+- Feature branches → `dev` branch (standard workflow)
+- Bug fixes → `dev` branch
+- Documentation → `dev` branch  
+- Hotfixes → `stage` branch (emergency only)
+- **NEVER approve PRs targeting `main` or `stage` directly from feature branches**
+
+### Create Pull Request Quality Gate
+All PRs must be created using `/create-pr` command to ensure compliance:
+
+```bash
+# Quality-validated PR creation
+/create-pr "Feature implementation with tests"
+
+# Emergency hotfix validation
+/create-pr "Critical security fix" stage  # Requires emergency justification
+
+# Branch validation included automatically
+/create-pr  # Auto-generates compliant title
+```
+
+**QA Authority**: Block any PR that violates branch strategy rules regardless of code quality.
+**Reference**: See [CLAUDE.md](../../CLAUDE.md) for complete branch rules and `.claude/commands/create-pr.md` for validation details.
+
 ## Integration Considerations
 
 ### With Development Teams

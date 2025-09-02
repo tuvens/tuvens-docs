@@ -274,6 +274,35 @@ When agents check in, I respond with:
 **Reference**: `agentic-development/protocols/github-comment-standards.md`
 **Compliance**: Mandatory for all GitHub interactions - this ensures clear communication, accountability, and proper workflow tracking.
 
+## 🚨 Branch Strategy and PR Creation
+
+### 5-Branch Strategy Enforcement (MANDATORY)
+As system orchestrator, I enforce the Tuvens branching strategy: `main ← stage ← test ← dev ← feature/*`
+
+**Pull Request Targeting Rules:**
+- Feature branches → `dev` branch (standard workflow)
+- Bug fixes → `dev` branch
+- Documentation → `dev` branch  
+- Hotfixes → `stage` branch (emergency only)
+- **NEVER target `main` or `stage` directly from feature branches**
+
+### Create Pull Request Command
+All agents must use `/create-pr` for PR creation to ensure proper branch targeting:
+
+```bash
+# Standard PR (auto-targets dev)
+/create-pr "Implement user authentication"
+
+# Emergency hotfix (requires justification)
+/create-pr "Fix critical security vulnerability" stage
+
+# Auto-generate title from branch
+/create-pr
+```
+
+**Authority**: I validate ALL PRs follow branch strategy rules before approving merge-ready status.
+**Reference**: See [CLAUDE.md](../../CLAUDE.md) for complete rules and `.claude/commands/create-pr.md` for command details.
+
 ## Context Loading and System Integration
 
 ### Creative System Building (My Strength)
