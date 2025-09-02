@@ -421,6 +421,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/fix-start-session-workflow-dev-branch-enforcement",
         "issues": []
+      },
+      {
+        "name": "devops/feature/add-create-pr-command-and-include-branch-strategy-instructions-in-agent-files",
+        "author": "tuvens",
+        "created": "2025-09-02T09:57:30Z",
+        "lastActivity": "2025-09-02T11:21:16.887Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/add-create-pr-command-and-include-branch-strategy-instructions-in-agent-files",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -454,7 +467,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-02T09:57:27.035Z",
+  "lastUpdated": "2025-09-02T11:21:16.887Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
