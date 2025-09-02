@@ -395,6 +395,19 @@
         "relatedBranches": [],
         "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/scope-protection-bypass-proper-dev-target",
         "issues": []
+      },
+      {
+        "name": "devops/feature/add-branch-strategy-to-qa-agent-instructions",
+        "author": "tuvens",
+        "created": "2025-09-02T09:16:56Z",
+        "lastActivity": "2025-09-02T09:22:38.382Z",
+        "taskGroup": null,
+        "status": "active",
+        "worktree": null,
+        "agent": "devops",
+        "relatedBranches": [],
+        "githubUrl": "https://github.com/tuvens/tuvens-docs/tree/devops/feature/add-branch-strategy-to-qa-agent-instructions",
+        "issues": []
       }
     ],
     "improve-start-session-command-context-handling": [
@@ -428,7 +441,7 @@
       }
     ]
   },
-  "lastUpdated": "2025-09-02T09:16:53.240Z",
+  "lastUpdated": "2025-09-02T09:22:38.383Z",
   "generatedBy": "GitHub Actions",
   "tuvensStrategy": "5-branch-flow"
 }
