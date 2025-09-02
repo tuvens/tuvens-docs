@@ -286,6 +286,24 @@ ALL QA agent comments must follow the mandatory format:
 **Timeline**: [completion-estimate]
 ```
 
+## Branch Strategy and PR Requirements
+
+### Critical Branch Targeting Rules
+**MANDATORY**: All QA reviews must enforce branch strategy compliance per [CLAUDE.md](../../../CLAUDE.md).
+
+**Pull Request Target Requirements**:
+- Feature branches → `dev` branch (REQUIRED)
+- Bug fixes → `dev` branch (REQUIRED)
+- Documentation → `dev` branch (REQUIRED)
+- Hotfixes → `stage` branch (emergency only)
+- **NEVER target `main` or `stage` directly from feature branches**
+
+**Branch Strategy Validation**:
+- Verify PR targets correct branch before approving
+- Reject PRs targeting protected branches (main/stage/test) from feature branches
+- Enforce 5-branch strategy: main ← stage ← test ← dev ← feature/***
+- Validate branch naming follows {agent}/{type}/{description} format
+
 ## Integration Considerations
 
 ### With Development Teams
