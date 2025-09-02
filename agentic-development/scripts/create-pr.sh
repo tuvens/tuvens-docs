@@ -333,8 +333,7 @@ if gh pr create \
     --title "${PR_TITLE}" \
     --body "${PR_BODY}" \
     --base "${TARGET_BRANCH}" \
-    --head "${CURRENT_BRANCH}" \
-    --draft false; then
+    --head "${CURRENT_BRANCH}"; then
     
     log_success "Pull request created successfully!"
     
